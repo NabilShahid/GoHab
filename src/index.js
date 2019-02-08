@@ -3,13 +3,17 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App/app";
 import * as serviceWorker from "./serviceWorker";
-import Firebase, { FirebaseContext } from './services/firebase';
-
-
+import Firebase, { FirebaseContext } from "./services/firebase";
+import "bootstrap/dist/css/bootstrap.css";
+import "antd/dist/antd.css";
+import store from "./store";
+import { Provider } from "react-redux";
 ReactDOM.render(
-  <FirebaseContext.Provider value={new Firebase()}>
-    <App />
-  </FirebaseContext.Provider>,
+  <Provider store={store}>
+    <FirebaseContext.Provider value={new Firebase()}>
+      <App />
+    </FirebaseContext.Provider>
+  </Provider>,
   document.getElementById("root")
 );
 

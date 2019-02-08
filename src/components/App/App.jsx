@@ -6,15 +6,19 @@ import SignUpPage from "../SignUp/signup";
 import SignInPage from "../SignIn/signin";
 import SignOutButton from "../SignOut/signoutbutton";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { withFirebase } from '../../services/firebase';
-import PasswordForgetPage from '../PasswordForget/passwordforget'
+import { withFirebase } from "../../services/firebase";
+import PasswordForgetPage from "../PasswordForget/passwordforget";
+import Header from "../Header/header"
+import {updateUser} from "../../actions/userActions.js"
+import {connect} from "react-redux";
+
+import "./app.css";
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       authUser: null,
-      userEmail:''
+      userEmail: ""
     };
   }
 
@@ -22,8 +26,9 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <div>Welcome {this.state.userEmail}</div>
-          {this.state.authUser ? <NavigationAuth /> : <NavigationNonAuth />}
+        <Header/>
+        <SignOutButton />  
+          {/* {this.state.authUser ? <NavigationAuth /> : <NavigationNonAuth />} */}
           <Route exact path={ROUTES.HOME} component={Main} />
           <Route path={ROUTES.PASSWORD_FORGET} render={(props) => <PasswordForgetPage {...props}/> } />
           <Route path={ROUTES.SIGNIN} component={SignInPage} />
@@ -35,11 +40,11 @@ class App extends Component {
 
   componentDidMount() {
     this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      let userEmail=authUser.email;
+      let userEmail = authUser.email;
       authUser
-        ? this.setState({ authUser,userEmail })
-        : this.setState({ authUser: null, userEmail:"" });
-        
+        ? this.setState({ authUser, userEmail })
+        : this.setState({ authUser: null, userEmail: "" });
+        this.props.updateUser({UserEmail:userEmail,UserName:"Nabil Shahid"});
     });
   }
 
@@ -47,6 +52,14 @@ class App extends Component {
     this.listener();
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (userPayload) => {
+          dispatch(updateUser(userPayload));
+      }
+  };
+};
 
 const NavigationAuth = () => (
   <ul>
@@ -80,4 +93,4 @@ const NavigationNonAuth = () => (
   </ul>
 );
 
-export default withFirebase(App);
+export default connect(null, mapDispatchToProps)( withFirebase(App));

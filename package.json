@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.13.0",
+    "bootstrap": "^4.2.1",
     "firebase": "^5.7.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",

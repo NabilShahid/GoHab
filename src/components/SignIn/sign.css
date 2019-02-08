@@ -1,0 +1,33 @@
+#loginContainer{
+    height: 76vh;
+    width: 80vw;
+    box-shadow: 0px 0px 3px -1px rgba(0,0,0,1);
+    border-radius: 1vh;
+    background-color: white;
+}
+#loginPage{
+    padding: 12vh 12vw;
+    background-image: url("../../assets/images/loginbackground.jpg");
+    background-position: center;
+    background-size: cover;
+}
+#loginContainer .ant-row{
+    height: 100%;
+}
+#leftCol{
+    height: 100%;
+    background-color: #ff3030;
+    border-top-left-radius: 1vh;
+    border-bottom-left-radius: 1vh;
+    box-shadow: 0px 0px 3px -1px rgba(0,0,0,1);
+}
+#loginButton{
+
+    margin-left: 100px;
+    margin-top: 100px;
+    width: 40%;
+    border-radius: 4px;
+    background-color: #4a4949;
+    color: white;
+
+}
