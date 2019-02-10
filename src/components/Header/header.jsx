@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import './header.css';
-import logo from '../../assets/images/logo_2.png'
+import logo from '../../assets/images/logo_withoutText.png'
 
 class Header extends Component {
   state = {};
@@ -14,7 +14,7 @@ class Header extends Component {
         <div className="col-md-5" />
         <div className="col-md-3" style={{ textAlign: "right" }} />
       </div>
-      <img src={logo}/>
+      {/* <img src={logo}/> */}
       </React.Fragment>
     );
   }

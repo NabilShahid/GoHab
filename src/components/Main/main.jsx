@@ -1,18 +1,46 @@
 import React, { Component } from "react";
 import  { FirebaseContext } from '../../services/firebase';
+import { withFirebase } from "../../services/firebase";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import SignOutButton from "../SignOut/signoutbutton";
+import SideMenu from "../SideMenu/sidemenu";
+import {connect} from "react-redux";
+import Header from "../Header/header";
 
-const Main = () => {
+class MainBase extends Component {
+  state = {  }
+  render() { 
+    return (
+    
+    
+        <div>
+        <SideMenu/>
+       {/* Hello Main Page {this.props.user.UserEmail}
+       <SignOutButton /> */}
+       </div>
+      
+    );
+  }
+  componentDidMount() {
+    setTimeout(()=>{
+      console.log(this.props.user);
+
+    },1)
+  }
   
-  return (
-    <div>
-      Main Page<p> {process.env.REACT_APP_NABIL}</p>
-      <FirebaseContext.Consumer>
-        {firebase => {
-          console.log(firebase);
-          return <div>I've access to Firebase and render something.</div>;
-        }}
-      </FirebaseContext.Consumer>
-    </div>
-  );
+}
+
+const mapStateToProps = (state) => {
+  return {
+      user: state.User       
+  };
 };
-export default Main;
+
+const Main = compose(
+  withRouter,
+  withFirebase
+)(MainBase);
+
+
+export default connect(mapStateToProps, null)(Main);

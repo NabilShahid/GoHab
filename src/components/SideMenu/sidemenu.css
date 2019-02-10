@@ -1,0 +1,16 @@
+
+.ant-menu{
+    width: 300px !important;
+    background-color: #fd3a3a !important;
+    color: white !important;
+}
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #ffffff !important;
+}
+.ant-menu-item-selected {
+    color: #4a4949 !important;
+   
+}
+.ant-menu-vertical .ant-menu-item:after, .ant-menu-vertical-left .ant-menu-item:after, .ant-menu-vertical-right .ant-menu-item:after, .ant-menu-inline .ant-menu-item:after{
+    border-right: 3px solid #4a4949 !important;
+}
