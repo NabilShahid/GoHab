@@ -1,16 +1,39 @@
 
 .ant-menu{
-    width: 300px !important;
     background-color: #fd3a3a !important;
-    color: white !important;
+    background:  #f1f1f1!important;
+    color: #4c4c4c !important;
+    border-radius: 5px;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: #ffffff !important;
+    background-color: #fd3a3a!important;
 }
 .ant-menu-item-selected {
-    color: #4a4949 !important;
+    color: white !important;
+    /* margin: 5px !important; */
+    /* border-radius: 4px; */
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+  
    
 }
 .ant-menu-vertical .ant-menu-item:after, .ant-menu-vertical-left .ant-menu-item:after, .ant-menu-vertical-right .ant-menu-item:after, .ant-menu-inline .ant-menu-item:after{
-    border-right: 3px solid #4a4949 !important;
+    border-right: 0px !important;
+}
+.sideIcon{
+    font-size: 19px !important;
+    margin-right: 5%;
+}
+.ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
+    width: unset !important;
+}
+#sGoalsI{
+    color: #fea01b;
+}
+#sHabbitsI{
+    color: #1dc0d4;
+    
+}
+#sTasksI{
+    color: #5cb360;
+    
 }

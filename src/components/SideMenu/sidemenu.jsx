@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Menu, Icon } from "antd";
-import "./sidemenu.css"
+import history from "../../services/history";
+import * as ROUTES from "../../constants/routes";
+import "./sidemenu.css";
 
 
 class SideMenu extends Component {
@@ -12,57 +14,62 @@ class SideMenu extends Component {
   render() {
     return (
         <Menu        
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[ROUTES.HOME]}
         mode={this.state.mode}
         theme={this.state.theme}
+        onSelect={this.moveToPath}	
       >
-        <Menu.Item key="home">
-          <Icon type="mail" />
+        <Menu.Item key={ROUTES.HOME}>
+        <i id="sHomeI" className="fa fa-home sideIcon"></i>
           Home
         </Menu.Item>
-        <Menu.Item key="goals">
-          <Icon type="calendar" />
+        <Menu.Item key="goals" theme="filled">
+          <i id="sGoalsI" className="fa fa-home sideIcon"></i>
           Goals
         </Menu.Item>
-        <Menu.Item key="habbits">
-          <Icon type="calendar" />
+        <Menu.Item key="habbits" theme="filled">
+          <i id="sHabbitsI" className="fa fa-home sideIcon"></i>
           Habbits
         </Menu.Item>
-        <Menu.Item key="tasks">
-          <Icon type="calendar" />
+        <Menu.Item key={ROUTES.TASKS} theme="filled">
+          <i id="sTasksI" className="fa fa-home sideIcon"></i>
           Tasks
         </Menu.Item>
         <Menu.Item key="goalTree">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Goal Tree
         </Menu.Item>
         <Menu.Item key="habbitCalendar">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Habbit Calendar
         </Menu.Item>
         <Menu.Item key="habbitStats">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Habbit Stats
         </Menu.Item>
         <Menu.Item key="taskStats">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Task Stats
         </Menu.Item>
         <Menu.Item key="8">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Goal Progress
         </Menu.Item>
         <Menu.Item key="habbitTracking">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Habbit Tracking
         </Menu.Item>
         <Menu.Item key="taskManaging">
-          <Icon type="calendar" />
+          <i className="fa fa-home sideIcon"></i>
           Task Managing
         </Menu.Item>
       
       </Menu>
     );
+  }
+
+  moveToPath=({key})=>{
+     history.push(key);
   }
 }
 

@@ -7,8 +7,7 @@ import * as ROUTES from "../../constants/routes";
 import { PasswordForgetLink } from "../PasswordForget/passwordforget";
 import { Card, Row, Col } from "antd";
 import { Button } from "antd";
-
-import "./sign.css";
+import "./signin.css";
 
 const gridStyle = {
   width: "25%",
@@ -37,23 +36,29 @@ class SignInFormBase extends Component {
 
   onSubmit = event => {
     const { email, password } = this.state;
-
-    this.props.firebase
+    event.preventDefault();
+    console.log(this.props.firebase)
+    this.props.firebase.authOps
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        this.props.history.push(ROUTES.MAIN);
       })
       .catch(error => {
         this.setState({ error });
       });
 
-    event.preventDefault();
+    
   };
+  
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  
+  addUser=()=>{
+    this.props.firebase.goalOps.retrieveAllGoals("nabil110176@gmail.com");
+  }
 
   render() {
     const { email, password, error } = this.state;
@@ -87,7 +92,7 @@ class SignInFormBase extends Component {
 
                 {error && <p>{error.message}</p>}
               </form>
-              <Button id="loginButton">Sign In</Button>
+              <Button id="loginButton" onClick={this.addUser}>Sign In</Button>
             </Col>
           </Row>
         </div>

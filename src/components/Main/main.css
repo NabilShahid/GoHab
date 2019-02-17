@@ -1,0 +1,21 @@
+
+.createCards{
+    padding: 0% 1.5% !important;
+}
+#headerContainer{
+    /* background-image: url("../../assets/images/output-onlinejpgtools.jpg"); */
+    background-position: center;
+    background-size: cover;
+    background: linear-gradient(160deg, #4c4c4c 0%, #252525 100%);
+}
+#contentContainer{
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    margin-left: 2%;
+    margin-right: 2%; 
+    border-radius: 5px;
+    color: #4a4949;
+    min-height: 90vh;
+    padding: 1.5%;
+    margin-top: 6%;
+    background-color: white;
+}

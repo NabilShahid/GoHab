@@ -5,7 +5,7 @@ import Main from "../Main/main";
 import SignUpPage from "../SignUp/signup";
 import SignInPage from "../SignIn/signin";
 import SignOutButton from "../SignOut/signoutbutton";
-import { Router, Route, Redirect } from "react-router-dom";
+import { Router, Route, Redirect,Switch } from "react-router-dom";
 import { withFirebase } from "../../services/firebase";
 import PasswordForgetPage from "../PasswordForget/passwordforget";
 import Header from "../Header/header";
@@ -27,21 +27,20 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
-          {/* <Header/>
-        <SignOutButton />   */}
-          {/* {this.state.authUser ? <NavigationAuth /> : <NavigationNonAuth />} */}
-          <Route exact path="/" render={() => <Redirect to={ROUTES.HOME} />} />
-          <Route exact path={ROUTES.HOME} component={Main} />
-          {/* <Route path={ROUTES.PASSWORD_FORGET} render={(props) => <PasswordForgetPage {...props}/> } /> */}
+          <Switch>
+          <Route exact path="/" render={() => <Redirect to={ROUTES.MAIN} />} />
+          <Route exact path={ROUTES.MAIN} component={Main} />
           <Route path={ROUTES.SIGNIN} component={SignInPage} />
           <Route path={ROUTES.SIGNUP} component={SignUpPage} />
+          <Route component={Main} />
+          </Switch>
         </div>
       </Router>
     );
   }
 
   componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+    this.listener = this.props.firebase.authOps.fAuth.onAuthStateChanged(authUser => {
       if (authUser == null) history.push(ROUTES.SIGNIN);
       else {
         let userEmail = authUser.email;

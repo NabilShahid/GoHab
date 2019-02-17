@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./services/firebase";
 import "bootstrap/dist/css/bootstrap.css";
 import "antd/dist/antd.css";
+import 'font-awesome/css/font-awesome.min.css';
 import store from "./store";
 import { Provider } from "react-redux";
 ReactDOM.render(

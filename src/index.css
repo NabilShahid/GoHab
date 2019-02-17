@@ -17,3 +17,83 @@ code {
   height: 100%;
   overflow-x: hidden;
 }
+.ant-modal-content{
+  border-radius: 6px !important;
+}
+.ant-modal-title{
+  color: white !important;
+}
+.ant-modal-header{
+  background-color: #fd3a3a !important;
+}
+.ghtFormContainer{
+  width: 100%;
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 13px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+ }
+  .formLabel{
+    background-color: #f1f1f1;
+    color: #4c4c4c;
+    padding: 2px 15px 3px 10px;
+    border-radius: 3px;
+    width: 100%;
+}
+
+
+.formControlDiv{
+  padding-top: 15px;
+}
+
+.sHeader{
+  color: #4c4c4c;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 12px;
+  padding-left: 5px;
+  font-size: 14px;
+} 
+.formLogo{
+  width: 27px;
+  float: right;
+}
+
+.ghtFormContainer .ant-slider-track{
+  background-color: #fd3a3a;
+}
+.ghtFormContainer  .ant-slider:hover .ant-slider-track{
+  background-color: #4c4c4c;
+}
+
+.ghtFormContainer  .ant-checkbox-checked .ant-checkbox-inner{
+  background-color:#fd3a3a;
+  border-color: #fd3a3a;
+}
+
+.redButton{
+  background-color: #fd3a3a !important;
+  border: 0px !important;
+  border-radius: 3px !important;
+  color: white !important;  
+}
+.blackButton{
+  background-color: #4c4c4c !important;
+  border: 0px !important;
+  border-radius: 3px !important;
+  color: white !important;
+}
+.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date{
+  background: #fd3a3a !important;
+ 
+}
+.ant-calendar-today .ant-calendar-date{
+  border-color: #fd3a3a !important;
+  color: #4c4c4c !important ; 
+  
+}
+.formError{
+  font-size: 12px;
+  color: #fd3a3a
+}

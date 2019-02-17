@@ -1,0 +1,29 @@
+#createCardMain{
+    max-height: 135px;
+    padding: 12px;
+    color: white;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.1s;
+    transform: translateY(0px);
+}
+#createCardMain:hover{
+    transition: 0.2s;
+    transform: translateY(-5%);
+}
+#createTitle{
+    font-size: 18px;
+    font-weight: 500;
+    padding-top: 15px;
+    margin-left: 10px;
+    border-bottom: 1px solid white;
+    padding-left: 5px;
+    padding-bottom: 4px;
+}
+#createSubtitle{
+    padding-left: 16px;
+    font-size: 12px;
+    padding-top: 6px;
+    line-height: 1.3;
+}

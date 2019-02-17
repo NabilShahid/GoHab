@@ -3,6 +3,7 @@ import prodConfig from "../../envprod";
 import devConfig from "../../envdev";
 import AuthOperations from "../database/authOperations";
 import UserOperations from "../database/userOperations";
+import GoalOperations from "../database/goalOperations";
 import "firebase/auth";
 import "firebase/firestore";
 
@@ -12,12 +13,11 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.authOps=new AuthOperations(app.auth());
-    this.userOps=new UserOperations(app.firestore());
-  }
-   authOps;
-   userOps;
-
- 
+    let firestoreInstance=app.firestore();
+    firestoreInstance.settings( { timestampsInSnapshots: true });
+    this.userOps=new UserOperations(firestoreInstance);
+    this.goalOps=new GoalOperations(firestoreInstance);
+  }   
 }
 
 export default Firebase;

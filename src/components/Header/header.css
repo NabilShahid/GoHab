@@ -1,7 +1,14 @@
-#appHeader{
-    padding: 13px 0px 13px 0px;
-    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-    background-color: #f33535;
-    color: white;
-    margin-bottom: 30px;
-   }
+
+#headerAbDiv{  
+  position: absolute;
+  width: 100%;
+  padding-top: 0.6%;
+  padding-bottom: 6%;
+  color: white;
+}
+#headerTitle{
+  font-size: 32px;
+  font-weight: bold;
+  padding-right: 3%;
+}
+/* linear-gradient(160deg, #333333 0%, #1f1e1e 100%) */
