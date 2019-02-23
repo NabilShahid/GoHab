@@ -12,6 +12,7 @@ import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
+import Goals from "../Goals/goals";
 import history from "../../services/history";
 import * as ROUTES from "../../constants/routes";
 import MENUOPTIONS from "../../constants/menuOptions";
@@ -22,8 +23,7 @@ class MainBase extends Component {
   state = {};
   render() {
     return (
-      <div>
-        {/* <Header /> */}
+      <div>        
         <Row>
           <Col span={5}>
             <UserTile />
@@ -33,10 +33,12 @@ class MainBase extends Component {
           <Col span={19} id="headerContainer">
             <Header heading="Home" icon="fa fa-home" />
             <div id="contentContainer">
+             {/* Second level routes */}
               <Router history={history}>
                 <Switch>
                   <Route path={ROUTES.HOME} component={Home} />
                   <Route path={ROUTES.TASKS} component={Tasks} />
+                  <Route path={ROUTES.GOALS} component={Goals} />
                 </Switch>
               </Router>
             </div>
@@ -45,17 +47,27 @@ class MainBase extends Component {
       </div>
     );
   }
+
+  /**
+   * set initial route to home to show home tab by default
+   */
   componentDidMount() {
     history.push(ROUTES.HOME);
   }
 }
 
+/**
+ * state to props mapping for accessing user form user reducer  
+ */
 const mapStateToProps = state => {
   return {
     user: state.User
   };
 };
 
+/**
+ * compose router and firebase for accessing history and firebase via props
+ */
 const Main = compose(
   withRouter,
   withFirebase

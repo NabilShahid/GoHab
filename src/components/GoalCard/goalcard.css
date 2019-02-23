@@ -1,0 +1,56 @@
+.goalCard{
+    background-color: #f9f9f9;
+    padding: 8px;
+    border-radius: 3px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+}
+.goalSubtitle{
+    font-weight: normal;
+    font-size: 12px;
+    border-top: 1px solid #cec8c8;
+    margin-top: 3px;
+    padding-top: 3px;
+}
+.goalTitle{
+    font-weight: 500;
+}
+.goalDate{
+    font-weight: 400;
+    float: right;
+    font-size: 11px;
+    margin-top: 2%;
+}
+.goalCard .goalProgress{
+    margin-top: 2%;
+    font-size: 12px;
+}
+.goalCard .progress{
+    height: 11px;
+    margin-top: 2%;
+    border-radius: 2px;
+}
+.goalCard .progress-bar{
+     background: var(--goal-color);
+}
+.goalAssociations{
+    margin-top: 4%;
+    font-size: 12px;
+    border-top: 1px solid #cec8c8;
+    padding-top: 1%;
+}
+.goalBadge{
+    text-align: center;
+    margin-top: 1%;
+    font-weight: normal;
+    font-size: 10px;
+}
+.asscCount{
+    font-size: 12px;
+    font-weight: bold;
+}
+.goalCard .progressNumber{
+    font-weight: normal;
+    float: right;
+    font-size: 11px;
+    margin-top: 1%;
+}

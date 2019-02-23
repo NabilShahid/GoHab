@@ -5,4 +5,5 @@ export const HOME='/home';
 export const SIGNUP='/signup';
 export const PASSWORD_FORGET='/resetpassword';
 export const TASKS='/tasks';
+export const GOALS='/goals';
 

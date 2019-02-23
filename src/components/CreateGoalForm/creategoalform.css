@@ -1,0 +1,36 @@
+.ghtFormContainer .ant-input-disabled{
+    background-color: #ffffff;
+    opacity: 1;
+    cursor: not-allowed;
+    color: #4c4c4c;
+    border: unset !important;
+}
+.ghtFormContainer .ant-input{
+    border:unset;
+    border-bottom: 1px solid #d0d0d0;
+}
+.ghtFormContainer .progress-bar{
+    background-color: #fd3a3a;
+}
+
+.ghtFormContainer .progressNumber{
+    font-size: 11px;
+}
+
+.ghtFormContainer .goalProgress{
+    margin-top: 0.6%;
+}
+
+.ghtFormContainer .progress{
+    height: 0.9rem;
+}
+.sHeader{
+    color: #4c4c4c;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #d6d6d6;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    font-size: 15px;
+    font-weight: 500;
+  } 

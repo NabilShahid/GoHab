@@ -27,6 +27,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
+          {/* All first level routes */}
           <Switch>
           <Route exact path="/" render={() => <Redirect to={ROUTES.MAIN} />} />
           <Route exact path={ROUTES.MAIN} component={Main} />
@@ -39,8 +40,13 @@ class App extends Component {
     );
   }
 
+
+  /**
+   * componentDidMount hook. Check user session using firrebase onAuthStateChanged, updates userReducer
+   */
   componentDidMount() {
     this.listener = this.props.firebase.authOps.fAuth.onAuthStateChanged(authUser => {
+      //go to signin page if no session
       if (authUser == null) history.push(ROUTES.SIGNIN);
       else {
         let userEmail = authUser.email;
@@ -55,11 +61,17 @@ class App extends Component {
     });
   }
 
+  /**
+   * unsubscribes from firebase onAuthStateChanged
+   */
   componentWillUnmount() {
     this.listener();
   }
 }
 
+/**
+ * dispatch to props mapping form updating user
+ */
 const mapDispatchToProps = dispatch => {
   return {
     updateUser: userPayload => {
@@ -67,38 +79,6 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
-const NavigationAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.SIGNIN}>Signin</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGNUP}>Signup</Link>
-    </li>
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
-);
-
-const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.SIGNIN}>Signin</Link>
-    </li>
-
-    <li>
-      <Link to={ROUTES.SIGNUP}>Signup</Link>
-    </li>
-  </ul>
-);
 
 export default connect(
   null,

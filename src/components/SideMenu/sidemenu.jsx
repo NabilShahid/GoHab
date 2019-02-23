@@ -23,7 +23,7 @@ class SideMenu extends Component {
         <i id="sHomeI" className="fa fa-home sideIcon"></i>
           Home
         </Menu.Item>
-        <Menu.Item key="goals" theme="filled">
+        <Menu.Item key={ROUTES.GOALS} theme="filled">
           <i id="sGoalsI" className="fa fa-home sideIcon"></i>
           Goals
         </Menu.Item>
@@ -68,6 +68,9 @@ class SideMenu extends Component {
     );
   }
 
+  /**
+   * open selective tab on second route
+   */
   moveToPath=({key})=>{
      history.push(key);
   }

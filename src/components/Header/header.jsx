@@ -56,6 +56,9 @@ class Header extends Component {
   }
 }
 
+/**
+ * state to props mapping for dislaying user from userReducer 
+ */
 const mapStateToProps = state => {
   return {
     user: state.User

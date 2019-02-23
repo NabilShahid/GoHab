@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Joi from "joi";
-
 import {
   Modal,
   Button,
@@ -9,7 +8,10 @@ import {
   Icon,
   Slider,
   DatePicker,
-  Checkbox
+  Checkbox,
+  Popconfirm,
+  message,
+  Tooltip
 } from "antd";
 import { withFirebase } from "../../services/firebase";
 import logo from "../../assets/images/logo_withoutText.png";
@@ -19,7 +21,7 @@ const { TextArea } = Input;
 class CreateGoalForm extends React.Component {
   state = {
     loading: false,
-    dueDate: false,
+    noDueDate: false,
     errors: {
       name: {
         error: true,
@@ -29,18 +31,19 @@ class CreateGoalForm extends React.Component {
         error: true,
         message: ""
       }
-    }
+    },
+    formValues: {
+      name: "dddd",
+      description: "",
+      importance: 1,
+      progress: 25,
+      dueDate: moment().toDate()
+    },
+    disabledForm: false
   };
-
   dateFormat = "DD-MMM-YYYY";
 
-  formValues = {
-    name: "",
-    description: "",
-    importance: 1,
-    progress: 25,
-    dueDate: moment().toDate()
-  };
+  //Joi schema for form
   schema = {
     name: Joi.string()
       .max(50)
@@ -52,193 +55,277 @@ class CreateGoalForm extends React.Component {
       .label("Description")
   };
 
+  /**
+   * create goal in firestore using data provided on the form for current user
+   */
   createGoal = () => {
     this.setState({ loading: true });
-    if(this.formValues.dueDate)
-    this.formValues.dueDate = this.formValues.dueDate.toISOString();
+    const { formValues, noDueDate } = this.state;
+    const formValuesToSave = { ...formValues };
+    //get date as string for saving in firestore
+    if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
+    else formValuesToSave.dueDate = false;
+    //call to firebase goalOps addNewGoal method
     this.props.firebase.goalOps
-      .addNewGoal("nabil110176@gmail.com", this.formValues)
+      .addNewGoal("nabil110176@gmail.com", formValuesToSave)
       .then(() => {
         this.setState({ loading: false });
-        this.props.close();
+        this.props.setFormVisibility("goal", false);
       })
       .catch(error => {
         console.error("Error writing document: ", error);
       });
   };
 
+  /**
+   * mark due date on or off
+   */
   dueDateUpdate = e => {
-    const dueDate = e.target.checked;
-    this.setState({ dueDate });
-    this.formValues.dueDate=false
+    const noDueDate = e.target.checked;
+    this.setState({ noDueDate });
   };
 
+
+  /**
+   * validate each field on change using Joi schema
+   */
   validateField = (name, value) => {
+    const { formValues } = this.state;
     const field = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(field, schema);
     const errors = { ...this.state.errors };
-
+    formValues[name] = value;
+    //if not valid field set validation errors on form
     if (error != null) {
       errors[name].error = true;
       errors[name].message = error.details[0].message;
-      this.setState({ errors });
+      this.setState({ errors, formValues });
       return false;
-    } else {
+    } else {//hide error messages
       errors[name].error = false;
       errors[name].message = "";
-      this.setState({ errors });
-      this.formValues[name] = value;
+      this.setState({ errors, formValues });
       return true;
     }
   };
 
-  validateForm=()=>{    
-    const {errors}=this.state;
-    for(const key in errors)
-    {
-      if(errors[key].error){
+  /**
+   * set value of fields which do not require validation 
+   */
+  setFormValueWithoutValidation = (name, value) => {
+    const { formValues } = this.state;
+    formValues[name] = value;
+    this.setState({ formValues });
+  };
+
+  /**
+   * enable or disable create button based on form validity
+   */
+  validateForm = () => {
+    const { errors } = this.state;
+    for (const key in errors) {
+      if (errors[key].error) {
         return false;
       }
     }
     return true;
+  };
+
+  /**
+   * set form to readonly mode if open with view in mode prop
+   */
+  componentWillMount() {
+    if (this.props.mode == "view") {
+      this.setInitFormValues();
+      this.state.disabledForm = true;
+    }
   }
-  
+
+  /**
+   * set values of form in case of existing goal for viewing and editing 
+   */
+  setInitFormValues() {
+    const { name, description, importance, progress, dueDate } = this.props;
+    const { formValues } = this.state;
+    formValues.name = name && name;
+    formValues.description = description && description;
+    formValues.importance = importance && importance;
+    formValues.progress = progress && progress;
+    if (dueDate) {
+      formValues.dueDate = moment(dueDate).toDate();
+      this.state.noDueDate = false;
+    } else this.state.noDueDate = true;
+  }
+
+  /**
+   * make form editable for updating goal info
+   */
+  editForm = () => {
+    const disabledForm = false;
+    this.setState({ disabledForm });
+  };
+
+  updateChanges = () => {};
+
+  /**
+   * discard changes in edited form i.e. set to initial values
+   */
+  cancelChanges = () => {
+    this.setInitFormValues();
+    const disabledForm = true;
+    this.setState({ disabledForm });
+  };
+
+  /**
+   * show or hide due date control based of mode of form
+   */
+  shouldShowDueDate() {
+    const { noDueDate, disabledForm } = this.state;
+    if (disabledForm && noDueDate) return false;
+    if (disabledForm && !noDueDate) return true;
+    if (!disabledForm) return true;
+  }
+
+  /**
+   * set width of date picker based on mode of the form i.e. smaller if with checkbox for editble form
+   */
+  getDatePickerWidth() {
+    if (this.state.disabledForm) return "100%";
+    return "70%";
+  }
 
   render() {
-    const { loading, dueDate, errors } = this.state;
-    const { close } = this.props;
+    const { loading, noDueDate, errors, disabledForm, formValues } = this.state;
+    const { mode } = this.props;
     return (
       <div>
-        <Modal
-          visible={true}
-          width="53%"
-          title="Create Goal"
-          onOk={close}
-          centered
-          bodyStyle={{ overflowY: "auto" }}
-          style={{ top: "10px" }}
-          onCancel={close}
-          footer={[
-            <Button key="back" onClick={close} className="blackButton">
-              Cancel
-            </Button>,
-            <Button
-              key="submit"
-              type="submit"
-              loading={loading}
-              onClick={this.createGoal}
-              className="redButton"
-              disabled={!this.validateForm()}
-            >
-              Create
-            </Button>
-          ]}
-        >
-          <div className="ghtFormContainer">
-            <div className="sHeader">
-              <i
-                className="fa fa-info-circle"
-                style={{ marginRight: "10px" }}
-              />
-              Fill out the form
-              <img src={logo} className="formLogo" />
-            </div>
-            <form onSubmit={this.createGoal}>
-              <div className="row formControlDiv">
-                <div className="col-md-3">
-                  <label className="formLabel">Name</label>
-                </div>
-                <div className="col-md-9">
-                  <Input
-                    size="small"
-                    name="name"
-                    defaultValue={this.formValues.name}
-                    onChange={e => {
-                      this.validateField(e.target.name, e.target.value);
-                    }}
-                    className="formControl"
-                  />
-                  {errors.name.error && (
-                    <span className="formError">{errors.name.message}</span>
-                  )}
-                </div>
+        <div className="ghtFormContainer">
+          <div className="sHeader">
+            {this.getFormHeader()}
+            <img src={logo} className="formLogo" />
+          </div>
+          <form onSubmit={this.createGoal}>
+            <div className="row formControlDiv">
+              <div className="col-md-3">
+                <label className="formLabel">Name</label>
               </div>
+              <div className="col-md-9">
+                <Input
+                  disabled={disabledForm}
+                  size="small"
+                  name="name"
+                  value={formValues.name}
+                  onChange={e => {
+                    this.validateField(e.target.name, e.target.value);
+                  }}
+                  className="formControl"
+                />
+                {errors.name.error && (
+                  <span className="formError">{errors.name.message}</span>
+                )}
+              </div>
+            </div>
 
-              <div className="row formControlDiv">
-                <div className="col-md-3">
-                  <label className="formLabel">Description</label>
-                </div>
-                <div className="col-md-9">
-                  <TextArea
-                    size="small"
-                    name="description"
-                    className="formControl"
-                    defaultValue={this.formValues.description}
-                    onChange={e => {
-                      this.validateField(e.target.name, e.target.value);
-                    }}
-                  />
-                  {errors.description.error && (
-                    <span className="formError">
-                      {errors.description.message}
+            <div className="row formControlDiv">
+              <div className="col-md-3">
+                <label className="formLabel">Description</label>
+              </div>
+              <div className="col-md-9">
+                <TextArea
+                  disabled={disabledForm}
+                  size="small"
+                  name="description"
+                  className="formControl"
+                  value={formValues.description}
+                  onChange={e => {
+                    this.validateField(e.target.name, e.target.value);
+                  }}
+                />
+                {errors.description.error && (
+                  <span className="formError">
+                    {errors.description.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="row formControlDiv">
+              <div className="col-md-3">
+                <label className="formLabel">Importance</label>
+              </div>
+              <div className="col-md-9">
+                <Rate
+                  disabled={disabledForm}
+                  character={<i className="fa fa-exclamation-triangle" />}
+                  allowHalf
+                  value={formValues.importance}
+                  style={{
+                    fontSize: 19,
+                    color: "#fd3a3a",
+                    marginTop: "-0.5%"
+                  }}
+                  onChange={value => {
+                    this.setFormValueWithoutValidation("importance", value);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="row formControlDiv">
+              <div className="col-md-3">
+                <label className="formLabel">Current Progress</label>
+              </div>
+              <div className="col-md-9">
+                <div className="iconWrapper">
+                  {!disabledForm && (
+                    <span>
+                      <i
+                        style={{ color: "#fd3a3a", fontSize: "18px" }}
+                        className="fa fa-times"
+                      />
+                      <Slider
+                        disabled={disabledForm}
+                        onChange={value => {
+                          this.setFormValueWithoutValidation("progress", value);
+                        }}
+                        value={formValues.progress}
+                        min={0}
+                        max={99}
+                        style={{
+                          width: "80%",
+                          margin: "0% 6%",
+                          display: "inline-block"
+                        }}
+                      />
+                      <i
+                        style={{ color: "#fd3a3a", fontSize: "18px" }}
+                        className="fa fa-check"
+                      />
                     </span>
                   )}
+                  {disabledForm && (
+                    <div className="goalProgress">
+                      <div className="progress">
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          style={{ width: formValues.progress + "%" }}
+                          aria-valuenow={formValues.progress}
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        >
+                          <span className="progressNumber">
+                            {formValues.progress}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <div className="row formControlDiv">
-                <div className="col-md-3">
-                  <label className="formLabel">Importance</label>
-                </div>
-                <div className="col-md-9">
-                  <Rate
-                    character={<i className="fa fa-exclamation-triangle" />}
-                    allowHalf
-                    defaultValue={this.formValues.importance}
-                    style={{
-                      fontSize: 19,
-                      color: "#fd3a3a",
-                      marginTop: "-0.5%"
-                    }}
-                    onChange={value => {
-                      this.formValues.importance = value;
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="row formControlDiv">
-                <div className="col-md-3">
-                  <label className="formLabel">Current Progress</label>
-                </div>
-                <div className="col-md-9">
-                  <div className="iconWrapper">
-                    <i
-                      style={{ color: "#fd3a3a", fontSize: "18px" }}
-                      className="fa fa-times"
-                    />
-                    <Slider
-                      onChange={value => {
-                        this.formValues.progress = value;
-                      }}
-                      defaultValue={this.formValues.progress}
-                      min={0}
-                      max={99}
-                      style={{
-                        width: "80%",
-                        margin: "0% 6%",
-                        display: "inline-block"
-                      }}
-                    />
-                    <i
-                      style={{ color: "#fd3a3a", fontSize: "18px" }}
-                      className="fa fa-check"
-                    />
-                  </div>
-                </div>
-              </div>
-
+            </div>
+            {this.shouldShowDueDate() && (
               <div className="row formControlDiv">
                 <div className="col-md-3">
                   <label className="formLabel">Due Date</label>
@@ -246,31 +333,100 @@ class CreateGoalForm extends React.Component {
                 <div className="col-md-9">
                   <DatePicker
                     onChange={value => {
-                      this.formValues.dueDate = value.toDate();
+                      this.setFormValueWithoutValidation(
+                        "dueDate",
+                        moment(value).toDate()
+                      );
                     }}
-                    disabled={dueDate}
+                    disabled={noDueDate || disabledForm}
                     size="small"
-                    style={{ width: "70%" }}
+                    style={{ width: this.getDatePickerWidth() }}
                     className="formControl"
-                    defaultValue={moment(
-                      this.formValues.dueDate,
-                      this.dateFormat
-                    )}
+                    value={moment(formValues.dueDate, this.dateFormat)}
                     format={this.dateFormat}
                   />
-                  <Checkbox
-                    style={{ marginLeft: "3%" }}
-                    onChange={this.dueDateUpdate}
-                  >
-                    No Due Date
-                  </Checkbox>
+                  {!disabledForm && (
+                    <Checkbox
+                      disabled={disabledForm}
+                      style={{ marginLeft: "3%" }}
+                      onChange={this.dueDateUpdate}
+                      checked={noDueDate}
+                    >
+                      No Due Date
+                    </Checkbox>
+                  )}
                 </div>
               </div>
-            </form>
-          </div>
-        </Modal>
+            )}
+          </form>
+        </div>
+        <div className="formControlDiv" style={{ textAlign: "right" }}>
+          <Button
+            key="submit"
+            type="submit"
+            loading={loading}
+            onClick={this.createGoal}
+            className="redButton"
+            disabled={!this.validateForm()}
+          >
+            Create
+          </Button>
+        </div>
       </div>
     );
+  }
+
+
+  /**
+   * get header of form based of mode i.e. view, create or edit
+   */
+  getFormHeader() {
+    const { formValues } = this.state;
+    const { name } = this.props;
+    if (this.props.mode == "view") {
+      if (this.state.disabledForm) {//view mode disabled
+        return (
+          <span>
+            {name}           
+            <Tooltip title="Edit goal">
+              <i
+              className={"fa fa-edit blackBoldClickableIcon"}
+              style={{ marginLeft: "10px" }}
+              onClick={this.editForm}
+            />
+            </Tooltip>
+             
+          </span>
+        );
+      } else {//editable mode
+        return (
+          <span>
+            {name}
+            <Tooltip title="Cancel">
+            <i
+              className={"fa fa-times blackBoldClickableIcon"}
+              style={{ marginLeft: "10px",color:"#fd3a3a" }}
+              onClick={this.cancelChanges}
+            />
+            </Tooltip>
+            <Tooltip title="Done">
+            <i
+              className={"fa fa-check blackBoldClickableIcon"}
+              style={{ marginLeft: "10px", color:"#3aab0c" }}
+              onClick={this.editMode}
+            />
+            </Tooltip>
+          </span>
+        );
+      }
+    } else {//create mode
+      return (
+        <span>
+          <i className={"fa fa-info-circle"} style={{ marginRight: "10px" }} />
+          Fill out the form
+        </span>
+      );
+    }
   }
 }
 

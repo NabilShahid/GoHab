@@ -1,3 +1,4 @@
+@import "./constants/itemColors.css";
 body {
   margin: 0;
   padding: 0;
@@ -46,15 +47,7 @@ code {
   padding-top: 15px;
 }
 
-.sHeader{
-  color: #4c4c4c;
-  margin-top: 8px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #d6d6d6;
-  padding-bottom: 12px;
-  padding-left: 5px;
-  font-size: 14px;
-} 
+
 .formLogo{
   width: 27px;
   float: right;
@@ -95,5 +88,16 @@ code {
 }
 .formError{
   font-size: 12px;
-  color: #fd3a3a
+  color: #fd3a3a;
 }
+
+.blackBoldClickableIcon{
+  color: #4c4c4c;
+  font-weight: bold !important;
+  cursor: pointer;
+}
+
+.ant-tooltip-inner{
+  background-color: #fd3a3a !important;
+}
+.fa-pencil{content:"\f040"}
