@@ -1,8 +1,11 @@
 import React from "react";
 import { Avatar, Badge } from "antd";
+import moment from "moment";
 
 import "./goalcard.css";
-const GoalCard = () => {
+const GoalCard = ({name,description,dueDate,progress,asscTasks,asscHabbits}) => {
+  if(!dueDate)dueDate="No due date"
+  else dueDate=moment(dueDate).format("DD-MMM-YYYY")
   return (
     <div className="goalCard">
       <div className="row">
@@ -12,19 +15,18 @@ const GoalCard = () => {
           </Avatar>
         </div>
         <div className="col-md-10 goalTitle">
-          Goal name here<span className="goalDate">13-Feb-2018</span>
+          {name}<span className="goalDate">{dueDate}</span>
           <div className="goalSubtitle">            
-            Subtitle of the sofasd flasjkf alhs flkajsk ajsd flkajs dj faskd
-            lajsdflaksdj
+            {description}
           </div>
           <div className="goalProgress">
-            Progress<span className="progressNumber">100%</span>
+            Progress<span className="progressNumber">{progress}%</span>
             <div className="progress">
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: "25%" }}
-                aria-valuenow="40"
+                style={{ width: progress+"%" }}
+                aria-valuenow={progress}
                 aria-valuemin="0"
                 aria-valuemax="100"
               />

@@ -33,7 +33,7 @@ class CreateGoalForm extends React.Component {
       }
     },
     formValues: {
-      name: "dddd",
+      name: "",
       description: "",
       importance: 1,
       progress: 25,
@@ -58,23 +58,35 @@ class CreateGoalForm extends React.Component {
   /**
    * create goal in firestore using data provided on the form for current user
    */
-  createGoal = () => {
+  performGoalAction = () => {
     this.setState({ loading: true });
     const { formValues, noDueDate } = this.state;
     const formValuesToSave = { ...formValues };
     //get date as string for saving in firestore
     if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
     else formValuesToSave.dueDate = false;
-    //call to firebase goalOps addNewGoal method
-    this.props.firebase.goalOps
-      .addNewGoal("nabil110176@gmail.com", formValuesToSave)
-      .then(() => {
-        this.setState({ loading: false });
-        this.props.setFormVisibility("goal", false);
-      })
-      .catch(error => {
-        console.error("Error writing document: ", error);
-      });
+
+    if (this.props.mode == "add")
+      //call to firebase goalOps addNewGoal method
+      this.props.firebase.goalOps
+        .addNewGoal("nabil110176@gmail.com", formValuesToSave)
+        .then(() => {
+          this.setState({ loading: false });
+          this.props.setFormVisibility("goal", false);
+        })
+        .catch(error => {
+          console.error("Error writing document: ", error);
+        });
+    else
+      this.props.firebase.goalOps
+        .updateGoal("nabil110176@gmail.com", formValuesToSave, this.props.id)
+        .then(() => {
+          this.setState({ loading: false });
+          this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
+        })
+        .catch(error => {
+          console.error("Error writing document: ", error);
+        });
   };
 
   /**
@@ -84,7 +96,6 @@ class CreateGoalForm extends React.Component {
     const noDueDate = e.target.checked;
     this.setState({ noDueDate });
   };
-
 
   /**
    * validate each field on change using Joi schema
@@ -102,7 +113,8 @@ class CreateGoalForm extends React.Component {
       errors[name].message = error.details[0].message;
       this.setState({ errors, formValues });
       return false;
-    } else {//hide error messages
+    } else {
+      //hide error messages
       errors[name].error = false;
       errors[name].message = "";
       this.setState({ errors, formValues });
@@ -111,7 +123,7 @@ class CreateGoalForm extends React.Component {
   };
 
   /**
-   * set value of fields which do not require validation 
+   * set value of fields which do not require validation
    */
   setFormValueWithoutValidation = (name, value) => {
     const { formValues } = this.state;
@@ -143,7 +155,7 @@ class CreateGoalForm extends React.Component {
   }
 
   /**
-   * set values of form in case of existing goal for viewing and editing 
+   * set values of form in case of existing goal for viewing and editing
    */
   setInitFormValues() {
     const { name, description, importance, progress, dueDate } = this.props;
@@ -152,6 +164,10 @@ class CreateGoalForm extends React.Component {
     formValues.description = description && description;
     formValues.importance = importance && importance;
     formValues.progress = progress && progress;
+    //set errors to false
+    for (const key in this.state.errors) {
+      this.state.errors[key].error = false;
+    }
     if (dueDate) {
       formValues.dueDate = moment(dueDate).toDate();
       this.state.noDueDate = false;
@@ -205,7 +221,7 @@ class CreateGoalForm extends React.Component {
             {this.getFormHeader()}
             <img src={logo} className="formLogo" />
           </div>
-          <form onSubmit={this.createGoal}>
+          <form onSubmit={this.performGoalAction}>
             <div className="row formControlDiv">
               <div className="col-md-3">
                 <label className="formLabel">Name</label>
@@ -280,10 +296,6 @@ class CreateGoalForm extends React.Component {
                 <div className="iconWrapper">
                   {!disabledForm && (
                     <span>
-                      <i
-                        style={{ color: "#fd3a3a", fontSize: "18px" }}
-                        className="fa fa-times"
-                      />
                       <Slider
                         disabled={disabledForm}
                         onChange={value => {
@@ -361,21 +373,11 @@ class CreateGoalForm extends React.Component {
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>
-          <Button
-            key="submit"
-            type="submit"
-            loading={loading}
-            onClick={this.createGoal}
-            className="redButton"
-            disabled={!this.validateForm()}
-          >
-            Create
-          </Button>
+          {this.getActionButton(mode, disabledForm, loading)}
         </div>
       </div>
     );
   }
-
 
   /**
    * get header of form based of mode i.e. view, create or edit
@@ -384,47 +386,60 @@ class CreateGoalForm extends React.Component {
     const { formValues } = this.state;
     const { name } = this.props;
     if (this.props.mode == "view") {
-      if (this.state.disabledForm) {//view mode disabled
+      if (this.state.disabledForm) {
+        //view mode disabled
         return (
-          <span>
-            {name}           
-            <Tooltip title="Edit goal">
+          <span style={{ cursor: "pointer" }} onClick={this.editForm}>
+            <Tooltip title="Edit goal info">
+              
               <i
-              className={"fa fa-edit blackBoldClickableIcon"}
-              style={{ marginLeft: "10px" }}
-              onClick={this.editForm}
-            />
+                className={"fa fa-edit blackBoldClickableIcon"}
+                style={{ marginRight: "10px" }}
+                
+              />Edit
             </Tooltip>
-             
           </span>
         );
-      } else {//editable mode
+      } else {
+        //editable mode
         return (
-          <span>
-            {name}
+          <span style={{cursor:"pointer"}} onClick={this.cancelChanges}> 
+                       
             <Tooltip title="Cancel">
-            <i
-              className={"fa fa-times blackBoldClickableIcon"}
-              style={{ marginLeft: "10px",color:"#fd3a3a" }}
-              onClick={this.cancelChanges}
-            />
-            </Tooltip>
-            <Tooltip title="Done">
-            <i
-              className={"fa fa-check blackBoldClickableIcon"}
-              style={{ marginLeft: "10px", color:"#3aab0c" }}
-              onClick={this.editMode}
-            />
+              <i
+                className={"fa fa-times blackBoldClickableIcon"}
+                style={{ marginRight: "10px"}}
+                
+              />Cancel
             </Tooltip>
           </span>
         );
       }
-    } else {//create mode
+    } else {
+      //create mode
       return (
         <span>
           <i className={"fa fa-info-circle"} style={{ marginRight: "10px" }} />
           Fill out the form
         </span>
+      );
+    }
+  }
+
+  getActionButton(mode, disabledForm, loading) {
+    if (mode == "add" || (mode == "view" && !disabledForm)) {
+      return (
+        <Button
+          key="submit"
+          type="submit"
+          loading={loading}
+          onClick={this.performGoalAction}
+          className="redButton"
+          disabled={!this.validateForm()}
+        >
+          {mode == "view" && "Update"}
+          {mode == "add" && "Create"}
+        </Button>
       );
     }
   }

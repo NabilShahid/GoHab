@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import userReducer from "./reducers/userReducer";
+import goalReducer from "./reducers/goalReducer";
 
 export default createStore(  
-   userReducer
+  combineReducers({userReducer,goalReducer})   
  );

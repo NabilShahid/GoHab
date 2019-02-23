@@ -24,7 +24,7 @@ class Home extends Component {
       this.setState({ formOpen });
       setTimeout(()=>{
         this.setState({aFormInDom});
-      },500);
+      },250);
     }  
    
   };
@@ -85,14 +85,8 @@ class Home extends Component {
             }}
             footer=""
           >
-            {/* <CreateGoalForm /> */}
-            <CreateGoalForm
-            dueDate="2019-02-23T09:48:13.652Z"
-            name="Test Goal"
-            description="TestDescription"
-            importance="3.5"
-            progress="94"
-            mode="view"
+            <CreateGoalForm          
+            mode="add"
             setFormVisibility={this.setFormVisibility}
             />
           </Modal>

@@ -101,3 +101,22 @@ code {
   background-color: #fd3a3a !important;
 }
 .fa-pencil{content:"\f040"}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #fd3a3a !important;
+}
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: #fd3a3a !important;
+}
+.ant-tabs-ink-bar{
+  background-color: #fd3a3a !important;
+}
+.blackClickable{
+  cursor: pointer;
+  color: #4c4c4c;
+  font-weight: bold !important;
+  
+}
+.ant-tabs .ant-tabs-left-bar .ant-tabs-tab{
+  text-align: left !important;
+}
