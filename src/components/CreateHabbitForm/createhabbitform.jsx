@@ -11,16 +11,19 @@ import {
   Checkbox,
   Popconfirm,
   message,
-  Tooltip
+  Tooltip,
+  Radio,
+  InputNumber,
+  Select
 } from "antd";
 import { withFirebase } from "../../services/firebase";
-import { addGoal } from "../../actions/goalActions";
-import { connect } from "react-redux";
 import logo from "../../assets/images/logo_withoutText.png";
-import "./creategoalform.css";
+import { connect } from "react-redux";
+import "./createhabitform.css";
 import moment from "moment";
 const { TextArea } = Input;
-class CreateGoalForm extends React.Component {
+const Option = Select.Option;
+class CreateHabitForm extends React.Component {
   state = {
     loading: false,
     noDueDate: false,
@@ -38,10 +41,33 @@ class CreateGoalForm extends React.Component {
       name: "",
       description: "",
       importance: 1,
-      progress: 25,
-      dueDate: moment().toDate()
+      category: "Health",
+      dueDate: moment().toDate(),
+      parentGoal:"",
+      period:"Dialy",
+      frquency:1
+      
     },
-    disabledForm: false
+    disabledForm: false,
+    periods: {
+      Dialy: {
+        max: "10",
+        unit: "day"
+      },
+      Weekly: {
+        max: "70",
+        unit: "week"
+      },
+      Monthly: {
+        max: "500",
+        unit: "month"
+      },
+      Yearly: {
+        max: "1000",
+        unit: "year"
+      }
+    },
+    selectedPeriod: {}
   };
   dateFormat = "DD-MMM-YYYY";
 
@@ -58,9 +84,9 @@ class CreateGoalForm extends React.Component {
   };
 
   /**
-   * create goal in firestore using data provided on the form for current user
+   * create habit in firestore using data provided on the form for current user
    */
-  performGoalAction = () => {
+  performHabitAction = () => {
     this.setState({ loading: true });
     const { formValues, noDueDate } = this.state;
     const formValuesToSave = { ...formValues };
@@ -69,20 +95,19 @@ class CreateGoalForm extends React.Component {
     else formValuesToSave.dueDate = false;
 
     if (this.props.mode == "add")
-      //call to firebase goalOps addNewGoal method
-      this.props.firebase.goalOps
-        .addNewGoal("nabil110176@gmail.com", formValuesToSave)
-        .then((g) => {
+      //call to firebase habitOps addNewHabit method
+      this.props.firebase.habitOps
+        .addNewHabit("nabil110176@gmail.com", formValuesToSave)
+        .then(() => {
           this.setState({ loading: false });
-          this.props.addGoal({...formValuesToSave,id:g.id})
-          this.props.setFormVisibility("Goal", false);
+          this.props.setFormVisibility("Habit", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
     else
-      this.props.firebase.goalOps
-        .updateGoal("nabil110176@gmail.com", formValuesToSave, this.props.id)
+      this.props.firebase.habitOps
+        .updateHabit("nabil110176@gmail.com", formValuesToSave, this.props.id)
         .then(() => {
           this.setState({ loading: false });
           this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
@@ -151,6 +176,8 @@ class CreateGoalForm extends React.Component {
    * set form to readonly mode if open with view in mode prop
    */
   componentWillMount() {
+    //set default selected period
+    this.state.selectedPeriod = this.state.periods[this.state.formValues.period];
     if (this.props.mode == "view") {
       this.setInitFormValues();
       this.state.disabledForm = true;
@@ -158,7 +185,7 @@ class CreateGoalForm extends React.Component {
   }
 
   /**
-   * set values of form in case of existing goal for viewing and editing
+   * set values of form in case of existing habit for viewing and editing
    */
   setInitFormValues() {
     const { name, description, importance, progress, dueDate } = this.props;
@@ -178,14 +205,13 @@ class CreateGoalForm extends React.Component {
   }
 
   /**
-   * make form editable for updating goal info
+   * make form editable for updating habit info
    */
   editForm = () => {
     const disabledForm = false;
     this.setState({ disabledForm });
   };
 
- 
   /**
    * discard changes in edited form i.e. set to initial values
    */
@@ -206,6 +232,33 @@ class CreateGoalForm extends React.Component {
   }
 
   /**
+   * sets period unit to show in from of period text box
+   */
+  setPeriod = value => {
+    const selectedPeriod = this.state.periods[value];
+    const {formValues}=this.state;
+    formValues.period=value;
+    formValues.frquency=1;
+    this.setState({ selectedPeriod, formValues});
+  };
+  /**
+   * sets period frequency
+   */
+  setPeriodFrequency = value => {
+    const {formValues}=this.state;
+    formValues.frquency=value;
+    this.setState({formValues});
+  };
+  /**
+   * sets parent goal id
+   */
+  setParentGoal = value => {
+    const {formValues}=this.state;
+    formValues.parentGoal=value;
+    this.setState({formValues});
+  };
+
+  /**
    * set width of date picker based on mode of the form i.e. smaller if with checkbox for editble form
    */
   getDatePickerWidth() {
@@ -214,8 +267,16 @@ class CreateGoalForm extends React.Component {
   }
 
   render() {
-    const { loading, noDueDate, errors, disabledForm, formValues } = this.state;
-    const { mode } = this.props;
+    const {
+      loading,
+      noDueDate,
+      errors,
+      disabledForm,
+      formValues,
+      periods,
+      selectedPeriod
+    } = this.state;
+    const { mode, goals } = this.props;
     return (
       <div>
         <div className="ghtFormContainer">
@@ -223,7 +284,7 @@ class CreateGoalForm extends React.Component {
             {this.getFormHeader()}
             <img src={logo} className="formLogo" />
           </div>
-          <form onSubmit={this.performGoalAction}>
+          <form onSubmit={this.performHabitAction}>
             <div className="row formControlDiv">
               <div className="col-md-3">
                 <label className="formLabel">Name</label>
@@ -270,6 +331,127 @@ class CreateGoalForm extends React.Component {
 
             <div className="row formControlDiv">
               <div className="col-md-3">
+                <label className="formLabel">Category</label>
+              </div>
+              <div className="col-md-9">
+                <Radio.Group
+                  defaultValue={formValues.category}
+                  onChange={e => {
+                    this.state.formValues.category = e.target.value;
+                  }}
+                  buttonStyle="solid"
+                >
+                  <Radio.Button value="Health">
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Health
+                  </Radio.Button>
+                  <Radio.Button value="Personal Development">
+                    {" "}
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Personal Development
+                  </Radio.Button>
+                  <Radio.Button value="Social">
+                    {" "}
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Social
+                  </Radio.Button>
+                  <Radio.Button value="Relationship">
+                    {" "}
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Relationship
+                  </Radio.Button>
+                  <Radio.Button value="Routine Work">
+                    {" "}
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Routine Work
+                  </Radio.Button>
+                  <Radio.Button value="Other">
+                    {" "}
+                    <i
+                      className={"fa fa-edit"}
+                      style={{ marginRight: "6px" }}
+                    />
+                    Other
+                  </Radio.Button>
+                </Radio.Group>
+              </div>
+            </div>
+
+            <div className="row formControlDiv" style={{ marginTop: "10px" }}>
+              <div className="col-md-3">
+                <label className="formLabel">Parent Goal</label>
+              </div>
+              <div className="col-md-9">
+                <Select
+                  showSearch
+                  defaultValue="none"
+                  style={{ width: "100%" }}
+                  size="small"
+                  onChange={this.setParentGoal}
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.props.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  <Option value="none">None</Option>
+                  {goals.map(g => {
+                    return <Option value={g.id}>{g.name}</Option>;
+                  })}
+                </Select>
+              </div>
+            </div>
+
+            <div className="row formControlDiv">
+              <div className="col-md-3">
+                <label className="formLabel">Period</label>
+              </div>
+              <div className="col-md-4">
+                <Select
+                  defaultValue="Dialy"
+                  style={{ width: "100%" }}
+                  size="small"
+                  onChange={this.setPeriod}
+                >
+                  {Object.keys(periods).map(p => {
+                    return <Option value={p}>{p}</Option>;
+                  })}
+                </Select>
+              </div>
+              <div className="col-md-2">
+                <InputNumber
+                  disabled={disabledForm}
+                  size="small"
+                  name="periodNumber"
+                  value={formValues.frquency}
+                  min={1}
+                  max={selectedPeriod.max}
+                  // value={formValues.name}
+                  onChange={this.setPeriodFrequency}
+                  className="formControl"
+                />
+              </div>
+              <div className="col-md-3">times a {selectedPeriod.unit}</div>
+            </div>
+
+            <div className="row formControlDiv">
+              <div className="col-md-3">
                 <label className="formLabel">Importance</label>
               </div>
               <div className="col-md-9">
@@ -290,59 +472,10 @@ class CreateGoalForm extends React.Component {
               </div>
             </div>
 
-            <div className="row formControlDiv">
-              <div className="col-md-3">
-                <label className="formLabel">Current Progress</label>
-              </div>
-              <div className="col-md-9">
-                <div className="iconWrapper">
-                  {!disabledForm && (
-                    <span>
-                      <Slider
-                        disabled={disabledForm}
-                        onChange={value => {
-                          this.setFormValueWithoutValidation("progress", value);
-                        }}
-                        value={formValues.progress}
-                        min={0}
-                        max={99}
-                        style={{
-                          width: "80%",
-                          margin: "0% 6%",
-                          display: "inline-block"
-                        }}
-                      />
-                      <i
-                        style={{ color: "#fd3a3a", fontSize: "18px" }}
-                        className="fa fa-check"
-                      />
-                    </span>
-                  )}
-                  {disabledForm && (
-                    <div className="goalProgress">
-                      <div className="progress">
-                        <div
-                          className="progress-bar"
-                          role="progressbar"
-                          style={{ width: formValues.progress + "%" }}
-                          aria-valuenow={formValues.progress}
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <span className="progressNumber">
-                            {formValues.progress}%
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
             {this.shouldShowDueDate() && (
               <div className="row formControlDiv">
                 <div className="col-md-3">
-                  <label className="formLabel">Due Date</label>
+                  <label className="formLabel">Track Until</label>
                 </div>
                 <div className="col-md-9">
                   <DatePicker
@@ -366,7 +499,7 @@ class CreateGoalForm extends React.Component {
                       onChange={this.dueDateUpdate}
                       checked={noDueDate}
                     >
-                      No Due Date
+                      Keep tracking
                     </Checkbox>
                   )}
                 </div>
@@ -392,27 +525,25 @@ class CreateGoalForm extends React.Component {
         //view mode disabled
         return (
           <span style={{ cursor: "pointer" }} onClick={this.editForm}>
-            <Tooltip title="Edit goal info">
-              
+            <Tooltip title="Edit Habit info">
               <i
                 className={"fa fa-edit blackBoldClickableIcon"}
                 style={{ marginRight: "10px" }}
-                
-              />Edit
+              />
+              Edit
             </Tooltip>
           </span>
         );
       } else {
         //editable mode
         return (
-          <span style={{cursor:"pointer"}} onClick={this.cancelChanges}> 
-                       
+          <span style={{ cursor: "pointer" }} onClick={this.cancelChanges}>
             <Tooltip title="Cancel">
               <i
                 className={"fa fa-times blackBoldClickableIcon"}
-                style={{ marginRight: "10px"}}
-                
-              />Cancel
+                style={{ marginRight: "10px" }}
+              />
+              Cancel
             </Tooltip>
           </span>
         );
@@ -435,7 +566,7 @@ class CreateGoalForm extends React.Component {
           key="submit"
           type="submit"
           loading={loading}
-          onClick={this.performGoalAction}
+          onClick={this.performHabitAction}
           className="redButton"
           disabled={!this.validateForm()}
         >
@@ -447,20 +578,13 @@ class CreateGoalForm extends React.Component {
   }
 }
 
-
-/**
- * dispatch to props mapping form updating user
- */
-const mapDispatchToProps = dispatch => {
-  return {   
-    addGoal: goalPayload => {
-      dispatch(addGoal(goalPayload));
-    }
+const mapStateToProps = state => {
+  return {
+    goals: state.goalReducer.Goals
   };
 };
 
 export default connect(
-  null,
-  mapDispatchToProps
-)(withFirebase(CreateGoalForm));
- 
+  mapStateToProps,
+  null
+)(withFirebase(CreateHabitForm));
