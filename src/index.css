@@ -181,7 +181,14 @@ code {
   background-color: #fd3a3a !important;
   color: white !important;
 }
-
+.ant-badge-count {
+  height: 16px !important;
+  min-width: unset!important;
+  line-height: 14px!important;
+  padding: 0 7px!important;
+  box-shadow: unset!important;
+  padding-right: 7px!important;
+}
 .cardAvatar{
   color: white;
   text-align: center;
@@ -190,6 +197,6 @@ code {
   font-size: 18px;
   padding-bottom: 6px;
   padding-top: 3px;
-  border-radius: 1px;
+  border-radius: 2px;
   font-weight: 500;
 }

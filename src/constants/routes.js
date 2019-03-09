@@ -1,9 +1,7 @@
-export const LANDING='/';
-export const SIGNIN='/signin';
-export const MAIN='/main';
-export const HOME='/home';
-export const SIGNUP='/signup';
-export const PASSWORD_FORGET='/resetpassword';
-export const TASKS='/tasks';
-export const GOALS='/goals';
-
+import PAGEKEYS from "./pageKeys";
+const ROUTES = {};
+ROUTES[PAGEKEYS["MAIN"]] = "/main";
+ROUTES[PAGEKEYS["SIGNIN"]] = "/signin";
+ROUTES[PAGEKEYS["HOME"]] = "/home";
+ROUTES[PAGEKEYS["GOALS"]] = "/goals";
+export default ROUTES;

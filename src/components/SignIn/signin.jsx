@@ -3,9 +3,10 @@ import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { SignUpLink } from "../SignUp/signup";
 import { withFirebase } from "../../services/firebase";
-import * as ROUTES from "../../constants/routes";
+import ROUTES from "../../constants/routes";
 import { PasswordForgetLink } from "../PasswordForget/passwordforget";
 import { Card, Row, Col } from "antd";
+import PAGEKEYS from "../../constants/pageKeys";
 import { Button } from "antd";
 import "./signin.css";
 
@@ -42,7 +43,7 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.MAIN);
+        this.props.history.push(ROUTES[PAGEKEYS["MAIN"]]);
       })
       .catch(error => {
         this.setState({ error });

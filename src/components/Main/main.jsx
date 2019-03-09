@@ -15,8 +15,8 @@ import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
 import Goals from "../Goals/goals";
 import history from "../../services/history";
-import * as ROUTES from "../../constants/routes";
-import MENUOPTIONS from "../../constants/menuOptions";
+import ROUTES from "../../constants/routes";
+import PAGEKEYS from "../../constants/pageKeys";
 import "./main.css";
 import "font-awesome/css/font-awesome.min.css";
 
@@ -32,14 +32,14 @@ class MainBase extends Component {
           </Col>
 
           <Col span={19} id="headerContainer">
-            <Header heading="Home" icon="fa fa-home" />
+            <Header/>
             <div id="contentContainer">
              {/* Second level routes */}
               <Router history={history}>
                 <Switch>
-                  <Route path={ROUTES.HOME} component={Home} />
-                  <Route path={ROUTES.TASKS} component={Tasks} />
-                  <Route path={ROUTES.GOALS} component={Goals} />
+                  <Route path={ROUTES[PAGEKEYS["HOME"]]} component={Home} />
+                  {/* <Route path={ROUTES[PAGEKEYS[TASKS]]} component={Tasks} /> */}
+                  <Route path={ROUTES[PAGEKEYS["GOALS"]]} component={Goals} />
                 </Switch>
               </Router>
             </div>
@@ -59,7 +59,6 @@ class MainBase extends Component {
       const allGoals = querySnapshot.docs.map(function(doc) {
         return { ...doc.data(), id: doc.id };
       });
-      var s = this.props;
       this.props.updateGoals(allGoals);
     })
     .catch(error => {

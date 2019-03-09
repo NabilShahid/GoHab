@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as ROUTES from "../../constants/routes";
+import ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
 import Main from "../Main/main";
 import SignUpPage from "../SignUp/signup";
@@ -12,6 +12,7 @@ import Header from "../Header/header";
 import { updateUser } from "../../actions/userActions.js";
 import { connect } from "react-redux";
 import history from "../../services/history";
+import PAGEKEYS from "../../constants/pageKeys";
 
 import "./app.css";
 class App extends Component {
@@ -29,10 +30,10 @@ class App extends Component {
         <div>
           {/* All first level routes */}
           <Switch>
-          <Route exact path="/" render={() => <Redirect to={ROUTES.MAIN} />} />
-          <Route exact path={ROUTES.MAIN} component={Main} />
-          <Route path={ROUTES.SIGNIN} component={SignInPage} />
-          <Route path={ROUTES.SIGNUP} component={SignUpPage} />
+          <Route exact path="/" render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />} />
+          <Route exact path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} />
+          <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInPage} />
+          {/* <Route path={ROUTES.SIGNUP} component={SignUpPage} /> */}
           <Route component={Main} />
           </Switch>
         </div>

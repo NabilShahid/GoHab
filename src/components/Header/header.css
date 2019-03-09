@@ -11,4 +11,24 @@
   font-weight: bold;
   padding-right: 3%;
 }
-/* linear-gradient(160deg, #333333 0%, #1f1e1e 100%) */
+#bellIcon{
+  font-size: 25px;
+  cursor: pointer;
+   
+ }
+ #headerOptions{
+  padding-top: 11px;
+  text-align: right;
+ }
+
+ #headerOptions input{
+  background-color: #656565;
+  color: white;
+  width: 80%;
+  border: unset;
+ }
+ #headerOptions input:focus{
+ 
+  width: 100%;
+  
+ }
