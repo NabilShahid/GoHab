@@ -1,4 +1,4 @@
-@import "./constants/itemColors.css";
+@import "./constants/styleVars.css";
 body {
   margin: 0;
   padding: 0;
@@ -16,7 +16,7 @@ code {
 }
 #root{
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .ant-modal-content{
   border-radius: 6px !important;
@@ -119,4 +119,77 @@ code {
 }
 .ant-tabs .ant-tabs-left-bar .ant-tabs-tab{
   text-align: left !important;
+}
+
+.ghtFormContainer .ant-input-disabled{
+  background-color: #ffffff;
+  opacity: 1;
+  cursor: not-allowed;
+  color: #4c4c4c;
+  border: unset !important;
+}
+.ghtFormContainer .ant-input{
+  border:unset;
+  border-bottom: 1px solid #d0d0d0;
+}
+.ghtFormContainer .progress-bar{
+  background-color: #fd3a3a;
+}
+
+.ghtFormContainer .progressNumber{
+  font-size: 11px;
+}
+
+.ghtFormContainer .goalProgress{
+  margin-top: 0.6%;
+}
+
+.ghtFormContainer .progress{
+  height: 0.9rem;
+}
+.sHeader{
+  color: #4c4c4c;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #d6d6d6;
+  padding-bottom: 12px;
+  padding-left: 5px;
+  font-size: 15px;
+  font-weight: 500;
+} 
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background: #fd3a3a !important;
+  border-color: #fd3a3a !important;
+}
+
+.ant-radio-button-wrapper:hover {
+  color: white !important;
+  background-color: #4c4c4c;
+}
+.ant-radio-button-wrapper-checked:active {
+  border-color: #fd3a3a !important;
+  box-shadow: unset !important;
+}
+.ant-radio-button-wrapper-checked {
+   
+  box-shadow: unset !important;
+   
+}
+
+.ant-select-dropdown-menu-item-active {
+  background-color: #fd3a3a !important;
+  color: white !important;
+}
+
+.cardAvatar{
+  color: white;
+  text-align: center;
+  width: 43px;
+  margin-top: -20px;
+  font-size: 18px;
+  padding-bottom: 6px;
+  padding-top: 3px;
+  border-radius: 1px;
+  font-weight: 500;
 }

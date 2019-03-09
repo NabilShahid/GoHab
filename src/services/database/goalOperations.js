@@ -6,8 +6,7 @@ export default class GoalOperations {
   addNewGoal(useremail, goalObj) {
     return this.fDatabase
       .collection(`UsersInfo/${useremail}/Goals`)
-      .doc()
-      .set(goalObj);
+      .add(goalObj);
   }
   updateGoal(useremail,goalObj,goalId){
     return this.fDatabase

@@ -11,6 +11,13 @@ const goalReducer = (
       state = newState;
       break;
     }
+    case "ADD_GOAL":{
+      let newState={...state};
+      newState.Goals.push(action.payload);
+      state = newState;
+      break;
+    }
+
     case "UPDATE_GOAL": {
       let newState = { ...state };
       newState.Goals = newState.Goals.map(g => {

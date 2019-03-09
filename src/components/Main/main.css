@@ -14,8 +14,9 @@
     margin-right: 2%; 
     border-radius: 5px;
     color: #4c4c4c;
-    min-height: 90vh;
+    height: 90vh;
     padding: 1.5%;
-    margin-top: 6%;
+    margin-top: 65px;
     background-color: white;
+    overflow-y: auto;
 }

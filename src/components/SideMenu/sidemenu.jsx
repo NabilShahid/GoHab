@@ -27,9 +27,9 @@ class SideMenu extends Component {
           <i id="sGoalsI" className="fa fa-home sideIcon"></i>
           Goals
         </Menu.Item>
-        <Menu.Item key="habbits" theme="filled">
-          <i id="sHabbitsI" className="fa fa-home sideIcon"></i>
-          Habbits
+        <Menu.Item key="habits" theme="filled">
+          <i id="sHabitsI" className="fa fa-home sideIcon"></i>
+          Habits
         </Menu.Item>
         <Menu.Item key={ROUTES.TASKS} theme="filled">
           <i id="sTasksI" className="fa fa-home sideIcon"></i>
@@ -39,13 +39,13 @@ class SideMenu extends Component {
           <i className="fa fa-home sideIcon"></i>
           Goal Tree
         </Menu.Item>
-        <Menu.Item key="habbitCalendar">
+        <Menu.Item key="habitCalendar">
           <i className="fa fa-home sideIcon"></i>
-          Habbit Calendar
+          Habit Calendar
         </Menu.Item>
-        <Menu.Item key="habbitStats">
+        <Menu.Item key="habitStats">
           <i className="fa fa-home sideIcon"></i>
-          Habbit Stats
+          Habit Stats
         </Menu.Item>
         <Menu.Item key="taskStats">
           <i className="fa fa-home sideIcon"></i>
@@ -55,9 +55,9 @@ class SideMenu extends Component {
           <i className="fa fa-home sideIcon"></i>
           Goal Progress
         </Menu.Item>
-        <Menu.Item key="habbitTracking">
+        <Menu.Item key="habitTracking">
           <i className="fa fa-home sideIcon"></i>
-          Habbit Tracking
+          Habit Tracking
         </Menu.Item>
         <Menu.Item key="taskManaging">
           <i className="fa fa-home sideIcon"></i>

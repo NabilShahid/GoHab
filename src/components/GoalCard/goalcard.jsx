@@ -3,16 +3,16 @@ import { Avatar, Badge } from "antd";
 import moment from "moment";
 
 import "./goalcard.css";
-const GoalCard = ({name,description,dueDate,progress,asscTasks,asscHabbits}) => {
+const GoalCard = ({name,description,dueDate,progress,asscTasks,asscHabits}) => {
   if(!dueDate)dueDate="No due date"
   else dueDate=moment(dueDate).format("DD-MMM-YYYY")
   return (
     <div className="goalCard">
       <div className="row">
         <div className="col-md-2">
-          <Avatar shape="circle" style={{ background: "var(--goal-color)" }}>
-            G
-          </Avatar>
+          <div className="cardAvatar" style={{ background: "var(--goal-color)", boxShadow:"var(--goal-shadow)" }}>
+            {name[0].toUpperCase()||""}
+          </div>
         </div>
         <div className="col-md-10 goalTitle">
           {name}<span className="goalDate">{dueDate}</span>
@@ -42,7 +42,7 @@ const GoalCard = ({name,description,dueDate,progress,asscTasks,asscHabbits}) => 
                   2
                 </div>
                
-               Associated Habbits
+               Associated Habits
 
                 
               </div>

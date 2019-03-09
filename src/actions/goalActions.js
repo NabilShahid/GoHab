@@ -10,9 +10,9 @@ export function updateGoal(goalPayload) {
         payload: goalPayload
     };
 }
-export function resetCounters() {
+export function addGoal(goalPayload) {
     return {
-        type: "RESET_COUNTERS",
-        payload: {}
+        type: "ADD_GOAL",
+        payload: goalPayload
     };
 }

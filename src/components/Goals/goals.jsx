@@ -28,7 +28,7 @@ class Goals extends Component {
           <Modal
             visible={goalDialogVisible}
             width="58%"
-            title="Create Goal"
+            title={currentGoalOptions.name}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
@@ -41,10 +41,10 @@ class Goals extends Component {
               <TabPane tab="Goal Info" key="1">
                 <div className="gTabContent">{this.currentGoalDialog()}</div>
               </TabPane>
-              <TabPane tab="Sub Tasks" key="2">
+              <TabPane tab="Sub Habits" key="2">
                 <div className="gTabContent" />
               </TabPane>
-              <TabPane tab="Sub Habbit" key="3">
+              <TabPane tab="Sub Tasks" key="3">
                 <div className="gTabContent" />
               </TabPane>
             </Tabs>
@@ -104,7 +104,7 @@ class Goals extends Component {
         }
 
         goalRows.push(
-          <div className="row" key={i}>
+          <div className="row" style={{marginTop:"15px"}} key={i}>
             {this.getRowCols(goalRowArray, i)}
           </div>
         );
@@ -131,27 +131,13 @@ class Goals extends Component {
             dueDate={r.dueDate}
             progress={r.progress}
             asscTasks="3"
-            asscHabbits="5"
+            asscHabits="5"
           />
         </div>
       );
     });
   }
 
-  componentDidMount() {
-    this.props.firebase.goalOps
-      .retrieveAllGoals("nabil110176@gmail.com")
-      .then(querySnapshot => {
-        const allGoals = querySnapshot.docs.map(function(doc) {
-          return { ...doc.data(), id: doc.id };
-        });
-        var s = this.props;
-        this.props.updateGoals(allGoals);
-      })
-      .catch(error => {
-        console.log("firebase error: ", error);
-      });
-  }
 }
 
 const mapStateToProps = state => {
@@ -164,10 +150,7 @@ const mapStateToProps = state => {
  * dispatch to props mapping form updating user
  */
 const mapDispatchToProps = dispatch => {
-  return {
-    updateGoals: goalsPayload => {
-      dispatch(updateGoals(goalsPayload));
-    },
+  return {   
     updateGoal: goalPayload => {
       dispatch(updateGoal(goalPayload));
     }

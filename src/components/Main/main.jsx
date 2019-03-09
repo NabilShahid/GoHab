@@ -8,6 +8,7 @@ import SignOutButton from "../SignOut/signoutbutton";
 import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
+import { updateGoals } from "../../actions/goalActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -52,7 +53,18 @@ class MainBase extends Component {
    * set initial route to home to show home tab by default
    */
   componentDidMount() {
-    history.push(ROUTES.HOME);
+    this.props.firebase.goalOps
+    .retrieveAllGoals("nabil110176@gmail.com")
+    .then(querySnapshot => {
+      const allGoals = querySnapshot.docs.map(function(doc) {
+        return { ...doc.data(), id: doc.id };
+      });
+      var s = this.props;
+      this.props.updateGoals(allGoals);
+    })
+    .catch(error => {
+      console.log("firebase error: ", error);
+    });
   }
 }
 
@@ -65,6 +77,18 @@ const mapStateToProps = state => {
   };
 };
 
+
+/*
+* dispatch to props mapping form updating user
+*/
+const mapDispatchToProps = dispatch => {
+ return {
+   updateGoals: goalsPayload => {
+     dispatch(updateGoals(goalsPayload));
+   }
+ };
+};
+
 /**
  * compose router and firebase for accessing history and firebase via props
  */
@@ -75,5 +99,5 @@ const Main = compose(
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Main);
