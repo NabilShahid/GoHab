@@ -11,8 +11,8 @@
 .goalCard:hover{
     transition: 0.2s;
     transform: scale(1.04);
-    background-color: #ffc16d;
-    color: white;
+    background-color: #f1f1f1;
+     
 }
 .goalSubtitle{
     font-weight: normal;

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import { withFirebase } from "../../services/firebase/context";
-import { updateGoals, updateGoal } from "../../actions/goalActions";
+import {  updateGoal } from "../../actions/goalActions";
 import { connect } from "react-redux";
 import { Modal, Tabs } from "antd";
 import "./goals.css";

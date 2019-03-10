@@ -8,7 +8,7 @@ import SignOutButton from "../SignOut/signoutbutton";
 import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
-import { updateGoals } from "../../actions/goalActions";
+import { insertGoals } from "../../actions/goalActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -59,7 +59,7 @@ class MainBase extends Component {
       const allGoals = querySnapshot.docs.map(function(doc) {
         return { ...doc.data(), id: doc.id };
       });
-      this.props.updateGoals(allGoals);
+      this.props.insertGoals(allGoals);
     })
     .catch(error => {
       console.log("firebase error: ", error);
@@ -82,8 +82,8 @@ const mapStateToProps = state => {
 */
 const mapDispatchToProps = dispatch => {
  return {
-   updateGoals: goalsPayload => {
-     dispatch(updateGoals(goalsPayload));
+   insertGoals: goalsPayload => {
+     dispatch(insertGoals(goalsPayload));
    }
  };
 };

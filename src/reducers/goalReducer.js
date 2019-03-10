@@ -5,7 +5,7 @@ const goalReducer = (
   action
 ) => {
   switch (action.type) {
-    case "UPDATE_GOALS": {
+    case "INSERT_GOALS": {
       let newState = { ...state };
       newState.Goals = action.payload;
       state = newState;

@@ -1,6 +1,6 @@
-export function updateGoals(goalsPayload) {
+export function insertGoals(goalsPayload) {
     return {
-        type: "UPDATE_GOALS",
+        type: "INSERT_GOALS",
         payload: goalsPayload
     };
 }

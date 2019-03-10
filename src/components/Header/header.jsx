@@ -19,11 +19,12 @@ class Header extends Component {
             {this.props.title}
           </Col>
           <Col id="headerOptions" span={11}>
-            <Search
+            {this.props.search&&<Search
               placeholder="Search"
               onSearch={value => console.log(value)}
               style={{ width: 200 }}
-            />
+            />}
+            
           </Col>
           <Col style={{ textAlign: "right", paddingTop: "14px" }} span={1}>
             <Badge count={12} showZero>
