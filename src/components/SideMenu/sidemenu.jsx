@@ -4,6 +4,7 @@ import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { updateHeader } from "../../actions/headerActions";
+import { removeGoalFilter } from "../../actions/goalActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
 import HEADEROPTIONS from "../../constants/headerOptions";
@@ -83,6 +84,7 @@ class SideMenu extends Component {
   moveToPath = ({ key }) => {
     history.push(ROUTES[key]);
     this.props.updateHeader(HEADEROPTIONS[key]);
+    key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
   };
 }
 
@@ -93,6 +95,9 @@ const mapDispatchToProps = dispatch => {
   return {
     updateHeader: headerPayload => {
       dispatch(updateHeader(headerPayload));
+    },
+    removeGoalFilter:()=>{
+      dispatch(removeGoalFilter())
     }
   };
 };

@@ -16,3 +16,14 @@ export function addGoal(goalPayload) {
         payload: goalPayload
     };
 }
+export function filterGoals(filterPayload) {
+    return {
+        type: "FILTER_GOALS",
+        payload: filterPayload
+    };
+}
+export function removeGoalFilter() {
+    return {
+        type: "REMOVE_GOAL_FILTER"
+    };
+}

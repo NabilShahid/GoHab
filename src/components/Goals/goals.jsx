@@ -142,7 +142,7 @@ class Goals extends Component {
 
 const mapStateToProps = state => {
   return {
-    goals: state.goalReducer.Goals
+    goals: state.goalReducer.FilteredGoals
   };
 };
 

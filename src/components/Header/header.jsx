@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {filterGoals} from "../../actions/goalActions";
 import "./header.css";
 import logo from "../../assets/images/logo_withoutText.png";
+import PAGEKEYS from "../../constants/pageKeys";
+import HEADEROPTIONS from "../../constants/headerOptions";
 import { Row, Col, Badge, Drawer, Input } from "antd";
 const Search = Input.Search;
 class Header extends Component {
   state = {
     notificationsVisible: false
   };
+
+  searchValues(value){
+    switch(this.props.title)
+    {
+      case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title:{
+        this.props.filterGoals(value);
+      }
+    }
+  }
 
   render() {
     return (
@@ -21,7 +33,7 @@ class Header extends Component {
           <Col id="headerOptions" span={11}>
             {this.props.search&&<Search
               placeholder="Search"
-              onSearch={value => console.log(value)}
+              onChange={e => {this.searchValues(e.target.value)}}
               style={{ width: 200 }}
             />}
             
@@ -58,7 +70,7 @@ class Header extends Component {
 }
 
 /**
- * state to props mapping for dislaying user from userReducer
+ * state to props mapping
  */
 const mapStateToProps = state => {
   return {
@@ -69,17 +81,17 @@ const mapStateToProps = state => {
 };
 
 /**
- * dispatch to props mapping form updating user
+ * dispatch to props mapping
  */
 const mapDispatchToProps = dispatch => {
-  return {   
-    updateGoal: goalPayload => {
-      "dispatch(updateGoal(goalPayload));"
+  return {
+    filterGoals: filterPayload=>{
+      dispatch(filterGoals(filterPayload))
     }
   };
 };
  
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Header);

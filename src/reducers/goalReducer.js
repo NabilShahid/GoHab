@@ -1,6 +1,7 @@
 const goalReducer = (
   state = {
-    Goals: []
+    Goals: [],
+    FilteredGoals:[]
   },
   action
 ) => {
@@ -8,6 +9,7 @@ const goalReducer = (
     case "INSERT_GOALS": {
       let newState = { ...state };
       newState.Goals = action.payload;
+      newState.FilteredGoals=action.payload;
       state = newState;
       break;
     }
@@ -27,6 +29,21 @@ const goalReducer = (
       });
       state = newState;
       break;
+    }
+
+    case "FILTER_GOALS":{
+      let newState = { ...state };
+      newState.FilteredGoals=newState.Goals.filter(v=>{
+        return (v.name.toLowerCase()+"\t"+v.description.toLowerCase()).indexOf(action.payload)>-1
+      });
+      state=newState;
+      break;
+    }
+
+    case "REMOVE_GOAL_FILTER":{
+      let newState = { ...state };
+      newState.FilteredGoals=newState.Goals;
+      state=newState;
     }
   }
   return state;
