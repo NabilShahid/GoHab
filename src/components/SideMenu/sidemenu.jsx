@@ -38,7 +38,7 @@ class SideMenu extends Component {
           <i id="sGoalsI" className="fa fa-home sideIcon" />
           Goals
         </Menu.Item>
-        <Menu.Item key="habits" theme="filled">
+        <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
           <i id="sHabitsI" className="fa fa-home sideIcon" />
           Habits
         </Menu.Item>

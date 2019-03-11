@@ -14,6 +14,7 @@ import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
 import Goals from "../Goals/goals";
+import Habits from "../Habits/habits";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -38,7 +39,7 @@ class MainBase extends Component {
               <Router history={history}>
                 <Switch>
                   <Route path={ROUTES[PAGEKEYS["HOME"]]} component={Home} />
-                  {/* <Route path={ROUTES[PAGEKEYS[TASKS]]} component={Tasks} /> */}
+                  <Route path={ROUTES[PAGEKEYS["HABITS"]]} component={Habits} />
                   <Route path={ROUTES[PAGEKEYS["GOALS"]]} component={Goals} />
                 </Switch>
               </Router>

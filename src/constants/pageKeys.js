@@ -2,7 +2,8 @@
     HOME:"HOME",
     GOALS:"GOALS",
     SINGIN:"SINGIN",
-    MAIN:"MAIN"
+    MAIN:"MAIN",
+    HABITS:"HABITS"
 
 }
 export default PAGEKEYS;
