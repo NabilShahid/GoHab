@@ -197,3 +197,13 @@ code {
   border-radius: 2px;
   font-weight: 500;
 }
+.miniLabel{
+  font-size: 11px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.orderIcon{
+  font-size: 16px;
+  cursor: pointer;
+}

@@ -2,27 +2,60 @@ import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import { withFirebase } from "../../services/firebase/context";
-import {  updateGoal } from "../../actions/goalActions";
+import { updateGoal, sortGoals } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import { Modal, Tabs } from "antd";
+import { Modal, Tabs, Radio, Row, Col, Icon } from "antd";
 import "./goals.css";
+import { Select } from "antd";
 
+const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 
 class Goals extends Component {
   state = {
     goalDialogInDom: false,
     goalDialogVisible: false,
-    currentGoalOptions: {}
+    currentGoalOptions: {},
+    order: "asc"
   };
+  changeOrder(){
+    let {order}=this.state;
+    if(order=="asc")order="desc"
+    else order="asc"
+    this.props.sortGoals({});
+    this.setState({order});
+  }
   render() {
     const {
       goalDialogInDom,
       goalDialogVisible,
-      currentGoalOptions
+      currentGoalOptions,
+      order
     } = this.state;
     return (
       <div id="goalCardsDiv">
+        <div className="goalCardsViewSelector">
+          <Row />
+          <Row>
+            <Col span={11} />
+
+            <Col span={12} style={{ textAlign: "right" }}>
+              <span className="miniLabel">Order By:</span>
+              <Select size="small" defaultValue="lucy">
+                <Option value="jack">Due Date</Option>
+                <Option value="lucy">Progress</Option>
+                <Option value="disabled">Importance</Option>
+                <Option value="Yiminghe">Alphabetical</Option>
+              </Select>
+            </Col>
+            <Col span={1} style={{ textAlign: "center" }}>
+              <div onClick={()=>{this.changeOrder()}} className="orderIcon">
+                {order == "asc" && <i className="fa fa-sort-up" />}
+                {order == "desc" && <i className="fa fa-sort-down" />}
+              </div>
+            </Col>
+          </Row>
+        </div>
         {this.getGoalRows(this.props.goals, 3)}
         {goalDialogInDom && (
           <Modal
@@ -104,7 +137,7 @@ class Goals extends Component {
         }
 
         goalRows.push(
-          <div className="row" style={{marginTop:"15px"}} key={i}>
+          <div className="row" style={{ marginTop: "15px" }} key={i}>
             {this.getRowCols(goalRowArray, i)}
           </div>
         );
@@ -137,7 +170,6 @@ class Goals extends Component {
       );
     });
   }
-
 }
 
 const mapStateToProps = state => {
@@ -150,10 +182,13 @@ const mapStateToProps = state => {
  * dispatch to props mapping form updating user
  */
 const mapDispatchToProps = dispatch => {
-  return {   
+  return {
     updateGoal: goalPayload => {
       dispatch(updateGoal(goalPayload));
-    }
+    },
+    sortGoals: sortPayload => {
+      dispatch(sortGoals(sortPayload));
+    },
   };
 };
 

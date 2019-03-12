@@ -39,6 +39,16 @@ const goalReducer = (
       state=newState;
       break;
     }
+    case "SORT_GOALS":{
+      let newState = { ...state };
+      newState.FilteredGoals=newState.FilteredGoals.sort((a,b)=>{
+        if(a.name.toLowerCase()<b.name.toLowerCase())return -1;
+        else if(a.name.toLowerCase()>b.name.toLowerCase())return 1;
+        return 0;
+      });
+      state=newState;
+      break;
+    }
 
     case "REMOVE_GOAL_FILTER":{
       let newState = { ...state };
