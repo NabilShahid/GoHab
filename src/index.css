@@ -206,4 +206,9 @@ code {
 .orderIcon{
   font-size: 16px;
   cursor: pointer;
+  color: #4c4c4c;
+  /* background-color: #fd3a3a; */
+  margin: 0px 9px;
+  border-radius: 3px;
+ border: 1px solid #e2e2e2;
 }

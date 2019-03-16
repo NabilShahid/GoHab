@@ -16,21 +16,31 @@ class Goals extends Component {
     goalDialogInDom: false,
     goalDialogVisible: false,
     currentGoalOptions: {},
-    order: "asc"
+    order: "asc",
+    orderBy:"dueDate"
   };
   changeOrder(){
-    let {order}=this.state;
+    let {order,orderBy}=this.state;
     if(order=="asc")order="desc"
     else order="asc"
-    this.props.sortGoals({});
+    this.props.sortGoals({order,orderBy});
     this.setState({order});
+  }
+  changeOrderBy(v){
+    const orderBy=v;
+    this.props.sortGoals({order:this.state.order,orderBy});
+    this.setState({orderBy});
+  }
+  componentDidMount(){
+    this.changeOrder(this.state.orderBy);
   }
   render() {
     const {
       goalDialogInDom,
       goalDialogVisible,
       currentGoalOptions,
-      order
+      order,
+      orderBy
     } = this.state;
     return (
       <div id="goalCardsDiv">
@@ -41,11 +51,11 @@ class Goals extends Component {
 
             <Col span={12} style={{ textAlign: "right" }}>
               <span className="miniLabel">Order By:</span>
-              <Select size="small" defaultValue="lucy">
-                <Option value="jack">Due Date</Option>
-                <Option value="lucy">Progress</Option>
-                <Option value="disabled">Importance</Option>
-                <Option value="Yiminghe">Alphabetical</Option>
+              <Select onChange={(e)=>this.changeOrderBy(e)} style={{width:"120px"}} size="small" defaultValue={orderBy}>
+                <Option value="dueDate">Due Date</Option>
+                <Option value="progress">Progress</Option>
+                <Option value="importance">Importance</Option>
+                <Option value="alphabetical">Alphabetical</Option>
               </Select>
             </Col>
             <Col span={1} style={{ textAlign: "center" }}>
