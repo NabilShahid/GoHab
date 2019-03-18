@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CreateCard from "../CreateCard/createcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import CreateHabitForm from "../CreateHabitForm/createhabitform";
+import CreateTaskForm from "../CreateTaskForm/createtaskform";
 
 import { Modal } from "antd";
 class Home extends Component {
@@ -12,7 +13,7 @@ class Home extends Component {
       Habit: false,
       Task: false
     },
-    createDialogTitle:""
+    createDialogTitle: ""
   };
 
   /**
@@ -21,8 +22,9 @@ class Home extends Component {
   setFormVisibility = (form, visibility) => {
     const formInDom = { ...this.state.formInDom };
     const anyFormOpen = (formInDom[form] = visibility);
-    const createDialogTitle=form;
-    if (anyFormOpen) this.setState({ anyFormOpen, formInDom ,createDialogTitle});
+    const createDialogTitle = form;
+    if (anyFormOpen)
+      this.setState({ anyFormOpen, formInDom, createDialogTitle });
     else {
       //remove form from dom when not needed timeout to show animation correctly
       this.setState({ anyFormOpen });
@@ -59,23 +61,28 @@ class Home extends Component {
               icon="fa fa-check"
             />
           </div>
-          <div className="col-md-4" onClick={() => {
+          <div
+            className="col-md-4"
+            onClick={() => {
               this.setFormVisibility("Habit", true);
-            }}>
+            }}
+          >
             <CreateCard
               ccTitle="Create Habit"
               ccSubTitle="Create a new goal and assing value to it"
               background="linear-gradient(60deg, #26c6da, #00acc1)"
-              boxShadow="var(--habit-shadow)"              
+              boxShadow="var(--habit-shadow)"
               icon="fa fa-check"
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4" onClick={() => {
+              this.setFormVisibility("Task", true);
+            }}>
             <CreateCard
               ccTitle="Create Task"
               ccSubTitle="Create a new goal and assing value to it"
               background="linear-gradient(60deg, #66bb6a, #43a047)"
-              boxShadow="var(--task-shadow)"              
+              boxShadow="var(--task-shadow)"
               icon="fa fa-check"
             />
           </div>
@@ -84,7 +91,7 @@ class Home extends Component {
         <Modal
           visible={anyFormOpen}
           width="53%"
-          title={"Create "+createDialogTitle}
+          title={"Create " + createDialogTitle}
           centered
           bodyStyle={{ overflowY: "auto" }}
           style={{ top: "10px" }}
@@ -101,6 +108,12 @@ class Home extends Component {
           )}
           {formInDom.Habit && (
             <CreateHabitForm
+              mode="add"
+              setFormVisibility={this.setFormVisibility}
+            />
+          )}
+          {formInDom.Task && (
+            <CreateTaskForm
               mode="add"
               setFormVisibility={this.setFormVisibility}
             />
