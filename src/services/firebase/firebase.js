@@ -5,6 +5,7 @@ import AuthOperations from "../database/authOperations";
 import UserOperations from "../database/userOperations";
 import GoalOperations from "../database/goalOperations";
 import HabitOperations from "../database/habitOperations";
+import TaskOperations from "../database/taskOperations";
 import "firebase/auth";
 import "firebase/firestore";
 
@@ -19,6 +20,7 @@ class Firebase {
     this.userOps=new UserOperations(firestoreInstance);
     this.goalOps=new GoalOperations(firestoreInstance);
     this.habitOps=new HabitOperations(firestoreInstance);
+    this.taskOps=new TaskOperations(firestoreInstance);
   }   
 }
 

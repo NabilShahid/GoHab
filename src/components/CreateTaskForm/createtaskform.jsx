@@ -11,14 +11,17 @@ import {
   Checkbox,
   Popconfirm,
   message,
-  Tooltip
+  Tooltip,
+  Select
 } from "antd";
 import { withFirebase } from "../../services/firebase";
- import { connect } from "react-redux";
+import { connect } from "react-redux";
 import logo from "../../assets/images/logo_withoutText.png";
 import "./createtaskform.css";
 import moment from "moment";
 const { TextArea } = Input;
+const Option = Select.Option;
+
 class CreateHabbitForm extends React.Component {
   state = {
     loading: false,
@@ -37,7 +40,7 @@ class CreateHabbitForm extends React.Component {
       name: "",
       description: "",
       importance: 1,
-      progress: 25,
+      parentGoal: "",
       dueDate: moment().toDate()
     },
     disabledForm: false
@@ -71,9 +74,9 @@ class CreateHabbitForm extends React.Component {
       //call to firebase taskOps addNewTask method
       this.props.firebase.taskOps
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
-        .then((g) => {
+        .then(g => {
           this.setState({ loading: false });
-          this.props.addTask({...formValuesToSave,id:g.id})
+          this.props.addTask({ ...formValuesToSave, id: g.id });
           this.props.setFormVisibility("Task", false);
         })
         .catch(error => {
@@ -90,7 +93,14 @@ class CreateHabbitForm extends React.Component {
           console.error("Error writing document: ", error);
         });
   };
-
+  /**
+   * sets parent goal id
+   */
+  setParentGoal = value => {
+    const {formValues}=this.state;
+    formValues.parentGoal=value;
+    this.setState({formValues});
+  };
   /**
    * mark due date on or off
    */
@@ -160,12 +170,11 @@ class CreateHabbitForm extends React.Component {
    * set values of form in case of existing task for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, progress, dueDate } = this.props;
+    const { name, description, importance, dueDate } = this.props;
     const { formValues } = this.state;
     formValues.name = name && name;
     formValues.description = description && description;
     formValues.importance = importance && importance;
-    formValues.progress = progress && progress;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -184,7 +193,6 @@ class CreateHabbitForm extends React.Component {
     this.setState({ disabledForm });
   };
 
- 
   /**
    * discard changes in edited form i.e. set to initial values
    */
@@ -214,7 +222,7 @@ class CreateHabbitForm extends React.Component {
 
   render() {
     const { loading, noDueDate, errors, disabledForm, formValues } = this.state;
-    const { mode } = this.props;
+    const { mode, goals } = this.props;
     return (
       <div>
         <div className="ghtFormContainer">
@@ -266,7 +274,31 @@ class CreateHabbitForm extends React.Component {
                 )}
               </div>
             </div>
-
+            <div className="row formControlDiv" style={{ marginTop: "10px" }}>
+              <div className="col-md-3">
+                <label className="formLabel">Parent Goal</label>
+              </div>
+              <div className="col-md-9">
+                <Select
+                  showSearch
+                  defaultValue="none"
+                  style={{ width: "100%" }}
+                  size="small"
+                  onChange={this.setParentGoal}
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.props.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  <Option value="none">None</Option>
+                  {goals.map(g => {
+                    return <Option value={g.id}>{g.name}</Option>;
+                  })}
+                </Select>
+              </div>
+            </div>
             <div className="row formControlDiv">
               <div className="col-md-3">
                 <label className="formLabel">Importance</label>
@@ -289,55 +321,6 @@ class CreateHabbitForm extends React.Component {
               </div>
             </div>
 
-            <div className="row formControlDiv">
-              <div className="col-md-3">
-                <label className="formLabel">Current Progress</label>
-              </div>
-              <div className="col-md-9">
-                <div className="iconWrapper">
-                  {!disabledForm && (
-                    <span>
-                      <Slider
-                        disabled={disabledForm}
-                        onChange={value => {
-                          this.setFormValueWithoutValidation("progress", value);
-                        }}
-                        value={formValues.progress}
-                        min={0}
-                        max={99}
-                        style={{
-                          width: "80%",
-                          margin: "0% 6%",
-                          display: "inline-block"
-                        }}
-                      />
-                      <i
-                        style={{ color: "#fd3a3a", fontSize: "18px" }}
-                        className="fa fa-check"
-                      />
-                    </span>
-                  )}
-                  {disabledForm && (
-                    <div className="goalProgress">
-                      <div className="progress">
-                        <div
-                          className="progress-bar"
-                          role="progressbar"
-                          style={{ width: formValues.progress + "%" }}
-                          aria-valuenow={formValues.progress}
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
-                          <span className="progressNumber">
-                            {formValues.progress}%
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
             {this.shouldShowDueDate() && (
               <div className="row formControlDiv">
                 <div className="col-md-3">
@@ -392,26 +375,24 @@ class CreateHabbitForm extends React.Component {
         return (
           <span style={{ cursor: "pointer" }} onClick={this.editForm}>
             <Tooltip title="Edit task info">
-              
               <i
                 className={"fa fa-edit blackBoldClickableIcon"}
                 style={{ marginRight: "10px" }}
-                
-              />Edit
+              />
+              Edit
             </Tooltip>
           </span>
         );
       } else {
         //editable mode
         return (
-          <span style={{cursor:"pointer"}} onClick={this.cancelChanges}> 
-                       
+          <span style={{ cursor: "pointer" }} onClick={this.cancelChanges}>
             <Tooltip title="Cancel">
               <i
                 className={"fa fa-times blackBoldClickableIcon"}
-                style={{ marginRight: "10px"}}
-                
-              />Cancel
+                style={{ marginRight: "10px" }}
+              />
+              Cancel
             </Tooltip>
           </span>
         );
@@ -446,20 +427,24 @@ class CreateHabbitForm extends React.Component {
   }
 }
 
-
 /**
  * dispatch to props mapping form updating user
  */
 const mapDispatchToProps = dispatch => {
-  return {   
+  return {
     addTask: taskPayload => {
-    //   dispatch(addGoal(goalPayload));
+      //   dispatch(addGoal(goalPayload));
     }
   };
 };
 
+const mapStateToProps = state => {
+    return {
+      goals: state.goalReducer.Goals
+    };
+  };
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withFirebase(CreateHabbitForm));
- 
