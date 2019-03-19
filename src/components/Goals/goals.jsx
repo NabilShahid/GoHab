@@ -17,7 +17,7 @@ class Goals extends Component {
     goalDialogVisible: false,
     currentGoalOptions: {},
     order: "asc",
-    orderBy:"dueDate"
+    orderBy:"alphabetical"
   };
   changeOrder(){
     let {order,orderBy}=this.state;
@@ -31,9 +31,7 @@ class Goals extends Component {
     this.props.sortGoals({order:this.state.order,orderBy});
     this.setState({orderBy});
   }
-  componentDidMount(){
-    this.changeOrder(this.state.orderBy);
-  }
+
   render() {
     const {
       goalDialogInDom,

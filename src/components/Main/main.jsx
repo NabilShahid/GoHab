@@ -8,7 +8,7 @@ import SignOutButton from "../SignOut/signoutbutton";
 import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
-import { insertGoals } from "../../actions/goalActions";
+import { insertGoals,sortGoals } from "../../actions/goalActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -61,6 +61,10 @@ class MainBase extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.props.insertGoals(allGoals);
+      setTimeout(()=>{
+
+        this.props.sortGoals({order:"asc",orderBy:"progress"})
+      },1000)
     })
     .catch(error => {
       console.log("firebase error: ", error);
@@ -85,7 +89,10 @@ const mapDispatchToProps = dispatch => {
  return {
    insertGoals: goalsPayload => {
      dispatch(insertGoals(goalsPayload));
-   }
+   },
+   sortGoals: sortPayload => {
+    dispatch(sortGoals(sortPayload));
+  },
  };
 };
 

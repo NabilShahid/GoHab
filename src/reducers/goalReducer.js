@@ -8,8 +8,8 @@ const goalReducer = (
   switch (action.type) {
     case "INSERT_GOALS": {
       let newState = { ...state };
-      newState.Goals = action.payload;
-      newState.FilteredGoals = action.payload;
+      newState.Goals = [...action.payload];
+      newState.FilteredGoals = [...action.payload];
       state = newState;
       break;
     }
@@ -22,11 +22,15 @@ const goalReducer = (
 
     case "UPDATE_GOAL": {
       let newState = { ...state };
-      newState.Goals = newState.Goals.map(g => {
-        if (g.id == action.payload.id) {
-          return action.payload;
-        } else return g;
+      let goalIndex= newState.Goals.findIndex(g => {
+        return g.id == action.payload.id
       });
+      newState.Goals[goalIndex]=action.payload;
+      
+      goalIndex = newState.FilteredGoals.findIndex(g => {
+        return g.id == action.payload.id
+      });
+      newState.FilteredGoals[goalIndex]=action.payload;
       state = newState;
       break;
     }
@@ -46,6 +50,7 @@ const goalReducer = (
     case "SORT_GOALS": {
       let newState = { ...state };
       const { order, orderBy } = action.payload;
+      console.log(newState)
       switch (orderBy) {
         case "alphabetical": {
           newState.FilteredGoals = newState.FilteredGoals.sort((a, b) => {
@@ -96,6 +101,7 @@ const goalReducer = (
           
         }
       }
+      console.log(newState)
       state = newState;
       break;
     }
