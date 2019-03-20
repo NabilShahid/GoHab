@@ -173,9 +173,26 @@ class Goals extends Component {
             progress={r.progress}
             asscTasks="3"
             asscHabits="5"
+            id={r.id}
+            markGoal={this.markGoal}
           />
         </div>
       );
+    });
+  }
+
+  markGoal=(id)=>{
+    let currGoal=this.props.goals.find((v)=>v.id==id);
+    if(currGoal.progress==100)
+    currGoal.progress=0;
+    else currGoal.progress=100;
+    this.updateLocalGoal(currGoal);    
+    this.props.firebase.goalOps
+    .updateGoal("nabil110176@gmail.com", currGoal, id)
+    .then(() => {
+    })
+    .catch(error => {
+      console.error("Error writing document: ", error);
     });
   }
 }

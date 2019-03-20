@@ -305,7 +305,7 @@ class CreateGoalForm extends React.Component {
                         }}
                         value={formValues.progress}
                         min={0}
-                        max={99}
+                        max={mode=="add"?99:100}
                         style={{
                           width: "80%",
                           margin: "0% 6%",

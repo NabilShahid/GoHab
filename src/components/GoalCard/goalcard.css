@@ -1,5 +1,5 @@
 .goalCard{
-    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#fc960e);
+    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#ffc16d);
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
@@ -44,6 +44,7 @@
 }
 .goalCard .progress-bar{
      background: var(--goal-color);
+     transition: width 0.2s ease;
 }
 .goalAssociations{
     margin-top: 4%;
@@ -66,4 +67,17 @@
     float: right;
     font-size: 11px;
     margin-top: 1%;
+}
+.markIcon{
+    font-size: 18px !important;
+    padding-top: 11px;
+    padding-left: 13px;   
+    
+}
+
+.markChecked{    
+    color: #35d618;
+}
+.markUnchecked{
+    color:#a2a2a2;
 }
