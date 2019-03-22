@@ -47,6 +47,15 @@ const goalReducer = (
       state = newState;
       break;
     }
+    case "FILTER_BY_STATUS": {
+      let newState = { ...state };
+       if(action.payload=="completed") newState.FilteredGoals = newState.Goals.filter(v =>v.progress==100);
+      else if(action.payload=="pending") newState.FilteredGoals = newState.Goals.filter(v =>v.progress<100);
+      else newState.FilteredGoals=newState.Goals
+      // else if(status=="all") newState.FilteredGoals = newState.FilteredGoals.filter(v =>v.progress==0);
+      state = newState;
+      break;
+    }
     case "SORT_GOALS": {
       let newState = { ...state };
       const { order, orderBy } = action.payload;

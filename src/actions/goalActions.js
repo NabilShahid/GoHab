@@ -33,3 +33,10 @@ export function removeGoalFilter() {
         type: "REMOVE_GOAL_FILTER"
     };
 }
+
+export function filterGoalsByStatus(statusPayload){
+    return {
+        type: "FILTER_BY_STATUS",
+        payload: statusPayload
+    };
+}

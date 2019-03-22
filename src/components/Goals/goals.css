@@ -1,9 +1,13 @@
 .goalCardsViewSelector{    
-    margin-bottom: 2%;
+    margin-bottom: 35px;
+    margin-top: 10px;
 }
 #goalCardsDiv .ant-radio-group{
-    font-size: 11px;
+    font-size: 13px;
 }
 .goalsRow{
     margin-top: 10px;
+}
+.goalControlTopPadding{
+    padding-top: 6px;
 }

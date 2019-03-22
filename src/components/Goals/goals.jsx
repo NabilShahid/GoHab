@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import { withFirebase } from "../../services/firebase/context";
-import { updateGoal, sortGoals } from "../../actions/goalActions";
+import {
+  updateGoal,
+  sortGoals,
+  filterGoalsByStatus
+} from "../../actions/goalActions";
 import { connect } from "react-redux";
 import { Modal, Tabs, Radio, Row, Col, Icon } from "antd";
 import "./goals.css";
@@ -17,21 +21,23 @@ class Goals extends Component {
     goalDialogVisible: false,
     currentGoalOptions: {},
     order: "asc",
-    orderBy:"alphabetical"
+    orderBy: "alphabetical"
   };
-  changeOrder(){
-    let {order,orderBy}=this.state;
-    if(order=="asc")order="desc"
-    else order="asc"
-    this.props.sortGoals({order,orderBy});
-    this.setState({order});
+  changeOrder() {
+    let { order, orderBy } = this.state;
+    if (order == "asc") order = "desc";
+    else order = "asc";
+    this.props.sortGoals({ order, orderBy });
+    this.setState({ order });
   }
-  changeOrderBy(v){
-    const orderBy=v;
-    this.props.sortGoals({order:this.state.order,orderBy});
-    this.setState({orderBy});
+  changeOrderBy(v) {
+    const orderBy = v;
+    this.props.sortGoals({ order: this.state.order, orderBy });
+    this.setState({ orderBy });
   }
-
+  changeGoalsStatus(v){
+    this.props.filterGoalsByStatus(v);
+  }
   render() {
     const {
       goalDialogInDom,
@@ -45,19 +51,44 @@ class Goals extends Component {
         <div className="goalCardsViewSelector">
           <Row />
           <Row>
-            <Col span={11} />
+            <Col span={11}>
+              <Radio.Group defaultValue="all" buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
+                <Radio.Button value="all">All Goals</Radio.Button>
+                <Radio.Button value="completed">Achieved Goals</Radio.Button>
+                <Radio.Button value="pending">Pending Goals</Radio.Button>
+                {/* <Radio.Button value="d">Chengdu</Radio.Button> */}
+              </Radio.Group>
+            </Col>
 
-            <Col span={12} style={{ textAlign: "right" }}>
+            <Col
+              span={12}
+              className="goalControlTopPadding"
+              style={{ textAlign: "right" }}
+            >
               <span className="miniLabel">Order By:</span>
-              <Select onChange={(e)=>this.changeOrderBy(e)} style={{width:"120px"}} size="small" defaultValue={orderBy}>
+              <Select
+                onChange={e => this.changeOrderBy(e)}
+                style={{ width: "120px" }}
+                size="small"
+                defaultValue={orderBy}
+              >
                 <Option value="dueDate">Due Date</Option>
                 <Option value="progress">Progress</Option>
                 <Option value="importance">Importance</Option>
                 <Option value="alphabetical">Alphabetical</Option>
               </Select>
             </Col>
-            <Col span={1} style={{ textAlign: "center" }}>
-              <div onClick={()=>{this.changeOrder()}} className="orderIcon">
+            <Col
+              span={1}
+              className="goalControlTopPadding"
+              style={{ textAlign: "center" }}
+            >
+              <div
+                onClick={() => {
+                  this.changeOrder();
+                }}
+                className="orderIcon"
+              >
                 {order == "asc" && <i className="fa fa-sort-up" />}
                 {order == "desc" && <i className="fa fa-sort-down" />}
               </div>
@@ -181,20 +212,18 @@ class Goals extends Component {
     });
   }
 
-  markGoal=(id)=>{
-    let currGoal=this.props.goals.find((v)=>v.id==id);
-    if(currGoal.progress==100)
-    currGoal.progress=0;
-    else currGoal.progress=100;
-    this.updateLocalGoal(currGoal);    
+  markGoal = id => {
+    let currGoal = this.props.goals.find(v => v.id == id);
+    if (currGoal.progress == 100) currGoal.progress = 0;
+    else currGoal.progress = 100;
+    this.updateLocalGoal(currGoal);
     this.props.firebase.goalOps
-    .updateGoal("nabil110176@gmail.com", currGoal, id)
-    .then(() => {
-    })
-    .catch(error => {
-      console.error("Error writing document: ", error);
-    });
-  }
+      .updateGoal("nabil110176@gmail.com", currGoal, id)
+      .then(() => {})
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  };
 }
 
 const mapStateToProps = state => {
@@ -214,6 +243,9 @@ const mapDispatchToProps = dispatch => {
     sortGoals: sortPayload => {
       dispatch(sortGoals(sortPayload));
     },
+    filterGoalsByStatus: statusPayload => {
+      dispatch(filterGoalsByStatus(statusPayload));
+    }
   };
 };
 
