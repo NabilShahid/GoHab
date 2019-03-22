@@ -31,7 +31,7 @@ class Header extends Component {
             {this.props.title}
           </Col>
           <Col id="headerOptions" span={11}>
-            {this.props.search&&<Search
+            {this.props.search&&<Search id="headerSearch"
               placeholder="Search"
               onChange={e => {this.searchValues(e.target.value)}}
               style={{ width: 200 }}

@@ -21,7 +21,8 @@ class Goals extends Component {
     goalDialogVisible: false,
     currentGoalOptions: {},
     order: "asc",
-    orderBy: "alphabetical"
+    orderBy: "alphabetical",
+    currentStatusFilter:"all"
   };
   changeOrder() {
     let { order, orderBy } = this.state;
@@ -37,6 +38,9 @@ class Goals extends Component {
   }
   changeGoalsStatus(v){
     this.props.filterGoalsByStatus(v);
+    document.getElementById("headerSearch").value="";
+    const { order, orderBy } = this.state;
+    this.props.sortGoals({ order, orderBy, currentStatusFilter:v });
   }
   render() {
     const {
@@ -44,7 +48,8 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions,
       order,
-      orderBy
+      orderBy,
+      currentStatusFilter
     } = this.state;
     return (
       <div id="goalCardsDiv">
@@ -52,11 +57,10 @@ class Goals extends Component {
           <Row />
           <Row>
             <Col span={11}>
-              <Radio.Group defaultValue="all" buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
+              <Radio.Group value={currentStatusFilter} buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
                 <Radio.Button value="all">All Goals</Radio.Button>
                 <Radio.Button value="completed">Achieved Goals</Radio.Button>
                 <Radio.Button value="pending">Pending Goals</Radio.Button>
-                {/* <Radio.Button value="d">Chengdu</Radio.Button> */}
               </Radio.Group>
             </Col>
 
