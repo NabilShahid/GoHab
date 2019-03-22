@@ -39,8 +39,10 @@ class Goals extends Component {
   changeGoalsStatus(v){
     this.props.filterGoalsByStatus(v);
     document.getElementById("headerSearch").value="";
-    const { order, orderBy } = this.state;
-    this.props.sortGoals({ order, orderBy, currentStatusFilter:v });
+    let { order, orderBy } = this.state;
+    if(v!="all"&&orderBy=="progress") orderBy="alphabetical";
+    this.props.sortGoals({ order, orderBy});
+    this.setState({currentStatusFilter:v,orderBy});
   }
   render() {
     const {
@@ -74,10 +76,10 @@ class Goals extends Component {
                 onChange={e => this.changeOrderBy(e)}
                 style={{ width: "120px" }}
                 size="small"
-                defaultValue={orderBy}
+                value={orderBy}
               >
                 <Option value="dueDate">Due Date</Option>
-                <Option value="progress">Progress</Option>
+                {currentStatusFilter=="all"&&<Option value="progress">Progress</Option>}
                 <Option value="importance">Importance</Option>
                 <Option value="alphabetical">Alphabetical</Option>
               </Select>
@@ -165,6 +167,15 @@ class Goals extends Component {
   updateLocalGoal = goal => {
     this.props.updateGoal(goal);
     this.closeGoalDialog();
+    setTimeout(()=>{
+      if(this.state.currentStatusFilter!="all")
+      {
+        this.changeGoalsStatus(this.state.currentStatusFilter);
+      }
+      else{
+        this.changeOrderBy(this.state.orderBy);
+      }
+    },1500)
   };
 
   /**
