@@ -38,7 +38,6 @@ class Goals extends Component {
   }
   changeGoalsStatus(v){
     this.props.filterGoalsByStatus(v);
-    document.getElementById("headerSearch").value="";
     let { order, orderBy } = this.state;
     if(v!="all"&&orderBy=="progress") orderBy="alphabetical";
     this.props.sortGoals({ order, orderBy});

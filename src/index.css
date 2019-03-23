@@ -14,93 +14,94 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-#root{
+#root {
   height: 100%;
   overflow: hidden;
 }
-.ant-modal-content{
+.ant-modal-content {
   border-radius: 6px !important;
 }
-.ant-modal-title{
+.ant-modal-title {
   color: white !important;
 }
-.ant-modal-header{
+.ant-modal-header {
   background-color: #fd3a3a !important;
 }
-.ghtFormContainer{
+.ghtFormContainer {
   width: 100%;
   padding: 15px;
   border-radius: 4px;
   font-size: 13px;
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
- }
-  .formLabel{
-    background-color: #f1f1f1;
-    color: #4c4c4c;
-    padding: 2px 15px 3px 10px;
-    border-radius: 3px;
-    width: 100%;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+.formLabel {
+  background-color: #f1f1f1;
+  color: #4c4c4c;
+  padding: 2px 15px 3px 10px;
+  border-radius: 3px;
+  width: 100%;
 }
 
-
-.formControlDiv{
+.formControlDiv {
   padding-top: 15px;
 }
 
-
-.formLogo{
+.formLogo {
   width: 27px;
   float: right;
 }
 
-.ghtFormContainer .ant-slider-track{
+.ghtFormContainer .ant-slider-track {
   background-color: #fd3a3a;
 }
-.ghtFormContainer  .ant-slider:hover .ant-slider-track{
+.ghtFormContainer .ant-slider:hover .ant-slider-track {
   background-color: #4c4c4c;
 }
 
-.ghtFormContainer  .ant-checkbox-checked .ant-checkbox-inner{
-  background-color:#fd3a3a;
+.ghtFormContainer .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #fd3a3a;
   border-color: #fd3a3a;
 }
 
-.redButton{
+.redButton {
   background-color: #fd3a3a !important;
   border: 0px !important;
   border-radius: 3px !important;
-  color: white !important;  
+  color: white !important;
 }
-.blackButton{
+.blackButton {
   background-color: #4c4c4c !important;
   border: 0px !important;
   border-radius: 3px !important;
   color: white !important;
 }
-.ant-calendar-selected-date .ant-calendar-date, .ant-calendar-selected-start-date .ant-calendar-date, .ant-calendar-selected-end-date .ant-calendar-date{
+.ant-calendar-selected-date .ant-calendar-date,
+.ant-calendar-selected-start-date .ant-calendar-date,
+.ant-calendar-selected-end-date .ant-calendar-date {
   background: #fd3a3a !important;
- 
 }
-.ant-calendar-today .ant-calendar-date{
+.ant-calendar-today .ant-calendar-date {
   border-color: #fd3a3a !important;
-  color: #4c4c4c !important ; 
-  
+  color: #4c4c4c !important ;
 }
-.formError{
+.formError {
   font-size: 12px;
   color: #fd3a3a;
 }
 
-.blackBoldClickableIcon{
+.blackBoldClickableIcon {
   color: #4c4c4c;
   font-weight: bold !important;
   cursor: pointer;
 }
 
-.ant-tooltip-inner{
+.ant-tooltip-inner {
   background-color: #fd3a3a !important;
 }
-.fa-pencil{content:"\f040"}
+.fa-pencil {
+  content: "\f040";
+}
 
 .ant-tabs-nav .ant-tabs-tab-active {
   color: #fd3a3a !important;
@@ -108,43 +109,41 @@ code {
 .ant-tabs-nav .ant-tabs-tab:hover {
   color: #fd3a3a !important;
 }
-.ant-tabs-ink-bar{
+.ant-tabs-ink-bar {
   background-color: #fd3a3a !important;
 }
-.blackClickable{
+.blackClickable {
   cursor: pointer;
   color: #4c4c4c;
   font-weight: bold !important;
-  
 }
-.ant-tabs .ant-tabs-left-bar .ant-tabs-tab{
+.ant-tabs .ant-tabs-left-bar .ant-tabs-tab {
   text-align: left !important;
 }
 
-.ghtFormContainer .ant-input-disabled{
+.ghtFormContainer .ant-input-disabled {
   background-color: #ffffff;
   opacity: 1;
   cursor: not-allowed;
   color: #4c4c4c;
   border: unset !important;
 }
-.ghtFormContainer .ant-input{
-  border:unset;
+.ghtFormContainer .ant-input {
+  border: unset;
   border-bottom: 1px solid #d0d0d0;
 }
-.ghtFormContainer .progress-bar{
+.ghtFormContainer .progress-bar {
   background-color: #fd3a3a;
 }
 
-.ghtFormContainer .progressNumber{
+.ghtFormContainer .progressNumber {
   font-size: 11px;
 }
 
-
-.ghtFormContainer .progress{
+.ghtFormContainer .progress {
   height: 0.9rem;
 }
-.sHeader{
+.sHeader {
   color: #4c4c4c;
   margin-top: 8px;
   margin-bottom: 15px;
@@ -153,9 +152,10 @@ code {
   padding-left: 5px;
   font-size: 15px;
   font-weight: 500;
-} 
+}
 
-.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+.ant-radio-group-solid
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
   background: #fd3a3a !important;
   border-color: #fd3a3a !important;
 }
@@ -169,9 +169,7 @@ code {
   box-shadow: unset !important;
 }
 .ant-radio-button-wrapper-checked {
-   
   box-shadow: unset !important;
-   
 }
 
 .ant-select-dropdown-menu-item-active {
@@ -180,13 +178,13 @@ code {
 }
 .ant-badge-count {
   height: 16px !important;
-  min-width: unset!important;
-  line-height: 14px!important;
-  padding: 0 7px!important;
-  box-shadow: unset!important;
-  padding-right: 7px!important;
+  min-width: unset !important;
+  line-height: 14px !important;
+  padding: 0 7px !important;
+  box-shadow: unset !important;
+  padding-right: 7px !important;
 }
-.cardAvatar{
+.cardAvatar {
   color: white;
   text-align: center;
   width: 43px;
@@ -197,18 +195,17 @@ code {
   border-radius: 2px;
   font-weight: 500;
 }
-.miniLabel{
+.miniLabel {
   font-size: 11px;
   margin-right: 10px;
   font-weight: bold;
 }
 
-.orderIcon{
-  font-size: 16px;
+.orderIcon {
+  font-size: 15px;
   cursor: pointer;
   color: #4c4c4c;
-  /* background-color: #fd3a3a; */
   margin: 0px 9px;
   border-radius: 3px;
- border: 1px solid #e2e2e2;
+  border: 1px solid #e2e2e2;
 }

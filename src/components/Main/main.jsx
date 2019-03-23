@@ -55,6 +55,10 @@ class MainBase extends Component {
    * set initial route to home to show home tab by default
    */
   componentDidMount() {
+    this.getGoalsAndInsertAndSort();
+  }
+
+  getGoalsAndInsertAndSort(){
     this.props.firebase.goalOps
     .retrieveAllGoals("nabil110176@gmail.com")
     .then(querySnapshot => {
@@ -62,16 +66,16 @@ class MainBase extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.props.insertGoals(allGoals);
-      setTimeout(()=>{
-
-        this.props.sortGoals({order:"asc",orderBy:"progress"})
-      },1000)
+      this.props.sortGoals({order:"asc",orderBy:"alphabetical"})
+      
     })
     .catch(error => {
       console.log("firebase error: ", error);
     });
   }
+  
 }
+
 
 /**
  * state to props mapping for accessing user form user reducer  
