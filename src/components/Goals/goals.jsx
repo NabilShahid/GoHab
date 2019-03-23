@@ -38,10 +38,7 @@ class Goals extends Component {
   }
   changeGoalsStatus(v){
     this.props.filterGoalsByStatus(v);
-    let { order, orderBy } = this.state;
-    if(v!="all"&&orderBy=="progress") orderBy="alphabetical";
-    this.props.sortGoals({ order, orderBy});
-    this.setState({currentStatusFilter:v,orderBy});
+    this.setState({currentStatusFilter:v});
   }
   render() {
     const {
