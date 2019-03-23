@@ -29,7 +29,7 @@ const GoalCard = ({
             {name[0].toUpperCase() || ""}
           </div>
           {/* <Icon type="check-circle" style={{color:"green"}}/> */}
-          <Tooltip placement="right" title={progress == 100 ? "Mark as incomplete" : "Mark as complete"}>
+          <Tooltip placement="right" title={progress == 100 ? "Mark as pending" : "Mark as achieved"}>
               
           <i onClick={(e)=>{e.stopPropagation();markGoal(id)}}
             className={

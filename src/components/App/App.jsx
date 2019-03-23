@@ -31,11 +31,9 @@ class App extends Component {
           {/* All first level routes */}
           <Switch>
           <Route exact path="/" render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />} />
-          <Route exact path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} />
+          <Route path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} />
           <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInPage} />
-          {/* <Route path={ROUTES.SIGNUP} component={SignUpPage} /> */}
-          <Route component={Main} />
-          </Switch>
+           </Switch>
         </div>
       </Router>
     );

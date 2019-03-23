@@ -38,9 +38,10 @@ class MainBase extends Component {
              {/* Second level routes */}
               <Router history={history}>
                 <Switch>
-                  <Route path={ROUTES[PAGEKEYS["HOME"]]} component={Home} />
-                  <Route path={ROUTES[PAGEKEYS["HABITS"]]} component={Habits} />
-                  <Route path={ROUTES[PAGEKEYS["GOALS"]]} component={Goals} />
+                  <Route exact path={ROUTES[PAGEKEYS["MAIN"]]} render={() => <Redirect to={ROUTES[PAGEKEYS["HOME"]]} />} />  
+                  <Route exact path={ROUTES[PAGEKEYS["HOME"]]} component={Home} />
+                  <Route exact path={ROUTES[PAGEKEYS["HABITS"]]} component={Habits} />
+                  <Route exact path={ROUTES[PAGEKEYS["GOALS"]]} component={Goals} />
                 </Switch>
               </Router>
             </div>

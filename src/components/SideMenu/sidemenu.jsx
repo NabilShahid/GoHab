@@ -15,11 +15,19 @@ class SideMenu extends Component {
   };
   selectedOption;
   componentWillMount() {
-    const currPage = Object.keys(ROUTES).filter(key => {
-      return ROUTES[key] == this.props.location.pathname;
-    })[0];
-    this.props.updateHeader(HEADEROPTIONS[currPage]);
-    this.selectedOption=[currPage];
+    if(this.props.location.pathname==ROUTES[PAGEKEYS["MAIN"]])
+    {
+      this.props.updateHeader(HEADEROPTIONS[PAGEKEYS["HOME"]]);
+      this.selectedOption=[PAGEKEYS["HOME"]];
+    }
+    else{
+      const currPage = Object.keys(ROUTES).filter(key => {
+        return ROUTES[key] == this.props.location.pathname;
+      })[0];
+      this.props.updateHeader(HEADEROPTIONS[currPage]);
+      this.selectedOption=[currPage];
+    }
+    
   }
 
   render() {
