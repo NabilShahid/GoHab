@@ -19,43 +19,35 @@ class Goals extends Component {
   state = {
     goalDialogInDom: false,
     goalDialogVisible: false,
-    currentGoalOptions: {},
-    order: "asc",
-    orderBy: "alphabetical",
-    currentStatusFilter:"all"
+    currentGoalOptions: {}
   };
   changeOrder() {
-    let { order, orderBy } = this.state;
+    let { order, orderBy } = this.props;
     if (order == "asc") order = "desc";
     else order = "asc";
     this.props.sortGoals({ order, orderBy });
-    this.setState({ order });
   }
   changeOrderBy(v) {
     const orderBy = v;
-    this.props.sortGoals({ order: this.state.order, orderBy });
-    this.setState({ orderBy });
+    this.props.sortGoals({ order: this.props.order, orderBy });
   }
   changeGoalsStatus(v){
     this.props.filterGoalsByStatus(v);
-    this.setState({currentStatusFilter:v});
   }
   render() {
     const {
       goalDialogInDom,
       goalDialogVisible,
-      currentGoalOptions,
-      order,
-      orderBy,
-      currentStatusFilter
+      currentGoalOptions
     } = this.state;
+    const {statusFilter,orderBy,order}=this.props;
     return (
       <div id="goalCardsDiv">
         <div className="goalCardsViewSelector">
           <Row />
           <Row>
             <Col span={11}>
-              <Radio.Group value={currentStatusFilter} buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
+              <Radio.Group value={statusFilter} buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
                 <Radio.Button value="all">All Goals</Radio.Button>
                 <Radio.Button value="completed">Achieved Goals</Radio.Button>
                 <Radio.Button value="pending">Pending Goals</Radio.Button>
@@ -75,7 +67,7 @@ class Goals extends Component {
                 value={orderBy}
               >
                 <Option value="dueDate">Due Date</Option>
-                {currentStatusFilter=="all"&&<Option value="progress">Progress</Option>}
+                {statusFilter=="all"&&<Option value="progress">Progress</Option>}
                 <Option value="importance">Importance</Option>
                 <Option value="alphabetical">Alphabetical</Option>
               </Select>
@@ -164,12 +156,12 @@ class Goals extends Component {
     this.props.updateGoal(goal);
     this.closeGoalDialog();
     setTimeout(()=>{
-      if(this.state.currentStatusFilter!="all")
+      if(this.props.statusFilter!="all")
       {
-        this.changeGoalsStatus(this.state.currentStatusFilter);
+        this.changeGoalsStatus(this.statusFilter);
       }
       else{
-        this.changeOrderBy(this.state.orderBy);
+        this.changeOrderBy(this.props.orderBy);
       }
     },1500)
   };
@@ -240,7 +232,10 @@ class Goals extends Component {
 
 const mapStateToProps = state => {
   return {
-    goals: state.goalReducer.FilteredGoals
+    goals: state.goalReducer.FilteredGoals,
+    statusFilter:state.goalReducer.CurrentStatusFilter,
+    order:state.goalReducer.CurrentOrder,
+    orderBy:state.goalReducer.CurrentOrderBy
   };
 };
 

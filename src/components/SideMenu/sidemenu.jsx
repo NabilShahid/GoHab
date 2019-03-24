@@ -3,7 +3,7 @@ import { Menu, Icon } from "antd";
 import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { updateHeader } from "../../actions/headerActions";
+import { updateHeader, updateFilterString } from "../../actions/headerActions";
 import { removeGoalFilter } from "../../actions/goalActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
@@ -92,9 +92,43 @@ class SideMenu extends Component {
   moveToPath = ({ key }) => {
     history.push(ROUTES[key]);
     this.props.updateHeader(HEADEROPTIONS[key]);
-    key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
+    // key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
+    this.updateHeaderFilterString(key);
+
   };
+
+
+  updateHeaderFilterString(key){
+    switch(key){
+      case PAGEKEYS["GOALS"]:{
+        this.props.updateFilterString(this.props.goalFilterString);
+        this.filterHeaderIfValue(this.props.goalFilterString);
+        break;
+      }
+      case PAGEKEYS["TASKS"]:{
+        this.props.updateFilterString("this.props.goalFilterString");
+        break;
+      }
+    }
+  }
+
+  filterHeaderIfValue(value)
+  {
+    value&&document.getElementById("headerSearch").focus();
+  }
 }
+
+
+
+/**
+ * state to props mapping
+ */
+const mapStateToProps = state => {
+  return {
+    goalFilterString: state.goalReducer.CurrentFilterString
+  };
+};
+
 
 /**
  * dispatch to props mapping for updating header
@@ -104,13 +138,15 @@ const mapDispatchToProps = dispatch => {
     updateHeader: headerPayload => {
       dispatch(updateHeader(headerPayload));
     },
-    removeGoalFilter:()=>{
-      dispatch(removeGoalFilter())
+    updateFilterString:(filterPayload)=>{
+      dispatch(updateFilterString(filterPayload))
     }
   };
 };
 
+
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(SideMenu));

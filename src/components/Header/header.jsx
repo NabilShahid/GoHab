@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {filterGoals} from "../../actions/goalActions";
+import {updateFilterString} from "../../actions/headerActions";
 import "./header.css";
 import logo from "../../assets/images/logo_withoutText.png";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -17,6 +18,7 @@ class Header extends Component {
     {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title:{
         this.props.filterGoals(value);
+        this.props.updateFilterString(value);
       }
     }
   }
@@ -33,6 +35,7 @@ class Header extends Component {
           <Col id="headerOptions" span={11}>
             {this.props.search&&<Search id="headerSearch"
               placeholder="Search"
+              value={this.props.currentFilterString}
               onChange={e => {this.searchValues(e.target.value)}}
               style={{ width: 200 }}
             />}
@@ -76,7 +79,8 @@ const mapStateToProps = state => {
   return {
     title: state.headerReducer.Title,
     icon:state.headerReducer.Icon,
-    search:state.headerReducer.Search
+    search:state.headerReducer.Search,
+    currentFilterString:state.headerReducer.CurrentFilterString
   };
 };
 
@@ -87,6 +91,9 @@ const mapDispatchToProps = dispatch => {
   return {
     filterGoals: filterPayload=>{
       dispatch(filterGoals(filterPayload))
+    },
+    updateFilterString:filterPayload=>{
+      dispatch(updateFilterString(filterPayload))
     }
   };
 };

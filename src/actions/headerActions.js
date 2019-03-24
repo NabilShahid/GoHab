@@ -4,3 +4,9 @@ export function updateHeader(headerPayload) {
         payload: headerPayload
     };
 }
+export function updateFilterString(filterStringPayload) {
+    return {
+        type: "UPDATE_FITLER_STRING",
+        payload: filterStringPayload
+    };
+}

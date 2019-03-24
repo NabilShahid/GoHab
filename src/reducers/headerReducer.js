@@ -2,7 +2,8 @@ const headerReducer = (
   state = {
     Icon: "",
     Title: "",
-    Search: false
+    Search: false,
+    CurrentFilterString:""
   },
   action
 ) => {
@@ -11,6 +12,11 @@ const headerReducer = (
         let newState = { ...action.payload };
         state = newState;
         break;
+    }
+    case "UPDATE_FITLER_STRING":{
+      let newState = { ...state };
+      newState.CurrentFilterString=action.payload;
+      state = newState;
     }
   }
   return state;

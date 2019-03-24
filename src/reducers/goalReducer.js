@@ -3,7 +3,9 @@ const goalReducer = (
     Goals: [],
     FilteredGoals: [],
     CurrentFilterString: "",
-    CurrentStatusFilter:"all"
+    CurrentStatusFilter:"all",
+    CurrentOrder:"asc",
+    CurrentOrderBy:"alphabetical"
   },
   action
 ) => {
@@ -113,14 +115,16 @@ const goalReducer = (
         newState.Goals,
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
-      );
+      );      
+      newState.CurrentOrder=action.payload.order;
+      newState.CurrentOrderBy=action.payload.orderBy;
       state = newState;
       break;
     }
 
     case "REMOVE_GOAL_FILTER": {
       let newState = { ...state };
-      newState.FilteredGoals = newState.Goals;
+      newState.FilteredGoals = JSON.parse(JSON.stringify(newState.Goals));
       state = newState;
     }
   }
