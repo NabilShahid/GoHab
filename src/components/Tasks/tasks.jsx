@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Tabs } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
-import HabitCard from "../HabitCard/habitcard";
+import TaskCard from "../TaskCard/taskcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 const TabPane = Tabs.TabPane;
 
@@ -122,7 +122,7 @@ class Tasks extends Component {
                 this.viewTaskDialog(r);
               }}
             >
-              <HabitCard
+              <TaskCard
                 name={r.name}
                 description={r.description}
                 dueDate={r.dueDate}

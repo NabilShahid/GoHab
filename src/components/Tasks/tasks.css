@@ -1,0 +1,13 @@
+.taskCardsViewSelector{    
+    margin-bottom: 35px;
+    margin-top: 10px;
+}
+#taskCardsDiv .ant-radio-group{
+    font-size: 13px;
+}
+.tasksRow{
+    margin-top: 10px;
+}
+.taskControlTopPadding{
+    padding-top: 6px;
+}

@@ -1,0 +1,42 @@
+.taskCard{
+    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#93de97);
+    padding: 8px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px 0px #bfbfbf;
+    transition: 0.1s;
+    transform: scale(1);
+    cursor: pointer;
+    color: #8c8c8c;
+}
+.taskCard:hover{
+    transition: 0.2s;
+    transform: scale(1.04);
+    background-color: #f1f1f1;
+     
+}
+.taskSubtitle{
+    font-weight: normal;
+    font-size: 12px;
+    border-top: 1px solid #cec8c8;
+    margin-top: 3px;
+    padding-top: 3px;
+    height: 3em;
+    line-height: 1.4em;
+    overflow: hidden;
+}
+.taskTitle{
+    font-weight: 500;
+}
+.taskDate{
+    font-weight: 400;
+    float: right;
+    font-size: 11px;
+    margin-top: 2%;
+}
+
+.taskBadge{
+    text-align: center;
+    margin-top: 1%;
+    font-weight: normal;
+    font-size: 10px;
+}
