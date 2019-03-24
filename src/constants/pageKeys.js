@@ -3,7 +3,8 @@
     GOALS:"GOALS",
     SINGIN:"SINGIN",
     MAIN:"MAIN",
-    HABITS:"HABITS"
+    HABITS:"HABITS",
+    TASKS:"TASKS"
 
 }
 export default PAGEKEYS;

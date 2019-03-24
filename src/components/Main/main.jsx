@@ -42,6 +42,7 @@ class MainBase extends Component {
                   <Route exact path={ROUTES[PAGEKEYS["HOME"]]} component={Home} />
                   <Route exact path={ROUTES[PAGEKEYS["HABITS"]]} component={Habits} />
                   <Route exact path={ROUTES[PAGEKEYS["GOALS"]]} component={Goals} />
+                  <Route exact path={ROUTES[PAGEKEYS["TASKS"]]} component={Tasks} />
                 </Switch>
               </Router>
             </div>
