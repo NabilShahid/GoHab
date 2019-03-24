@@ -18,6 +18,11 @@ const goalReducer = (
     case "ADD_GOAL": {
       let newState = { ...state };
       newState.Goals.push(action.payload);
+      newState.FilteredGoals = getFilteredGoals(
+        newState.Goals,
+        newState.CurrentFilterString,
+        newState.CurrentStatusFilter
+      );
       state = newState;
       break;
     }

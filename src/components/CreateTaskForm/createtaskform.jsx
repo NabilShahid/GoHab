@@ -16,6 +16,7 @@ import {
 } from "antd";
 import { withFirebase } from "../../services/firebase";
 import { connect } from "react-redux";
+import { addTask } from "../../actions/taskActions";
 import logo from "../../assets/images/logo_withoutText.png";
 import "./createtaskform.css";
 import moment from "moment";
@@ -74,9 +75,9 @@ class CreateHabbitForm extends React.Component {
       //call to firebase taskOps addNewTask method
       this.props.firebase.taskOps
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
-        .then(g => {
+        .then(t => {
           this.setState({ loading: false });
-          this.props.addTask({ ...formValuesToSave, id: g.id });
+          this.props.addTask({ ...formValuesToSave, id: t.id });
           this.props.setFormVisibility("Task", false);
         })
         .catch(error => {
@@ -433,7 +434,7 @@ class CreateHabbitForm extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     addTask: taskPayload => {
-      //   dispatch(addGoal(goalPayload));
+        dispatch(addTask(taskPayload));
     }
   };
 };

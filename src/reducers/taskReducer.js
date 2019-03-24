@@ -18,6 +18,11 @@ const taskReducer = (
       case "ADD_TASK": {
         let newState = { ...state };
         newState.Tasks.push(action.payload);
+        newState.FilteredTasks = getFilteredTasks(
+          newState.Tasks,
+          newState.CurrentFilterString,
+          newState.CurrentStatusFilter
+        );
         state = newState;
         break;
       }

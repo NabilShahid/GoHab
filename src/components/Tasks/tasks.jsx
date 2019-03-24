@@ -20,7 +20,7 @@ class Tasks extends Component {
         } = this.state;
         return (
           <div id="taskCardsDiv">
-            {this.getTasksRows(this.props.goals, 3)}
+            {this.getTasksRows(this.props.tasks, 3)}
             {taskDialogInDom && (
               <Modal
                 visible={taskDialogVisible}
@@ -51,12 +51,12 @@ class Tasks extends Component {
         );
       }
     
-      viewTaskDialog = goal => {
+      viewTaskDialog = task => {
         let { taskDialogVisible, taskDialogInDom } = this.state;
-        const currentGoalOptions = { ...goal };
+        const currentTaskOptions = { ...task };
         taskDialogInDom = true;
         taskDialogVisible = true;
-        this.setState({ taskDialogVisible, taskDialogInDom, currentGoalOptions });
+        this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions });
       };
     
       currentTaskDialog() {
@@ -136,7 +136,7 @@ class Tasks extends Component {
 }
 const mapStateToProps = state => {
     return {
-      goals: state.goalReducer.FilteredGoals
+      tasks: state.taskReducer.FilteredTasks
     };
   };
   

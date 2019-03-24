@@ -9,6 +9,7 @@ import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
 import { insertGoals,sortGoals } from "../../actions/goalActions";
+import { insertTasks,sortTasks } from "../../actions/taskActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -57,6 +58,7 @@ class MainBase extends Component {
    */
   componentDidMount() {
     this.getGoalsAndInsertAndSort();
+    this.getTasksAndInsertAndSort();
   }
 
   getGoalsAndInsertAndSort(){
@@ -68,6 +70,22 @@ class MainBase extends Component {
       });
       this.props.insertGoals(allGoals);
       this.props.sortGoals({order:"asc",orderBy:"alphabetical"})
+      
+    })
+    .catch(error => {
+      console.log("firebase error: ", error);
+    });
+  }
+
+  getTasksAndInsertAndSort(){
+    this.props.firebase.taskOps
+    .retrieveAllTasks("nabil110176@gmail.com")
+    .then(querySnapshot => {
+      const allGoals = querySnapshot.docs.map(function(doc) {
+        return { ...doc.data(), id: doc.id };
+      });
+      this.props.insertTasks(allGoals);
+      // this.props.sortGoals({order:"asc",orderBy:"alphabetical"})
       
     })
     .catch(error => {
@@ -99,6 +117,13 @@ const mapDispatchToProps = dispatch => {
    sortGoals: sortPayload => {
     dispatch(sortGoals(sortPayload));
   },
+   insertTasks: goalsPayload => {
+     dispatch(insertTasks(goalsPayload));
+   },
+  //  sortGoals: sortPayload => {
+  //   dispatch(sortGoals(sortPayload));
+  // },
+  
  };
 };
 
