@@ -213,6 +213,7 @@ class Goals extends Component {
             description={r.description}
             dueDate={r.dueDate}
             progress={r.progress}
+            importance={r.importance}
             asscTasks="3"
             asscHabits="5"
             id={r.id}

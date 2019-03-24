@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Badge, Button, Icon, Tooltip } from "antd";
+import { Avatar, Badge, Button, Icon, Tooltip, Rate } from "antd";
 import moment from "moment";
 
 import "./goalcard.css";
@@ -9,6 +9,7 @@ const GoalCard = ({
   dueDate,
   progress,
   id,
+  importance,
   asscTasks,
   asscHabits,
   markGoal
@@ -55,6 +56,25 @@ const GoalCard = ({
                 aria-valuemin="0"
                 aria-valuemax="100"
               />
+            </div>
+          </div>
+          <div className="goalImportance">
+            Importance
+            <div>
+
+
+            <Rate
+            disabled="true"
+            character={<i className="fa fa-exclamation-triangle" />}
+            allowHalf
+            value={importance}
+            style={{
+              fontSize: 19,
+              color: "#ffa726",
+              marginTop:"5px"
+            }}
+            
+          />
             </div>
           </div>
         </div>

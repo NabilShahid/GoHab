@@ -127,8 +127,7 @@ class Tasks extends Component {
                 description={r.description}
                 dueDate={r.dueDate}
                 progress={r.progress}
-                asscTasks="3"
-                asscHabits="5"
+                importance={r.importance}
               />
             </div>
           );

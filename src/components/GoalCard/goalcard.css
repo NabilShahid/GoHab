@@ -33,10 +33,15 @@
     font-size: 11px;
     margin-top: 2%;
 }
-.goalCard .goalProgress{
+.goalProgress{
     margin-top: 2%;
     font-size: 12px;
 }
+.goalImportance{
+    margin-top: 4%;
+    font-size: 12px;
+}
+
 .goalCard .progress{
     height: 11px;
     margin-top: 2%;
