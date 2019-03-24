@@ -48,7 +48,7 @@ const goalReducer = (
       state = newState;
       break;
     }
-    case "FILTER_BY_STATUS": {
+    case "FILTER_GOALS_BY_STATUS": {
       let newState = { ...state };
       newState.FilteredGoals = getFilteredGoals(newState.Goals,newState.CurrentFilterString,action.payload)
       newState.CurrentStatusFilter=action.payload;

@@ -14,7 +14,7 @@ const HabitCard = ({name,description,dueDate,progress,asscTasks,asscHabits}) => 
             {name[0].toUpperCase()||""}
           </div>
         </div>
-        <div className="col-md-10 habitTitle">
+        <div className="col-md-10 habitCardContent">
           {name}<span className="habitDate">{dueDate}</span>
           <div className="habitSubtitle">            
             {description}

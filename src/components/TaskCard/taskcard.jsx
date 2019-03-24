@@ -20,7 +20,7 @@ const TaskCard = ({ name, description, dueDate, importance }) => {
             {name[0].toUpperCase() || ""}
           </div>
         </div>
-        <div className="col-md-10 taskTitle">
+        <div className="col-md-10 taskCardContent">
           {name}
           <span className="taskDate">{dueDate}</span>
           <div className="taskSubtitle">{description}</div>

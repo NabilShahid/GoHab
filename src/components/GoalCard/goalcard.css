@@ -6,7 +6,7 @@
     transition: 0.1s;
     transform: scale(1);
     cursor: pointer;
-    color: #8c8c8c;
+    color: #a5a5a5;
 }
 .goalCard:hover{
     transition: 0.2s;
@@ -24,7 +24,7 @@
     line-height: 1.4em;
     overflow: hidden;
 }
-.goalTitle{
+.goalCardContent{
     font-weight: 500;
 }
 .goalDate{

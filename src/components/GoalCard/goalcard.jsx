@@ -41,7 +41,7 @@ const GoalCard = ({
             </Tooltip>
           
         </div>
-        <div className="col-md-10 goalTitle">
+        <div className="col-md-10 goalCardContent">
           {name}
           <span className="goalDate">{dueDate}</span>
           <div className="goalSubtitle">{description}</div>
