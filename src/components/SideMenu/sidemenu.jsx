@@ -11,23 +11,19 @@ import HEADEROPTIONS from "../../constants/headerOptions";
 import "./sidemenu.css";
 
 class SideMenu extends Component {
-  state = {   
-  };
+  state = {};
   selectedOption;
   componentWillMount() {
-    if(this.props.location.pathname==ROUTES[PAGEKEYS["MAIN"]])
-    {
+    if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
       this.props.updateHeader(HEADEROPTIONS[PAGEKEYS["HOME"]]);
-      this.selectedOption=[PAGEKEYS["HOME"]];
-    }
-    else{
+      this.selectedOption = [PAGEKEYS["HOME"]];
+    } else {
       const currPage = Object.keys(ROUTES).filter(key => {
         return ROUTES[key] == this.props.location.pathname;
       })[0];
       this.props.updateHeader(HEADEROPTIONS[currPage]);
-      this.selectedOption=[currPage];
+      this.selectedOption = [currPage];
     }
-    
   }
 
   render() {
@@ -94,41 +90,39 @@ class SideMenu extends Component {
     this.props.updateHeader(HEADEROPTIONS[key]);
     // key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
     this.updateHeaderFilterString(key);
-
   };
 
-
-  updateHeaderFilterString(key){
-    switch(key){
-      case PAGEKEYS["GOALS"]:{
+  updateHeaderFilterString(key) {
+    switch (key) {
+      case PAGEKEYS["GOALS"]: {
         this.props.updateFilterString(this.props.goalFilterString);
         this.filterHeaderIfValue(this.props.goalFilterString);
         break;
       }
-      case PAGEKEYS["TASKS"]:{
-        this.props.updateFilterString("this.props.goalFilterString");
+      case PAGEKEYS["TASKS"]: {
+        this.props.updateFilterString(this.props.taskFilterString);
         break;
       }
     }
   }
 
-  filterHeaderIfValue(value)
-  {
-    value&&document.getElementById("headerSearch").focus();
+  filterHeaderIfValue(value) {
+    if (value)
+      setTimeout(()=>{
+        document.getElementById("headerSearch").focus();
+      });
   }
 }
-
-
 
 /**
  * state to props mapping
  */
 const mapStateToProps = state => {
   return {
-    goalFilterString: state.goalReducer.CurrentFilterString
+    goalFilterString: state.goalReducer.CurrentFilterString,
+    taskFilterString: state.taskReducer.CurrentFilterString
   };
 };
-
 
 /**
  * dispatch to props mapping for updating header
@@ -138,13 +132,11 @@ const mapDispatchToProps = dispatch => {
     updateHeader: headerPayload => {
       dispatch(updateHeader(headerPayload));
     },
-    updateFilterString:(filterPayload)=>{
-      dispatch(updateFilterString(filterPayload))
+    updateFilterString: filterPayload => {
+      dispatch(updateFilterString(filterPayload));
     }
   };
 };
-
-
 
 export default connect(
   mapStateToProps,

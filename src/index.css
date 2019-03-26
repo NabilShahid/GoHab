@@ -209,3 +209,10 @@ code {
   border-radius: 3px;
   border: 1px solid #e2e2e2;
 }
+.controlTopPadding{
+  padding-top: 6px;
+}
+.cardsViewSelector{    
+  margin-bottom: 35px;
+  margin-top: 10px;
+}

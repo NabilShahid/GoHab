@@ -71,8 +71,10 @@ class CreateHabbitForm extends React.Component {
     if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
     else formValuesToSave.dueDate = false;
 
-    if (this.props.mode == "add")
+    if (this.props.mode == "add"){
+      
       //call to firebase taskOps addNewTask method
+      formValuesToSave.completed=false;
       this.props.firebase.taskOps
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
         .then(t => {
@@ -83,6 +85,7 @@ class CreateHabbitForm extends React.Component {
         .catch(error => {
           console.error("Error writing document: ", error);
         });
+    }
     else
       this.props.firebase.taskOps
         .updateTask("nabil110176@gmail.com", formValuesToSave, this.props.id)

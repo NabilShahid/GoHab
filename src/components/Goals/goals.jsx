@@ -43,7 +43,7 @@ class Goals extends Component {
     const {statusFilter,orderBy,order}=this.props;
     return (
       <div id="goalCardsDiv">
-        <div className="goalCardsViewSelector">
+        <div className="cardsViewSelector">
           <Row />
           <Row>
             <Col span={11}>
@@ -56,7 +56,7 @@ class Goals extends Component {
 
             <Col
               span={12}
-              className="goalControlTopPadding"
+              className="controlTopPadding"
               style={{ textAlign: "right" }}
             >
               <span className="miniLabel">Order By:</span>
@@ -74,7 +74,7 @@ class Goals extends Component {
             </Col>
             <Col
               span={1}
-              className="goalControlTopPadding"
+              className="controlTopPadding"
               style={{ textAlign: "center" }}
             >
               <div
@@ -158,7 +158,7 @@ class Goals extends Component {
     setTimeout(()=>{
       if(this.props.statusFilter!="all")
       {
-        this.changeGoalsStatus(this.statusFilter);
+        this.changeGoalsStatus(this.props.statusFilter);
       }
       else{
         this.changeOrderBy(this.props.orderBy);
