@@ -2,7 +2,6 @@ export default class AuthOperations {
   fAuth = null;
   constructor(fAuth) {
     this.fAuth = fAuth;
-    console.log(fAuth);
   }
 
   doSignInWithEmailAndPassword = (email, password) =>

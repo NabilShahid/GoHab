@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Modal, Tabs, Radio, Row, Col,Select,Op } from "antd";
+import React, { Component } from "react";
+import { Modal, Tabs, Radio, Row, Col, Select, Op } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
+import BucketList from "../BucketList/bucketlist";
 import {
   updateTask,
   sortTasks,
@@ -12,38 +13,44 @@ import CreateGoalForm from "../CreateGoalForm/creategoalform";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 class Tasks extends Component {
-    state = {
-        taskDialogInDom: false,
-        taskDialogVisible: false,
-        currentTaskOptions: {}
-      };
-      changeOrder() {
-        let { order, orderBy } = this.props;
-        if (order == "asc") order = "desc";
-        else order = "asc";
-        this.props.sortTasks({ order, orderBy });
-      }
-      changeOrderBy(v) {
-        const orderBy = v;
-        this.props.sortTasks({ order: this.props.order, orderBy });
-      }
-      changeTasksStatus(v){
-        this.props.filterTasksByStatus(v);
-      }
-      render() {
-        const {
-          taskDialogInDom,
-          taskDialogVisible,
-          currentTaskOptions
-        } = this.state;
-        const {statusFilter,orderBy,order}=this.props;
-        return (
-          <div id="taskCardsDiv">
-                  <div className="cardsViewSelector">
+  state = {
+    taskDialogInDom: false,
+    taskDialogVisible: false,
+    currentTaskOptions: {}
+  };
+  changeOrder() {
+    let { order, orderBy } = this.props;
+    if (order == "asc") order = "desc";
+    else order = "asc";
+    this.props.sortTasks({ order, orderBy });
+  }
+  changeOrderBy(v) {
+    const orderBy = v;
+    this.props.sortTasks({ order: this.props.order, orderBy });
+  }
+  changeTasksStatus(v) {
+    this.props.filterTasksByStatus(v);
+  }
+  render() {
+    const {
+      taskDialogInDom,
+      taskDialogVisible,
+      currentTaskOptions
+    } = this.state;
+    const { statusFilter, orderBy, order } = this.props;
+    return (
+      <div id="taskCardsDiv">
+        <div className="cardsViewSelector">
           <Row />
           <Row>
             <Col span={11}>
-              <Radio.Group value={statusFilter} buttonStyle="solid" onChange={e=>{this.changeTasksStatus(e.target.value)}}>
+              <Radio.Group
+                value={statusFilter}
+                buttonStyle="solid"
+                onChange={e => {
+                  this.changeTasksStatus(e.target.value);
+                }}
+              >
                 <Radio.Button value="all">All Tasks</Radio.Button>
                 <Radio.Button value="completed">Completed Goals</Radio.Button>
                 <Radio.Button value="pending">Pending Tasks</Radio.Button>
@@ -63,7 +70,9 @@ class Tasks extends Component {
                 value={orderBy}
               >
                 <Option value="dueDate">Due Date</Option>
-                {statusFilter=="all"&&<Option value="progress">Progress</Option>}
+                {statusFilter == "all" && (
+                  <Option value="progress">Progress</Option>
+                )}
                 <Option value="importance">Importance</Option>
                 <Option value="alphabetical">Alphabetical</Option>
               </Select>
@@ -85,148 +94,148 @@ class Tasks extends Component {
             </Col>
           </Row>
         </div>
-            {this.getTasksRows(this.props.tasks, 3)}
-            {taskDialogInDom && (
-              <Modal
-                visible={taskDialogVisible}
-                width="58%"
-                title={currentTaskOptions.name}
-                centered
-                bodyStyle={{ overflowY: "auto" }}
-                style={{ top: "10px" }}
-                onCancel={() => {
-                  this.closeHabitDialog();
-                }}
-                footer=""
-              >
-                <Tabs defaultActiveKey="1" tabPosition="left">
-                  <TabPane tab="Goal Info" key="1">
-                    <div className="hTabContent">{this.currentTaskDialog()}</div>
-                  </TabPane>
-                  <TabPane tab="Sub Habits" key="2">
-                    <div className="hTabContent" />
-                  </TabPane>
-                  <TabPane tab="Sub Tasks" key="3">
-                    <div className="hTabContent" />
-                  </TabPane>
-                </Tabs>
-              </Modal>
-            )}
+        {/* {this.getTasksRows(this.props.tasks, 3)} */}
+        <BucketList items={this.props.tasks}/>
+        {taskDialogInDom && (
+          <Modal
+            visible={taskDialogVisible}
+            width="58%"
+            title={currentTaskOptions.name}
+            centered
+            bodyStyle={{ overflowY: "auto" }}
+            style={{ top: "10px" }}
+            onCancel={() => {
+              this.closeHabitDialog();
+            }}
+            footer=""
+          >
+            <Tabs defaultActiveKey="1" tabPosition="left">
+              <TabPane tab="Goal Info" key="1">
+                <div className="hTabContent">{this.currentTaskDialog()}</div>
+              </TabPane>
+              <TabPane tab="Sub Habits" key="2">
+                <div className="hTabContent" />
+              </TabPane>
+              <TabPane tab="Sub Tasks" key="3">
+                <div className="hTabContent" />
+              </TabPane>
+            </Tabs>
+          </Modal>
+        )}
+      </div>
+    );
+  }
+
+  viewTaskDialog = task => {
+    let { taskDialogVisible, taskDialogInDom } = this.state;
+    const currentTaskOptions = { ...task };
+    taskDialogInDom = true;
+    taskDialogVisible = true;
+    this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions });
+  };
+
+  currentTaskDialog() {
+    const { currentTaskOptions } = this.state;
+    return (
+      <CreateGoalForm
+        dueDate={currentTaskOptions.dueDate}
+        name={currentTaskOptions.name}
+        description={currentTaskOptions.description}
+        importance={currentTaskOptions.importance}
+        progress={currentTaskOptions.progress}
+        mode="view"
+        setFormVisibility={this.setFormVisibility}
+        id={currentTaskOptions.id}
+        closeAndUpdate={this.updateLocalTask}
+      />
+    );
+  }
+
+  closeTaskDialog = () => {
+    this.setState({ goalDialogVisible: false });
+    setTimeout(() => {
+      this.setState({ goalDialogInDom: false });
+    }, 250);
+  };
+
+  updateLocalTask = task => {
+    this.props.updateTask(task);
+    this.closeTaskDialog();
+  };
+
+  /**
+   *returns rows of tasks, each row containing 1 to 3 cols if available
+   */
+  getTasksRows(tasks, colSize) {
+    let taskRows = [];
+    for (let i = 0; i < tasks.length; i += 3) {
+      if (tasks[i]) {
+        const taskRowArray = [];
+        for (let j = 0; j < colSize; j++) {
+          if (tasks[i + j]) taskRowArray.push(tasks[i + j]);
+        }
+
+        taskRows.push(
+          <div className="row" style={{ marginTop: "15px" }} key={i}>
+            {this.getTaskCols(taskRowArray, i)}
           </div>
         );
       }
-    
-      viewTaskDialog = task => {
-        let { taskDialogVisible, taskDialogInDom } = this.state;
-        const currentTaskOptions = { ...task };
-        taskDialogInDom = true;
-        taskDialogVisible = true;
-        this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions });
-      };
-    
-      currentTaskDialog() {
-        const { currentTaskOptions } = this.state;
-        return (
-          <CreateGoalForm
-            dueDate={currentTaskOptions.dueDate}
-            name={currentTaskOptions.name}
-            description={currentTaskOptions.description}
-            importance={currentTaskOptions.importance}
-            progress={currentTaskOptions.progress}
-            mode="view"
-            setFormVisibility={this.setFormVisibility}
-            id={currentTaskOptions.id}
-            closeAndUpdate={this.updateLocalTask}
+    }
+    return taskRows;
+  }
+
+  getTaskCols(rowArray, rowindex) {
+    let cellClass = "col-md-4";
+    if (rowindex > 0) cellClass += " goalsRow";
+    return rowArray.map(r => {
+      return (
+        <div
+          key={r.id}
+          className={cellClass}
+          onClick={() => {
+            this.viewTaskDialog(r);
+          }}
+        >
+          <TaskCard
+            name={r.name}
+            description={r.description}
+            dueDate={r.dueDate}
+            progress={r.progress}
+            importance={r.importance}
           />
-        );
-      }
-    
-      closeTaskDialog = () => {
-        this.setState({ goalDialogVisible: false });
-        setTimeout(() => {
-          this.setState({ goalDialogInDom: false });
-        }, 250);
-      };
-    
-      updateLocalTask = task => {
-        this.props.updateTask(task);
-        this.closeTaskDialog();
-      };
-    
-      /**
-       *returns rows of goals, each row containing 1 to 3 cols if available
-       */
-      getTasksRows(goals, colSize) {
-        let goalRows = [];
-        for (let i = 0; i < goals.length; i += 3) {
-          if (goals[i]) {
-            const goalRowArray = [];
-            for (let j = 0; j < colSize; j++) {
-              if (goals[i + j]) goalRowArray.push(goals[i + j]);
-            }
-    
-            goalRows.push(
-              <div className="row" style={{marginTop:"15px"}} key={i}>
-                {this.getRowCols(goalRowArray, i)}
-              </div>
-            );
-          }
-        }
-        return goalRows;
-      }
-    
-      getRowCols(rowArray, rowindex) {
-        let cellClass = "col-md-4";
-        if (rowindex > 0) cellClass += " goalsRow";
-        return rowArray.map(r => {
-          return (
-            <div
-              key={r.id}
-              className={cellClass}
-              onClick={() => {
-                this.viewTaskDialog(r);
-              }}
-            >
-              <TaskCard
-                name={r.name}
-                description={r.description}
-                dueDate={r.dueDate}
-                progress={r.progress}
-                importance={r.importance}
-              />
-            </div>
-          );
-        });
-      }
+        </div>
+      );
+    });
+  }
 }
 const mapStateToProps = state => {
-    return {
-      tasks: state.taskReducer.FilteredTasks,
-      statusFilter:state.taskReducer.CurrentStatusFilter,
-      order:state.taskReducer.CurrentOrder,
-      orderBy:state.taskReducer.CurrentOrderBy
-    };
+  return {
+    tasks: state.taskReducer.FilteredTasks,
+    statusFilter: state.taskReducer.CurrentStatusFilter,
+    order: state.taskReducer.CurrentOrder,
+    orderBy: state.taskReducer.CurrentOrderBy
   };
-  
-  /**
-   * dispatch to props mapping form updating user
-   */
-  const mapDispatchToProps = dispatch => {
-    return {   
-      updateTask: goalPayload => {
-        dispatch(updateTask(goalPayload));
-      },
-      sortTasks: taskPayload => {
-        dispatch(sortTasks(taskPayload));
-      },
-      filterTasksByStatus: statusPayload => {
-        dispatch(filterTasksByStatus(statusPayload));
-      }
-    };
+};
+
+/**
+ * dispatch to props mapping form updating user
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    updateTask: goalPayload => {
+      dispatch(updateTask(goalPayload));
+    },
+    sortTasks: taskPayload => {
+      dispatch(sortTasks(taskPayload));
+    },
+    filterTasksByStatus: statusPayload => {
+      dispatch(filterTasksByStatus(statusPayload));
+    }
   };
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withFirebase(Tasks));
- 
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withFirebase(Tasks));

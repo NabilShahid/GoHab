@@ -130,6 +130,10 @@ const taskReducer = (
       let newState = { ...state };
       newState.FilteredTasks = newState.Tasks;
       state = newState;
+      break;
+    }
+    default:{
+
     }
   }
   return state;
