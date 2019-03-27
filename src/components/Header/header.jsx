@@ -19,6 +19,7 @@ class Header extends Component {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
         this.props.filterGoals(value);
         this.props.updateFilterString(value);
+        break;
       }
       case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
         this.props.filterTasks(value);

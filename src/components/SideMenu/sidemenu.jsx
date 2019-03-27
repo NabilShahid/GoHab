@@ -101,6 +101,7 @@ class SideMenu extends Component {
       }
       case PAGEKEYS["TASKS"]: {
         this.props.updateFilterString(this.props.taskFilterString);
+        this.filterHeaderIfValue(this.props.taskFilterString);
         break;
       }
     }
