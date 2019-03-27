@@ -1,3 +1,4 @@
+import {getSortedGoalNamesAndIDs,getFilteredGoals} from "../services/methods/transformOps";
 const goalReducer = (
   state = {
     Goals: [],
@@ -5,7 +6,8 @@ const goalReducer = (
     CurrentFilterString: "",
     CurrentStatusFilter:"all",
     CurrentOrder:"asc",
-    CurrentOrderBy:"alphabetical"
+    CurrentOrderBy:"alphabetical",
+    SortedGoalNamesAndIDs:[]
   },
   action
 ) => {
@@ -14,6 +16,7 @@ const goalReducer = (
       let newState = { ...state };
       newState.Goals = [...action.payload];
       newState.FilteredGoals = [...action.payload];
+      newState.SortedGoalNames=getSortedGoalNamesAndIDs(action.payload);
       state = newState;
       break;
     }
@@ -126,19 +129,12 @@ const goalReducer = (
       let newState = { ...state };
       newState.FilteredGoals = JSON.parse(JSON.stringify(newState.Goals));
       state = newState;
+      break;
     }
+    default:{}
   }
   return state;
 };
 
-function getFilteredGoals(goals, filterString,currentStatus) {
-  return goals.filter(v => {
-    const goalStatus=v.progress==100?"completed":"pending";
-    return (
-      (v.name.toLowerCase() + "\t" + v.description.toLowerCase()).indexOf(
-        filterString
-      ) > -1&&(currentStatus=="all"||goalStatus==currentStatus)
-    );
-  });
-}
+
 export default goalReducer;
