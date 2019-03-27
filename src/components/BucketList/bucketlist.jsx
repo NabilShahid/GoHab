@@ -1,28 +1,34 @@
 import React from "react";
 import TaskCard from "../TaskCard/taskcard";
 import "./bucketlist.css";
-const BucketList = ({ items }) => {
-  console.log(items);
+const BucketList = ({ items, lists }) => {
+  console.log(lists);
   return (
-    <div>      
-      <div className="bList">
-        <div className="bListHeader">Under Goals: My Fucking Shit</div>
-        <div className="bListContent">
-          {items.map(item => {
-            return (
-              <div className="bListCard">
-                <TaskCard
-                  name={item.name}
-                  description={item.description}
-                  dueDate={item.dueDate}
-                  progress={item.progress}
-                  importance={item.importance}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+    <div className="bLists">
+      {lists.map(list => {
+        return (
+          <div className="bList">
+            <div className="bListHeader">{list.name}</div>
+            <div className="bListContent">
+              {items
+                .filter(item => item.parentGoal == list.id)
+                .map(filteredItem => {
+                  return (
+                    <div className="bListCard">
+                      <TaskCard
+                        name={filteredItem.name}
+                        description={filteredItem.description}
+                        dueDate={filteredItem.dueDate}
+                        progress={filteredItem.progress}
+                        importance={filteredItem.importance}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import {getSortedGoalNamesAndIDs,getFilteredGoals} from "../services/methods/transformOps";
+import {getSortedGoalNamesAndIDs,getFilteredGoals} from "../services/methods/goalMethods";
 const goalReducer = (
   state = {
     Goals: [],
@@ -16,7 +16,7 @@ const goalReducer = (
       let newState = { ...state };
       newState.Goals = [...action.payload];
       newState.FilteredGoals = [...action.payload];
-      newState.SortedGoalNames=getSortedGoalNamesAndIDs(action.payload);
+      newState.SortedGoalNamesAndIDs=getSortedGoalNamesAndIDs(action.payload);
       state = newState;
       break;
     }

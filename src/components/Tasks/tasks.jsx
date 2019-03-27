@@ -95,7 +95,7 @@ class Tasks extends Component {
           </Row>
         </div>
         {/* {this.getTasksRows(this.props.tasks, 3)} */}
-        <BucketList items={this.props.tasks}/>
+        <BucketList items={this.props.tasks} lists={this.props.goalNamesAndIDs}/>
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
@@ -187,7 +187,7 @@ class Tasks extends Component {
 
   getTaskCols(rowArray, rowindex) {
     let cellClass = "col-md-4";
-    if (rowindex > 0) cellClass += " goalsRow";
+    if (rowindex > 0) cellClass += " tasksRow";
     return rowArray.map(r => {
       return (
         <div
@@ -214,7 +214,8 @@ const mapStateToProps = state => {
     tasks: state.taskReducer.FilteredTasks,
     statusFilter: state.taskReducer.CurrentStatusFilter,
     order: state.taskReducer.CurrentOrder,
-    orderBy: state.taskReducer.CurrentOrderBy
+    orderBy: state.taskReducer.CurrentOrderBy,
+    goalNamesAndIDs:state.goalReducer.SortedGoalNamesAndIDs
   };
 };
 
