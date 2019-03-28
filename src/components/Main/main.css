@@ -18,6 +18,6 @@
     padding: 1.5%;
     margin-top: 65px;
     background-color: white;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: hidden;
+    overflow-x: hidden; */
 }
