@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  overflow: auto;
 }
 
 code {
@@ -215,4 +216,7 @@ code {
 .cardsViewSelector{    
   margin-bottom: 35px;
   margin-top: 10px;
+}
+.inheritHeight{
+  height: inherit;
 }

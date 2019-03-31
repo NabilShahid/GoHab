@@ -2,23 +2,26 @@
   display: flex;
   flex-direction: row;
   /* height: 100%; */
+  padding: 5px;  
   min-width: 1px;
   width: 100%;
+  height: 70vh;
+  min-width: 300px;
+  overflow: auto;
+
+  
 }
 .bList {
-  display: flex;
-  flex: 1 1 100%;
-  height: 100%;
-  flex-direction: column;
+ /* overflow-y: hidden; */
+ /* height: 100%; */
+ 
 }
 .bList:not(:first-child) {
   margin-left: 50px;
 }
 .bListContent{
-    width: 300px;
-      display: flex; 
-    flex: 1 1 100%;
-    flex-direction: column;
+    width: 320px;  
+    padding: 0px 10px;
 }
 .bListCard {
   margin-top: 35px;

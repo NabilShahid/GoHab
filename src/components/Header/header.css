@@ -1,9 +1,8 @@
 
 #headerAbDiv{  
-  position: absolute;
-  width: 100%;
-  padding-top: 0.6%;
-  padding-bottom: 6%;
+ 
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: white;
 }
 #headerTitle{

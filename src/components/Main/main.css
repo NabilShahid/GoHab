@@ -1,23 +1,34 @@
 
-.createCards{
-    padding: 0% 1.5% !important;
-}
-#headerContainer{
+
+#mainContainer{
     /* background-image: url("../../assets/images/output-onlinejpgtools.jpg"); */
     background-position: center;
     background-size: cover;
     background: linear-gradient(160deg, #4c4c4c 0%, #252525 100%);
+    /* padding: 0 !important; */
+    flex: 7;
+    flex-basis: 0px;
+    
 }
-#contentContainer{
+
+#sideContainer{
+    /* padding-right: 0 !important; */
+    flex: 2;
+}
+#headerContainer{
+    height: 12%;
+}
+
+#bodyContainer{
     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
-    margin-left: 2%;
-    margin-right: 2%; 
+    margin-left: 20px;
+    margin-right: 20px; 
     border-radius: 5px;
     color: #4c4c4c;
-    height: 90vh;
-    padding: 1.5%;
-    margin-top: 65px;
+    padding: 20px;
     background-color: white;
+    height: 88%;
+    /* margin-top: 5px; */
     /* overflow-y: hidden;
     overflow-x: hidden; */
 }

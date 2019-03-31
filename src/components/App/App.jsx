@@ -27,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <Router history={history}>
-        <div>
+        <div className="inheritHeight">
           {/* All first level routes */}
           <Switch>
           <Route exact path="/" render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />} />

@@ -26,16 +26,19 @@ class MainBase extends Component {
   state = {};
   render() {
     return (
-      <div>        
-        <Row>
-          <Col span={5}>
+      <div className="inheritHeight">        
+        <div className="row inheritHeight" style={{display:"flex"}}>
+          <div id="sideContainer" className="inheritHeight">
             <UserTile />
             <SideMenu />
-          </Col>
+          </div>
 
-          <Col span={19} id="headerContainer">
+          <div id="mainContainer" className="inheritHeight">
+          <div id="headerContainer">
             <Header/>
-            <div id="contentContainer">
+
+          </div>
+            <div id="bodyContainer">
              {/* Second level routes */}
               <Router history={history}>
                 <Switch>
@@ -47,8 +50,8 @@ class MainBase extends Component {
                 </Switch>
               </Router>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }
