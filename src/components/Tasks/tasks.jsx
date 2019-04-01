@@ -116,8 +116,14 @@ class Tasks extends Component {
             footer=""
           >
             <CreateTaskForm
-              mode="add"
+              mode="view"
               setFormVisibility={this.setFormVisibility}
+              name={currentTaskOptions.name}
+              description={currentTaskOptions.description}
+              dueDate={currentTaskOptions.dueDate}
+              id={currentTaskOptions.id}              
+              importance={currentTaskOptions.importance}
+              closeAndUpdate={this.updateLocalTask}
             />
           </Modal>
         )}
@@ -133,22 +139,7 @@ class Tasks extends Component {
     this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions });
   };
 
-  currentTaskDialog() {
-    const { currentTaskOptions } = this.state;
-    return (
-      <CreateTaskForm
-        dueDate={currentTaskOptions.dueDate}
-        name={currentTaskOptions.name}
-        description={currentTaskOptions.description}
-        importance={currentTaskOptions.importance}
-        progress={currentTaskOptions.progress}
-        mode="view"
-        setFormVisibility={this.setFormVisibility}
-        id={currentTaskOptions.id}
-        closeAndUpdate={this.updateLocalTask}
-      />
-    );
-  }
+
 
   closeTaskDialog = () => {
     this.setState({ taskDialogVisible: false });
@@ -223,8 +214,8 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    updateTask: goalPayload => {
-      dispatch(updateTask(goalPayload));
+    updateTask: taskPayload => {
+      dispatch(updateTask(taskPayload));
     },
     sortTasks: taskPayload => {
       dispatch(sortTasks(taskPayload));

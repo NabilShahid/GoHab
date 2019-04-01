@@ -8,11 +8,11 @@ export default class TaskOperations {
         .collection(`UsersInfo/${useremail}/Tasks`)
         .add(taskObj);
     }
-    updateTask(useremail,goalObj,goalId){
+    updateTask(useremail,taskObj,taskId){
       return this.fDatabase
       .collection(`UsersInfo/${useremail}/Tasks`)
-      .doc(goalId)
-      .set(goalObj);
+      .doc(taskId)
+      .set(taskObj);
     }
     retrieveAllTasks(useremail) {
       return this.fDatabase.collection(`UsersInfo/${useremail}/Tasks`).get();
