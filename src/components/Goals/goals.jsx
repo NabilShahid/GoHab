@@ -8,7 +8,7 @@ import {
   filterGoalsByStatus
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import { Modal, Tabs, Radio, Row, Col, Icon } from "antd";
+import { Modal, Tabs, Radio, Row, Col } from "antd";
 import "./goals.css";
 import { Select } from "antd";
 
@@ -89,7 +89,9 @@ class Goals extends Component {
             </Col>
           </Row>
         </div>
-        {this.getGoalRows(this.props.goals, 3)}
+        <div className="actualCardsDiv">
+          {this.getGoalRows(this.props.goals, 3)}
+      </div>
         {goalDialogInDom && (
           <Modal
             visible={goalDialogVisible}

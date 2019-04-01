@@ -1,4 +1,7 @@
 @import "./constants/styleVars.css";
+html{
+  height: 100%;
+}
 body {
   margin: 0;
   padding: 0;

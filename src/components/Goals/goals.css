@@ -5,3 +5,12 @@
 .goalsRow{
     margin-top: 10px;
 }
+#goalCardsDiv{
+    height: 100%;
+}
+.actualCardsDiv{
+    height: 85%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}

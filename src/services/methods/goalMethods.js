@@ -10,6 +10,10 @@ export function getSortedGoalNamesAndIDs(goals) {
       id: g.id
     };
   });
+  goalNameAndIDs.unshift({
+    name:"Standalone Tasks",
+    id:""
+  })
   return goalNameAndIDs;
 }
 

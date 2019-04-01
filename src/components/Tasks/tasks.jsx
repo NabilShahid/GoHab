@@ -10,6 +10,7 @@ import {
 } from "../../actions/taskActions";
 import TaskCard from "../TaskCard/taskcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
+import "./tasks.css";
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 class Tasks extends Component {
@@ -94,7 +95,9 @@ class Tasks extends Component {
             </Col>
           </Row>
         </div>
-        {/* {this.getTasksRows(this.props.tasks, 3)} */}
+        {/* <div className="actualCardsDiv">
+        {this.getTasksRows(this.props.tasks, 3)}
+        </div> */}
         <BucketList items={this.props.tasks} lists={this.props.goalNamesAndIDs}/>
         {taskDialogInDom && (
           <Modal

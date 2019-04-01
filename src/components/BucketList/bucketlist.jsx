@@ -9,6 +9,7 @@ const BucketList = ({ items, lists }) => {
         return (
           <div className="bList">
             <div className="bListHeader">{list.name}</div>
+            <div className="bListAddButton"><i className="fa fa-plus"></i></div>
             <div className="bListContent">
               {items
                 .filter(item => item.parentGoal == list.id)

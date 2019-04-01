@@ -1,19 +1,14 @@
 .bLists {
   display: flex;
   flex-direction: row;
-  /* height: 100%; */
   padding: 5px;  
-  min-width: 1px;
-  width: 100%;
-  height: 70vh;
-  min-width: 300px;
-  overflow: auto;
-
-  
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 88%;
 }
 .bList {
- /* overflow-y: hidden; */
- /* height: 100%; */
+ height: 100%;
+
  
 }
 .bList:not(:first-child) {
@@ -21,15 +16,29 @@
 }
 .bListContent{
     width: 320px;  
-    padding: 0px 10px;
+    padding: 0px 20px;
+    height: 80%;
+    overflow-y: auto;
+    box-shadow: 0px 0px 1px 1px #f5f3f3;
+    border-radius: 3px;
 }
 .bListCard {
   margin-top: 35px;
  }
- /* asana style */
-/* display: flex;
-flex: 1 1 100%;
-flex-direction: column;
-margin: -2px -10px 0;
-overflow-x: hidden;
-padding: 2px 10px 0; */
+ .bListHeader{
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #969696;
+ }
+.bListAddButton{
+  text-align: center;
+  padding: 0px 0px;
+  margin-bottom: 10px;
+  color: #4da751;
+  font-size: 20px;
+  box-shadow: 0px 0px 1px 1px #e8e6e6;
+  border-radius: 3px;
+  cursor: pointer;
+}

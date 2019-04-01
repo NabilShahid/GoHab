@@ -27,7 +27,7 @@ class MainBase extends Component {
   render() {
     return (
       <div className="inheritHeight">        
-        <div className="row inheritHeight" style={{display:"flex"}}>
+        <div className="inheritHeight" style={{display:"flex"}}>
           <div id="sideContainer" className="inheritHeight">
             <UserTile />
             <SideMenu />

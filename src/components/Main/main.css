@@ -6,17 +6,19 @@
     background-size: cover;
     background: linear-gradient(160deg, #4c4c4c 0%, #252525 100%);
     /* padding: 0 !important; */
-    flex: 7;
-    flex-basis: 0px;
-    
+     flex: 0 0 79%;
+    overflow: hidden ;
+    display: flex;
+    flex-direction: column;
 }
 
 #sideContainer{
     /* padding-right: 0 !important; */
-    flex: 2;
+    flex: 0 0 21%;
+    
 }
 #headerContainer{
-    height: 12%;
+    flex: 0 0 12%;
 }
 
 #bodyContainer{
@@ -27,8 +29,15 @@
     color: #4c4c4c;
     padding: 20px;
     background-color: white;
-    height: 88%;
+    flex: 0 0 87%;
+    
     /* margin-top: 5px; */
-    /* overflow-y: hidden;
-    overflow-x: hidden; */
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
+
+@media  screen and (max-width: 500px) { 
+   #sideContainer{
+        width:75px;
+    }
+  }

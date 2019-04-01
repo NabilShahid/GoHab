@@ -11,3 +11,12 @@
 .taskControlTopPadding{
     padding-top: 6px;
 }
+#taskCardsDiv{
+    height: 100%;
+}
+.actualCardsDiv{
+    height: 85%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
