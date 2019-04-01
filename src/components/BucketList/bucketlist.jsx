@@ -1,9 +1,8 @@
 import React from "react";
 import TaskCard from "../TaskCard/taskcard";
 import "./bucketlist.css";
-const BucketList = ({ items, lists }) => {
-  console.log(lists);
-  return (
+const BucketList = ({ items, lists, openDialog }) => {
+   return (
     <div className="bLists">
       {lists.map(list => {
         return (
@@ -15,7 +14,7 @@ const BucketList = ({ items, lists }) => {
                 .filter(item => item.parentGoal == list.id)
                 .map(filteredItem => {
                   return (
-                    <div className="bListCard">
+                    <div className="bListCard" onClick={()=>{openDialog(filteredItem)}}>
                       <TaskCard
                         name={filteredItem.name}
                         description={filteredItem.description}

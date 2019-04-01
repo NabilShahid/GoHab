@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Tabs, Radio, Row, Col, Select, Op } from "antd";
+import { Modal, Radio, Row, Col, Select, Op } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
 import BucketList from "../BucketList/bucketlist";
@@ -9,9 +9,8 @@ import {
   filterTasksByStatus
 } from "../../actions/taskActions";
 import TaskCard from "../TaskCard/taskcard";
-import CreateGoalForm from "../CreateGoalForm/creategoalform";
+import CreateTaskForm from "../CreateTaskForm/createtaskform";
 import "./tasks.css";
-const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 class Tasks extends Component {
   state = {
@@ -98,31 +97,28 @@ class Tasks extends Component {
         {/* <div className="actualCardsDiv">
         {this.getTasksRows(this.props.tasks, 3)}
         </div> */}
-        <BucketList items={this.props.tasks} lists={this.props.goalNamesAndIDs}/>
+        <BucketList
+          items={this.props.tasks}
+          lists={this.props.goalNamesAndIDs}
+          openDialog={this.viewTaskDialog}
+        />
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
-            width="58%"
+            width="53%"
             title={currentTaskOptions.name}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
             onCancel={() => {
-              this.closeHabitDialog();
+              this.closeTaskDialog();
             }}
             footer=""
           >
-            <Tabs defaultActiveKey="1" tabPosition="left">
-              <TabPane tab="Goal Info" key="1">
-                <div className="hTabContent">{this.currentTaskDialog()}</div>
-              </TabPane>
-              <TabPane tab="Sub Habits" key="2">
-                <div className="hTabContent" />
-              </TabPane>
-              <TabPane tab="Sub Tasks" key="3">
-                <div className="hTabContent" />
-              </TabPane>
-            </Tabs>
+            <CreateTaskForm
+              mode="add"
+              setFormVisibility={this.setFormVisibility}
+            />
           </Modal>
         )}
       </div>
@@ -140,7 +136,7 @@ class Tasks extends Component {
   currentTaskDialog() {
     const { currentTaskOptions } = this.state;
     return (
-      <CreateGoalForm
+      <CreateTaskForm
         dueDate={currentTaskOptions.dueDate}
         name={currentTaskOptions.name}
         description={currentTaskOptions.description}
@@ -155,9 +151,9 @@ class Tasks extends Component {
   }
 
   closeTaskDialog = () => {
-    this.setState({ goalDialogVisible: false });
+    this.setState({ taskDialogVisible: false });
     setTimeout(() => {
-      this.setState({ goalDialogInDom: false });
+      this.setState({ taskDialogInDom: false });
     }, 250);
   };
 
@@ -218,7 +214,7 @@ const mapStateToProps = state => {
     statusFilter: state.taskReducer.CurrentStatusFilter,
     order: state.taskReducer.CurrentOrder,
     orderBy: state.taskReducer.CurrentOrderBy,
-    goalNamesAndIDs:state.goalReducer.SortedGoalNamesAndIDs
+    goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs
   };
 };
 
