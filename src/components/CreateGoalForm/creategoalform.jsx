@@ -163,10 +163,10 @@ class CreateGoalForm extends React.Component {
   setInitFormValues() {
     const { name, description, importance, progress, dueDate } = this.props;
     const { formValues } = this.state;
-    formValues.name = name && name;
-    formValues.description = description && description;
-    formValues.importance = importance && importance;
-    formValues.progress = progress && progress;
+    formValues.name = name || "";
+    formValues.description = description || "";
+    formValues.importance = importance || 1;
+    formValues.progress = progress || 25;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;

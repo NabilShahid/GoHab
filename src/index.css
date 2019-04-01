@@ -136,6 +136,16 @@ code {
   border: unset;
   border-bottom: 1px solid #d0d0d0;
 }
+
+.ghtFormContainer .ant-select-enabled .ant-select-selection{
+  border: unset;
+  border-bottom: 1px solid #d0d0d0;
+}
+.ghtFormContainer .ant-select-disabled .ant-select-selection{
+  color: #4c4c4c;
+  background-color: white;
+  border: unset;
+}
 .ghtFormContainer .progress-bar {
   background-color: #fd3a3a;
 }

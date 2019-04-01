@@ -1,9 +1,26 @@
 #userDiv{
     background-color: #f1f1f1;
     color: #4c4c4c;
-    padding: 3% 5% 0% 5%;
-}
-#userLogo {
-    width: 43px;
-    margin: 5px;
+    padding: 5%;
+    width: 100%;
+    text-align: center;
+ }
+#gohabLogo {
+    width: 35px;
+    margin: 6px 6px 6px -22%;
+    
   }
+  #gohabTitle{
+    font-size:17px;
+    font-weight:500;
+  }
+  @media  screen and (max-width: 500px) { 
+    #gohabTitle{
+        display: none;
+      }
+      #gohabLogo {
+        
+        margin-left: 0;
+        
+      }
+   }

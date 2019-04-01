@@ -117,12 +117,12 @@ class Tasks extends Component {
           >
             <CreateTaskForm
               mode="view"
-              setFormVisibility={this.setFormVisibility}
               name={currentTaskOptions.name}
               description={currentTaskOptions.description}
               dueDate={currentTaskOptions.dueDate}
               id={currentTaskOptions.id}              
               importance={currentTaskOptions.importance}
+              parentGoal={currentTaskOptions.parentGoal}
               closeAndUpdate={this.updateLocalTask}
             />
           </Modal>

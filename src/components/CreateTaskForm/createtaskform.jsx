@@ -174,11 +174,12 @@ class CreateHabbitForm extends React.Component {
    * set values of form in case of existing task for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, dueDate } = this.props;
+    const { name, description, importance, dueDate, parentGoal } = this.props;
     const { formValues } = this.state;
-    formValues.name = name && name;
-    formValues.description = description && description;
-    formValues.importance = importance && importance;
+    formValues.name = name || "";
+    formValues.description = description || "";
+    formValues.importance = importance || 1;
+    formValues.parentGoal = parentGoal || "";
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -285,7 +286,8 @@ class CreateHabbitForm extends React.Component {
               <div className="col-md-9">
                 <Select
                   showSearch
-                  defaultValue="none"
+                  value={formValues.parentGoal}
+                  disabled={disabledForm}
                   style={{ width: "100%" }}
                   size="small"
                   onChange={this.setParentGoal}
@@ -296,7 +298,7 @@ class CreateHabbitForm extends React.Component {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  <Option value="none">None</Option>
+                  <Option value="">None</Option>
                   {goals.map(g => {
                     return <Option value={g.id}>{g.name}</Option>;
                   })}

@@ -140,7 +140,6 @@ class Goals extends Component {
         importance={currentGoalOptions.importance}
         progress={currentGoalOptions.progress}
         mode="view"
-        setFormVisibility={this.setFormVisibility}
         id={currentGoalOptions.id}
         closeAndUpdate={this.updateLocalGoal}
       />
