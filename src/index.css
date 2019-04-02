@@ -201,12 +201,13 @@ code {
 .cardAvatar {
   color: white;
   text-align: center;
-  width: 43px;
+  width: 37px;
   margin-top: -20px;
   font-size: 18px;
-  padding-bottom: 6px;
-  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-top: 1px;
   border-radius: 2px;
+  margin-left: -2px;
   font-weight: 500;
 }
 .miniLabel {
@@ -232,4 +233,17 @@ code {
 }
 .inheritHeight{
   height: inherit;
+}
+
+.markIcon{
+  margin: 13px 0 5px 7px;
+  width: 21px; 
+  transition: 0.1s;
+  transform: scale(1)    
+}
+.markIcon:hover{
+  margin: 13px 0 5px 7px;
+  width: 21px; 
+  transition: 0.1s;
+  transform: scale(1.15)   
 }

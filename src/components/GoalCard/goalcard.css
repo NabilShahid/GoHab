@@ -7,10 +7,11 @@
     transform: scale(1);
     cursor: pointer;
     color: #a5a5a5;
+    margin-top: 5px;
 }
 .goalCard:hover{
     transition: 0.2s;
-    transform: scale(1.04);
+    transform: scale(1.03);
     background-color: #f1f1f1;
      
 }
@@ -73,16 +74,5 @@
     font-size: 11px;
     margin-top: 1%;
 }
-.markIcon{
-    font-size: 18px !important;
-    padding-top: 11px;
-    padding-left: 13px;   
-    
-}
 
-.markChecked{    
-    color: #35d618;
-}
-.markUnchecked{
-    color:#a2a2a2;
-}
+

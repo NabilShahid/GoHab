@@ -31,13 +31,13 @@ const taskReducer = (
 
     case "UPDATE_TASK": {
       let newState = { ...state };
-      let taskIndex = newState.Tasks.findIndex(g => {
-        return g.id == action.payload.id;
+      let taskIndex = newState.Tasks.findIndex(t => {
+        return t.id == action.payload.id;
       });
       newState.Tasks[taskIndex] = action.payload;
 
-      taskIndex = newState.FilteredTasks.findIndex(g => {
-        return g.id == action.payload.id;
+      taskIndex = newState.FilteredTasks.findIndex(t => {
+        return t.id == action.payload.id;
       });
       newState.FilteredTasks[taskIndex] = action.payload;
       state = newState;

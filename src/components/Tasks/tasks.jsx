@@ -56,7 +56,7 @@ class Tasks extends Component {
                 }}
               >
                 <Radio.Button value="all">All Tasks</Radio.Button>
-                <Radio.Button value="completed">Completed Goals</Radio.Button>
+                <Radio.Button value="completed">Completed Tasks</Radio.Button>
                 <Radio.Button value="pending">Pending Tasks</Radio.Button>
               </Radio.Group>
             </Col>
@@ -105,6 +105,7 @@ class Tasks extends Component {
           items={this.props.tasks}
           lists={this.props.goalNamesAndIDs}
           openDialog={this.viewTaskDialog}
+          markItem={this.markTask}
         />
         {taskDialogInDom && (
           <Modal
@@ -159,6 +160,15 @@ class Tasks extends Component {
   updateLocalTask = task => {
     this.props.updateTask(task);
     this.closeTaskDialog();
+    setTimeout(()=>{
+      if(this.props.statusFilter!="all")
+      {
+        this.changeTasksStatus(this.props.statusFilter);
+      }
+      else{
+        this.changeOrderBy(this.props.orderBy);
+      }
+    },1500)
   };
 
   /**
@@ -199,13 +209,28 @@ class Tasks extends Component {
             name={r.name}
             description={r.description}
             dueDate={r.dueDate}
-            progress={r.progress}
+            completed={r.completed}
             importance={r.importance}
+            markTask={this.markTask}
+            id={r.id}
           />
         </div>
       );
     });
   }
+
+  markTask = id => {
+    let currTask = this.props.tasks.find(v => v.id == id);
+    if (currTask.completed) currTask.completed = false;
+    else currTask.completed = true;
+    this.updateLocalTask(currTask);
+    this.props.firebase.taskOps
+      .updateTask("nabil110176@gmail.com", currTask, id)
+      .then(() => {})
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  };
 }
 const mapStateToProps = state => {
   return {

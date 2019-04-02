@@ -1,7 +1,7 @@
 import React from "react";
 import TaskCard from "../TaskCard/taskcard";
 import "./bucketlist.css";
-const BucketList = ({ items, lists, openDialog }) => {
+const BucketList = ({ items, lists, openDialog, markItem }) => {
    return (
     <div className="bLists">
       {lists.map(list => {
@@ -21,6 +21,9 @@ const BucketList = ({ items, lists, openDialog }) => {
                         dueDate={filteredItem.dueDate}
                         progress={filteredItem.progress}
                         importance={filteredItem.importance}
+                        id={filteredItem.id}
+                        completed={filteredItem.completed}
+                        markTask={markItem}
                       />
                     </div>
                   );
