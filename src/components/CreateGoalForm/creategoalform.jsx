@@ -153,7 +153,7 @@ class CreateGoalForm extends React.Component {
   componentWillMount() {
     if (this.props.mode == "view") {
       this.setInitFormValues();
-      this.state.disabledForm = true;
+      this.setState({disabledForm:true});
     }
   }
 

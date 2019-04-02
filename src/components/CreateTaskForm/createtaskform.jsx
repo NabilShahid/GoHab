@@ -80,7 +80,9 @@ class CreateHabbitForm extends React.Component {
         .then(t => {
           this.setState({ loading: false });
           this.props.addTask({ ...formValuesToSave, id: t.id });
-          this.props.setFormVisibility("Task", false);
+          if(this.props.close)this.props.close();
+          
+          else this.props.setFormVisibility("Task", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
@@ -166,7 +168,14 @@ class CreateHabbitForm extends React.Component {
   componentWillMount() {
     if (this.props.mode == "view") {
       this.setInitFormValues();
-      this.state.disabledForm = true;
+      this.setState({disabledForm:true});
+    }
+    else if(this.props.mode=="add"&&this.props.parentGoal)
+    {
+      let formValues=this.state;
+      formValues.parentGoal=this.props.parentGoal;
+      formValues.dueDate=moment().toDate();
+      this.setState({formValues});
     }
   }
 

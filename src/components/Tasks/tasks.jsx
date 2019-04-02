@@ -16,7 +16,9 @@ class Tasks extends Component {
   state = {
     taskDialogInDom: false,
     taskDialogVisible: false,
-    currentTaskOptions: {}
+    currentTaskOptions: {},
+    taskViewMode:"view",
+    taskDialogTitle:""
   };
   changeOrder() {
     let { order, orderBy } = this.props;
@@ -35,7 +37,9 @@ class Tasks extends Component {
     const {
       taskDialogInDom,
       taskDialogVisible,
-      currentTaskOptions
+      currentTaskOptions,
+      taskViewMode,
+      taskDialogTitle
     } = this.state;
     const { statusFilter, orderBy, order } = this.props;
     return (
@@ -106,7 +110,7 @@ class Tasks extends Component {
           <Modal
             visible={taskDialogVisible}
             width="53%"
-            title={currentTaskOptions.name}
+            title={taskDialogTitle}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
@@ -116,7 +120,7 @@ class Tasks extends Component {
             footer=""
           >
             <CreateTaskForm
-              mode="view"
+              mode={taskViewMode}
               name={currentTaskOptions.name}
               description={currentTaskOptions.description}
               dueDate={currentTaskOptions.dueDate}
@@ -124,6 +128,7 @@ class Tasks extends Component {
               importance={currentTaskOptions.importance}
               parentGoal={currentTaskOptions.parentGoal}
               closeAndUpdate={this.updateLocalTask}
+              close={this.closeTaskDialog}
             />
           </Modal>
         )}
@@ -131,12 +136,15 @@ class Tasks extends Component {
     );
   }
 
-  viewTaskDialog = task => {
+  viewTaskDialog = (task,parentGoal) => {
+    const taskViewMode=task?"view":"add";
+    const taskDialogTitle=task?task.name:"Create Task"
     let { taskDialogVisible, taskDialogInDom } = this.state;
     const currentTaskOptions = { ...task };
+    if(parentGoal)currentTaskOptions.parentGoal=parentGoal;
     taskDialogInDom = true;
     taskDialogVisible = true;
-    this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions });
+    this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions, taskViewMode, taskDialogTitle });
   };
 
 

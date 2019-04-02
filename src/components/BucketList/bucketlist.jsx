@@ -8,13 +8,13 @@ const BucketList = ({ items, lists, openDialog }) => {
         return (
           <div className="bList">
             <div className="bListHeader">{list.name}</div>
-            <div className="bListAddButton"><i className="fa fa-plus"></i></div>
+            <div className="bListAddButton" onClick={()=>{openDialog(false,list.id)}}><i className="fa fa-plus"></i></div>
             <div className="bListContent">
               {items
                 .filter(item => item.parentGoal == list.id)
                 .map(filteredItem => {
                   return (
-                    <div className="bListCard" onClick={()=>{openDialog(filteredItem)}}>
+                    <div className="bListCard" onClick={()=>{openDialog(filteredItem,false)}}>
                       <TaskCard
                         name={filteredItem.name}
                         description={filteredItem.description}

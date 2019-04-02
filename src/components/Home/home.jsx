@@ -34,14 +34,6 @@ class Home extends Component {
     }
   };
 
-  /**
-   * add or remove from dom
-   */
-  addRemoveFormdom = () => {
-    const aFormInDom = false;
-    this.setState({ aFormInDom });
-  };
-
   render() {
     const { anyFormOpen, formInDom, createDialogTitle } = this.state;
     return (
