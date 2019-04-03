@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Radio, Row, Col, Select, Op } from "antd";
+import { Modal, Radio, Row, Col, Select, message } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
 import BucketList from "../BucketList/bucketlist";
@@ -221,9 +221,15 @@ class Tasks extends Component {
 
   markTask = id => {
     let currTask = this.props.tasks.find(v => v.id == id);
-    if (currTask.completed) currTask.completed = false;
-    else currTask.completed = true;
+    if (currTask.completed)   
+    currTask.completed = false;
+    else
+    {
+      currTask.completed = true;      
+      message.success(`Marked ${currTask.name} as completed!`);
+    }
     this.updateLocalTask(currTask);
+    
     this.props.firebase.taskOps
       .updateTask("nabil110176@gmail.com", currTask, id)
       .then(() => {})

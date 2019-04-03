@@ -247,3 +247,6 @@ code {
   transition: 0.1s;
   transform: scale(1.15)   
 }
+.ant-message .anticon {   
+  top: -3px !important;
+}

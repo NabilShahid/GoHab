@@ -8,7 +8,7 @@ import {
   filterGoalsByStatus
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import { Modal, Tabs, Radio, Row, Col } from "antd";
+import { Modal, Tabs, Radio, Row, Col,message } from "antd";
 import "./goals.css";
 import { Select } from "antd";
 
@@ -219,8 +219,12 @@ class Goals extends Component {
 
   markGoal = id => {
     let currGoal = this.props.goals.find(v => v.id == id);
-    if (currGoal.progress == 100) currGoal.progress = 0;
-    else currGoal.progress = 100;
+    if (currGoal.progress == 100) currGoal.progress = 0;     
+    else
+    {
+      currGoal.progress = 100;      
+      message.success(`Marked ${currGoal.name} as achieved!`);
+    }
     this.updateLocalGoal(currGoal);
     this.props.firebase.goalOps
       .updateGoal("nabil110176@gmail.com", currGoal, id)
