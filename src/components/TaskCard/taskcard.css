@@ -6,7 +6,7 @@
     transition: 0.1s;
     transform: scale(1);
     cursor: pointer;
-    color: #a5a5a5;
+    color: #9a9a9a;
 }
 .taskCard:hover{
     transition: 0.2s;

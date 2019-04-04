@@ -4,26 +4,27 @@
   padding: 5px;  
   overflow-x: auto;
   overflow-y: hidden;
-  height: 88%;
+  height: 89%;
 }
 .bList {
  height: 100%;
-
- 
+  flex: 0 0 360px;
 }
 .bList:not(:first-child) {
   margin-left: 50px;
 }
 .bListContent{
-    width: 340px;  
+    /* width: 360px;   */
     padding: 0px 20px;
-    height: 80%;
+    height: 85%;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0px 0px 1px 1px #f5f3f3;
     border-radius: 3px;
 }
 .bListCard {
-  margin-top: 35px;
+  margin-top: 25px;
+  margin-bottom: 25px;
  }
  .bListHeader{
   font-weight: 500;
