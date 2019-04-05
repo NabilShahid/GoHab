@@ -17,8 +17,9 @@ class Tasks extends Component {
     taskDialogInDom: false,
     taskDialogVisible: false,
     currentTaskOptions: {},
-    taskViewMode:"view",
-    taskDialogTitle:""
+    taskViewMode: "view",
+    taskDialogTitle: "",
+    viewTypeFilter: "bucket"
   };
   changeOrder() {
     let { order, orderBy } = this.props;
@@ -33,13 +34,19 @@ class Tasks extends Component {
   changeTasksStatus(v) {
     this.props.filterTasksByStatus(v);
   }
+  changeViewType(v) {
+    const viewTypeFilter =
+      this.state.viewTypeFilter === "bucket" ? "grid" : "bucket";
+    this.setState({ viewTypeFilter });
+  }
   render() {
     const {
       taskDialogInDom,
       taskDialogVisible,
       currentTaskOptions,
       taskViewMode,
-      taskDialogTitle
+      taskDialogTitle,
+      viewTypeFilter
     } = this.state;
     const { statusFilter, orderBy, order } = this.props;
     return (
@@ -60,9 +67,29 @@ class Tasks extends Component {
                 <Radio.Button value="pending">Pending Tasks</Radio.Button>
               </Radio.Group>
             </Col>
+            <Col span={6}>
+              <Radio.Group
+                value={viewTypeFilter}
+                buttonStyle="solid"
+                onChange={e => {
+                  this.changeViewType(e.target.value);
+                }}
+              >
+                <Radio.Button value="bucket">
+                  <i
+                    style={{ transform: "rotate(90deg)" }}
+                    className="tViewSwitcherIcon fa fa-align-left"
+                  />
+                  Bucket View
+                </Radio.Button>
+                <Radio.Button value="grid">
+                  <i className="tViewSwitcherIcon  fa fa-th-large" />Grid View
+                </Radio.Button>
+              </Radio.Group>
+            </Col>
 
             <Col
-              span={12}
+              span={6}
               className="controlTopPadding"
               style={{ textAlign: "right" }}
             >
@@ -98,15 +125,19 @@ class Tasks extends Component {
             </Col>
           </Row>
         </div>
-        {/* <div className="actualCardsDiv">
-        {this.getTasksRows(this.props.tasks, 3)}
-        </div> */}
-        <BucketList
-          items={this.props.tasks}
-          lists={this.props.goalNamesAndIDs}
-          openDialog={this.viewTaskDialog}
-          markItem={this.markTask}
-        />
+        {viewTypeFilter === "bucket" ? (
+          <BucketList
+            items={this.props.tasks}
+            lists={this.props.goalNamesAndIDs}
+            openDialog={this.viewTaskDialog}
+            markItem={this.markTask}
+          />
+        ) : (
+          <div className="actualCardsDiv">
+            {this.getTasksRows(this.props.tasks, 3)}
+          </div>
+        )}
+
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
@@ -125,7 +156,7 @@ class Tasks extends Component {
               name={currentTaskOptions.name}
               description={currentTaskOptions.description}
               dueDate={currentTaskOptions.dueDate}
-              id={currentTaskOptions.id}              
+              id={currentTaskOptions.id}
               importance={currentTaskOptions.importance}
               parentGoal={currentTaskOptions.parentGoal}
               closeAndUpdate={this.updateLocalTask}
@@ -137,18 +168,22 @@ class Tasks extends Component {
     );
   }
 
-  viewTaskDialog = (task,parentGoal) => {
-    const taskViewMode=task?"view":"add";
-    const taskDialogTitle=task?task.name:"Create Task"
+  viewTaskDialog = (task, parentGoal) => {
+    const taskViewMode = task ? "view" : "add";
+    const taskDialogTitle = task ? task.name : "Create Task";
     let { taskDialogVisible, taskDialogInDom } = this.state;
     const currentTaskOptions = { ...task };
-    if(parentGoal)currentTaskOptions.parentGoal=parentGoal;
+    if (parentGoal) currentTaskOptions.parentGoal = parentGoal;
     taskDialogInDom = true;
     taskDialogVisible = true;
-    this.setState({ taskDialogVisible, taskDialogInDom, currentTaskOptions, taskViewMode, taskDialogTitle });
+    this.setState({
+      taskDialogVisible,
+      taskDialogInDom,
+      currentTaskOptions,
+      taskViewMode,
+      taskDialogTitle
+    });
   };
-
-
 
   closeTaskDialog = () => {
     this.setState({ taskDialogVisible: false });
@@ -160,15 +195,13 @@ class Tasks extends Component {
   updateLocalTask = task => {
     this.props.updateTask(task);
     this.closeTaskDialog();
-    setTimeout(()=>{
-      if(this.props.statusFilter!="all")
-      {
+    setTimeout(() => {
+      if (this.props.statusFilter != "all") {
         this.changeTasksStatus(this.props.statusFilter);
-      }
-      else{
+      } else {
         this.changeOrderBy(this.props.orderBy);
       }
-    },1500)
+    }, 1500);
   };
 
   /**
@@ -221,15 +254,13 @@ class Tasks extends Component {
 
   markTask = id => {
     let currTask = this.props.tasks.find(v => v.id == id);
-    if (currTask.completed)   
-    currTask.completed = false;
-    else
-    {
-      currTask.completed = true;      
+    if (currTask.completed) currTask.completed = false;
+    else {
+      currTask.completed = true;
       message.success(`Marked ${currTask.name} as completed!`);
     }
     this.updateLocalTask(currTask);
-    
+
     this.props.firebase.taskOps
       .updateTask("nabil110176@gmail.com", currTask, id)
       .then(() => {})
