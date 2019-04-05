@@ -4,7 +4,6 @@ import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { updateFilterString } from "../../actions/headerActions";
 import "./header.css";
-import logo from "../../assets/images/logo_withoutText.png";
 import PAGEKEYS from "../../constants/pageKeys";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import { Row, Col, Badge, Drawer, Input } from "antd";
@@ -24,7 +23,9 @@ class Header extends Component {
       case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
         this.props.filterTasks(value);
         this.props.updateFilterString(value);
+        break;
       }
+      default:{}
     }
   }
 

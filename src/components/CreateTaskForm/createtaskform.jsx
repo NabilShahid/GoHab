@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import Joi from "joi";
 import {
-  Modal,
   Button,
   Input,
   Rate,
-  Icon,
-  Slider,
   DatePicker,
   Checkbox,
-  Popconfirm,
-  message,
   Tooltip,
   Select
 } from "antd";

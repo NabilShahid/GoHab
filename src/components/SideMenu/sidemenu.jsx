@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Menu, Icon } from "antd";
+import { Menu } from "antd";
 import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { updateHeader, updateFilterString } from "../../actions/headerActions";
-import { removeGoalFilter } from "../../actions/goalActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
 import HEADEROPTIONS from "../../constants/headerOptions";
@@ -104,12 +103,14 @@ class SideMenu extends Component {
         this.filterHeaderIfValue(this.props.taskFilterString);
         break;
       }
+      default: {
+      }
     }
   }
 
   filterHeaderIfValue(value) {
     if (value)
-      setTimeout(()=>{
+      setTimeout(() => {
         document.getElementById("headerSearch").focus();
       });
   }
