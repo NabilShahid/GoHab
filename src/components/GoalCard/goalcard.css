@@ -1,17 +1,16 @@
 .goalCard{
-    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#ffc16d);
+    background: linear-gradient(160deg,#ffffff 80%,#f7d7ac);
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
     transition: 0.1s;
-    transform: scale(1);
     cursor: pointer;
     color: #9a9a9a;
     margin-top: 5px;
 }
 .goalCard:hover{
     transition: 0.2s;
-    transform: scale(1.03);
+    transform: translateY(-4px);
     background-color: #f1f1f1;
      
 }
@@ -26,7 +25,7 @@
     overflow: hidden;
 }
 .goalCardContent{
-    font-weight: 500;
+    font-weight: normal;
 }
 .goalDate{
     font-weight: 400;
@@ -66,7 +65,7 @@
 }
 .asscCount{
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
 }
 .goalCard .progressNumber{
     font-weight: normal;

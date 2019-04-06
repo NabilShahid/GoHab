@@ -1,16 +1,15 @@
 .taskCard{
-    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#93de97);
+    background: linear-gradient(160deg,#ffffff 80%,#c6ffc8);
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
     transition: 0.1s;
-    transform: scale(1);
     cursor: pointer;
     color: #9a9a9a;
 }
 .taskCard:hover{
     transition: 0.2s;
-    transform: scale(1.04);
+    transform: translateY(-4px);
     background-color: #f1f1f1;
      
 }
@@ -30,7 +29,7 @@
     overflow: hidden;
 }
 .taskCardContent{
-    font-weight: 500;
+    font-weight: normal;
 }
 .taskDate{
     font-weight: 400;

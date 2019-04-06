@@ -18,7 +18,7 @@ const TaskCard = ({
   return (
     <div
       className="taskCard"
-      style={completed ? { background: "#dedede", color: "#adadad" } : {}}
+      style={completed ? { color: "rgb(195, 195, 195)", background: "rrgb(249, 249, 249)"  } : {}}
     >
       <div className="row">
         <div className="col-md-2">

@@ -21,7 +21,7 @@ const GoalCard = ({
   return (
     <div
       className="goalCard"
-      style={progress == 100 ? { background: "#dedede", color: "#adadad" } : {}}
+      style={progress == 100 ? { color: "rgb(195, 195, 195)", background: "rrgb(249, 249, 249)" } : {}}
     >
       <div className="row">
         <div className="col-md-2">
