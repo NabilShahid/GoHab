@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, Badge, Button, Icon, Tooltip, Rate } from "antd";
 import moment from "moment";
-import markedIcon from "../../assets/images/checkIconMarked.png";
-import unmarkedIcon from "../../assets/images/checkIconUnmarked.png";
+import markedIcon from "../../assets/images/checkIconMarked1.png";
+import unmarkedIcon from "../../assets/images/checkIcon1.png";
 
 import "./goalcard.css";
 const GoalCard = ({
@@ -21,7 +21,7 @@ const GoalCard = ({
   return (
     <div
       className="goalCard"
-      style={progress == 100 ? { color: "rgb(195, 195, 195)", background: "rrgb(249, 249, 249)" } : {}}
+      style={progress == 100 ? { color: "rgb(195, 195, 195)", background: "rgb(251, 251, 251)" } : {}}
     >
       <div className="row">
         <div className="col-md-2">
@@ -63,7 +63,7 @@ const GoalCard = ({
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: progress + "%" }}
+                style={{ width: progress + "%",background:(progress==100?"#ffc373":"#fea321") }}
                 aria-valuenow={progress}
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -80,7 +80,7 @@ const GoalCard = ({
                 value={importance}
                 style={{
                   fontSize: 19,
-                  color: "#ffa726",
+                  color:(progress==100?"#ffc373":"#fea321"),
                   marginTop: "5px"
                 }}
               />

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { filterGoals } from "../../actions/goalActions";
+import { filterGoals,toggleGoalFilter } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { updateFilterString } from "../../actions/headerActions";
 import "./header.css";
@@ -25,12 +25,28 @@ class Header extends Component {
         this.props.updateFilterString(value);
         break;
       }
-      default:{}
+      default: {
+      }
+    }
+  }
+
+  toggleFilter(){
+    switch (this.props.title) {
+      case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
+        this.props.toggleGoalFilter();
+        break;
+      }
+      case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
+        this.props.toggleTaskFilter();
+        break;
+      }
+      default: {
+      }
     }
   }
 
   render() {
-    const { search } = this.props;
+    const { search, filter } = this.props;
     return (
       <div id="headerAbDiv">
         <Row>
@@ -39,7 +55,7 @@ class Header extends Component {
             <i className={this.props.icon} style={{ marginRight: "2%" }} />
             {this.props.title}
           </Col>
-          <Col id="headerOptions" span={11}>
+          <Col id="headerOptions" span={filter?10:11}>
             {search && (
               <Search
                 id="headerSearch"
@@ -52,7 +68,15 @@ class Header extends Component {
               />
             )}
           </Col>
-          <Col style={{ textAlign: "right", paddingTop: "14px" }} span={1}>
+          {filter && (
+            <Col span={1} className="headerIconContainer">
+              <i className="fa fa-filter" id="bellIcon"  onClick={e => {
+                  this.toggleFilter();
+                }} />
+            </Col>
+          )}
+
+          <Col className="headerIconContainer" span={1}>
             <Badge count={12} showZero>
               <i
                 onClick={() => {
@@ -91,6 +115,7 @@ const mapStateToProps = state => {
     title: state.headerReducer.Title,
     icon: state.headerReducer.Icon,
     search: state.headerReducer.Search,
+    filter: state.headerReducer.Filter,
     currentFilterString: state.headerReducer.CurrentFilterString
   };
 };
@@ -108,6 +133,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateFilterString: filterPayload => {
       dispatch(updateFilterString(filterPayload));
+    },    
+    toggleGoalFilter: () => {
+      dispatch(toggleGoalFilter());
     }
   };
 };

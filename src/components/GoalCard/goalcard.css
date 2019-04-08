@@ -48,7 +48,7 @@
     border-radius: 2px;
 }
 .goalCard .progress-bar{
-     background: var(--goal-color);
+     /* background: var(--goal-color); */
      transition: width 0.2s ease;
 }
 .goalAssociations{

@@ -40,3 +40,8 @@ export function filterGoalsByStatus(statusPayload){
         payload: statusPayload
     };
 }
+export function toggleGoalFilter(){
+    return {
+        type: "TOGGLE_GOAL_FILTER"
+    };
+}
