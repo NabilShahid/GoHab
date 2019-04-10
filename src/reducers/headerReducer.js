@@ -3,6 +3,7 @@ const headerReducer = (
     Icon: "",
     Title: "",
     Search: false,
+    Filter:false,
     CurrentFilterString:""
   },
   action

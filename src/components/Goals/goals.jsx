@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import { withFirebase } from "../../services/firebase/context";
+import unmarkedIcon from "../../assets/images/4ad49ce59d.svg";
 import {
   updateGoal,
   sortGoals,
   filterGoalsByStatus
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import { Modal, Tabs, Radio, Row, Col,message } from "antd";
+import { Modal, Tabs, Radio, Row, Col, message, Popover } from "antd";
 import "./goals.css";
 import { Select } from "antd";
 
@@ -31,7 +32,7 @@ class Goals extends Component {
     const orderBy = v;
     this.props.sortGoals({ order: this.props.order, orderBy });
   }
-  changeGoalsStatus(v){
+  changeGoalsStatus(v) {
     this.props.filterGoalsByStatus(v);
   }
   render() {
@@ -40,14 +41,62 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions
     } = this.state;
-    const {statusFilter,orderBy,order}=this.props;
+    const { statusFilter, orderBy, order, filterVisible } = this.props;
     return (
       <div id="goalCardsDiv">
-        <div className="cardsViewSelector">
-          <Row />
+        <div className="row">
+          <div className="col-md-8" />
+          <div className="col-md-4">
+            <div
+              className="filterPopup"
+              style={{ display: filterVisible ? "block" : "none" }}
+            >
+              <div className="filterPopupHeader">Filters</div>
+              <div className="row">
+                <div className="col-md-12">
+                  <Radio.Group
+                    value={statusFilter}
+                    buttonStyle="solid"
+                    size="small"
+                    onChange={e => {
+                      this.changeGoalsStatus(e.target.value);
+                    }}
+                  >
+                    <Radio.Button value="all">All Goals</Radio.Button>
+                    <Radio.Button value="completed">
+                      Achieved Goals
+                    </Radio.Button>
+                    <Radio.Button value="pending">Pending Goals</Radio.Button>
+                  </Radio.Group>
+                </div>
+              </div>
+              <div className="row" style={{ marginTop: "10px" }}>
+                <div className="col-md-2">Sort</div>
+                <div className="col-md-10">
+                  <Select
+                    onChange={e => this.changeOrderBy(e)}
+                    value={orderBy}
+                    size="small"
+                    style={{ width: "100%" }}
+                  >
+                    <Option value="dueDate">Due Date</Option>
+                    {statusFilter == "all" && (
+                      <Option value="progress">Progress</Option>
+                    )}
+                    <Option value="importance">Importance</Option>
+                    <Option value="alphabetical">Alphabetical</Option>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <img src={unmarkedIcon}/> */}
+        {/* <Row />
           <Row>
             <Col span={11}>
-              <Radio.Group value={statusFilter} buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
+              <Radio.Group value={statusFilter} size="small" buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
                 <Radio.Button value="all">All Goals</Radio.Button>
                 <Radio.Button value="completed">Achieved Goals</Radio.Button>
                 <Radio.Button value="pending">Pending Goals</Radio.Button>
@@ -87,11 +136,10 @@ class Goals extends Component {
                 {order == "desc" && <i className="fa fa-sort-down" />}
               </div>
             </Col>
-          </Row>
-        </div>
+          </Row> */}
         <div className="actualCardsDiv">
           {this.getGoalRows(this.props.goals, 3)}
-      </div>
+        </div>
         {goalDialogInDom && (
           <Modal
             visible={goalDialogVisible}
@@ -156,15 +204,13 @@ class Goals extends Component {
   updateLocalGoal = goal => {
     this.props.updateGoal(goal);
     this.closeGoalDialog();
-    setTimeout(()=>{
-      if(this.props.statusFilter!="all")
-      {
+    setTimeout(() => {
+      if (this.props.statusFilter != "all") {
         this.changeGoalsStatus(this.props.statusFilter);
-      }
-      else{
+      } else {
         this.changeOrderBy(this.props.orderBy);
       }
-    },1500)
+    }, 1500);
   };
 
   /**
@@ -219,10 +265,9 @@ class Goals extends Component {
 
   markGoal = id => {
     let currGoal = this.props.goals.find(v => v.id == id);
-    if (currGoal.progress == 100) currGoal.progress = 0;     
-    else
-    {
-      currGoal.progress = 100;      
+    if (currGoal.progress == 100) currGoal.progress = 0;
+    else {
+      currGoal.progress = 100;
       message.success(`Marked ${currGoal.name} as achieved!`);
     }
     this.updateLocalGoal(currGoal);
@@ -238,9 +283,10 @@ class Goals extends Component {
 const mapStateToProps = state => {
   return {
     goals: state.goalReducer.FilteredGoals,
-    statusFilter:state.goalReducer.CurrentStatusFilter,
-    order:state.goalReducer.CurrentOrder,
-    orderBy:state.goalReducer.CurrentOrderBy
+    statusFilter: state.goalReducer.CurrentStatusFilter,
+    order: state.goalReducer.CurrentOrder,
+    orderBy: state.goalReducer.CurrentOrderBy,
+    filterVisible: state.goalReducer.FilterMenuVisible
   };
 };
 

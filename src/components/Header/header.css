@@ -1,33 +1,32 @@
-
-#headerAbDiv{  
- 
+#headerAbDiv {
   padding-top: 10px;
   padding-bottom: 10px;
   color: white;
 }
-#headerTitle{
+#headerTitle {
   font-size: 32px;
   font-weight: bold;
   padding-right: 3%;
 }
-#bellIcon{
+#bellIcon {
   font-size: 25px;
   cursor: pointer;
-   
- }
- #headerOptions{
+}
+#headerOptions {
   padding-top: 11px;
   text-align: right;
- }
+}
 
- #headerOptions input{
+#headerOptions input {
   background-color: #656565;
   color: white;
   width: 80%;
   border: unset;
- }
- #headerOptions input:focus{
- 
+}
+#headerOptions input:focus {
   width: 100%;
-  
- }
+}
+.headerIconContainer {
+  text-align: right;
+  padding-top: 14px;
+}

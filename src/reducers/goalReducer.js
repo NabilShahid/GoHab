@@ -7,7 +7,8 @@ const goalReducer = (
     CurrentStatusFilter:"all",
     CurrentOrder:"asc",
     CurrentOrderBy:"alphabetical",
-    SortedGoalNamesAndIDs:[]
+    SortedGoalNamesAndIDs:[],
+    FilterMenuVisible:false
   },
   action
 ) => {
@@ -128,6 +129,13 @@ const goalReducer = (
     case "REMOVE_GOAL_FILTER": {
       let newState = { ...state };
       newState.FilteredGoals = JSON.parse(JSON.stringify(newState.Goals));
+      state = newState;
+      break;
+    }
+    case "TOGGLE_GOAL_FILTER": {
+      let newState = { ...state };
+      if(newState.FilterMenuVisible)newState.FilterMenuVisible=false;
+      else newState.FilterMenuVisible=true;
       state = newState;
       break;
     }
