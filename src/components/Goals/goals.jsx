@@ -8,9 +8,19 @@ import {
   filterGoalsByStatus
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import { Modal, Tabs, Radio, Row, Col, message, Popover } from "antd";
+import {
+  Modal,
+  Tabs,
+  Radio,
+  Row,
+  Col,
+  message,
+  Popover,
+  Button,
+  Icon,
+  Select
+} from "antd";
 import "./goals.css";
-import { Select } from "antd";
 
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
@@ -40,55 +50,73 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions
     } = this.state;
-    const { statusFilter, orderBy, order, filterVisible } = this.props;
+    const { statusFilter, orderBy, order } = this.props;
     return (
       <div id="goalCardsDiv">
-        <div className="row">
-          <div className="col-md-8">
-          </div>
-          <div className="col-md-4">
-            <div
-              className="filterPopup"
-              style={{ display: filterVisible ? "block" : "none" }}
+        <div className="row cardsViewSelector">
+          <div className="col-md-11" style={{ padding: 0 }}>
+            <Button
+              type="primary"
+              className="noColorButton"
+              style={{ background: "var(--goal-color)" }}
             >
-              <div className="filterPopupHeader">Filters</div>
-              <div className="row">
-                <div className="col-md-12">
-                  <Radio.Group
-                    value={statusFilter}
-                    buttonStyle="solid"
-                    size="small"
-                    onChange={e => {
-                      this.changeGoalsStatus(e.target.value);
-                    }}
-                  >
-                    <Radio.Button value="all">All Goals</Radio.Button>
-                    <Radio.Button value="completed">
-                      Achieved Goals
-                    </Radio.Button>
-                    <Radio.Button value="pending">Pending Goals</Radio.Button>
-                  </Radio.Group>
+              <i className="fa fa-plus" style={{ marginRight: "10px" }} />
+              Add Goal
+            </Button>
+          </div>
+          <div className="col-md-1 cardsFilterIconContainer">
+            <Popover
+              placement="bottomLeft"
+              title="Fitlers"
+              content={
+                <div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <Radio.Group
+                        value={statusFilter}
+                        buttonStyle="solid"
+                        size="small"
+                        onChange={e => {
+                          this.changeGoalsStatus(e.target.value);
+                        }}
+                      >
+                        <Radio.Button value="all">All Goals</Radio.Button>
+                        <Radio.Button value="completed">
+                          Achieved Goals
+                        </Radio.Button>
+                        <Radio.Button value="pending">
+                          Pending Goals
+                        </Radio.Button>
+                      </Radio.Group>
+                    </div>
+                  </div>
+                  <div className="row" style={{ marginTop: "10px" }}>
+                    <div className="col-md-2">Sort</div>
+                    <div className="col-md-10">
+                      <Select
+                        onChange={e => this.changeOrderBy(e)}
+                        value={orderBy}
+                        size="small"
+                        style={{ width: "100%" }}
+                      >
+                        <Option value="dueDate">Due Date</Option>
+                        {statusFilter == "all" && (
+                          <Option value="progress">Progress</Option>
+                        )}
+                        <Option value="importance">Importance</Option>
+                        <Option value="alphabetical">Alphabetical</Option>
+                      </Select>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="row" style={{ marginTop: "10px" }}>
-                <div className="col-md-2">Sort</div>
-                <div className="col-md-10">
-                  <Select
-                    onChange={e => this.changeOrderBy(e)}
-                    value={orderBy}
-                    size="small"
-                    style={{ width: "100%" }}
-                  >
-                    <Option value="dueDate">Due Date</Option>
-                    {statusFilter == "all" && (
-                      <Option value="progress">Progress</Option>
-                    )}
-                    <Option value="importance">Importance</Option>
-                    <Option value="alphabetical">Alphabetical</Option>
-                  </Select>
-                </div>
-              </div>
-            </div>
+              }
+              trigger="click"
+            >
+           
+                <i className="fa fa-filter cardsFilterIcon" style={{color:"#fd960f" }} />
+                 
+             
+            </Popover>
           </div>
         </div>
 
@@ -285,8 +313,7 @@ const mapStateToProps = state => {
     goals: state.goalReducer.FilteredGoals,
     statusFilter: state.goalReducer.CurrentStatusFilter,
     order: state.goalReducer.CurrentOrder,
-    orderBy: state.goalReducer.CurrentOrderBy,
-    filterVisible: state.goalReducer.FilterMenuVisible
+    orderBy: state.goalReducer.CurrentOrderBy
   };
 };
 

@@ -1,14 +1,16 @@
-import {getSortedGoalNamesAndIDs,getFilteredGoals} from "../services/methods/goalMethods";
+import {
+  getSortedGoalNamesAndIDs,
+  getFilteredGoals
+} from "../services/methods/goalMethods";
 const goalReducer = (
   state = {
     Goals: [],
     FilteredGoals: [],
     CurrentFilterString: "",
-    CurrentStatusFilter:"all",
-    CurrentOrder:"asc",
-    CurrentOrderBy:"alphabetical",
-    SortedGoalNamesAndIDs:[],
-    FilterMenuVisible:false
+    CurrentStatusFilter: "all",
+    CurrentOrder: "asc",
+    CurrentOrderBy: "alphabetical",
+    SortedGoalNamesAndIDs: []
   },
   action
 ) => {
@@ -17,7 +19,7 @@ const goalReducer = (
       let newState = { ...state };
       newState.Goals = [...action.payload];
       newState.FilteredGoals = [...action.payload];
-      newState.SortedGoalNamesAndIDs=getSortedGoalNamesAndIDs(action.payload);
+      newState.SortedGoalNamesAndIDs = getSortedGoalNamesAndIDs(action.payload);
       state = newState;
       break;
     }
@@ -61,8 +63,12 @@ const goalReducer = (
     }
     case "FILTER_GOALS_BY_STATUS": {
       let newState = { ...state };
-      newState.FilteredGoals = getFilteredGoals(newState.Goals,newState.CurrentFilterString,action.payload)
-      newState.CurrentStatusFilter=action.payload;
+      newState.FilteredGoals = getFilteredGoals(
+        newState.Goals,
+        newState.CurrentFilterString,
+        action.payload
+      );
+      newState.CurrentStatusFilter = action.payload;
       state = newState;
       break;
     }
@@ -119,9 +125,9 @@ const goalReducer = (
         newState.Goals,
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
-      );      
-      newState.CurrentOrder=action.payload.order;
-      newState.CurrentOrderBy=action.payload.orderBy;
+      );
+      newState.CurrentOrder = action.payload.order;
+      newState.CurrentOrderBy = action.payload.orderBy;
       state = newState;
       break;
     }
@@ -132,17 +138,11 @@ const goalReducer = (
       state = newState;
       break;
     }
-    case "TOGGLE_GOAL_FILTER": {
-      let newState = { ...state };
-      if(newState.FilterMenuVisible)newState.FilterMenuVisible=false;
-      else newState.FilterMenuVisible=true;
-      state = newState;
-      break;
+
+    default: {
     }
-    default:{}
   }
   return state;
 };
-
 
 export default goalReducer;

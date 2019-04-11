@@ -5,6 +5,7 @@ import CreateHabitForm from "../CreateHabitForm/createhabitform";
 import CreateTaskForm from "../CreateTaskForm/createtaskform";
 
 import { Modal } from "antd";
+import "./home.css";
 class Home extends Component {
   state = {
     anyFormOpen: false,
