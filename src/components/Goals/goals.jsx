@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
 import { withFirebase } from "../../services/firebase/context";
-import unmarkedIcon from "../../assets/images/4ad49ce59d.svg";
 import {
   updateGoal,
   sortGoals,
@@ -45,7 +44,8 @@ class Goals extends Component {
     return (
       <div id="goalCardsDiv">
         <div className="row">
-          <div className="col-md-8" />
+          <div className="col-md-8">
+          </div>
           <div className="col-md-4">
             <div
               className="filterPopup"

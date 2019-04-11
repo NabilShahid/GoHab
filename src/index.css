@@ -258,6 +258,7 @@ code {
   padding: 13px;
   font-size: 13px;
   color: #828282;
+  top:-10px;
 }
 .filterPopupHeader{
   font-weight: bold;
