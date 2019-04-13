@@ -1,6 +1,7 @@
 import {
   getSortedGoalNamesAndIDs,
-  getFilteredGoals
+  getFilteredGoals,
+  getSortedGoals
 } from "../services/methods/goalMethods";
 const goalReducer = (
   state = {
@@ -8,7 +9,6 @@ const goalReducer = (
     FilteredGoals: [],
     CurrentFilterString: "",
     CurrentStatusFilter: "all",
-    CurrentOrder: "asc",
     CurrentOrderBy: "alphabetical",
     SortedGoalNamesAndIDs: []
   },
@@ -74,59 +74,13 @@ const goalReducer = (
     }
     case "SORT_GOALS": {
       let newState = { ...state };
-      const { order, orderBy } = action.payload;
-      switch (orderBy) {
-        case "alphabetical": {
-          newState.Goals = newState.Goals.sort((a, b) => {
-            if (a.name.toLowerCase() < b.name.toLowerCase())
-              return order == "asc" ? -1 : 1;
-            else if (a.name.toLowerCase() > b.name.toLowerCase())
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "progress": {
-          newState.Goals = newState.Goals.sort((a, b) => {
-            if (a.progress < b.progress) return order == "asc" ? -1 : 1;
-            else if (a.progress > b.progress) return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "dueDate": {
-          newState.Goals = newState.Goals.sort((a, b) => {
-            const aDate = new Date(a.dueDate);
-            const bDate = new Date(b.dueDate);
-            if (aDate == "Invalid Date") aDate = new Date(0);
-            if (bDate == "Invalid Date") bDate = new Date(0);
-
-            if (new Date(aDate) < new Date(bDate))
-              return order == "asc" ? -1 : 1;
-            else if (new Date(aDate) > new Date(bDate))
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "importance": {
-          newState.Goals = newState.Goals.sort((a, b) => {
-            if (a.importance < b.importance) return order == "asc" ? -1 : 1;
-            else if (a.importance > b.importance)
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        default: {
-        }
-      }
+      const { orderBy } = action.payload;
+      newState.Goals = getSortedGoals(newState.Goals, orderBy);
       newState.FilteredGoals = getFilteredGoals(
         newState.Goals,
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
-      );
-      newState.CurrentOrder = action.payload.order;
+      );      
       newState.CurrentOrderBy = action.payload.orderBy;
       state = newState;
       break;

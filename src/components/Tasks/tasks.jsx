@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Radio, Row, Col, Select, message, Button } from "antd";
+import { Modal, Radio, Row, Col, Select, message, Button, Popover } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
 import BucketList from "../BucketList/bucketlist";
@@ -21,15 +21,10 @@ class Tasks extends Component {
     taskDialogTitle: "",
     viewTypeFilter: "bucket"
   };
-  changeOrder() {
-    let { order, orderBy } = this.props;
-    if (order == "asc") order = "desc";
-    else order = "asc";
-    this.props.sortTasks({ order, orderBy });
-  }
+
   changeOrderBy(v) {
     const orderBy = v;
-    this.props.sortTasks({ order: this.props.order, orderBy });
+    this.props.sortTasks({ orderBy });
   }
   changeTasksStatus(v) {
     this.props.filterTasksByStatus(v);
@@ -48,22 +43,86 @@ class Tasks extends Component {
       taskDialogTitle,
       viewTypeFilter
     } = this.state;
-    const { statusFilter, orderBy, order } = this.props;
+    const { statusFilter, orderBy } = this.props;
     return (
       <div id="taskCardsDiv">
         <div className="row cardsViewSelector">
-          <div className="col-md-8" style={{ padding: 0 }}>
+          <div className="col-md-11" style={{ padding: 0 }}>
             <Button
               type="primary"
               className="noColorButton"
-              style={{ background: "var(--task-color)"}}
+              style={{ background: "var(--task-color)" }}
             >
-              <i className="fa fa-plus" style={{ marginRight: "10px" }} />Add
-              Task
+              <i className="fa fa-plus" style={{ marginRight: "10px" }} />
+              Add Task
             </Button>
           </div>
-          <div className="col-md-4">
-            
+          <div className="col-md-1 cardsFilterIconContainer">
+            <Popover
+              placement="bottomLeft"
+              title="Change View"
+              content={
+                <div>
+                  <div className="cardFilterLabel">Tasks View:</div>
+                  <div>
+                    <Radio.Group
+                      value={viewTypeFilter}
+                      buttonStyle="solid"
+                      size="small"
+                      onChange={e => {
+                        this.changeViewType(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="bucket">
+                        <i
+                          style={{ transform: "rotate(90deg)" }}
+                          className="tViewSwitcherIcon fa fa-align-left"
+                        />
+                        Bucket View
+                      </Radio.Button>
+                      <Radio.Button value="grid">
+                        <i className="tViewSwitcherIcon  fa fa-th-large" />
+                        Grid View
+                      </Radio.Button>
+                    </Radio.Group>
+                  </div>
+                  <div className="cardFilterLabel">Show Tasks:</div>
+                  <div>
+                    <Radio.Group
+                      value={statusFilter}
+                      buttonStyle="solid"
+                      size="small"
+                      onChange={e => {
+                        this.changeTasksStatus(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="all">All</Radio.Button>
+                      <Radio.Button value="completed">Completed</Radio.Button>
+                      <Radio.Button value="pending">Pending</Radio.Button>
+                    </Radio.Group>
+                  </div>
+                  <div className="cardFilterLabel">Sort:</div>
+                  <div>
+                    <Select
+                      onChange={e => this.changeOrderBy(e)}
+                      style={{ width: "100%" }}
+                      size="small"
+                      value={orderBy}
+                    >
+                      <Option value="dueDate">Due Date</Option>
+                      <Option value="importance">Importance</Option>
+                      <Option value="alphabetical">Alphabetical</Option>
+                    </Select>
+                  </div>
+                </div>
+              }
+              trigger="click"
+            >
+              <i
+                className="fa fa-cogs cardsFilterIcon"
+                style={{ color: "#fd960f" }}
+              />
+            </Popover>
           </div>
         </div>
         {/* <div className="cardsViewSelector">
@@ -288,7 +347,6 @@ const mapStateToProps = state => {
   return {
     tasks: state.taskReducer.FilteredTasks,
     statusFilter: state.taskReducer.CurrentStatusFilter,
-    order: state.taskReducer.CurrentOrder,
     orderBy: state.taskReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs
   };

@@ -31,15 +31,9 @@ class Goals extends Component {
     goalDialogVisible: false,
     currentGoalOptions: {}
   };
-  changeOrder() {
-    let { order, orderBy } = this.props;
-    if (order == "asc") order = "desc";
-    else order = "asc";
-    this.props.sortGoals({ order, orderBy });
-  }
   changeOrderBy(v) {
     const orderBy = v;
-    this.props.sortGoals({ order: this.props.order, orderBy });
+    this.props.sortGoals({orderBy });
   }
   changeGoalsStatus(v) {
     this.props.filterGoalsByStatus(v);
@@ -50,7 +44,7 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions
     } = this.state;
-    const { statusFilter, orderBy, order } = this.props;
+    const { statusFilter, orderBy } = this.props;
     return (
       <div id="goalCardsDiv">
         <div className="row cardsViewSelector">
@@ -67,11 +61,14 @@ class Goals extends Component {
           <div className="col-md-1 cardsFilterIconContainer">
             <Popover
               placement="bottomLeft"
-              title="Fitlers"
+              title="Change View"
               content={
                 <div>
-                  <div className="row">
-                    <div className="col-md-12">
+                  
+                  <div className="cardFilterLabel">
+                    Show Goals:
+                  </div>
+                    <div>
                       <Radio.Group
                         value={statusFilter}
                         buttonStyle="solid"
@@ -80,19 +77,17 @@ class Goals extends Component {
                           this.changeGoalsStatus(e.target.value);
                         }}
                       >
-                        <Radio.Button value="all">All Goals</Radio.Button>
+                        <Radio.Button value="all">All</Radio.Button>
                         <Radio.Button value="completed">
-                          Achieved Goals
+                          Achieved
                         </Radio.Button>
                         <Radio.Button value="pending">
-                          Pending Goals
+                          Pending
                         </Radio.Button>
                       </Radio.Group>
                     </div>
-                  </div>
-                  <div className="row" style={{ marginTop: "10px" }}>
-                    <div className="col-md-2">Sort</div>
-                    <div className="col-md-10">
+                    <div className="cardFilterLabel">Sort:</div>
+                    <div >
                       <Select
                         onChange={e => this.changeOrderBy(e)}
                         value={orderBy}
@@ -108,12 +103,11 @@ class Goals extends Component {
                       </Select>
                     </div>
                   </div>
-                </div>
               }
               trigger="click"
             >
            
-                <i className="fa fa-filter cardsFilterIcon" style={{color:"#fd960f" }} />
+                <i className="fa fa-cogs cardsFilterIcon" style={{color:"#fd960f" }} />
                  
              
             </Popover>
@@ -312,7 +306,6 @@ const mapStateToProps = state => {
   return {
     goals: state.goalReducer.FilteredGoals,
     statusFilter: state.goalReducer.CurrentStatusFilter,
-    order: state.goalReducer.CurrentOrder,
     orderBy: state.goalReducer.CurrentOrderBy
   };
 };

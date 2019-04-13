@@ -1,9 +1,6 @@
+import {alphaSort,numericSort,dateSort} from "./ghtCommonMethods";
 export function getSortedGoalNamesAndIDs(goals) {
-  let goalNameAndIDs = goals.sort((a, b) => {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-    else if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-    else return 0;
-  });
+  let goalNameAndIDs = alphaSort(goals,"asc","name");
   goalNameAndIDs = goals.map(g => {
     return {
       name: g.name,
@@ -27,4 +24,30 @@ export function getFilteredGoals(goals, filterString, currentStatus) {
       (currentStatus == "all" || goalStatus == currentStatus)
     );
   });
+}
+
+
+export function getSortedGoals(goals,orderBy){
+  let newGoals=[];
+  switch (orderBy) {
+    case "alphabetical": {
+      newGoals = alphaSort(goals,"asc","name");
+      break;
+    }
+    case "progress": {
+      newGoals = numericSort(goals,"asc","progress")
+      break;
+    }
+    case "dueDate": {
+      newGoals = dateSort(goals,"asc","dueDate")
+      break;
+    }
+    case "importance": {
+      newGoals = numericSort(goals,"desc","importance");
+      break;
+    }
+    default: {
+    }
+  }
+  return newGoals;
 }

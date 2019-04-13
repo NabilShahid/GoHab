@@ -72,7 +72,7 @@ class MainBase extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.props.insertGoals(allGoals);
-      this.props.sortGoals({order:"asc",orderBy:"alphabetical"})
+      this.props.sortGoals({orderBy:"alphabetical"})
       
     })
     .catch(error => {
@@ -88,7 +88,7 @@ class MainBase extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.props.insertTasks(allGoals);
-      // this.props.sortGoals({order:"asc",orderBy:"alphabetical"})
+      this.props.sortTasks({orderBy:"alphabetical"})
       
     })
     .catch(error => {
@@ -123,6 +123,9 @@ const mapDispatchToProps = dispatch => {
    insertTasks: goalsPayload => {
      dispatch(insertTasks(goalsPayload));
    },
+   sortTasks: sortPayload => {
+    dispatch(sortTasks(sortPayload));
+  }
   //  sortGoals: sortPayload => {
   //   dispatch(sortGoals(sortPayload));
   // },

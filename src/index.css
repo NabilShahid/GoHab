@@ -266,3 +266,15 @@ code {
   margin-top: 6px;
   
 }
+.ant-radio-group-small .ant-radio-button-wrapper {
+  height: 27px !important;
+   padding: 1px 7px !important;
+}
+.ant-popover-title{
+  color:#6f6f6f !important;
+}
+.cardFilterLabel{
+  font-size: 12px;
+   margin: 6px 0px;
+  color: #838384;
+}

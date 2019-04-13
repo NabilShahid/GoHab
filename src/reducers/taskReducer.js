@@ -1,10 +1,13 @@
+import {  
+  getFilteredTasks,
+  getSortedTasks
+} from "../services/methods/taskMethods";
 const taskReducer = (
   state = {
     Tasks: [],
     FilteredTasks: [],
     CurrentFilterString: "",
     CurrentStatusFilter: "all",
-    CurrentOrder: "asc",
     CurrentOrderBy: "alphabetical"
   },
   action
@@ -68,59 +71,13 @@ const taskReducer = (
     }
     case "SORT_TASKS": {
       let newState = { ...state };
-      const { order, orderBy } = action.payload;
-      switch (orderBy) {
-        case "alphabetical": {
-          newState.Tasks = newState.Tasks.sort((a, b) => {
-            if (a.name.toLowerCase() < b.name.toLowerCase())
-              return order == "asc" ? -1 : 1;
-            else if (a.name.toLowerCase() > b.name.toLowerCase())
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "progress": {
-          newState.Tasks = newState.Tasks.sort((a, b) => {
-            if (a.progress < b.progress) return order == "asc" ? -1 : 1;
-            else if (a.progress > b.progress) return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "dueDate": {
-          newState.Tasks = newState.Tasks.sort((a, b) => {
-            const aDate = new Date(a.dueDate);
-            const bDate = new Date(b.dueDate);
-            if (aDate == "Invalid Date") aDate = new Date(0);
-            if (bDate == "Invalid Date") bDate = new Date(0);
-
-            if (new Date(aDate) < new Date(bDate))
-              return order == "asc" ? -1 : 1;
-            else if (new Date(aDate) > new Date(bDate))
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        case "importance": {
-          newState.Tasks = newState.Tasks.sort((a, b) => {
-            if (a.importance < b.importance) return order == "asc" ? -1 : 1;
-            else if (a.importance > b.importance)
-              return order == "desc" ? -1 : 1;
-            return 0;
-          });
-          break;
-        }
-        default: {
-        }
-      }
+      const {  orderBy } = action.payload;
+      newState.Tasks=getSortedTasks(newState.Tasks,orderBy);
       newState.FilteredTasks = getFilteredTasks(
         newState.Tasks,
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
       );
-      newState.CurrentOrder=action.payload.order;
       newState.CurrentOrderBy=action.payload.orderBy;
       state = newState;
       break;
@@ -139,15 +96,5 @@ const taskReducer = (
   return state;
 };
 
-function getFilteredTasks(tasks, filterString, currentStatus) {
-  return tasks.filter(v => {
-    const taskStatus=v.completed?"completed":"pending";
-    return (
-      (v.name.toLowerCase() + "\t" + v.description.toLowerCase()).indexOf(
-        filterString
-      ) > -1 &&
-      (currentStatus == "all" || taskStatus==currentStatus)
-    );
-  });
-}
+
 export default taskReducer;
