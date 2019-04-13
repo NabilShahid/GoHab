@@ -335,6 +335,7 @@ class CreateHabitForm extends React.Component {
               </div>
               <div className="col-md-9">
                 <Radio.Group
+                size="small"
                   defaultValue={formValues.category}
                   onChange={e => {
                     this.state.formValues.category = e.target.value;

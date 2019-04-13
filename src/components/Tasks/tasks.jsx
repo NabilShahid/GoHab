@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { Modal, Radio, Row, Col, Select, message, Button, Popover } from "antd";
+import { Modal, Radio, Row, Col, Select, message, Button, Popover, Tooltip } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
 import BucketList from "../BucketList/bucketlist";
 import {
   updateTask,
   sortTasks,
-  filterTasksByStatus
+  filterTasksByStatus,
+  changeTasksViewType
 } from "../../actions/taskActions";
 import TaskCard from "../TaskCard/taskcard";
 import CreateTaskForm from "../CreateTaskForm/createtaskform";
@@ -18,8 +19,7 @@ class Tasks extends Component {
     taskDialogVisible: false,
     currentTaskOptions: {},
     taskViewMode: "view",
-    taskDialogTitle: "",
-    viewTypeFilter: "bucket"
+    taskDialogTitle: ""
   };
 
   changeOrderBy(v) {
@@ -28,11 +28,9 @@ class Tasks extends Component {
   }
   changeTasksStatus(v) {
     this.props.filterTasksByStatus(v);
-  }
+  } 
   changeViewType(v) {
-    const viewTypeFilter =
-      this.state.viewTypeFilter === "bucket" ? "grid" : "bucket";
-    this.setState({ viewTypeFilter });
+    this.props.changeTasksViewType();
   }
   render() {
     const {
@@ -40,24 +38,26 @@ class Tasks extends Component {
       taskDialogVisible,
       currentTaskOptions,
       taskViewMode,
-      taskDialogTitle,
-      viewTypeFilter
+      taskDialogTitle
+      
     } = this.state;
-    const { statusFilter, orderBy } = this.props;
+    const { statusFilter, orderBy, viewTypeFilter } = this.props;
     return (
       <div id="taskCardsDiv">
         <div className="row cardsViewSelector">
-          <div className="col-md-11" style={{ padding: 0 }}>
+          <div className="col-md-6" style={{ padding: 0 }}>
             <Button
               type="primary"
               className="noColorButton"
               style={{ background: "var(--task-color)" }}
+              onClick={()=>this.viewTaskDialog(false,false)}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
               Add Task
             </Button>
           </div>
-          <div className="col-md-1 cardsFilterIconContainer">
+          
+          <div className="col-md-6 cardsFilterIconContainer">
             <Popover
               placement="bottomLeft"
               title="Change View"
@@ -73,17 +73,8 @@ class Tasks extends Component {
                         this.changeViewType(e.target.value);
                       }}
                     >
-                      <Radio.Button value="bucket">
-                        <i
-                          style={{ transform: "rotate(90deg)" }}
-                          className="tViewSwitcherIcon fa fa-align-left"
-                        />
-                        Bucket View
-                      </Radio.Button>
-                      <Radio.Button value="grid">
-                        <i className="tViewSwitcherIcon  fa fa-th-large" />
-                        Grid View
-                      </Radio.Button>
+                      <Radio.Button value="bucket">Goals View</Radio.Button>
+                      <Radio.Button value="grid">Grid View</Radio.Button>
                     </Radio.Group>
                   </div>
                   <div className="cardFilterLabel">Show Tasks:</div>
@@ -118,87 +109,18 @@ class Tasks extends Component {
               }
               trigger="click"
             >
-              <i
+            <Tooltip title="Change View">
+              
+            <i
                 className="fa fa-cogs cardsFilterIcon"
-                style={{ color: "#fd960f" }}
+                style={{ color: "#4ea952" }}
               />
+            </Tooltip>
+              
             </Popover>
           </div>
         </div>
-        {/* <div className="cardsViewSelector">
-          <Row />
-          <Row>
-            <Col span={11}>
-              <Radio.Group
-                value={statusFilter}
-                buttonStyle="solid"
-                onChange={e => {
-                  this.changeTasksStatus(e.target.value);
-                }}
-              >
-                <Radio.Button value="all">All Tasks</Radio.Button>
-                <Radio.Button value="completed">Completed Tasks</Radio.Button>
-                <Radio.Button value="pending">Pending Tasks</Radio.Button>
-              </Radio.Group>
-            </Col>
-            <Col span={6}>
-              <Radio.Group
-                value={viewTypeFilter}
-                buttonStyle="solid"
-                onChange={e => {
-                  this.changeViewType(e.target.value);
-                }}
-              >
-                <Radio.Button value="bucket">
-                  <i
-                    style={{ transform: "rotate(90deg)" }}
-                    className="tViewSwitcherIcon fa fa-align-left"
-                  />
-                  Bucket View
-                </Radio.Button>
-                <Radio.Button value="grid">
-                  <i className="tViewSwitcherIcon  fa fa-th-large" />Grid View
-                </Radio.Button>
-              </Radio.Group>
-            </Col>
-
-            <Col
-              span={6}
-              className="controlTopPadding"
-              style={{ textAlign: "right" }}
-            >
-              <span className="miniLabel">Order By:</span>
-              <Select
-                onChange={e => this.changeOrderBy(e)}
-                style={{ width: "120px" }}
-                size="small"
-                value={orderBy}
-              >
-                <Option value="dueDate">Due Date</Option>
-                {statusFilter == "all" && (
-                  <Option value="progress">Progress</Option>
-                )}
-                <Option value="importance">Importance</Option>
-                <Option value="alphabetical">Alphabetical</Option>
-              </Select>
-            </Col>
-            <Col
-              span={1}
-              className="controlTopPadding"
-              style={{ textAlign: "center" }}
-            >
-              <div
-                onClick={() => {
-                  this.changeOrder();
-                }}
-                className="orderIcon"
-              >
-                {order == "asc" && <i className="fa fa-sort-up" />}
-                {order == "desc" && <i className="fa fa-sort-down" />}
-              </div>
-            </Col>
-          </Row>
-        </div> */}
+       
         {viewTypeFilter === "bucket" ? (
           <BucketList
             items={this.props.tasks}
@@ -272,7 +194,7 @@ class Tasks extends Component {
     setTimeout(() => {
       if (this.props.statusFilter != "all") {
         this.changeTasksStatus(this.props.statusFilter);
-      } else {
+
         this.changeOrderBy(this.props.orderBy);
       }
     }, 1500);
@@ -348,7 +270,8 @@ const mapStateToProps = state => {
     tasks: state.taskReducer.FilteredTasks,
     statusFilter: state.taskReducer.CurrentStatusFilter,
     orderBy: state.taskReducer.CurrentOrderBy,
-    goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs
+    goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
+    viewTypeFilter:state.taskReducer.CurrentViewType
   };
 };
 
@@ -365,6 +288,9 @@ const mapDispatchToProps = dispatch => {
     },
     filterTasksByStatus: statusPayload => {
       dispatch(filterTasksByStatus(statusPayload));
+    },
+    changeTasksViewType: statusPayload => {
+      dispatch(changeTasksViewType(statusPayload));
     }
   };
 };

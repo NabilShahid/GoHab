@@ -31,6 +31,7 @@ const goalReducer = (
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
       );
+      newState.SortedGoalNamesAndIDs = getSortedGoalNamesAndIDs(newState.Goals);
       state = newState;
       break;
     }
@@ -46,6 +47,7 @@ const goalReducer = (
         return g.id == action.payload.id;
       });
       newState.FilteredGoals[goalIndex] = action.payload;
+      newState.SortedGoalNamesAndIDs = getSortedGoalNamesAndIDs(newState.Goals);
       state = newState;
       break;
     }

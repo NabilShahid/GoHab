@@ -40,3 +40,9 @@ export function filterTasksByStatus(statusPayload){
         payload: statusPayload
     };
 }
+
+export function changeTasksViewType(){
+    return {
+        type: "UPDATE_TASKS_VIEW_TYPE"
+    };
+}

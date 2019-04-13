@@ -18,7 +18,7 @@ import {
   Popover,
   Button,
   Icon,
-  Select
+  Select, Tooltip
 } from "antd";
 import "./goals.css";
 
@@ -33,7 +33,7 @@ class Goals extends Component {
   };
   changeOrderBy(v) {
     const orderBy = v;
-    this.props.sortGoals({orderBy });
+    this.props.sortGoals({ orderBy });
   }
   changeGoalsStatus(v) {
     this.props.filterGoalsByStatus(v);
@@ -48,7 +48,7 @@ class Goals extends Component {
     return (
       <div id="goalCardsDiv">
         <div className="row cardsViewSelector">
-          <div className="col-md-11" style={{ padding: 0 }}>
+          <div className="col-md-6" style={{ padding: 0 }}>
             <Button
               type="primary"
               className="noColorButton"
@@ -58,107 +58,59 @@ class Goals extends Component {
               Add Goal
             </Button>
           </div>
-          <div className="col-md-1 cardsFilterIconContainer">
+          <div className="col-md-6 cardsFilterIconContainer">
             <Popover
               placement="bottomLeft"
               title="Change View"
               content={
                 <div>
-                  
-                  <div className="cardFilterLabel">
-                    Show Goals:
+                  <div className="cardFilterLabel">Show Goals:</div>
+                  <div>
+                    <Radio.Group
+                      value={statusFilter}
+                      buttonStyle="solid"
+                      size="small"
+                      onChange={e => {
+                        this.changeGoalsStatus(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="all">All</Radio.Button>
+                      <Radio.Button value="completed">Achieved</Radio.Button>
+                      <Radio.Button value="pending">Pending</Radio.Button>
+                    </Radio.Group>
                   </div>
-                    <div>
-                      <Radio.Group
-                        value={statusFilter}
-                        buttonStyle="solid"
-                        size="small"
-                        onChange={e => {
-                          this.changeGoalsStatus(e.target.value);
-                        }}
-                      >
-                        <Radio.Button value="all">All</Radio.Button>
-                        <Radio.Button value="completed">
-                          Achieved
-                        </Radio.Button>
-                        <Radio.Button value="pending">
-                          Pending
-                        </Radio.Button>
-                      </Radio.Group>
-                    </div>
-                    <div className="cardFilterLabel">Sort:</div>
-                    <div >
-                      <Select
-                        onChange={e => this.changeOrderBy(e)}
-                        value={orderBy}
-                        size="small"
-                        style={{ width: "100%" }}
-                      >
-                        <Option value="dueDate">Due Date</Option>
-                        {statusFilter == "all" && (
-                          <Option value="progress">Progress</Option>
-                        )}
-                        <Option value="importance">Importance</Option>
-                        <Option value="alphabetical">Alphabetical</Option>
-                      </Select>
-                    </div>
+                  <div className="cardFilterLabel">Sort:</div>
+                  <div>
+                    <Select
+                      onChange={e => this.changeOrderBy(e)}
+                      value={orderBy}
+                      size="small"
+                      style={{ width: "100%" }}
+                    >
+                      <Option value="dueDate">Due Date</Option>
+                      {statusFilter != "completed" && (
+                        <Option value="progress">Progress</Option>
+                      )}
+                      <Option value="importance">Importance</Option>
+                      <Option value="alphabetical">Alphabetical</Option>
+                    </Select>
                   </div>
+                </div>
               }
               trigger="click"
-            >
-           
-                <i className="fa fa-cogs cardsFilterIcon" style={{color:"#fd960f" }} />
-                 
-             
+            > <Tooltip title="Change View">
+            
+            <i
+                className="fa fa-cogs cardsFilterIcon"
+                style={{ color: "#fd960f" }}
+              />
+          </Tooltip>
+              
             </Popover>
           </div>
         </div>
 
-        {/* <img src={unmarkedIcon}/> */}
-        {/* <Row />
-          <Row>
-            <Col span={11}>
-              <Radio.Group value={statusFilter} size="small" buttonStyle="solid" onChange={e=>{this.changeGoalsStatus(e.target.value)}}>
-                <Radio.Button value="all">All Goals</Radio.Button>
-                <Radio.Button value="completed">Achieved Goals</Radio.Button>
-                <Radio.Button value="pending">Pending Goals</Radio.Button>
-              </Radio.Group>
-            </Col>
-
-            <Col
-              span={12}
-              className="controlTopPadding"
-              style={{ textAlign: "right" }}
-            >
-              <span className="miniLabel">Order By:</span>
-              <Select
-                onChange={e => this.changeOrderBy(e)}
-                style={{ width: "120px" }}
-                size="small"
-                value={orderBy}
-              >
-                <Option value="dueDate">Due Date</Option>
-                {statusFilter=="all"&&<Option value="progress">Progress</Option>}
-                <Option value="importance">Importance</Option>
-                <Option value="alphabetical">Alphabetical</Option>
-              </Select>
-            </Col>
-            <Col
-              span={1}
-              className="controlTopPadding"
-              style={{ textAlign: "center" }}
-            >
-              <div
-                onClick={() => {
-                  this.changeOrder();
-                }}
-                className="orderIcon"
-              >
-                {order == "asc" && <i className="fa fa-sort-up" />}
-                {order == "desc" && <i className="fa fa-sort-down" />}
-              </div>
-            </Col>
-          </Row> */}
+      
         <div className="actualCardsDiv">
           {this.getGoalRows(this.props.goals, 3)}
         </div>
@@ -229,9 +181,8 @@ class Goals extends Component {
     setTimeout(() => {
       if (this.props.statusFilter != "all") {
         this.changeGoalsStatus(this.props.statusFilter);
-      } else {
-        this.changeOrderBy(this.props.orderBy);
       }
+      this.changeOrderBy(this.props.orderBy);
     }, 1500);
   };
 

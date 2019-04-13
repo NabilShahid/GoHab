@@ -8,7 +8,8 @@ const taskReducer = (
     FilteredTasks: [],
     CurrentFilterString: "",
     CurrentStatusFilter: "all",
-    CurrentOrderBy: "alphabetical"
+    CurrentOrderBy: "alphabetical",
+    CurrentViewType:"bucket"
   },
   action
 ) => {
@@ -83,6 +84,12 @@ const taskReducer = (
       break;
     }
 
+    case "UPDATE_TASKS_VIEW_TYPE": {
+      let newState = { ...state };
+      newState.CurrentViewType=newState.CurrentViewType ==="bucket" ? "grid" : "bucket";
+      state = newState;
+      break;
+    }
     case "REMOVE_TASK_FILTER": {
       let newState = { ...state };
       newState.FilteredTasks = newState.Tasks;
