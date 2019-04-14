@@ -62,7 +62,6 @@ class CreateHabbitForm extends React.Component {
     this.setState({ loading: true });
     const { formValues, noDueDate } = this.state;
     const formValuesToSave = { ...formValues };
-    console.log(this.state,formValues)
     //get date as string for saving in firestore
     if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
     else formValuesToSave.dueDate = false;

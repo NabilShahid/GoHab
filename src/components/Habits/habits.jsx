@@ -26,6 +26,9 @@ class Habits extends Component {
     const orderBy = v;
     this.props.sortHabits({ orderBy });
   }
+  changeHabitsStatus(v) {
+    this.props.filterHabitsByStatus(v);
+  } 
 
   changeViewType(v) {
     this.props.changeHabitsViewType();
@@ -39,7 +42,7 @@ class Habits extends Component {
       habitDialogTitle
       
     } = this.state;
-    const {  orderBy, viewTypeFilter } = this.props;
+    const { statusFilter ,orderBy, viewTypeFilter } = this.props;
     return (
       <div id="habitCardsDiv">
         <div className="row cardsViewSelector">
@@ -75,6 +78,22 @@ class Habits extends Component {
                       <Radio.Button value="grid">Grid View</Radio.Button>
                     </Radio.Group>
                   </div>
+
+                  <div className="cardFilterLabel">Show Habits:</div>
+                  <div>
+                    <Radio.Group
+                      value={statusFilter}
+                      buttonStyle="solid"
+                      size="small"
+                      onChange={e => {
+                        this.changeHabitsStatus(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="all">All</Radio.Button>
+                      <Radio.Button value="pending">Following</Radio.Button>
+                      <Radio.Button value="completed">Not Following</Radio.Button>
+                    </Radio.Group>
+                  </div>
                  
                   <div className="cardFilterLabel">Sort:</div>
                   <div>
@@ -97,7 +116,7 @@ class Habits extends Component {
               
             <i
                 className="fa fa-cogs cardsFilterIcon"
-                style={{ color: "#4ea952" }}
+                style={{ color: "#17bcd0" }}
               />
             </Tooltip>
               

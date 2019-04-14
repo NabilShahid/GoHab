@@ -1,6 +1,7 @@
 import React from "react";
-import { Avatar, Badge, Rate, Tooltip } from "antd";
-import moment from "moment";
+import { Tooltip } from "antd";
+import markedIcon from "../../assets/images/checkIconMarked1.png";
+import unmarkedIcon from "../../assets/images/checkIcon1.png";
 import "./habitcard.css";
 const HabitCard = ({ name, description, completed, markHabit, id }) => {
   return (
@@ -25,16 +26,17 @@ const HabitCard = ({ name, description, completed, markHabit, id }) => {
           </div>
           <Tooltip
             placement="right"
-            title={completed ? "Mark as pending" : "Mark as completed"}
+            title={completed ? "Start following" : "Stop following"}
           >
-            <i
-              className={"habitMarkIcon fa "+(completed ? "fa-play habitCardFollowed" : "fa-stop habitCardMissed")}
+            <img
+              src={completed ? markedIcon : unmarkedIcon}
               onClick={e => {
                 e.stopPropagation();
                 markHabit(id);
               }}
-             
-            ></i>
+              alt="Mark/Unmark as Complete"
+              className="markIcon"
+            />
           </Tooltip>
         </div>
         <div className="col-md-10 habitCardContent">

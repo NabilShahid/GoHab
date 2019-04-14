@@ -7,6 +7,7 @@ import {
       Habits: [],
       FilteredHabits: [],
       CurrentFilterString: "",
+      CurrentStatusFilter: "all",
       CurrentOrderBy: "alphabetical",
       CurrentViewType:"bucket"
     },
@@ -25,7 +26,8 @@ import {
         newState.Habits.push(action.payload);
         newState.FilteredHabits = getFilteredHabits(
           newState.Habits,
-          newState.CurrentFilterString
+          newState.CurrentFilterString,
+          newState.CurrentStatusFilter
         );
         state = newState;
         break;
@@ -50,7 +52,8 @@ import {
         let newState = { ...state };
         newState.FilteredHabits = getFilteredHabits(
           newState.Habits,
-          action.payload
+          action.payload,
+          newState.CurrentStatusFilter
         );
         newState.CurrentFilterString = action.payload;
         state = newState;
@@ -60,7 +63,8 @@ import {
         let newState = { ...state };
         newState.FilteredHabits = getFilteredHabits(
           newState.Habits,
-          newState.CurrentFilterString
+          newState.CurrentFilterString,
+          action.payload
         );
         newState.CurrentStatusFilter = action.payload;
         state = newState;
@@ -72,7 +76,8 @@ import {
         newState.Habits=getSortedHabits(newState.Habits,orderBy);
         newState.FilteredHabits = getFilteredHabits(
           newState.Habits,
-          newState.CurrentFilterString
+          newState.CurrentFilterString,
+          newState.CurrentStatusFilter
         );
         newState.CurrentOrderBy=action.payload.orderBy;
         state = newState;

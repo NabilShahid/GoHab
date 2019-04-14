@@ -39,11 +39,10 @@ class CreateHabitForm extends React.Component {
     formValues: {
       name: "",
       description: "",
-      category: "Health",     
-      parentGoal:"",
-      period:"Dialy",
-      frquency:1
-      
+      category: "Health",
+      parentGoal: "",
+      period: "Dialy",
+      frquency: 1
     },
     disabledForm: false,
     periods: {
@@ -86,10 +85,11 @@ class CreateHabitForm extends React.Component {
   performHabitAction = () => {
     this.setState({ loading: true });
     const { formValues } = this.state;
-    const formValuesToSave = { ...formValues };  
+    const formValuesToSave = { ...formValues };
 
-    if (this.props.mode == "add")
+    if (this.props.mode == "add") {
       //call to firebase habitOps addNewHabit method
+      formValuesToSave.completed = false;
       this.props.firebase.habitOps
         .addNewHabit("nabil110176@gmail.com", formValuesToSave)
         .then(() => {
@@ -99,7 +99,7 @@ class CreateHabitForm extends React.Component {
         .catch(error => {
           console.error("Error writing document: ", error);
         });
-    else
+    } else
       this.props.firebase.habitOps
         .updateHabit("nabil110176@gmail.com", formValuesToSave, this.props.id)
         .then(() => {
@@ -111,7 +111,6 @@ class CreateHabitForm extends React.Component {
         });
   };
 
-  
   /**
    * validate each field on change using Joi schema
    */
@@ -164,7 +163,9 @@ class CreateHabitForm extends React.Component {
    */
   componentWillMount() {
     //set default selected period
-    this.state.selectedPeriod = this.state.periods[this.state.formValues.period];
+    this.state.selectedPeriod = this.state.periods[
+      this.state.formValues.period
+    ];
     if (this.props.mode == "view") {
       this.setInitFormValues();
       this.state.disabledForm = true;
@@ -184,7 +185,6 @@ class CreateHabitForm extends React.Component {
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
     }
-    
   }
 
   /**
@@ -204,32 +204,31 @@ class CreateHabitForm extends React.Component {
     this.setState({ disabledForm });
   };
 
- 
   /**
    * sets period unit to show in from of period text box
    */
   setPeriod = value => {
     const selectedPeriod = this.state.periods[value];
-    const {formValues}=this.state;
-    formValues.period=value;
-    formValues.frquency=1;
-    this.setState({ selectedPeriod, formValues});
+    const { formValues } = this.state;
+    formValues.period = value;
+    formValues.frquency = 1;
+    this.setState({ selectedPeriod, formValues });
   };
   /**
    * sets period frequency
    */
   setPeriodFrequency = value => {
-    const {formValues}=this.state;
-    formValues.frquency=value;
-    this.setState({formValues});
+    const { formValues } = this.state;
+    formValues.frquency = value;
+    this.setState({ formValues });
   };
   /**
    * sets parent goal id
    */
   setParentGoal = value => {
-    const {formValues}=this.state;
-    formValues.parentGoal=value;
-    this.setState({formValues});
+    const { formValues } = this.state;
+    formValues.parentGoal = value;
+    this.setState({ formValues });
   };
 
   /**
@@ -308,7 +307,7 @@ class CreateHabitForm extends React.Component {
               </div>
               <div className="col-md-9">
                 <Radio.Group
-                size="small"
+                  size="small"
                   defaultValue={formValues.category}
                   onChange={e => {
                     this.state.formValues.category = e.target.value;
@@ -423,9 +422,6 @@ class CreateHabitForm extends React.Component {
               </div>
               <div className="col-md-3">times a {selectedPeriod.unit}</div>
             </div>
-
-
-
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>
