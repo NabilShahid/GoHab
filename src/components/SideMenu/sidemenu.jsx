@@ -51,31 +51,31 @@ class SideMenu extends Component {
         </Menu.Item>
         <Menu.Item key="goalTree">
           <i className="fa fa-home sideIcon" />
-          Goal Tree
+          Habit Tracking
         </Menu.Item>
         <Menu.Item key="habitCalendar">
           <i className="fa fa-home sideIcon" />
-          Habit Calendar
+          Goal Stats
         </Menu.Item>
         <Menu.Item key="habitStats">
           <i className="fa fa-home sideIcon" />
-          Habit Stats
+          Task Stats
         </Menu.Item>
         <Menu.Item key="taskStats">
           <i className="fa fa-home sideIcon" />
-          Task Stats
+          Habit Stats
         </Menu.Item>
         <Menu.Item key="8">
           <i className="fa fa-home sideIcon" />
-          Goal Progress
+          Goal Calendar
         </Menu.Item>
         <Menu.Item key="habitTracking">
           <i className="fa fa-home sideIcon" />
-          Habit Tracking
+          Tasks Calendar
         </Menu.Item>
         <Menu.Item key="taskManaging">
           <i className="fa fa-home sideIcon" />
-          Task Managing
+          Habit Calendar
         </Menu.Item>
       </Menu>
     );
@@ -103,6 +103,11 @@ class SideMenu extends Component {
         this.filterHeaderIfValue(this.props.taskFilterString);
         break;
       }
+      case PAGEKEYS["HABITS"]: {
+        this.props.updateFilterString(this.props.habitFilterString);
+        this.filterHeaderIfValue(this.props.habitFilterString);
+        break;
+      }
       default: {
       }
     }
@@ -122,7 +127,8 @@ class SideMenu extends Component {
 const mapStateToProps = state => {
   return {
     goalFilterString: state.goalReducer.CurrentFilterString,
-    taskFilterString: state.taskReducer.CurrentFilterString
+    taskFilterString: state.taskReducer.CurrentFilterString,
+    habitFilterString:state.habitReducer.CurrentFilterString
   };
 };
 
