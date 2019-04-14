@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
+import { filterHabits } from "../../actions/habitActions";
 import { updateFilterString } from "../../actions/headerActions";
 import "./header.css";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -22,6 +23,11 @@ class Header extends Component {
       }
       case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
         this.props.filterTasks(value);
+        this.props.updateFilterString(value);
+        break;
+      }
+      case HEADEROPTIONS[PAGEKEYS["HABITS"]].Title: {
+        this.props.filterHabits(value);
         this.props.updateFilterString(value);
         break;
       }
@@ -108,6 +114,9 @@ const mapDispatchToProps = dispatch => {
     },
     filterTasks: filterPayload => {
       dispatch(filterTasks(filterPayload));
+    },
+    filterHabits: filterPayload => {
+      dispatch(filterHabits(filterPayload));
     },
     updateFilterString: filterPayload => {
       dispatch(updateFilterString(filterPayload));
