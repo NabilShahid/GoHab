@@ -26,7 +26,6 @@ const Option = Select.Option;
 class CreateHabitForm extends React.Component {
   state = {
     loading: false,
-    noDueDate: false,
     errors: {
       name: {
         error: true,
@@ -40,9 +39,7 @@ class CreateHabitForm extends React.Component {
     formValues: {
       name: "",
       description: "",
-      importance: 1,
-      category: "Health",
-      dueDate: moment().toDate(),
+      category: "Health",     
       parentGoal:"",
       period:"Dialy",
       frquency:1
@@ -88,11 +85,8 @@ class CreateHabitForm extends React.Component {
    */
   performHabitAction = () => {
     this.setState({ loading: true });
-    const { formValues, noDueDate } = this.state;
-    const formValuesToSave = { ...formValues };
-    //get date as string for saving in firestore
-    if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
-    else formValuesToSave.dueDate = false;
+    const { formValues } = this.state;
+    const formValuesToSave = { ...formValues };  
 
     if (this.props.mode == "add")
       //call to firebase habitOps addNewHabit method
@@ -117,14 +111,7 @@ class CreateHabitForm extends React.Component {
         });
   };
 
-  /**
-   * mark due date on or off
-   */
-  dueDateUpdate = e => {
-    const noDueDate = e.target.checked;
-    this.setState({ noDueDate });
-  };
-
+  
   /**
    * validate each field on change using Joi schema
    */
@@ -188,20 +175,16 @@ class CreateHabitForm extends React.Component {
    * set values of form in case of existing habit for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, progress, dueDate } = this.props;
+    const { name, description, progress } = this.props;
     const { formValues } = this.state;
     formValues.name = name && name;
     formValues.description = description && description;
-    formValues.importance = importance && importance;
     formValues.progress = progress && progress;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
     }
-    if (dueDate) {
-      formValues.dueDate = moment(dueDate).toDate();
-      this.state.noDueDate = false;
-    } else this.state.noDueDate = true;
+    
   }
 
   /**
@@ -221,16 +204,7 @@ class CreateHabitForm extends React.Component {
     this.setState({ disabledForm });
   };
 
-  /**
-   * show or hide due date control based of mode of form
-   */
-  shouldShowDueDate() {
-    const { noDueDate, disabledForm } = this.state;
-    if (disabledForm && noDueDate) return false;
-    if (disabledForm && !noDueDate) return true;
-    if (!disabledForm) return true;
-  }
-
+ 
   /**
    * sets period unit to show in from of period text box
    */
@@ -269,7 +243,6 @@ class CreateHabitForm extends React.Component {
   render() {
     const {
       loading,
-      noDueDate,
       errors,
       disabledForm,
       formValues,
@@ -451,61 +424,8 @@ class CreateHabitForm extends React.Component {
               <div className="col-md-3">times a {selectedPeriod.unit}</div>
             </div>
 
-            <div className="row formControlDiv">
-              <div className="col-md-3">
-                <label className="formLabel">Importance</label>
-              </div>
-              <div className="col-md-9">
-                <Rate
-                  disabled={disabledForm}
-                  character={<i className="fa fa-exclamation-triangle" />}
-                  allowHalf
-                  value={formValues.importance}
-                  style={{
-                    fontSize: 19,
-                    color: "#fd3a3a",
-                    marginTop: "-0.5%"
-                  }}
-                  onChange={value => {
-                    this.setFormValueWithoutValidation("importance", value);
-                  }}
-                />
-              </div>
-            </div>
 
-            {this.shouldShowDueDate() && (
-              <div className="row formControlDiv">
-                <div className="col-md-3">
-                  <label className="formLabel">Track Until</label>
-                </div>
-                <div className="col-md-9">
-                  <DatePicker
-                    onChange={value => {
-                      this.setFormValueWithoutValidation(
-                        "dueDate",
-                        moment(value).toDate()
-                      );
-                    }}
-                    disabled={noDueDate || disabledForm}
-                    size="small"
-                    style={{ width: this.getDatePickerWidth() }}
-                    className="formControl"
-                    value={moment(formValues.dueDate, this.dateFormat)}
-                    format={this.dateFormat}
-                  />
-                  {!disabledForm && (
-                    <Checkbox
-                      disabled={disabledForm}
-                      style={{ marginLeft: "3%" }}
-                      onChange={this.dueDateUpdate}
-                      checked={noDueDate}
-                    >
-                      Keep tracking
-                    </Checkbox>
-                  )}
-                </div>
-              </div>
-            )}
+
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>

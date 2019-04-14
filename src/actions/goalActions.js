@@ -28,11 +28,6 @@ export function sortGoals(sortPayload) {
         payload: sortPayload
     };
 }
-export function removeGoalFilter() {
-    return {
-        type: "REMOVE_GOAL_FILTER"
-    };
-}
 
 export function filterGoalsByStatus(statusPayload){
     return {

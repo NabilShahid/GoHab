@@ -1,19 +1,19 @@
 .habitCard{
-    background: linear-gradient(160deg,#ffffff, #ffffff,#efefef,#7fc9d2);
+    background: linear-gradient(160deg,#ffffff 80%,#c3dfe2);
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
     transition: 0.1s;
-    transform: scale(1);
     cursor: pointer;
-    color: #a5a5a5;
+    color: #9a9a9a;
 }
 .habitCard:hover{
     transition: 0.2s;
-    transform: scale(1.04);
+    transform: translateY(-4px);
     background-color: #f1f1f1;
      
 }
+
 .habitSubtitle{
     font-weight: normal;
     font-size: 12px;
@@ -25,45 +25,28 @@
     overflow: hidden;
 }
 .habitCardContent{
-    font-weight: 500;
+    font-weight: normal;
 }
-.habitDate{
-    font-weight: 400;
-    float: right;
-    font-size: 11px;
-    margin-top: 2%;
-}
-.habitCard .habitProgress{
-    margin-top: 2%;
-    font-size: 12px;
-}
-.habitCard .progress{
-    height: 11px;
-    margin-top: 2%;
-    border-radius: 2px;
-}
-.habitCard .progress-bar{
-     background: var(--habit-color);
-}
-.habitAssociations{
+
+.habitCardInfo{
     margin-top: 4%;
     font-size: 12px;
-    border-top: 1px solid #cec8c8;
-    padding-top: 1%;
+    margin-bottom: 5px;
 }
+
 .habitBadge{
     text-align: center;
     margin-top: 1%;
     font-weight: normal;
     font-size: 10px;
 }
-.asscCount{
-    font-size: 12px;
-    font-weight: bold;
+.habitCardMissed{
+    color: #f15d5d;
 }
-.habitCard .progressNumber{
-    font-weight: normal;
-    float: right;
-    font-size: 11px;
-    margin-top: 1%;
+.habitCardFollowed{
+    color: rgb(96, 214, 96);
+}
+.habitMarkIcon{
+    margin: 10px 0px 5px 10px;
+    font-size: 15px !important;
 }

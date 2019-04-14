@@ -1,159 +1,285 @@
-import React, { Component } from 'react';
-import { Modal, Tabs } from "antd";
+import React, { Component } from "react";
+import { Modal, Radio, Row, Col, Select, message, Button, Popover, Tooltip } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
+import BucketList from "../BucketList/bucketlist";
+import {
+  updateHabit,
+  sortHabits,
+  filterHabitsByStatus,
+  changeHabitsViewType
+} from "../../actions/habitActions";
 import HabitCard from "../HabitCard/habitcard";
-import CreateGoalForm from "../CreateGoalForm/creategoalform";
-const TabPane = Tabs.TabPane;
-
+import CreateHabitForm from "../CreateHabitForm/createhabitform";
+import "./habits.css";
+const Option = Select.Option;
 class Habits extends Component {
-    state = {
-        habitDialogInDom: false,
-        habitDialogVisible: false,
-        currentHabitOptions: {}
-      };
-      render() {
-        const {
-          habitDialogInDom,
-          habitDialogVisible,
-          currentHabitOptions
-        } = this.state;
-        return (
-          <div id="habitCardsDiv">
-            {this.getHabitsRows(this.props.goals, 3)}
-            {habitDialogInDom && (
-              <Modal
-                visible={habitDialogVisible}
-                width="58%"
-                title={currentHabitOptions.name}
-                centered
-                bodyStyle={{ overflowY: "auto" }}
-                style={{ top: "10px" }}
-                onCancel={() => {
-                  this.closeHabitDialog();
-                }}
-                footer=""
-              >
-                <Tabs defaultActiveKey="1" tabPosition="left">
-                  <TabPane tab="Goal Info" key="1">
-                    <div className="hTabContent">{this.currentHabitDialog()}</div>
-                  </TabPane>
-                  <TabPane tab="Sub Habits" key="2">
-                    <div className="hTabContent" />
-                  </TabPane>
-                  <TabPane tab="Sub Tasks" key="3">
-                    <div className="hTabContent" />
-                  </TabPane>
-                </Tabs>
-              </Modal>
-            )}
+  state = {
+    habitDialogInDom: false,
+    habitDialogVisible: false,
+    currentHabitOptions: {},
+    habitViewMode: "view",
+    habitDialogTitle: ""
+  };
+
+  changeOrderBy(v) {
+    const orderBy = v;
+    this.props.sortHabits({ orderBy });
+  }
+
+  changeViewType(v) {
+    this.props.changeHabitsViewType();
+  }
+  render() {
+    const {
+      habitDialogInDom,
+      habitDialogVisible,
+      currentHabitOptions,
+      habitViewMode,
+      habitDialogTitle
+      
+    } = this.state;
+    const {  orderBy, viewTypeFilter } = this.props;
+    return (
+      <div id="habitCardsDiv">
+        <div className="row cardsViewSelector">
+          <div className="col-md-6" style={{ padding: 0 }}>
+            <Button
+              type="primary"
+              className="noColorButton"
+              style={{ background: "var(--habit-color)" }}
+              onClick={()=>this.viewHabitDialog(false,false)}
+            >
+              <i className="fa fa-plus" style={{ marginRight: "10px" }} />
+              Add Habit
+            </Button>
+          </div>
+          
+          <div className="col-md-6 cardsFilterIconContainer">
+            <Popover
+              placement="bottomLeft"
+              title="Change View"
+              content={
+                <div>
+                  <div className="cardFilterLabel">Habits View:</div>
+                  <div>
+                    <Radio.Group
+                      value={viewTypeFilter}
+                      buttonStyle="solid"
+                      size="small"
+                      onChange={e => {
+                        this.changeViewType(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="bucket">Goals View</Radio.Button>
+                      <Radio.Button value="grid">Grid View</Radio.Button>
+                    </Radio.Group>
+                  </div>
+                 
+                  <div className="cardFilterLabel">Sort:</div>
+                  <div>
+                    <Select
+                      onChange={e => this.changeOrderBy(e)}
+                      style={{ width: "100%" }}
+                      size="small"
+                      value={orderBy}
+                    >
+                      <Option value="dueDate">Due Date</Option>
+                      <Option value="importance">Importance</Option>
+                      <Option value="alphabetical">Alphabetical</Option>
+                    </Select>
+                  </div>
+                </div>
+              }
+              trigger="click"
+            >
+            <Tooltip title="Change View">
+              
+            <i
+                className="fa fa-cogs cardsFilterIcon"
+                style={{ color: "#4ea952" }}
+              />
+            </Tooltip>
+              
+            </Popover>
+          </div>
+        </div>
+       
+        {viewTypeFilter === "bucket" ? (
+          <BucketList
+            items={this.props.habits}
+            lists={this.props.goalNamesAndIDs}
+            openDialog={this.viewHabitDialog}
+            markItem={this.markHabit}
+          />
+        ) : (
+          <div className="actualCardsDiv">
+            {this.getHabitsRows(this.props.habits, 3)}
+          </div>
+        )}
+
+        {habitDialogInDom && (
+          <Modal
+            visible={habitDialogVisible}
+            width="53%"
+            title={habitDialogTitle}
+            centered
+            bodyStyle={{ overflowY: "auto" }}
+            style={{ top: "10px" }}
+            onCancel={() => {
+              this.closeHabitDialog();
+            }}
+            footer=""
+          >
+            <CreateHabitForm
+              mode={habitViewMode}
+              name={currentHabitOptions.name}
+              description={currentHabitOptions.description}
+              dueDate={currentHabitOptions.dueDate}
+              id={currentHabitOptions.id}
+              importance={currentHabitOptions.importance}
+              parentGoal={currentHabitOptions.parentGoal}
+              closeAndUpdate={this.updateLocalHabit}
+              close={this.closeHabitDialog}
+            />
+          </Modal>
+        )}
+      </div>
+    );
+  }
+
+  viewHabitDialog = (habit, parentGoal) => {
+    const habitViewMode = habit ? "view" : "add";
+    const habitDialogTitle = habit ? habit.name : "Create Habit";
+    let { habitDialogVisible, habitDialogInDom } = this.state;
+    const currentHabitOptions = { ...habit };
+    if (parentGoal) currentHabitOptions.parentGoal = parentGoal;
+    habitDialogInDom = true;
+    habitDialogVisible = true;
+    this.setState({
+      habitDialogVisible,
+      habitDialogInDom,
+      currentHabitOptions,
+      habitViewMode,
+      habitDialogTitle
+    });
+  };
+
+  closeHabitDialog = () => {
+    this.setState({ habitDialogVisible: false });
+    setTimeout(() => {
+      this.setState({ habitDialogInDom: false });
+    }, 250);
+  };
+
+  updateLocalHabit = habits => {
+    this.props.updateHabit(habits);
+    this.closeHabitDialog();
+    setTimeout(() => {
+      if (this.props.statusFilter != "all") {
+        this.changeHabitsStatus(this.props.statusFilter);
+
+        this.changeOrderBy(this.props.orderBy);
+      }
+    }, 1500);
+  };
+
+  /**
+   *returns rows of tasks, each row containing 1 to 3 cols if available
+   */
+  getHabitsRows(habits, colSize) {
+    let habitRows = [];
+    for (let i = 0; i < habits.length; i += 3) {
+      if (habits[i]) {
+        const habitRowArray = [];
+        for (let j = 0; j < colSize; j++) {
+          if (habits[i + j]) habitRowArray.push(habits[i + j]);
+        }
+
+        habitRows.push(
+          <div className="row" style={{ marginTop: "15px" }} key={i}>
+            {this.getHabitCols(habitRowArray, i)}
           </div>
         );
       }
-    
-      viewHabitDialog = goal => {
-        let { habitDialogVisible, habitDialogInDom } = this.state;
-        const currentGoalOptions = { ...goal };
-        habitDialogInDom = true;
-        habitDialogVisible = true;
-        this.setState({ habitDialogVisible, habitDialogInDom, currentGoalOptions });
-      };
-    
-      currentHabitDialog() {
-        const { currentHabitOptions } = this.state;
-        return (
-          <CreateGoalForm
-            dueDate={currentHabitOptions.dueDate}
-            name={currentHabitOptions.name}
-            description={currentHabitOptions.description}
-            importance={currentHabitOptions.importance}
-            progress={currentHabitOptions.progress}
-            mode="view"
-            setFormVisibility={this.setFormVisibility}
-            id={currentHabitOptions.id}
-            closeAndUpdate={this.updateLocalHabit}
+    }
+    return habitRows;
+  }
+
+  getHabitCols(rowArray, rowindex) {
+    let cellClass = "col-md-4";
+    if (rowindex > 0) cellClass += " habitsRow";
+    return rowArray.map(r => {
+      return (
+        <div
+          key={r.id}
+          className={cellClass}
+          onClick={() => {
+            this.viewHabitDialog(r);
+          }}
+        >
+          <HabitCard
+            name={r.name}
+            description={r.description}
+            dueDate={r.dueDate}
+            completed={r.completed}
+            importance={r.importance}
+            markHabit={this.markHabit}
+            id={r.id}
           />
-        );
-      }
-    
-      closeHabitDialog = () => {
-        this.setState({ goalDialogVisible: false });
-        setTimeout(() => {
-          this.setState({ goalDialogInDom: false });
-        }, 250);
-      };
-    
-      updateLocalHabit = goal => {
-        this.props.updateGoal(goal);
-        this.closeHabitDialog();
-      };
-    
-      /**
-       *returns rows of goals, each row containing 1 to 3 cols if available
-       */
-      getHabitsRows(goals, colSize) {
-        let goalRows = [];
-        for (let i = 0; i < goals.length; i += 3) {
-          if (goals[i]) {
-            const goalRowArray = [];
-            for (let j = 0; j < colSize; j++) {
-              if (goals[i + j]) goalRowArray.push(goals[i + j]);
-            }
-    
-            goalRows.push(
-              <div className="row" style={{marginTop:"15px"}} key={i}>
-                {this.getRowCols(goalRowArray, i)}
-              </div>
-            );
-          }
-        }
-        return goalRows;
-      }
-    
-      getRowCols(rowArray, rowindex) {
-        let cellClass = "col-md-4";
-        if (rowindex > 0) cellClass += " goalsRow";
-        return rowArray.map(r => {
-          return (
-            <div
-              key={r.id}
-              className={cellClass}
-              onClick={() => {
-                this.viewHabitDialog(r);
-              }}
-            >
-              <HabitCard
-                name={r.name}
-                description={r.description}
-                dueDate={r.dueDate}
-                progress={r.progress}
-                asscTasks="3"
-                asscHabits="5"
-              />
-            </div>
-          );
-        });
-      }
+        </div>
+      );
+    });
+  }
+
+  markHabit = id => {
+    let currHabit = this.props.habits.find(v => v.id == id);
+    if (currHabit.completed) currHabit.completed = false;
+    else {
+      currHabit.completed = true;
+      message.success(`Marked ${currHabit.name} as completed!`);
+    }
+    this.updateLocalHabit(currHabit);
+
+    this.props.firebase.habitOps
+      .updateHabit("nabil110176@gmail.com", currHabit, id)
+      .then(() => {})
+      .catch(error => {
+        console.error("Error writing document: ", error);
+      });
+  };
 }
 const mapStateToProps = state => {
-    return {
-      goals: state.goalReducer.FilteredGoals
-    };
+  return {
+    habits: state.habitReducer.FilteredHabits,
+    statusFilter: state.habitReducer.CurrentStatusFilter,
+    orderBy: state.habitReducer.CurrentOrderBy,
+    goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
+    viewTypeFilter:state.habitReducer.CurrentViewType
   };
-  
-  /**
-   * dispatch to props mapping form updating user
-   */
-  const mapDispatchToProps = dispatch => {
-    return {   
-      updateGoal: goalPayload => {
-        "dispatch(updateGoal(goalPayload));"
-      }
-    };
+};
+
+/**
+ * dispatch to props mapping form updating user
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    updateHabit: habitPayload => {
+      dispatch(updateHabit(habitPayload));
+    },
+    sortHabits: habitPayload => {
+      dispatch(sortHabits(habitPayload));
+    },
+    filterHabitsByStatus: statusPayload => {
+      dispatch(filterHabitsByStatus(statusPayload));
+    },
+    changeHabitsViewType: statusPayload => {
+      dispatch(changeHabitsViewType(statusPayload));
+    }
   };
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withFirebase(Habits));
- 
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withFirebase(Habits));

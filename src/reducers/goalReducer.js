@@ -88,12 +88,7 @@ const goalReducer = (
       break;
     }
 
-    case "REMOVE_GOAL_FILTER": {
-      let newState = { ...state };
-      newState.FilteredGoals = JSON.parse(JSON.stringify(newState.Goals));
-      state = newState;
-      break;
-    }
+  
 
     default: {
     }

@@ -8,14 +8,14 @@ export default class HabitOperations {
         .collection(`UsersInfo/${useremail}/Habits`)
         .add(habitObj);
     }
-    updateGoal(useremail,goalObj,goalId){
+    updateHabit(useremail,habitObj,habitId){
       return this.fDatabase
-      .collection(`UsersInfo/${useremail}/Goals`)
-      .doc(goalId)
-      .set(goalObj);
+      .collection(`UsersInfo/${useremail}/Habits`)
+      .doc(habitId)
+      .set(habitObj);
     }
-    retrieveAllGoals(useremail) {
-      return this.fDatabase.collection(`UsersInfo/${useremail}/Goals`).get();
+    retrieveAllHabits(useremail) {
+      return this.fDatabase.collection(`UsersInfo/${useremail}/Habits`).get();
     }
   }
   

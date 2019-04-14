@@ -1,0 +1,22 @@
+.habitCardsViewSelector{    
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+#habitCardsDiv .ant-radio-group{
+    font-size: 13px;
+}
+.habitsRow{
+    margin-top: 10px;
+}
+.habitControlTopPadding{
+    padding-top: 6px;
+}
+#habitCardsDiv{
+    height: 100%;
+}
+.actualCardsDiv{
+    height: 85%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}

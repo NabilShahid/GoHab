@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import Header from "../Header/header";
 import { insertGoals,sortGoals } from "../../actions/goalActions";
 import { insertTasks,sortTasks } from "../../actions/taskActions";
+import { insertHabits,sortHabits } from "../../actions/habitActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -62,6 +63,7 @@ class MainBase extends Component {
   componentDidMount() {
     this.getGoalsAndInsertAndSort();
     this.getTasksAndInsertAndSort();
+    this.getHabitsAndInsertAndSort();
   }
 
   getGoalsAndInsertAndSort(){
@@ -89,6 +91,22 @@ class MainBase extends Component {
       });
       this.props.insertTasks(allGoals);
       this.props.sortTasks({orderBy:"alphabetical"})
+      
+    })
+    .catch(error => {
+      console.log("firebase error: ", error);
+    });
+  }
+
+  getHabitsAndInsertAndSort(){
+    this.props.firebase.habitOps
+    .retrieveAllHabits("nabil110176@gmail.com")
+    .then(querySnapshot => {
+      const allHabits = querySnapshot.docs.map(function(doc) {
+        return { ...doc.data(), id: doc.id };
+      });
+      this.props.insertHabits(allHabits);
+      this.props.sortHabits({orderBy:"alphabetical"})
       
     })
     .catch(error => {
@@ -125,10 +143,14 @@ const mapDispatchToProps = dispatch => {
    },
    sortTasks: sortPayload => {
     dispatch(sortTasks(sortPayload));
+  },
+   insertHabits: habitsPayload => {
+     dispatch(insertHabits(habitsPayload));
+   },
+   sortHabits: sortPayload => {
+    dispatch(sortHabits(sortPayload));
   }
-  //  sortGoals: sortPayload => {
-  //   dispatch(sortGoals(sortPayload));
-  // },
+ 
   
  };
 };
