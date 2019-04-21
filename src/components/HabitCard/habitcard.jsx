@@ -4,7 +4,7 @@ import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
 import HabitHitMissChart from "../../charts/habitHitMissChart";
 import "./habitcard.css";
-const HabitCard = ({ name, description, completed, markHabit, id }) => {
+const HabitCard = ({ name, description, completed, markHabit, id, category,period, frequecy  }) => {
   return (
     <div
       className="habitCard"
@@ -46,22 +46,12 @@ const HabitCard = ({ name, description, completed, markHabit, id }) => {
           <div className="habitSubtitle">{description}</div>
           <div className="habitCardInfo">
             Category
-            <div>dfdfasfas adf sdfdf</div>
+            <div>{category}</div>
           </div>
           <div className="habitCardInfo">
             Following
             <div>5 times a day</div>
           </div>
-          {/* <div className="habitCardInfo">
-            <div className="row">
-              <div className="col-md-6 habitCardMissed">Missed:</div>
-              <div className="col-md-6 habitCardFollowed">Followed:</div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 habitCardMissed">5324 times</div>
-              <div className="col-md-6 habitCardFollowed">4324 times</div>
-            </div>
-          </div> */}
           <div className="row habitCardInfo">
           
             <div className="col-md-6">

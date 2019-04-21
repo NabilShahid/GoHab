@@ -54,7 +54,7 @@ class Habits extends Component {
               onClick={()=>this.viewHabitDialog(false,false)}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Create Habit
+              Add New
             </Button>
           </div>
           
@@ -130,6 +130,7 @@ class Habits extends Component {
             lists={this.props.goalNamesAndIDs}
             openDialog={this.viewHabitDialog}
             markItem={this.markHabit}
+            card="habit"
           />
         ) : (
           <div className="actualCardsDiv">
@@ -240,9 +241,10 @@ class Habits extends Component {
           <HabitCard
             name={r.name}
             description={r.description}
-            dueDate={r.dueDate}
+            category={r.category}
+            period={r.period}
             completed={r.completed}
-            importance={r.importance}
+            frequency={r.frequency}
             markHabit={this.markHabit}
             id={r.id}
           />

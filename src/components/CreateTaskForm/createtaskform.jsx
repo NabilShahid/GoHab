@@ -75,8 +75,7 @@ class CreateHabbitForm extends React.Component {
         .then(t => {
           this.setState({ loading: false });
           this.props.addTask({ ...formValuesToSave, id: t.id });
-          if(this.props.close)this.props.close();
-          
+          if(this.props.close)this.props.close();          
           else this.props.setFormVisibility("Task", false);
         })
         .catch(error => {

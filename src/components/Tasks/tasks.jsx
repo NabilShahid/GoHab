@@ -53,7 +53,7 @@ class Tasks extends Component {
               onClick={()=>this.viewTaskDialog(false,false)}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Create Task
+              Add New
             </Button>
             {/* <span style={{float:"right"}}>Tasks Under Goals</span> */}
           </div>
@@ -128,6 +128,7 @@ class Tasks extends Component {
             lists={this.props.goalNamesAndIDs}
             openDialog={this.viewTaskDialog}
             markItem={this.markTask}
+            card="task"
           />
         ) : (
           <div className="actualCardsDiv">

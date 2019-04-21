@@ -19,6 +19,7 @@ import {
 import { withFirebase } from "../../services/firebase";
 import logo from "../../assets/images/logo_withoutText.png";
 import { connect } from "react-redux";
+import { addHabit } from "../../actions/habitActions";
 import "./createhabitform.css";
 import moment from "moment";
 const { TextArea } = Input;
@@ -92,9 +93,11 @@ class CreateHabitForm extends React.Component {
       formValuesToSave.completed = false;
       this.props.firebase.habitOps
         .addNewHabit("nabil110176@gmail.com", formValuesToSave)
-        .then(() => {
+        .then(h => {
           this.setState({ loading: false });
-          this.props.setFormVisibility("Habit", false);
+          this.props.addHabit({ ...formValuesToSave, id: h.id });
+          if (this.props.close) this.props.close();
+          else this.props.setFormVisibility("Habit", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
@@ -169,6 +172,10 @@ class CreateHabitForm extends React.Component {
     if (this.props.mode == "view") {
       this.setInitFormValues();
       this.state.disabledForm = true;
+    } else if (this.props.mode == "add" && this.props.parentGoal) {
+      let formValues = { ...this.state.formValues };
+      formValues.parentGoal = this.props.parentGoal;
+      this.setState({ formValues });
     }
   }
 
@@ -176,11 +183,21 @@ class CreateHabitForm extends React.Component {
    * set values of form in case of existing habit for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, progress } = this.props;
+    const {
+      name,
+      description,
+      category,
+      parentGoal,
+      period,
+      frquency
+    } = this.props;
     const { formValues } = this.state;
-    formValues.name = name && name;
-    formValues.description = description && description;
-    formValues.progress = progress && progress;
+    formValues.name = name || "";
+    formValues.description = description || "";
+    formValues.category = category || "Health";
+    formValues.parentGoal = parentGoal || "";
+    formValues.period = period || "Dialy";
+    formValues.frquency = frquency || 1;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -372,7 +389,7 @@ class CreateHabitForm extends React.Component {
               <div className="col-md-9">
                 <Select
                   showSearch
-                  defaultValue="none"
+                  value={formValues.parentGoal}
                   style={{ width: "100%" }}
                   size="small"
                   onChange={this.setParentGoal}
@@ -495,6 +512,14 @@ class CreateHabitForm extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addHabit: taskPayload => {
+      dispatch(addHabit(taskPayload));
+    }
+  };
+};
+
 const mapStateToProps = state => {
   return {
     goals: state.goalReducer.Goals
@@ -503,5 +528,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withFirebase(CreateHabitForm));
