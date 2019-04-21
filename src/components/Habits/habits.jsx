@@ -54,7 +54,7 @@ class Habits extends Component {
               onClick={()=>this.viewHabitDialog(false,false)}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Add Habit
+              Create Habit
             </Button>
           </div>
           

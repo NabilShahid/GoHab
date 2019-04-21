@@ -55,7 +55,7 @@ class Goals extends Component {
               style={{ background: "var(--goal-color)" }}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Add Goal
+              Create Goal
             </Button>
           </div>
           <div className="col-md-6 cardsFilterIconContainer">

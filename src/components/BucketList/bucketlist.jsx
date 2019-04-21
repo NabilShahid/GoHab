@@ -8,7 +8,6 @@ const BucketList = ({ items, lists, openDialog, markItem }) => {
         return (
           <div className="bList">
             <div className="bListHeader">{list.name}</div>
-            <div className="bListAddButton" onClick={()=>{openDialog(false,list.id)}}><i className="fa fa-plus"></i></div>
             <div className="bListContent">
               {items
                 .filter(item => item.parentGoal == list.id)
@@ -29,6 +28,8 @@ const BucketList = ({ items, lists, openDialog, markItem }) => {
                   );
                 })}
             </div>
+            <div className="bListAddButton" onClick={()=>{openDialog(false,list.id)}}><i className="fa fa-plus"></i></div>
+
           </div>
         );
       })}

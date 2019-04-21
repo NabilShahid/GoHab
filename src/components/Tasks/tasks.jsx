@@ -53,8 +53,9 @@ class Tasks extends Component {
               onClick={()=>this.viewTaskDialog(false,false)}
             >
               <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Add Task
+              Create Task
             </Button>
+            {/* <span style={{float:"right"}}>Tasks Under Goals</span> */}
           </div>
           
           <div className="col-md-6 cardsFilterIconContainer">
