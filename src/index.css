@@ -120,6 +120,9 @@ code {
 .ant-tabs-ink-bar {
   background-color: #fd3a3a !important;
 }
+.ant-tabs .ant-tabs-left-content{
+  padding: 1px 3px 0 24px !important;
+}
 .blackClickable {
   cursor: pointer;
   color: #4c4c4c;

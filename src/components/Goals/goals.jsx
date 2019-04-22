@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import GoalCard from "../GoalCard/goalcard";
 import CreateGoalForm from "../CreateGoalForm/creategoalform";
+import Tasks from "../Tasks/tasks";
+import Habits from "../Habits/habits";
 import { withFirebase } from "../../services/firebase/context";
 import {
   updateGoal,
@@ -18,7 +20,8 @@ import {
   Popover,
   Button,
   Icon,
-  Select, Tooltip
+  Select,
+  Tooltip
 } from "antd";
 import "./goals.css";
 
@@ -98,19 +101,18 @@ class Goals extends Component {
                 </div>
               }
               trigger="click"
-            > <Tooltip title="Change View">
-            
-            <i
-                className="fa fa-cogs cardsFilterIcon"
-                style={{ color: "#fd960f" }}
-              />
-          </Tooltip>
-              
+            >
+              {" "}
+              <Tooltip title="Change View">
+                <i
+                  className="fa fa-cogs cardsFilterIcon"
+                  style={{ color: "#fd960f" }}
+                />
+              </Tooltip>
             </Popover>
           </div>
         </div>
 
-      
         <div className="actualCardsDiv">
           {this.getGoalRows(this.props.goals, 3)}
         </div>
@@ -132,10 +134,18 @@ class Goals extends Component {
                 <div className="gTabContent">{this.currentGoalDialog()}</div>
               </TabPane>
               <TabPane tab="Sub Habits" key="2">
-                <div className="gTabContent" />
+                <div className="gTabContent">
+                  <Habits
+                    subMode={{ ColSize: 2, Goal: currentGoalOptions.id }}
+                  />
+                </div>
               </TabPane>
               <TabPane tab="Sub Tasks" key="3">
-                <div className="gTabContent" />
+                <div className="gTabContent">
+                  <Tasks
+                    subMode={{ ColSize: 2, Goal: currentGoalOptions.id }}
+                  />
+                </div>
               </TabPane>
             </Tabs>
           </Modal>

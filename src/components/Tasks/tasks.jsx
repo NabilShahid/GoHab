@@ -1,5 +1,15 @@
 import React, { Component } from "react";
-import { Modal, Radio, Row, Col, Select, message, Button, Popover, Tooltip } from "antd";
+import {
+  Modal,
+  Radio,
+  Row,
+  Col,
+  Select,
+  message,
+  Button,
+  Popover,
+  Tooltip
+} from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
 import BucketList from "../BucketList/bucketlist";
@@ -28,7 +38,7 @@ class Tasks extends Component {
   }
   changeTasksStatus(v) {
     this.props.filterTasksByStatus(v);
-  } 
+  }
   changeViewType(v) {
     this.props.changeTasksViewType();
   }
@@ -39,103 +49,110 @@ class Tasks extends Component {
       currentTaskOptions,
       taskViewMode,
       taskDialogTitle
-      
     } = this.state;
-    const { statusFilter, orderBy, viewTypeFilter } = this.props;
+    const { statusFilter, orderBy, viewTypeFilter, subMode } = this.props;
     return (
       <div id="taskCardsDiv">
-        <div className="row cardsViewSelector">
-          <div className="col-md-6" style={{ padding: 0 }}>
-            <Button
-              type="primary"
-              className="noColorButton"
-              style={{ background: "var(--task-color)" }}
-              onClick={()=>this.viewTaskDialog(false,false)}
-            >
-              <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Add New
-            </Button>
-            {/* <span style={{float:"right"}}>Tasks Under Goals</span> */}
-          </div>
-          
-          <div className="col-md-6 cardsFilterIconContainer">
-            <Popover
-              placement="bottomLeft"
-              title="Change View"
-              content={
-                <div>
-                  <div className="cardFilterLabel">Tasks View:</div>
-                  <div>
-                    <Radio.Group
-                      value={viewTypeFilter}
-                      buttonStyle="solid"
-                      size="small"
-                      onChange={e => {
-                        this.changeViewType(e.target.value);
-                      }}
-                    >
-                      <Radio.Button value="bucket">Goals View</Radio.Button>
-                      <Radio.Button value="grid">Grid View</Radio.Button>
-                    </Radio.Group>
-                  </div>
-                  <div className="cardFilterLabel">Show Tasks:</div>
-                  <div>
-                    <Radio.Group
-                      value={statusFilter}
-                      buttonStyle="solid"
-                      size="small"
-                      onChange={e => {
-                        this.changeTasksStatus(e.target.value);
-                      }}
-                    >
-                      <Radio.Button value="all">All</Radio.Button>
-                      <Radio.Button value="completed">Completed</Radio.Button>
-                      <Radio.Button value="pending">Pending</Radio.Button>
-                    </Radio.Group>
-                  </div>
-                  <div className="cardFilterLabel">Sort:</div>
-                  <div>
-                    <Select
-                      onChange={e => this.changeOrderBy(e)}
-                      style={{ width: "100%" }}
-                      size="small"
-                      value={orderBy}
-                    >
-                      <Option value="dueDate">Due Date</Option>
-                      <Option value="importance">Importance</Option>
-                      <Option value="alphabetical">Alphabetical</Option>
-                    </Select>
-                  </div>
-                </div>
-              }
-              trigger="click"
-            >
-            <Tooltip title="Change View">
-              
-            <i
-                className="fa fa-cogs cardsFilterIcon"
-                style={{ color: "#4ea952" }}
-              />
-            </Tooltip>
-              
-            </Popover>
-          </div>
-        </div>
-       
-        {viewTypeFilter === "bucket" ? (
-          <BucketList
-            items={this.props.tasks}
-            lists={this.props.goalNamesAndIDs}
-            openDialog={this.viewTaskDialog}
-            markItem={this.markTask}
-            card="task"
-          />
-        ) : (
+        {subMode && (
           <div className="actualCardsDiv">
-            {this.getTasksRows(this.props.tasks, 3)}
+            {this.getTasksRows(this.props.tasks.filter(t=>t.parentGoal==subMode.Goal), subMode.ColSize)}
           </div>
         )}
+        {!subMode && (
+          <React.Fragment>
+            <div className="row cardsViewSelector">
+              <div className="col-md-6" style={{ padding: 0 }}>
+                <Button
+                  type="primary"
+                  className="noColorButton"
+                  style={{ background: "var(--task-color)" }}
+                  onClick={() => this.viewTaskDialog(false, false)}
+                >
+                  <i className="fa fa-plus" style={{ marginRight: "10px" }} />
+                  Add New
+                </Button>
+                {/* <span style={{float:"right"}}>Tasks Under Goals</span> */}
+              </div>
 
+              <div className="col-md-6 cardsFilterIconContainer">
+                <Popover
+                  placement="bottomLeft"
+                  title="Change View"
+                  content={
+                    <div>
+                      <div className="cardFilterLabel">Tasks View:</div>
+                      <div>
+                        <Radio.Group
+                          value={viewTypeFilter}
+                          buttonStyle="solid"
+                          size="small"
+                          onChange={e => {
+                            this.changeViewType(e.target.value);
+                          }}
+                        >
+                          <Radio.Button value="bucket">Goals View</Radio.Button>
+                          <Radio.Button value="grid">Grid View</Radio.Button>
+                        </Radio.Group>
+                      </div>
+                      <div className="cardFilterLabel">Show Tasks:</div>
+                      <div>
+                        <Radio.Group
+                          value={statusFilter}
+                          buttonStyle="solid"
+                          size="small"
+                          onChange={e => {
+                            this.changeTasksStatus(e.target.value);
+                          }}
+                        >
+                          <Radio.Button value="all">All</Radio.Button>
+                          <Radio.Button value="completed">
+                            Completed
+                          </Radio.Button>
+                          <Radio.Button value="pending">Pending</Radio.Button>
+                        </Radio.Group>
+                      </div>
+                      <div className="cardFilterLabel">Sort:</div>
+                      <div>
+                        <Select
+                          onChange={e => this.changeOrderBy(e)}
+                          style={{ width: "100%" }}
+                          size="small"
+                          value={orderBy}
+                        >
+                          <Option value="dueDate">Due Date</Option>
+                          <Option value="importance">Importance</Option>
+                          <Option value="alphabetical">Alphabetical</Option>
+                        </Select>
+                      </div>
+                    </div>
+                  }
+                  trigger="click"
+                >
+                  <Tooltip title="Change View">
+                    <i
+                      className="fa fa-cogs cardsFilterIcon"
+                      style={{ color: "#4ea952" }}
+                    />
+                  </Tooltip>
+                </Popover>
+              </div>
+            </div>
+
+            {viewTypeFilter === "bucket" ? (
+              <BucketList
+                items={this.props.tasks}
+                lists={this.props.goalNamesAndIDs}
+                openDialog={this.viewTaskDialog}
+                markItem={this.markTask}
+                card="task"
+              />
+            ) : (
+              <div className="actualCardsDiv">
+                {this.getTasksRows(this.props.tasks, 3)}
+              </div>
+            )}
+          </React.Fragment>
+        )}
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
@@ -216,7 +233,7 @@ class Tasks extends Component {
 
         taskRows.push(
           <div className="row" style={{ marginTop: "15px" }} key={i}>
-            {this.getTaskCols(taskRowArray, i)}
+            {this.getTaskCols(taskRowArray, i, colSize)}
           </div>
         );
       }
@@ -224,8 +241,8 @@ class Tasks extends Component {
     return taskRows;
   }
 
-  getTaskCols(rowArray, rowindex) {
-    let cellClass = "col-md-4";
+  getTaskCols(rowArray, rowindex, colSize) {
+    let cellClass = `col-md-${Math.floor(12 / colSize)}`;
     if (rowindex > 0) cellClass += " tasksRow";
     return rowArray.map(r => {
       return (
@@ -273,7 +290,7 @@ const mapStateToProps = state => {
     statusFilter: state.taskReducer.CurrentStatusFilter,
     orderBy: state.taskReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
-    viewTypeFilter:state.taskReducer.CurrentViewType
+    viewTypeFilter: state.taskReducer.CurrentViewType
   };
 };
 
