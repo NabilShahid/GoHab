@@ -7,6 +7,7 @@
     cursor: pointer;
     color: #9a9a9a;
     margin-top: 5px;
+    max-width: 360px;
 }
 .goalCard:hover{
     transition: 0.2s;
