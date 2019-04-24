@@ -10,6 +10,7 @@ import {
   filterGoalsByStatus
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
+import { alphaSort } from "../../services/methods/ghtCommonMethods.js";
 import {
   Modal,
   Tabs,
@@ -47,7 +48,7 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions
     } = this.state;
-    const { statusFilter, orderBy } = this.props;
+    const { statusFilter, orderBy, tasks,habits } = this.props;
     return (
       <div id="goalCardsDiv">
         <div className="row cardsViewSelector">
@@ -136,14 +137,28 @@ class Goals extends Component {
               <TabPane tab="Sub Habits" key="2">
                 <div className="gTabContent">
                   <Habits
-                    subMode={{ ColSize: 2, Goal: currentGoalOptions.id }}
+                     subMode={{
+                      ColSize: 2,
+                      Habits: alphaSort(
+                        habits.filter(g => g.parentGoal == currentGoalOptions.id),
+                        "asc",
+                        "name"
+                      )
+                    }}
                   />
                 </div>
               </TabPane>
               <TabPane tab="Sub Tasks" key="3">
                 <div className="gTabContent">
                   <Tasks
-                    subMode={{ ColSize: 2, Goal: currentGoalOptions.id }}
+                    subMode={{
+                      ColSize: 2,
+                      Tasks: alphaSort(
+                        tasks.filter(t => t.parentGoal == currentGoalOptions.id),
+                        "asc",
+                        "name"
+                      )
+                    }}
                   />
                 </div>
               </TabPane>
@@ -267,7 +282,9 @@ const mapStateToProps = state => {
   return {
     goals: state.goalReducer.FilteredGoals,
     statusFilter: state.goalReducer.CurrentStatusFilter,
-    orderBy: state.goalReducer.CurrentOrderBy
+    orderBy: state.goalReducer.CurrentOrderBy,
+    tasks: state.taskReducer.Tasks,
+    habits:state.habitReducer.Habits
   };
 };
 

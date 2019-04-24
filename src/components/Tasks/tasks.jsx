@@ -55,7 +55,7 @@ class Tasks extends Component {
       <div id="taskCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-            {this.getTasksRows(this.props.tasks.filter(t=>t.parentGoal==subMode.Goal), subMode.ColSize)}
+            {this.getTasksRows(subMode.Tasks, subMode.ColSize)}
           </div>
         )}
         {!subMode && (

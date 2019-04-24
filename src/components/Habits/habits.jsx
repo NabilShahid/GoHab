@@ -56,7 +56,7 @@ class Habits extends Component {
       <div id="habitCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-            {this.getHabitsRows(this.props.habits, subMode.ColSize)}
+            {this.getHabitsRows(subMode.Habits, subMode.ColSize)}
           </div>
         )}
         {!subMode && (
