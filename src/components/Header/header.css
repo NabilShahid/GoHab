@@ -8,13 +8,13 @@
   font-weight: bold;
   padding-right: 3%;
 }
-#bellIcon {
-  font-size: 25px;
+.headerIcon {  
   cursor: pointer;
 }
 #headerOptions {
   padding-top: 11px;
   text-align: right;
+  padding-left: 15px;
 }
 
 #headerOptions input {

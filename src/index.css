@@ -281,3 +281,16 @@ code {
    margin: 6px 0px;
   color: #838384;
 }
+.submenu{
+  padding: 2px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.submenuOption:not(:first-child){
+  padding-top: 8px;
+}
+.submenuOption:not(:last-child){
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 8px;
+
+}

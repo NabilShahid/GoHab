@@ -7,7 +7,10 @@ import { updateFilterString } from "../../actions/headerActions";
 import "./header.css";
 import PAGEKEYS from "../../constants/pageKeys";
 import HEADEROPTIONS from "../../constants/headerOptions";
-import { Row, Col, Badge, Drawer, Input } from "antd";
+import history from "../../services/history";
+import ROUTES from "../../constants/routes";
+import { withFirebase } from "../../services/firebase";
+import { Row, Col, Badge, Drawer, Input, Popover } from "antd";
 const Search = Input.Search;
 class Header extends Component {
   state = {
@@ -37,12 +40,12 @@ class Header extends Component {
   }
 
   render() {
-    const { search } = this.props;
+    const { search, firebase } = this.props;
     return (
       <div id="headerAbDiv">
         <Row>
           <Col span={1} />
-          <Col id="headerTitle" span={10}>
+          <Col id="headerTitle" span={9}>
             <i className={this.props.icon} style={{ marginRight: "2%" }} />
             {this.props.title}
           </Col>
@@ -66,10 +69,41 @@ class Header extends Component {
                 onClick={() => {
                   this.setState({ notificationsVisible: true });
                 }}
-                className="fa fa-bell"
-                id="bellIcon"
+                className="fa fa-bell headerIcon"
+                style={{ fontSize: "22px" }}
               />
             </Badge>
+          </Col>
+
+          <Col className="headerIconContainer" span={1}>
+            <Popover
+              placement="bottomLeft"
+              // title="Change View"
+              content={
+                <div className="submenu">
+                  <div className="submenuOption">Account Settings</div>
+                  <div
+                    onClick={() => {
+                      firebase.authOps.doSignOut().then(() => {
+                        history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
+                      });
+                    }}
+                    className="submenuOption"
+                  >
+                    Logout
+                  </div>
+                </div>
+              }
+              trigger="click"
+            >
+              <i
+                onClick={() => {
+                  // this.setState({ notificationsVisible: true });
+                }}
+                className="fa fa-cog headerIcon"
+                style={{ fontSize: "25px" }}
+              />
+            </Popover>
           </Col>
           <Col span={1} />
         </Row>
@@ -127,4 +161,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header);
+)(withFirebase(Header));
