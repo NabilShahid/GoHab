@@ -243,6 +243,9 @@ code {
 .inheritHeight{
   height: inherit;
 }
+.fullHeight{
+  height: 100%;
+}
 
 .markIcon{
   margin: 10px 0px 5px 6px;

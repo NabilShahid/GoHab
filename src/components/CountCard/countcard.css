@@ -1,0 +1,11 @@
+.countCard {
+    padding: 5px 7px;
+    /* border:1px solid #f1f1f1; */
+    border-radius: 3px;
+}
+.countCardContent {
+  font-size: 25px;
+}
+.countCardSubContent {
+  font-size: 13px;
+}

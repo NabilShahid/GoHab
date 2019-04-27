@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import "./createcard.css";
 const CreateCard = ({ background, icon,ccTitle, ccSubTitle, boxShadow }) => {
   return (
-    <div id="createCardMain" style={{ background,boxShadow }}>
+    <div className="createCardMain" style={{ background,boxShadow }}>
       <Row>
         <Col style={{ fontSize: "5em", marginTop:"-5px", textAlign:"center" }} span={8}>
           <i className={`createCardIcon ${icon}`} />

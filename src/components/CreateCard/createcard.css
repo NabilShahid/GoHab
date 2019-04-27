@@ -1,4 +1,4 @@
-#createCardMain{
+.createCardMain{
     max-height: 135px;
     padding: 12px;
     color: white;
@@ -8,7 +8,7 @@
     transition: 0.1s;
     transform: translateY(0px);
 }
-#createCardMain:hover{
+.createCardMain:hover{
     transition: 0.2s;
     transform: translateY(-5%);
 }
