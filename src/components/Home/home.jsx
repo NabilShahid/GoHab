@@ -91,7 +91,7 @@ class Home extends Component {
         <div className="row" style={{ marginTop: "30px" }}>
           <div className="col-md-4">
             <CountCard
-              background="linear-gradient(160deg,#fbfbfb 80%,#f7d7ac)"
+              background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
               color="#fd9a14"              
               subtitle="Pending Goals"
               count={goalsCount}
@@ -99,7 +99,7 @@ class Home extends Component {
           </div>
           <div className="col-md-4">
             <CountCard
-              background="linear-gradient(160deg,#fbfbfb 80%,#c3dfe2)"
+              background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
               color="#04afc4"              
               subtitle="Active Habits"
               count={habitsCount}
@@ -107,7 +107,7 @@ class Home extends Component {
           </div>
           <div className="col-md-4">
             <CountCard
-              background="linear-gradient(160deg,#fbfbfb 80%,#c6ffc8)"
+              background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"
               color="#49a54d"              
               subtitle="Pending Tasks"
               count={tasksCount}

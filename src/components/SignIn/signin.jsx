@@ -66,7 +66,7 @@ class SignInFormBase extends Component {
 
     return (
       <React.Fragment>
-        {/* <div id="loginContainer">
+        <div id="loginContainer">
           <Row>
             <Col id="leftCol" span={10} />
             <Col id="rightCol" span={14}>
@@ -94,7 +94,7 @@ class SignInFormBase extends Component {
               <Button id="loginButton" onClick={this.addUser}>Sign In</Button>
             </Col>
           </Row>
-        </div> */}
+        </div>
         <div className={"container "+(signUpForm?"right-panel-active":"")} id="container">
           <div className="form-container sign-up-container">
             
