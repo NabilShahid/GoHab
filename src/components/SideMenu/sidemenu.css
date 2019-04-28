@@ -1,12 +1,12 @@
 
 .ant-menu{
-    background-color: #fd3a3a !important;
-    background:  #f1f1f1!important;
+    background-color: var(--primary-color) !important;
+    background:  white!important;
     color: #4c4c4c !important;
     border-radius: 5px;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: #fd3a3a!important;
+    background-color: var(--primary-color)!important;
 }
 .ant-menu-item-selected {
     color: white !important;

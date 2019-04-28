@@ -280,7 +280,7 @@ class CreateGoalForm extends React.Component {
                   value={formValues.importance}
                   style={{
                     fontSize: 19,
-                    color: "#fd3a3a",
+                    color: "var(--primary-color)",
                     marginTop: "-0.5%"
                   }}
                   onChange={value => {
@@ -313,7 +313,7 @@ class CreateGoalForm extends React.Component {
                         }}
                       />
                       <i
-                        style={{ color: "#fd3a3a", fontSize: "18px" }}
+                        style={{ color: "var(--primary-color)", fontSize: "18px" }}
                         className="fa fa-check"
                       />
                     </span>

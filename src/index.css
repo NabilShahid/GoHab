@@ -57,19 +57,19 @@ code {
 }
 
 .ghtFormContainer .ant-slider-track {
-  background-color: #fd3a3a;
+  background-color: var(--primary-color);
 }
 .ghtFormContainer .ant-slider:hover .ant-slider-track {
   background-color: #4c4c4c;
 }
 
 .ghtFormContainer .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #fd3a3a;
-  border-color: #fd3a3a;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .redButton {
-  background-color: #fd3a3a !important;
+  background-color: var(--primary-color) !important;
   border: 0px !important;
   border-radius: 3px !important;
   color: white !important;
@@ -88,15 +88,15 @@ code {
 .ant-calendar-selected-date .ant-calendar-date,
 .ant-calendar-selected-start-date .ant-calendar-date,
 .ant-calendar-selected-end-date .ant-calendar-date {
-  background: #fd3a3a !important;
+  background: var(--primary-color) !important;
 }
 .ant-calendar-today .ant-calendar-date {
-  border-color: #fd3a3a !important;
+  border-color: var(--primary-color) !important;
   color: #4c4c4c !important ;
 }
 .formError {
   font-size: 12px;
-  color: #fd3a3a;
+  color: var(--primary-color);
 }
 
 .blackBoldClickableIcon {
@@ -106,20 +106,20 @@ code {
 }
 
 .ant-tooltip-inner {
-  background-color: #fd3a3a !important;
+  background-color: var(--primary-color) !important;
 }
 .fa-pencil {
   content: "\f040";
 }
 
 .ant-tabs-nav .ant-tabs-tab-active {
-  color: #fd3a3a !important;
+  color: var(--primary-color) !important;
 }
 .ant-tabs-nav .ant-tabs-tab:hover {
-  color: #fd3a3a !important;
+  color: var(--primary-color) !important;
 }
 .ant-tabs-ink-bar {
-  background-color: #fd3a3a !important;
+  background-color: var(--primary-color) !important;
 }
 .ant-tabs .ant-tabs-left-content{
   padding: 1px 3px 0 24px !important;
@@ -155,7 +155,7 @@ code {
   border: unset;
 }
 .ghtFormContainer .progress-bar {
-  background-color: #fd3a3a;
+  background-color: var(--primary-color);
 }
 
 .ghtFormContainer .progressNumber {
@@ -178,8 +178,8 @@ code {
 
 .ant-radio-group-solid
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  background: #fd3a3a !important;
-  border-color: #fd3a3a !important;
+  background: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
 .ant-radio-button-wrapper:hover {
@@ -187,7 +187,7 @@ code {
   background-color: #4c4c4c;
 }
 .ant-radio-button-wrapper-checked:active {
-  border-color: #fd3a3a !important;
+  border-color: var(--primary-color) !important;
   box-shadow: unset !important;
 }
 .ant-radio-button-wrapper-checked {
@@ -195,7 +195,7 @@ code {
 }
 
 .ant-select-dropdown-menu-item-active {
-  background-color: #fd3a3a !important;
+  background-color: var(--primary-color) !important;
   color: white !important;
 }
 .ant-badge-count {

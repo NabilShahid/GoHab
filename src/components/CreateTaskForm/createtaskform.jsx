@@ -320,7 +320,7 @@ class CreateHabbitForm extends React.Component {
                   value={formValues.importance}
                   style={{
                     fontSize: 19,
-                    color: "#fd3a3a",
+                    color: "var(--primary-color)",
                     marginTop: "-0.5%"
                   }}
                   onChange={value => {
