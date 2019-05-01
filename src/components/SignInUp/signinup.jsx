@@ -96,31 +96,39 @@ class SignInFormBase extends Component {
           </Row>
         </div> */}
         <div
-          className={"siuContainer " + (signUpForm ? "siuRightPanelActive" : "")}
+          className={
+            "siuContainer " + (signUpForm ? "siuRightPanelActive" : "")
+          }
         >
           <div className="siuFormContainer signUpContainer">
-            <form action="#">
+            <form className="siuForm" action="#">
               <div className="siuMainHeader">Create Account</div>
               <div className="socialContainer">
-                <a href="#" className="social">
+                <a href="#" className="siuSocialLink">
                   <i className="fab fa-facebook-f" />
                 </a>
-                <a href="#" className="social">
+                <a href="#" className="siuSocialLink">
                   <i className="fab fa-google-plus-g" />
                 </a>
-                <a href="#" className="social">
+                <a href="#" className="siuSocialLink">
                   <i className="fab fa-linkedin-in" />
                 </a>
               </div>
-              <span>or use your email for registration</span>
+              <span className="siuInfoText">
+                or use your email for registration
+              </span>
               <input className="siuInput" type="text" placeholder="Name" />
               <input className="siuInput" type="email" placeholder="Email" />
-              <input className="siuInput" type="password" placeholder="Password" />
-              <button>Sign Up</button>
+              <input
+                className="siuInput"
+                type="password"
+                placeholder="Password"
+              />
+              <button className="siuButton">Sign Up</button>
             </form>
           </div>
           <div className="siuFormContainer signInContainer">
-            <form onSubmit={this.onSubmit}>
+            <form className="siuForm" onSubmit={this.onSubmit}>
               <div className="siuMainHeader">Sign in</div>
               <div className="socialContainer">
                 <a href="#" className="social">
@@ -133,34 +141,36 @@ class SignInFormBase extends Component {
                   <i className="fab fa-linkedin-in" />
                 </a>
               </div>
-              <span>or use your account</span>
-              <input className="siuInput"
+              <span className="siuInfoText">or use your account</span>
+              <input
+                className="siuInput"
                 name="email"
                 value={email}
                 onChange={this.onChange}
                 type="text"
                 placeholder="Email Address"
               />
-              <input className="siuInput"
+              <input
+                className="siuInput"
                 type="password"
                 name="password"
                 value={password}
                 onChange={this.onChange}
                 placeholder="Password"
               />
-              <a href="#">Forgot your password?</a>
-              <button>Sign In</button>
+              <a className="siuSocialLink" href="#">Forgot your password?</a>
+              <button className="siuButton">Sign In</button>
             </form>
           </div>
           <div className="siuOverlayContainer">
             <div className="siuOverlay">
               <div className="siuOverlayPanel siuOverlayLeft">
                 <div className="siuMainHeader">Welcome Back!</div>
-                <p>
+                <p className="siuP">
                   To keep connected with us please login with your personal info
                 </p>
                 <button
-                  className="ghost"
+                  className="ghost siuButton"
                   id="signIn"
                   onClick={() => {
                     this.setState({ signUpForm: false });
@@ -171,9 +181,11 @@ class SignInFormBase extends Component {
               </div>
               <div className="siuOverlayPanel siuOverlayRight">
                 <div className="siuMainHeader">Hello, Friend!</div>
-                <p>Enter your personal details and start journey with us</p>
+                <p className="siuP">
+                  Enter your personal details and start journey with us
+                </p>
                 <button
-                  className="ghost"
+                  className="ghost siuButton"
                   id="signUp"
                   onClick={() => {
                     this.setState({ signUpForm: true });

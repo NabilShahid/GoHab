@@ -41,7 +41,7 @@
     font-size: 34px;
 }
 
-p {
+.siuP {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -49,18 +49,18 @@ p {
     margin: 20px 0 30px;
 }
 
-span {
+.siuInfoText {
     font-size: 12px;
 }
 
-a {
+.siuSocialLink {
     color: #333;
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
 }
 
-button {
+.siuButton {
     border-radius: 20px;
     border: 1px solid #ff4b2b;
     background-color: #ff4b2b;
@@ -73,20 +73,20 @@ button {
     transition: transform 80ms ease-in;
 }
 
-button:active {
+.siuButton:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.siuButton:focus {
     outline: none;
 }
 
-button.ghost {
+.siuButton.ghost {
     background-color: transparent;
     border-color: #ffffff;
 }
 
-form {
+.siuForm {
     background-color: #ffffff;
     display: flex;
     align-items: center;
