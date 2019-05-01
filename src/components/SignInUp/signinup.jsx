@@ -5,36 +5,20 @@ import { SignUpLink } from "../SignUp/signup";
 import { withFirebase } from "../../services/firebase";
 import ROUTES from "../../constants/routes";
 import { PasswordForgetLink } from "../PasswordForget/passwordforget";
+import history from "../../services/history";
 import { Card, Row, Col } from "antd";
 import PAGEKEYS from "../../constants/pageKeys";
 import { Button } from "antd";
 import "./signinup.css";
 
-const gridStyle = {
-  width: "25%",
-  textAlign: "center"
-};
-const SignInUp = () => (
-  <div id="loginPage">
-    <SignInForm />
-    {/* <PasswordForgetLink/>
-    <SignUpLink /> */}
-  </div>
-);
 
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
-  signUpForm: false
-};
-
-class SignInFormBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
+class SignInUp extends Component {
+  state={
+    email: "",
+    password: "",
+    error: null,
+    signUpForm: false
+  };
 
   onSubmit = event => {
     const { email, password } = this.state;
@@ -43,8 +27,7 @@ class SignInFormBase extends Component {
     this.props.firebase.authOps
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES[PAGEKEYS["MAIN"]]);
+        history.push(ROUTES[PAGEKEYS["MAIN"]]);
       })
       .catch(error => {
         this.setState({ error });
@@ -158,6 +141,7 @@ class SignInFormBase extends Component {
                 onChange={this.onChange}
                 placeholder="Password"
               />
+              {error && <p className="suiP">{error.message}</p>}
               <a className="siuSocialLink" href="#">Forgot your password?</a>
               <button className="siuButton">Sign In</button>
             </form>
@@ -202,11 +186,7 @@ class SignInFormBase extends Component {
   }
 }
 
-const SignInForm = compose(
-  withRouter,
-  withFirebase
-)(SignInFormBase);
 
-export default SignInUp;
+export default withFirebase(SignInUp);
 
-export { SignInForm };
+ 

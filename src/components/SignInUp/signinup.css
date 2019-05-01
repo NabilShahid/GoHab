@@ -61,9 +61,9 @@
 }
 
 .siuButton {
-    border-radius: 20px;
-    border: 1px solid #ff4b2b;
-    background-color: #ff4b2b;
+    border-radius: 3px;
+    border: 1px solid #4c4c4c;
+    background-color: #4c4c4c;
     color: #ffffff;
     font-size: 12px;
     font-weight: bold;
@@ -190,9 +190,9 @@
 }
 
 .siuOverlay {
-    background: #ff416c;
-    background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-    background: linear-gradient(to right, #ff4b2b, #ff416c);
+    /* background: #ff416c; */
+    background: -webkit-linear-gradient(to right, #ff3e61,#fb584c);
+    background: linear-gradient(to right, #ff3e61,#fb584c);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
