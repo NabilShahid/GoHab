@@ -100,7 +100,7 @@ class SignInFormBase extends Component {
         >
           <div className="siuFormContainer signUpContainer">
             <form action="#">
-              <h1>Create Account</h1>
+              <div className="siuMainHeader">Create Account</div>
               <div className="socialContainer">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f" />
@@ -113,15 +113,15 @@ class SignInFormBase extends Component {
                 </a>
               </div>
               <span>or use your email for registration</span>
-              <input type="text" placeholder="Name" />
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+              <input className="siuInput" type="text" placeholder="Name" />
+              <input className="siuInput" type="email" placeholder="Email" />
+              <input className="siuInput" type="password" placeholder="Password" />
               <button>Sign Up</button>
             </form>
           </div>
           <div className="siuFormContainer signInContainer">
             <form onSubmit={this.onSubmit}>
-              <h1>Sign in</h1>
+              <div className="siuMainHeader">Sign in</div>
               <div className="socialContainer">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f" />
@@ -134,14 +134,14 @@ class SignInFormBase extends Component {
                 </a>
               </div>
               <span>or use your account</span>
-              <input
+              <input className="siuInput"
                 name="email"
                 value={email}
                 onChange={this.onChange}
                 type="text"
                 placeholder="Email Address"
               />
-              <input
+              <input className="siuInput"
                 type="password"
                 name="password"
                 value={password}
@@ -155,7 +155,7 @@ class SignInFormBase extends Component {
           <div className="siuOverlayContainer">
             <div className="siuOverlay">
               <div className="siuOverlayPanel siuOverlayLeft">
-                <h1>Welcome Back!</h1>
+                <div className="siuMainHeader">Welcome Back!</div>
                 <p>
                   To keep connected with us please login with your personal info
                 </p>
@@ -170,7 +170,7 @@ class SignInFormBase extends Component {
                 </button>
               </div>
               <div className="siuOverlayPanel siuOverlayRight">
-                <h1>Hello, Friend!</h1>
+                <div className="siuMainHeader">Hello, Friend!</div>
                 <p>Enter your personal details and start journey with us</p>
                 <button
                   className="ghost"
