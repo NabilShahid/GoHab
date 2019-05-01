@@ -3,7 +3,7 @@ import ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
 import Main from "../Main/main";
 import SignUpPage from "../SignUp/signup";
-import SignInPage from "../SignIn/signin";
+import SignInUp from "../SignInUp/signinup";
 import SignOutButton from "../SignOut/signoutbutton";
 import { Router, Route, Redirect,Switch } from "react-router-dom";
 import { withFirebase } from "../../services/firebase";
@@ -32,7 +32,7 @@ class App extends Component {
           <Switch>
           <Route exact path="/" render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />} />
           <Route path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} />
-          <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInPage} />
+          <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInUp} />
            </Switch>
         </div>
       </Router>

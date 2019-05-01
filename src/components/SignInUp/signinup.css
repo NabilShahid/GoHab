@@ -104,11 +104,11 @@ input {
     width: 100%;
 }
 
-.social-container {
+.socialContainer {
     margin: 20px 0;
 }
 
-.social-container a {
+.socialContainer a {
     border: 1px solid #dddddd;
     border-radius: 50%;
     display: inline-flex;
@@ -118,7 +118,7 @@ input {
     height: 40px;
     width: 40px;
 }
-.container {
+.siuContainer {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -128,31 +128,31 @@ input {
     max-width: 100%;
     min-height: 480px;
 }
-.form-container {
+.siuFormContainer {
     position: absolute;
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
 }
 
-.sign-in-container {
+.signInContainer {
     left: 0;
     width: 50%;
     z-index: 2;
 }
 
-.sign-up-container {
+.signUpContainer {
     left: 0;
     width: 50%;
     opacity: 0;
     z-index: 1;
 }
 
-.container.right-panel-active .sign-in-container {
+.siuContainer.siuRightPanelActive .signInContainer {
     transform: translateX(100%);
 }
 
-.container.right-panel-active .sign-up-container {
+.siuContainer.siuRightPanelActive .signUpContainer {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
@@ -172,7 +172,7 @@ input {
         z-index: 5;
     }
 }
-.overlay-container {
+.siuOverlayContainer {
     position: absolute;
     top: 0;
     left: 50%;
@@ -183,11 +183,11 @@ input {
     z-index: 100;
 }
 
-.container.right-panel-active .overlay-container {
+.siuContainer.siuRightPanelActive .siuOverlayContainer {
     transform: translateX(-100%);
 }
 
-.overlay {
+.siuOverlay {
     background: #ff416c;
     background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
     background: linear-gradient(to right, #ff4b2b, #ff416c);
@@ -203,11 +203,11 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay {
+.siuContainer.siuRightPanelActive .siuOverlay {
     transform: translateX(50%);
 }
 
-.overlay-panel {
+.siuOverlayPanel {
     position: absolute;
     display: flex;
     align-items: center;
@@ -222,19 +222,19 @@ input {
     transition: transform 0.6s ease-in-out;
 }
 
-.overlay-left {
+.siuOverlayLeft {
     transform: translateX(-20%);
 }
 
-.container.right-panel-active .overlay-left {
+.siuContainer.siuRightPanelActive .siuOverlayLeft {
     transform: translateX(0);
 }
 
-.overlay-right {
+.siuOverlayRight {
     right: 0;
     transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right {
+.siuContainer.siuRightPanelActive .siuOverlayRight {
     transform: translateX(20%);
 } 

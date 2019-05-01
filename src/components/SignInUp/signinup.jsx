@@ -8,13 +8,13 @@ import { PasswordForgetLink } from "../PasswordForget/passwordforget";
 import { Card, Row, Col } from "antd";
 import PAGEKEYS from "../../constants/pageKeys";
 import { Button } from "antd";
-import "./signin.css";
+import "./signinup.css";
 
 const gridStyle = {
   width: "25%",
   textAlign: "center"
 };
-const SignInPage = () => (
+const SignInUp = () => (
   <div id="loginPage">
     <SignInForm />
     {/* <PasswordForgetLink/>
@@ -96,13 +96,12 @@ class SignInFormBase extends Component {
           </Row>
         </div> */}
         <div
-          className={"container " + (signUpForm ? "right-panel-active" : "")}
-          id="container"
+          className={"siuContainer " + (signUpForm ? "siuRightPanelActive" : "")}
         >
-          <div className="form-container sign-up-container">
+          <div className="siuFormContainer signUpContainer">
             <form action="#">
               <h1>Create Account</h1>
-              <div className="social-container">
+              <div className="socialContainer">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f" />
                 </a>
@@ -120,10 +119,10 @@ class SignInFormBase extends Component {
               <button>Sign Up</button>
             </form>
           </div>
-          <div className="form-container sign-in-container">
+          <div className="siuFormContainer signInContainer">
             <form onSubmit={this.onSubmit}>
               <h1>Sign in</h1>
-              <div className="social-container">
+              <div className="socialContainer">
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f" />
                 </a>
@@ -153,9 +152,9 @@ class SignInFormBase extends Component {
               <button>Sign In</button>
             </form>
           </div>
-          <div className="overlay-container">
-            <div className="overlay">
-              <div className="overlay-panel overlay-left">
+          <div className="siuOverlayContainer">
+            <div className="siuOverlay">
+              <div className="siuOverlayPanel siuOverlayLeft">
                 <h1>Welcome Back!</h1>
                 <p>
                   To keep connected with us please login with your personal info
@@ -170,7 +169,7 @@ class SignInFormBase extends Component {
                   Sign In
                 </button>
               </div>
-              <div className="overlay-panel overlay-right">
+              <div className="siuOverlayPanel siuOverlayRight">
                 <h1>Hello, Friend!</h1>
                 <p>Enter your personal details and start journey with us</p>
                 <button
@@ -196,6 +195,6 @@ const SignInForm = compose(
   withFirebase
 )(SignInFormBase);
 
-export default SignInPage;
+export default SignInUp;
 
 export { SignInForm };
