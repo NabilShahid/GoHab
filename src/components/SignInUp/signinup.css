@@ -134,7 +134,7 @@
     position: absolute;
     top: 0;
     height: 100%;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .signInContainer {
@@ -158,7 +158,7 @@
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
-    animation: show 0.6s;
+    animation: show 0.5s;
 }
 
 @keyframes show {
@@ -176,13 +176,20 @@
 }
 .siuOverlayContainer {
     position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
+    top: 0;  
+    width: 40%;
     height: 100%;
     overflow: hidden;
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.5s ease-in-out;
     z-index: 100;
+}
+.siuLeftDistance{
+    left: 40%;
+    transition: all 0.5s ease-in-out;
+}
+.siuRightDistance{
+    left: 60%;
+    transition: all 0.5s ease-in-out;
 }
 
 .siuContainer.siuRightPanelActive .siuOverlayContainer {
@@ -202,7 +209,7 @@
     height: 100%;
     width: 200%;
     transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .siuContainer.siuRightPanelActive .siuOverlay {
@@ -221,7 +228,7 @@
     height: 100%;
     width: 50%;
     transform: translateX(0);
-    transition: transform 0.6s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .siuOverlayLeft {

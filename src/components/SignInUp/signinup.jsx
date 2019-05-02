@@ -146,7 +146,7 @@ class SignInUp extends Component {
               <button className="siuButton">Sign In</button>
             </form>
           </div>
-          <div className="siuOverlayContainer">
+          <div className={"siuOverlayContainer " + (signUpForm ? "siuLeftDistance" : "siuRightDistance")}>
             <div className="siuOverlay">
               <div className="siuOverlayPanel siuOverlayLeft">
                 <div className="siuMainHeader">Welcome Back!</div>
@@ -185,8 +185,6 @@ class SignInUp extends Component {
     );
   }
 }
-
-
 export default withFirebase(SignInUp);
 
  
