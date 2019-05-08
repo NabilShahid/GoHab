@@ -122,11 +122,14 @@
 }
 .siuContainer {
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 5px;
+    box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     position: relative;
     overflow: hidden;
-    width: 768px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    top: 9%;
     max-width: 100%;
     min-height: 480px;
 }
@@ -138,14 +141,14 @@
 }
 
 .signInContainer {
-    left: 0;
+    left: 5%;
     width: 50%;
     z-index: 2;
 }
 
 .signUpContainer {
-    left: 0;
-    width: 50%;
+    left: -20%;
+    width: 60%;
     opacity: 0;
     z-index: 1;
 }
