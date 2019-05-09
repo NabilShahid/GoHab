@@ -55,8 +55,7 @@
 .goalAssociations{
     margin-top: 4%;
     font-size: 12px;
-    border-top: 1px solid #cec8c8;
-    padding-top: 1%;
+    margin-bottom: 5px;
 }
 .goalBadge{
     text-align: center;
@@ -73,6 +72,10 @@
     float: right;
     font-size: 11px;
     margin-top: 1%;
+}
+.goalAssociationsNumber{
+    font-size: 15px;
+    font-weight: 900;
 }
 
 

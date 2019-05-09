@@ -57,6 +57,7 @@ const GoalCard = ({
             </div>
           </div>
           <div className="goalSubtitle">{description}</div>
+         
           <div className="goalProgress">
             Progress<span className="progressNumber">{progress}%</span>
             <div className="progress">
@@ -86,9 +87,27 @@ const GoalCard = ({
               />
             </div>
           </div>
+          <div className="row goalAssociations">          
+            <div className="col-md-6">
+              <div>
+                Sub Habits
+                <div>
+                  <span className="goalAssociationsNumber">123</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div>
+                Sub Tasks
+                <div>
+                  <span className="goalAssociationsNumber">10</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="goalAssociations">
+      {/* <div className="goalAssociations">
         <div className="row">
           <div
             className="col-md-6 goalBadge"
@@ -102,7 +121,7 @@ const GoalCard = ({
             Associated Tasks
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
