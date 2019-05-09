@@ -14,7 +14,9 @@ const GoalCard = ({
   importance,
   asscTasks,
   asscHabits,
-  markGoal
+  markGoal,
+  subTasks,
+  subHabits
 }) => {
   if (!dueDate) dueDate = "No due date";
   else dueDate = moment(dueDate).format("DD-MMM-YYYY");
@@ -92,7 +94,7 @@ const GoalCard = ({
               <div>
                 Sub Habits
                 <div>
-                  <span className="goalAssociationsNumber">123</span>
+                  <span className="goalAssociationsNumber">{subHabits||0}</span>
                 </div>
               </div>
             </div>
@@ -100,7 +102,7 @@ const GoalCard = ({
               <div>
                 Sub Tasks
                 <div>
-                  <span className="goalAssociationsNumber">10</span>
+                  <span className="goalAssociationsNumber">{subTasks||0}</span>
                 </div>
               </div>
             </div>

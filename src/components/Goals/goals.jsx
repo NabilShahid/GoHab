@@ -254,6 +254,8 @@ class Goals extends Component {
             asscTasks="3"
             asscHabits="5"
             id={r.id}
+            subTasks={r.subTasks}
+            subHabits={r.subHabits}
             markGoal={this.markGoal}
           />
         </div>

@@ -1,7 +1,8 @@
 import {
   getSortedGoalNamesAndIDs,
   getFilteredGoals,
-  getSortedGoals
+  getSortedGoals,
+  getGoalSubItemsCount
 } from "../services/methods/goalMethods";
 const goalReducer = (
   state = {
@@ -51,6 +52,26 @@ const goalReducer = (
       state = newState;
       break;
     }
+    case "UPDATE_SUB_ITEMS_COUNT": {
+      let newState = { ...state };
+      newState.Goals = getGoalSubItemsCount(
+        newState.Goals,
+        action.payload.items,
+        action.payload.goalId,
+        action.payload.itemName
+      );
+      if (action.filterGoals) {
+        newState.FilteredGoals = [...newState.Goals];
+      } else {
+        newState.FilteredGoals = getFilteredGoals(
+          newState.Goals,
+          newState.CurrentFilterString,
+          newState.CurrentStatusFilter
+        );
+      }
+      state = newState;
+      break;
+    }
 
     case "FILTER_GOALS": {
       let newState = { ...state };
@@ -82,13 +103,11 @@ const goalReducer = (
         newState.Goals,
         newState.CurrentFilterString,
         newState.CurrentStatusFilter
-      );      
+      );
       newState.CurrentOrderBy = action.payload.orderBy;
       state = newState;
       break;
     }
-
-  
 
     default: {
     }

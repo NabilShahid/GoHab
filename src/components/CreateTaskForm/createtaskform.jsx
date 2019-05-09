@@ -15,6 +15,7 @@ import { addTask } from "../../actions/taskActions";
 import logo from "../../assets/images/logo_withoutText.png";
 import "./createtaskform.css";
 import moment from "moment";
+import {updateSubItemsCount } from "../../actions/goalActions";
 const { TextArea } = Input;
 const Option = Select.Option;
 
@@ -65,6 +66,7 @@ class CreateHabbitForm extends React.Component {
     //get date as string for saving in firestore
     if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
     else formValuesToSave.dueDate = false;
+       
 
     if (this.props.mode == "add"){
       
@@ -74,7 +76,8 @@ class CreateHabbitForm extends React.Component {
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
         .then(t => {
           this.setState({ loading: false });
-          this.props.addTask({ ...formValuesToSave, id: t.id });
+          this.props.addTask({ ...formValuesToSave, id: t.id });  
+          this.updateSubTasksCountForGoal(formValues.parentGoal);            
           if(this.props.close)this.props.close();          
           else this.props.setFormVisibility("Task", false);
         })
@@ -82,16 +85,19 @@ class CreateHabbitForm extends React.Component {
           console.error("Error writing document: ", error);
         });
     }
-    else
+    else{
       this.props.firebase.taskOps
         .updateTask("nabil110176@gmail.com", formValuesToSave, this.props.id)
         .then(() => {
           this.setState({ loading: false });
+          this.updateSubTasksCountForGoal(formValues.parentGoal); 
           this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
+        this.updateSubTasksCountForGoal(this.props.id);
+    }
   };
   /**
    * sets parent goal id
@@ -108,6 +114,17 @@ class CreateHabbitForm extends React.Component {
     const noDueDate = e.target.checked;
     this.setState({ noDueDate });
   };
+  /**
+   * 
+   */
+  updateSubTasksCountForGoal(goalId){
+    this.props.updateSubItemsCount({
+      items:this.props.tasks,
+      goalId,
+      filterGoals:false,
+      itemName:"subTasks"
+    });
+  }
 
   /**
    * validate each field on change using Joi schema
@@ -443,13 +460,17 @@ const mapDispatchToProps = dispatch => {
   return {
     addTask: taskPayload => {
         dispatch(addTask(taskPayload));
-    }
+    },
+    updateSubItemsCount:itemsPayload => {
+      dispatch(updateSubItemsCount(itemsPayload));
+  }
   };
 };
 
 const mapStateToProps = state => {
     return {
-      goals: state.goalReducer.Goals
+      goals: state.goalReducer.Goals,
+      tasks:state.taskReducer.Tasks
     };
   };
 

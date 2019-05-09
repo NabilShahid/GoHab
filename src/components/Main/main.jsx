@@ -8,7 +8,7 @@ import SignOutButton from "../SignOut/signoutbutton";
 import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
-import { insertGoals,sortGoals } from "../../actions/goalActions";
+import { insertGoals,sortGoals,updateSubItemsCount } from "../../actions/goalActions";
 import { insertTasks,sortTasks } from "../../actions/taskActions";
 import { insertHabits,sortHabits } from "../../actions/habitActions";
 import { Row, Col } from "antd";
@@ -86,11 +86,17 @@ class MainBase extends Component {
     this.props.firebase.taskOps
     .retrieveAllTasks("nabil110176@gmail.com")
     .then(querySnapshot => {
-      const allGoals = querySnapshot.docs.map(function(doc) {
+      const allTasks = querySnapshot.docs.map(function(doc) {
         return { ...doc.data(), id: doc.id };
       });
-      this.props.insertTasks(allGoals);
-      this.props.sortTasks({orderBy:"alphabetical"})
+      this.props.insertTasks(allTasks);
+      this.props.sortTasks({orderBy:"alphabetical"});
+      this.props.updateSubItemsCount({
+        items:allTasks,
+        goalId:false,
+        filterGoals:false,
+        itemName:"subTasks"
+      });
       
     })
     .catch(error => {
@@ -106,7 +112,13 @@ class MainBase extends Component {
         return { ...doc.data(), id: doc.id };
       });
       this.props.insertHabits(allHabits);
-      this.props.sortHabits({orderBy:"alphabetical"})
+      this.props.sortHabits({orderBy:"alphabetical"});
+      this.props.updateSubItemsCount({
+        items:allHabits,
+        goalId:false,
+        filterGoals:false,
+        itemName:"subHabits"
+      });
       
     })
     .catch(error => {
@@ -149,6 +161,9 @@ const mapDispatchToProps = dispatch => {
    },
    sortHabits: sortPayload => {
     dispatch(sortHabits(sortPayload));
+  },
+  updateSubItemsCount: itemsPayload => {
+    dispatch(updateSubItemsCount(itemsPayload));
   }
  
   

@@ -35,3 +35,9 @@ export function filterGoalsByStatus(statusPayload){
         payload: statusPayload
     };
 }
+export function updateSubItemsCount(itemsPayload){
+    return {
+        type: "UPDATE_SUB_ITEMS_COUNT",
+        payload: itemsPayload
+    };
+}
