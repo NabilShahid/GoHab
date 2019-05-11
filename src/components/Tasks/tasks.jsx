@@ -224,7 +224,7 @@ class Tasks extends Component {
    */
   getTasksRows(tasks, colSize) {
     let taskRows = [];
-    for (let i = 0; i < tasks.length; i += 3) {
+    for (let i = 0; i < tasks.length; i += colSize) {
       if (tasks[i]) {
         const taskRowArray = [];
         for (let j = 0; j < colSize; j++) {

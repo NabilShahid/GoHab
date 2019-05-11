@@ -227,7 +227,7 @@ class Habits extends Component {
    */
   getHabitsRows(habits, colSize) {
     let habitRows = [];
-    for (let i = 0; i < habits.length; i += 3) {
+    for (let i = 0; i < habits.length; i += colSize) {
       if (habits[i]) {
         const habitRowArray = [];
         for (let j = 0; j < colSize; j++) {
