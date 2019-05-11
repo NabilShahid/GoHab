@@ -15,11 +15,7 @@ import {
 } from "../../actions/goalActions";
 import { insertTasks, sortTasks } from "../../actions/taskActions";
 import { insertHabits, sortHabits } from "../../actions/habitActions";
-import {
-  toggleGoalsLoading,
-  toggleHabitsLoading,
-  toggleTasksLoading
-} from "../../actions/loadingActions";
+import { toggleItemLoading } from "../../actions/loadingActions";
 import { Row, Col } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
@@ -31,7 +27,6 @@ import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
 import Loading from "../Loading/loading";
 import "./main.css";
-import "font-awesome/css/font-awesome.min.css";
 
 class MainBase extends Component {
   state = {};
@@ -66,11 +61,6 @@ class MainBase extends Component {
                   />
                   <Route
                     exact
-                    path={ROUTES[PAGEKEYS["HABITS"]]}
-                    component={Habits}
-                  />
-                  <Route
-                    exact
                     path={ROUTES[PAGEKEYS["GOALS"]]}
                     render={() => {
                       return goalsLoading ? (
@@ -84,8 +74,30 @@ class MainBase extends Component {
                   />
                   <Route
                     exact
+                    path={ROUTES[PAGEKEYS["HABITS"]]}
+                    render={() => {
+                      return goalsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <Habits />
+                      );
+                    }}
+                  />
+
+                  <Route
+                    exact
                     path={ROUTES[PAGEKEYS["TASKS"]]}
-                    component={Tasks}
+                    render={() => {
+                      return goalsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <Tasks />
+                      );
+                    }}
                   />
                 </Switch>
               </Router>
@@ -105,10 +117,12 @@ class MainBase extends Component {
     this.getHabitsAndInsertAndSort();
   }
 
-  getGoalsAndInsertAndSort() {    
+  getGoalsAndInsertAndSort() {
+    this.props.toggleItemLoading("goalsLoading",true);
     this.props.firebase.goalOps
       .retrieveAllGoals("nabil110176@gmail.com")
       .then(querySnapshot => {
+        this.props.toggleItemLoading("goalsLoading",false);
         const allGoals = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -121,9 +135,11 @@ class MainBase extends Component {
   }
 
   getTasksAndInsertAndSort() {
+    this.props.toggleItemLoading("tasksLoading",true);
     this.props.firebase.taskOps
       .retrieveAllTasks("nabil110176@gmail.com")
       .then(querySnapshot => {
+        this.props.toggleItemLoading("tasksLoading",false);
         const allTasks = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -142,11 +158,11 @@ class MainBase extends Component {
   }
 
   getHabitsAndInsertAndSort() {
-    this.props.toggleGoalsLoading(true);
+    this.props.toggleItemLoading("habitsLoading",true);
     this.props.firebase.habitOps
       .retrieveAllHabits("nabil110176@gmail.com")
       .then(querySnapshot => {
-        this.props.toggleGoalsLoading(false);
+        this.props.toggleItemLoading("habitsLoading",false);
         const allHabits = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -201,8 +217,8 @@ const mapDispatchToProps = dispatch => {
     updateSubItemsCount: itemsPayload => {
       dispatch(updateSubItemsCount(itemsPayload));
     },
-    toggleGoalsLoading: payload => {
-      dispatch(toggleGoalsLoading(payload));
+    toggleItemLoading: (item,loading) => {
+      dispatch(toggleItemLoading(item,loading));
     }
   };
 };

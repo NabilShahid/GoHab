@@ -1,14 +1,16 @@
 const loadingReducer = (
   state = {
-    goalsLoading: false
+    goalsLoading: false,
+    tasksLoading: false,
+    habitsLoading: false
   },
   action
 ) => {
   switch (action.type) {
-    case "TOGGLE_GOALS_LOADING":
+    case "TOGGLE_ITEM_LOADING":
       {
         let newState = { ...state };
-        newState.goalsLoading = action.payload;
+        newState[action.payload.item] = action.payload.loading;
         state = newState;
       }
       break;

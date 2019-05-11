@@ -1,9 +1,9 @@
 import React from "react";
 import { Spin, Icon } from "antd";
 
-const Loading = () => {
+const Loading = ({fontSize,color}) => {
   return (
-    <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+    <Spin indicator={<Icon type="loading" style={{ fontSize: (fontSize?fontSize:"35px"),color:(color?color:"var(--primary-color)") }} spin />} />
   );
 };
 
