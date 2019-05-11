@@ -343,6 +343,7 @@ class CreateHabitForm extends React.Component {
                 <Radio.Group
                   size="small"
                   defaultValue={formValues.category}
+                  disabled={disabledForm}
                   onChange={e => {
                     this.state.formValues.category = e.target.value;
                   }}
@@ -407,6 +408,7 @@ class CreateHabitForm extends React.Component {
                 <Select
                   showSearch
                   value={formValues.parentGoal}
+                  disabled={disabledForm}
                   style={{ width: "100%" }}
                   size="small"
                   onChange={this.setParentGoal}
@@ -434,6 +436,7 @@ class CreateHabitForm extends React.Component {
                   defaultValue="Dialy"
                   style={{ width: "100%" }}
                   size="small"
+                  disabled={disabledForm}
                   onChange={this.setPeriod}
                 >
                   {Object.keys(periods).map(p => {

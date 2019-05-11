@@ -1,5 +1,5 @@
 @import "./constants/styleVars.css";
-html{
+html {
   height: 100%;
 }
 body {
@@ -26,18 +26,19 @@ code {
   border-radius: 6px !important;
 }
 .ant-modal-title {
-  font-size:14px !important;
+  font-size: 15px !important;
 }
 .ant-modal-close-x {
-  line-height: 45px !important;
+  line-height: 35px !important;
   font-size: 12px !important;
+  height: 0px !important;
 }
 .ghtFormContainer {
   width: 100%;
   padding: 15px;
   border-radius: 4px;
   font-size: 13px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 .formLabel {
   color: #5f5f5f;
@@ -120,7 +121,7 @@ code {
 .ant-tabs-ink-bar {
   background-color: var(--primary-color) !important;
 }
-.ant-tabs .ant-tabs-left-content{
+.ant-tabs .ant-tabs-left-content {
   padding: 1px 3px 0 24px !important;
 }
 .blackClickable {
@@ -143,12 +144,19 @@ code {
   border: unset;
   border-bottom: 1px solid #d0d0d0;
 }
-
-.ghtFormContainer .ant-select-enabled .ant-select-selection{
+.ghtFormContainer .ant-radio-button-wrapper-disabled.ant-radio-button-wrapper-checked {
+  background-color: #fb584c !important;
+  border-color: #fb584c !important;
+}
+.ghtFormContainer .ant-input-number-disabled .ant-input-number-input {
+  background-color: white !important;
+  color: #5f5f5f !important;
+}
+.ghtFormContainer .ant-select-enabled .ant-select-selection {
   border: unset;
   border-bottom: 1px solid #d0d0d0;
 }
-.ghtFormContainer .ant-select-disabled .ant-select-selection{
+.ghtFormContainer .ant-select-disabled .ant-select-selection {
   color: #4c4c4c;
   background-color: white;
   border: unset;
@@ -174,7 +182,9 @@ code {
   font-size: 15px;
   font-weight: 500;
 }
-
+.ant-modal-header {
+  padding: 8px 24px !important;
+}
 .ant-radio-group-solid
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
   background: var(--primary-color) !important;
@@ -231,22 +241,22 @@ code {
   border-radius: 3px;
   border: 1px solid #e2e2e2;
 }
-.controlTopPadding{
+.controlTopPadding {
   padding-top: 6px;
 }
-.cardsViewSelector{    
+.cardsViewSelector {
   border-bottom: 1px solid #e8e7e7;
   margin: 0 3px 7px 8px !important;
-  padding:0px 1px 10px 1px;
+  padding: 0px 1px 10px 1px;
 }
-.inheritHeight{
+.inheritHeight {
   height: inherit;
 }
-.fullHeight{
+.fullHeight {
   height: 100%;
 }
 
-.markIcon{
+.markIcon {
   margin: 10px 0px 5px 6px;
   width: 23px;
   /* transition: 0.1s;
@@ -257,42 +267,40 @@ code {
   transition: 0.1s;
   transform: scale(1.05)   
 } */
-.ant-message .anticon {   
+.ant-message .anticon {
   top: -3px !important;
 }
 
-.cardsFilterIconContainer{
+.cardsFilterIconContainer {
   text-align: right;
   padding: 0 !important;
 }
-.cardsFilterIcon{
+.cardsFilterIcon {
   font-size: 22px !important;
   cursor: pointer;
   margin-top: 6px;
-  
 }
 .ant-radio-group-small .ant-radio-button-wrapper {
   height: 27px !important;
-   padding: 1px 7px !important;
+  padding: 1px 7px !important;
 }
-.ant-popover-title{
-  color:#6f6f6f !important;
+.ant-popover-title {
+  color: #6f6f6f !important;
 }
-.cardFilterLabel{
+.cardFilterLabel {
   font-size: 12px;
-   margin: 6px 0px;
+  margin: 6px 0px;
   color: #838384;
 }
-.submenu{
+.submenu {
   padding: 2px;
   font-size: 13px;
   cursor: pointer;
 }
-.submenuOption:not(:first-child){
+.submenuOption:not(:first-child) {
   padding-top: 8px;
 }
-.submenuOption:not(:last-child){
+.submenuOption:not(:last-child) {
   border-bottom: 1px solid #e4e4e4;
   padding-bottom: 8px;
-
 }
