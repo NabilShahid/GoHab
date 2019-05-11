@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 import { addHabit } from "../../actions/habitActions";
 import "./createhabitform.css";
 import moment from "moment";
+import { updateSubItemsCount } from "../../actions/goalActions";
 const { TextArea } = Input;
 const Option = Select.Option;
 class CreateHabitForm extends React.Component {
@@ -96,23 +97,39 @@ class CreateHabitForm extends React.Component {
         .then(h => {
           this.setState({ loading: false });
           this.props.addHabit({ ...formValuesToSave, id: h.id });
+          this.updateSubHabitsCountForGoal(formValues.parentGoal);
           if (this.props.close) this.props.close();
           else this.props.setFormVisibility("Habit", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
-    } else
+    } else {
       this.props.firebase.habitOps
         .updateHabit("nabil110176@gmail.com", formValuesToSave, this.props.id)
         .then(() => {
           this.setState({ loading: false });
           this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
+          this.updateSubHabitsCountForGoal(false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
+      
+    }
   };
+
+  /**
+   *update sub habits count prop function call wrapper
+   */
+  updateSubHabitsCountForGoal(goalId) {
+    this.props.updateSubItemsCount({
+      items: this.props.habits,
+      goalId,
+      filterGoals: false,
+      itemName: "subHabits"
+    });
+  }
 
   /**
    * validate each field on change using Joi schema
@@ -516,13 +533,17 @@ const mapDispatchToProps = dispatch => {
   return {
     addHabit: taskPayload => {
       dispatch(addHabit(taskPayload));
+    },
+    updateSubItemsCount: itemsPayload => {
+      dispatch(updateSubItemsCount(itemsPayload));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    goals: state.goalReducer.Goals
+    goals: state.goalReducer.Goals,
+    habits:state.habitReducer.Habits
   };
 };
 
