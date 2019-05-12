@@ -30,3 +30,6 @@
   text-align: right;
   padding-top: 14px;
 }
+.ant-drawer-body{
+  padding:0px !important;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import NotificationTile from "../NotificationTile/notificationtile";
+import Tasks from "../Tasks/tasks";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
@@ -10,11 +12,13 @@ import HEADEROPTIONS from "../../constants/headerOptions";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
-import { Row, Col, Badge, Drawer, Input, Popover } from "antd";
+import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
 const Search = Input.Search;
 class Header extends Component {
   state = {
-    notificationsVisible: false
+    notificationsVisible: false,
+    notificationsDialogInDom: false,
+    notificationDialogVisible: false
   };
 
   searchValues(value) {
@@ -39,8 +43,21 @@ class Header extends Component {
     }
   }
 
+  openNotificationsDialog = () => {
+    let { notificationDialogVisible, notificationsDialogInDom } = this.state;
+    notificationDialogVisible = true;
+    notificationsDialogInDom = true;
+    this.setState({ notificationDialogVisible, notificationsDialogInDom });
+  };
+  closeNotificationDialog = () => {
+    this.setState({ notificationDialogVisible: false });
+    setTimeout(() => {
+      this.setState({ notificationsDialogInDom: false });
+    }, 250);
+  };
   render() {
     const { search, firebase } = this.props;
+    const { notificationsDialogInDom, notificationDialogVisible } = this.state;
     return (
       <div id="headerAbDiv">
         <Row>
@@ -108,7 +125,7 @@ class Header extends Component {
           <Col span={1} />
         </Row>
         <Drawer
-          title="Basic Drawer"
+          title="Notifications"
           placement="right"
           closable={true}
           onClose={() => {
@@ -116,10 +133,27 @@ class Header extends Component {
           }}
           visible={this.state.notificationsVisible}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <NotificationTile openNotificationsDialog={this.openNotificationsDialog} />
+          <NotificationTile />
+          <NotificationTile />
+          <NotificationTile />
         </Drawer>
+        {notificationsDialogInDom && (
+          <Modal
+            visible={notificationDialogVisible}
+            width="58%"
+            title={"currentGoalOptions.name"}
+            centered
+            bodyStyle={{ overflowY: "auto" }}
+            style={{ top: "10px" }}
+            onCancel={() => {
+              this.closeNotificationDialog();
+            }}
+            footer=""
+          >
+            <Tasks />
+          </Modal>
+        )}
       </div>
     );
   }
