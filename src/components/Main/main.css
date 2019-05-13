@@ -17,7 +17,7 @@
     
 }
 #headerContainer{
-    flex: 0 0 12%;
+    flex: 0 0 75px;
 }
 
 #bodyContainer{
@@ -28,7 +28,7 @@
     color: #4c4c4c;
     padding: 15px 15px 0px 15px;
     background-color: white;
-    flex: 0 0 87%;
+    flex: 0 0 calc(100% - 80px);
     
     /* margin-top: 5px; */
     overflow-y: hidden;
