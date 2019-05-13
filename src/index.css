@@ -291,6 +291,9 @@ code {
 .ant-popover-title {
   color: #6f6f6f !important;
 }
+.ant-modal-body{
+  max-height: 550px;
+ }
 .cardFilterLabel {
   font-size: 12px;
   margin: 6px 0px;

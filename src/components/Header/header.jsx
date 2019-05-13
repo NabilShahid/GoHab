@@ -6,13 +6,14 @@ import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
 import { updateFilterString } from "../../actions/headerActions";
-import "./header.css";
+import { alphaSort,getOverdueItems } from "../../services/methods/ghtCommonMethods.js";
 import PAGEKEYS from "../../constants/pageKeys";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
 import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
+import "./header.css";
 const Search = Input.Search;
 class Header extends Component {
   state = {
@@ -56,10 +57,14 @@ class Header extends Component {
     }, 250);
   };
   render() {
-    const { search, firebase } = this.props;
-    const { notificationsDialogInDom, notificationDialogVisible } = this.state;
+    const { search, firebase, tasks } = this.props;
+    const {
+      notificationsDialogInDom,
+      notificationDialogVisible,
+      notificationsVisible
+    } = this.state;
     return (
-      <div id="headerAbDiv">
+      <div id="headerDiv">
         <Row>
           <Col span={1} />
           <Col id="headerTitle" span={9}>
@@ -131,9 +136,11 @@ class Header extends Component {
           onClose={() => {
             this.setState({ notificationsVisible: false });
           }}
-          visible={this.state.notificationsVisible}
+          visible={notificationsVisible}
         >
-          <NotificationTile openNotificationsDialog={this.openNotificationsDialog} />
+          <NotificationTile
+            openNotificationsDialog={this.openNotificationsDialog}
+          />
           <NotificationTile />
           <NotificationTile />
           <NotificationTile />
@@ -151,7 +158,12 @@ class Header extends Component {
             }}
             footer=""
           >
-            <Tasks />
+            <Tasks
+              subMode={{
+                ColSize: 2,
+                Tasks: alphaSort(getOverdueItems(tasks), "asc", "name")
+              }}
+            />
           </Modal>
         )}
       </div>
@@ -168,7 +180,8 @@ const mapStateToProps = state => {
     icon: state.headerReducer.Icon,
     search: state.headerReducer.Search,
     filter: state.headerReducer.Filter,
-    currentFilterString: state.headerReducer.CurrentFilterString
+    currentFilterString: state.headerReducer.CurrentFilterString,
+    tasks: state.taskReducer.Tasks
   };
 };
 
