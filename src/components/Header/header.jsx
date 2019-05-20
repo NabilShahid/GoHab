@@ -12,6 +12,7 @@ import HEADEROPTIONS from "../../constants/headerOptions";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
+import { withApi } from "../../services/api";
 import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
 import "./header.css";
 const Search = Input.Search;
@@ -19,7 +20,9 @@ class Header extends Component {
   state = {
     notificationsVisible: false,
     notificationsDialogInDom: false,
-    notificationDialogVisible: false
+    notificationDialogVisible: false,
+    notificationCount:0,
+    notifications:{}
   };
 
   searchValues(value) {
@@ -43,7 +46,24 @@ class Header extends Component {
       }
     }
   }
-
+  getNotificationsCount(){
+    this.props.api.getNotifications().then(result=>{
+      let notificationCount=0;
+      if(result){
+        notificationCount=Object.keys(result).reduce((prev,curr)=>{
+          if(result[curr].Count)
+          prev++;
+          else{
+            prev+=Object.keys(result[curr]).filter(item=>result[curr][item].Count).length;
+          }
+          return prev;
+        },0);
+      }
+      this.setState({notificationCount,notifications:result});
+    }).catch(ex=>{
+      this.setState({notificationCount:0,notifications:{}});
+    });
+  }
   openNotificationsDialog = () => {
     let { notificationDialogVisible, notificationsDialogInDom } = this.state;
     notificationDialogVisible = true;
@@ -56,12 +76,16 @@ class Header extends Component {
       this.setState({ notificationsDialogInDom: false });
     }, 250);
   };
+  componentWillMount(){
+    this.getNotificationsCount();
+  }
   render() {
     const { search, firebase, tasks } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
-      notificationsVisible
+      notificationsVisible,
+      notificationCount
     } = this.state;
     return (
       <div id="headerDiv">
@@ -86,7 +110,7 @@ class Header extends Component {
           </Col>
 
           <Col className="headerIconContainer" span={1}>
-            <Badge count={12} showZero>
+            <Badge count={notificationCount} showZero>
               <i
                 onClick={() => {
                   this.setState({ notificationsVisible: true });
@@ -208,4 +232,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withFirebase(Header));
+)(withFirebase(withApi(Header)));

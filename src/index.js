@@ -4,15 +4,18 @@ import "./index.css";
 import App from "./components/App/app";
 import * as serviceWorker from "./serviceWorker";
 import Firebase, { FirebaseContext } from "./services/firebase";
+import Api, { ApiContext } from "./services/api";
 import "bootstrap/dist/css/bootstrap.css";
 import "antd/dist/antd.css";
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 import store from "./store";
 import { Provider } from "react-redux";
 ReactDOM.render(
   <Provider store={store}>
     <FirebaseContext.Provider value={new Firebase()}>
-      <App />
+      <ApiContext.Provider value={new Api()}>
+        <App />
+      </ApiContext.Provider>
     </FirebaseContext.Provider>
   </Provider>,
   document.getElementById("root")
