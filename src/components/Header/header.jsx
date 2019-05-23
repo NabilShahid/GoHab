@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import NotificationTile from "../NotificationTile/notificationtile";
+import Goals from "../Goals/goals";
+import Habits from "../Habits/habits";
 import Tasks from "../Tasks/tasks";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
@@ -8,7 +10,7 @@ import { filterHabits } from "../../actions/habitActions";
 import { updateFilterString } from "../../actions/headerActions";
 import {
   alphaSort,
-  getOverdueItems
+  getDueItems
 } from "../../services/methods/ghtCommonMethods.js";
 import PAGEKEYS from "../../constants/pageKeys";
 import HEADEROPTIONS from "../../constants/headerOptions";
@@ -25,9 +27,10 @@ class Header extends Component {
     notificationsDialogInDom: false,
     notificationDialogVisible: false,
     notificationCount: 0,
-    notifications: []
+    notifications: [],
+    selectedNotificationIndex:0
   };
-
+  
   searchValues(value) {
     switch (this.props.title) {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
@@ -53,8 +56,11 @@ class Header extends Component {
     this.props.api
       .getNotifications("nabil110176@gmail.com", "all")
       .then(result => {
-        console.log(result);        
-        this.setState({ notificationCount:result.length, notifications: result });
+        console.log(result);
+        this.setState({
+          notificationCount: result.length,
+          notifications: result
+        });
       })
       .catch(ex => {
         this.setState({ notificationCount: 0, notifications: {} });
@@ -62,16 +68,25 @@ class Header extends Component {
   };
   getNotificationsList = () => {
     const { notifications } = this.state;
-    Object.keys(notifications)
+    Object.keys(notifications);
   };
-  getOverdueItems=()=>{
-   const{notifications}=this.state;
-   return(
-      notifications.map((n)=>{
-       return <NotificationTile/>
-      })
-   )
-  }
+  getDueItems = () => {
+    const { notifications } = this.state;
+    return notifications.map((n,i) => {
+      return (
+        <div key={i} onClick={()=>{
+          const selectedNotificationIndex=i;
+          this.openNotificationsDialog();
+          this.setState({selectedNotificationIndex});
+        }}>
+        <NotificationTile
+         
+          notificationInfo={n.Info}
+        />
+        </div>
+      );
+    });
+  };
   openNotificationsDialog = () => {
     let { notificationDialogVisible, notificationsDialogInDom } = this.state;
     notificationDialogVisible = true;
@@ -89,10 +104,54 @@ class Header extends Component {
     this.listenToChanges();
   }
   listenToChanges() {
-    this.props.firebase.goalOps.listenToGoalChanges("nabil110176@gmail.com",this.getNotifications);
+    this.props.firebase.goalOps.listenToGoalChanges(
+      "nabil110176@gmail.com",
+      this.getNotifications
+    );
+  }
+  setNotificationsDialogItems=()=>{
+    const {notifications,selectedNotificationIndex}=this.state;
+    var s=getDueItems(this.props.tasks,notifications[selectedNotificationIndex].Ids)
+    console.log(s)
+    if(notifications[selectedNotificationIndex].Info[1]=="Goals"){
+
+      return(
+        <Goals
+        subMode={{
+          ColSize: 2,
+          Goals: getDueItems(this.props.goals,notifications[selectedNotificationIndex].Ids)
+        }}
+      />
+      )
+    }
+    else if(notifications[selectedNotificationIndex].Info[1]=="Tasks")
+    {
+      console.log("Tasks")
+      return(
+        <Tasks
+        subMode={{
+          ColSize: 2,
+          Tasks: getDueItems(this.props.tasks,notifications[selectedNotificationIndex].Ids)
+        }}
+      />
+      )
+    }
+    else if(notifications[selectedNotificationIndex].Info[1]=="Habits")
+    {
+
+      return(
+        <Habits
+        subMode={{
+          ColSize: 2,
+          Tasks: getDueItems(this.props.habits,notifications[selectedNotificationIndex].Ids)
+        }}
+      />
+      )
+    }
+   
   }
   render() {
-    const { search, firebase, tasks } = this.props;
+    const { search, firebase } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
@@ -174,14 +233,7 @@ class Header extends Component {
           }}
           visible={notificationsVisible}
         >
-        {this.getOverdueItems()}
-          {/* {this.getNotificationsList()}
-          <NotificationTile
-            openNotificationsDialog={this.openNotificationsDialog}
-          />
-          <NotificationTile />
-          <NotificationTile />
-          <NotificationTile /> */}
+          {this.getDueItems()}
         </Drawer>
         {notificationsDialogInDom && (
           <Modal
@@ -196,12 +248,7 @@ class Header extends Component {
             }}
             footer=""
           >
-            <Tasks
-              subMode={{
-                ColSize: 2,
-                Tasks: alphaSort(getOverdueItems(tasks), "asc", "name")
-              }}
-            />
+            {this.setNotificationsDialogItems()}
           </Modal>
         )}
       </div>
@@ -219,7 +266,8 @@ const mapStateToProps = state => {
     search: state.headerReducer.Search,
     filter: state.headerReducer.Filter,
     currentFilterString: state.headerReducer.CurrentFilterString,
-    tasks: state.taskReducer.Tasks
+    tasks: state.taskReducer.Tasks,
+    goals:state.goalReducer.Goals
   };
 };
 

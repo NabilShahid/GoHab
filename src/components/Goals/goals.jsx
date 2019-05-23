@@ -48,75 +48,87 @@ class Goals extends Component {
       goalDialogVisible,
       currentGoalOptions
     } = this.state;
-    const { statusFilter, orderBy, tasks,habits } = this.props;
+    const { statusFilter, orderBy, tasks, habits, subMode } = this.props;
     return (
       <div id="goalCardsDiv">
-        <div className="row cardsViewSelector">
-          <div className="col-md-6" style={{ padding: 0 }}>
-            <Button
-              type="primary"
-              className="noColorButton"
-              style={{ background: "var(--goal-color)" }}
-            >
-              <i className="fa fa-plus" style={{ marginRight: "10px" }} />
-              Add New
-            </Button>
+        {subMode && (
+          <div className="actualCardsDiv">
+            {this.getGoalRows(subMode.Goals, subMode.ColSize)}
           </div>
-          <div className="col-md-6 cardsFilterIconContainer">
-            <Popover
-              placement="bottomLeft"
-              title="Change View"
-              content={
-                <div>
-                  <div className="cardFilterLabel">Show Goals:</div>
-                  <div>
-                    <Radio.Group
-                      value={statusFilter}
-                      buttonStyle="solid"
-                      size="small"
-                      onChange={e => {
-                        this.changeGoalsStatus(e.target.value);
-                      }}
-                    >
-                      <Radio.Button value="all">All</Radio.Button>
-                      <Radio.Button value="completed">Achieved</Radio.Button>
-                      <Radio.Button value="pending">Pending</Radio.Button>
-                    </Radio.Group>
-                  </div>
-                  <div className="cardFilterLabel">Sort:</div>
-                  <div>
-                    <Select
-                      onChange={e => this.changeOrderBy(e)}
-                      value={orderBy}
-                      size="small"
-                      style={{ width: "100%" }}
-                    >
-                      <Option value="dueDate">Due Date</Option>
-                      {statusFilter != "completed" && (
-                        <Option value="progress">Progress</Option>
-                      )}
-                      <Option value="importance">Importance</Option>
-                      <Option value="alphabetical">Alphabetical</Option>
-                    </Select>
-                  </div>
-                </div>
-              }
-              trigger="click"
-            >
-              {" "}
-              <Tooltip title="Change View">
-                <i
-                  className="fa fa-cogs cardsFilterIcon"
-                  style={{ color: "#fd960f" }}
-                />
-              </Tooltip>
-            </Popover>
-          </div>
-        </div>
+        )}
+        {!subMode && (
+          <React.Fragment>
+            <div className="row cardsViewSelector">
+              <div className="col-md-6" style={{ padding: 0 }}>
+                <Button
+                  type="primary"
+                  className="noColorButton"
+                  style={{ background: "var(--goal-color)" }}
+                >
+                  <i className="fa fa-plus" style={{ marginRight: "10px" }} />
+                  Add New
+                </Button>
+              </div>
+              <div className="col-md-6 cardsFilterIconContainer">
+                <Popover
+                  placement="bottomLeft"
+                  title="Change View"
+                  content={
+                    <div>
+                      <div className="cardFilterLabel">Show Goals:</div>
+                      <div>
+                        <Radio.Group
+                          value={statusFilter}
+                          buttonStyle="solid"
+                          size="small"
+                          onChange={e => {
+                            this.changeGoalsStatus(e.target.value);
+                          }}
+                        >
+                          <Radio.Button value="all">All</Radio.Button>
+                          <Radio.Button value="completed">
+                            Achieved
+                          </Radio.Button>
+                          <Radio.Button value="pending">Pending</Radio.Button>
+                        </Radio.Group>
+                      </div>
+                      <div className="cardFilterLabel">Sort:</div>
+                      <div>
+                        <Select
+                          onChange={e => this.changeOrderBy(e)}
+                          value={orderBy}
+                          size="small"
+                          style={{ width: "100%" }}
+                        >
+                          <Option value="dueDate">Due Date</Option>
+                          {statusFilter != "completed" && (
+                            <Option value="progress">Progress</Option>
+                          )}
+                          <Option value="importance">Importance</Option>
+                          <Option value="alphabetical">Alphabetical</Option>
+                        </Select>
+                      </div>
+                    </div>
+                  }
+                  trigger="click"
+                >
+                  {" "}
+                  <Tooltip title="Change View">
+                    <i
+                      className="fa fa-cogs cardsFilterIcon"
+                      style={{ color: "#fd960f" }}
+                    />
+                  </Tooltip>
+                </Popover>
+              </div>
+            </div>
 
-        <div className="actualCardsDiv">
-          {this.getGoalRows(this.props.goals, 3)}
-        </div>
+            <div className="actualCardsDiv">
+              {this.getGoalRows(this.props.goals, 3)}
+            </div>
+          </React.Fragment>
+        )}
+
         {goalDialogInDom && (
           <Modal
             visible={goalDialogVisible}
@@ -137,10 +149,12 @@ class Goals extends Component {
               <TabPane tab="Sub Habits" key="2">
                 <div className="gTabContent">
                   <Habits
-                     subMode={{
+                    subMode={{
                       ColSize: 2,
                       Habits: alphaSort(
-                        habits.filter(g => g.parentGoal == currentGoalOptions.id),
+                        habits.filter(
+                          g => g.parentGoal == currentGoalOptions.id
+                        ),
                         "asc",
                         "name"
                       )
@@ -154,7 +168,9 @@ class Goals extends Component {
                     subMode={{
                       ColSize: 2,
                       Tasks: alphaSort(
-                        tasks.filter(t => t.parentGoal == currentGoalOptions.id),
+                        tasks.filter(
+                          t => t.parentGoal == currentGoalOptions.id
+                        ),
                         "asc",
                         "name"
                       )
@@ -216,7 +232,7 @@ class Goals extends Component {
    */
   getGoalRows(goals, colSize) {
     let goalRows = [];
-    for (let i = 0; i < goals.length; i += 3) {
+    for (let i = 0; i < goals.length; i += colSize) {
       if (goals[i]) {
         const goalRowArray = [];
         for (let j = 0; j < colSize; j++) {
@@ -225,7 +241,7 @@ class Goals extends Component {
 
         goalRows.push(
           <div className="row" style={{ marginTop: "15px" }} key={i}>
-            {this.getRowCols(goalRowArray, i)}
+            {this.getRowCols(goalRowArray, i,colSize)}
           </div>
         );
       }
@@ -233,8 +249,8 @@ class Goals extends Component {
     return goalRows;
   }
 
-  getRowCols(rowArray, rowindex) {
-    let cellClass = "col-md-4";
+  getRowCols(rowArray, rowindex,colSize) {
+    let cellClass = `col-md-${Math.floor(12 / colSize)}`;
     if (rowindex > 0) cellClass += " goalsRow";
     return rowArray.map(r => {
       return (
@@ -251,8 +267,6 @@ class Goals extends Component {
             dueDate={r.dueDate}
             progress={r.progress}
             importance={r.importance}
-            asscTasks="3"
-            asscHabits="5"
             id={r.id}
             subTasks={r.subTasks}
             subHabits={r.subHabits}
@@ -286,7 +300,7 @@ const mapStateToProps = state => {
     statusFilter: state.goalReducer.CurrentStatusFilter,
     orderBy: state.goalReducer.CurrentOrderBy,
     tasks: state.taskReducer.Tasks,
-    habits:state.habitReducer.Habits
+    habits: state.habitReducer.Habits
   };
 };
 

@@ -34,9 +34,6 @@ export function dateSort(items, order, key) {
   return newItems;
 }
 
-export function getOverdueItems(items) {
-  return items.filter(
-    item =>
-      item.dueDate && !item.completed && new Date(item.dueDate) < new Date()
-  );
+export function getDueItems(items, dueItems) {
+  return items.filter(item => dueItems.indexOf(item.id) > -1);
 }
