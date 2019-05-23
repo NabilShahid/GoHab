@@ -6,7 +6,10 @@ import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
 import { updateFilterString } from "../../actions/headerActions";
-import { alphaSort,getOverdueItems } from "../../services/methods/ghtCommonMethods.js";
+import {
+  alphaSort,
+  getOverdueItems
+} from "../../services/methods/ghtCommonMethods.js";
 import PAGEKEYS from "../../constants/pageKeys";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import history from "../../services/history";
@@ -21,8 +24,8 @@ class Header extends Component {
     notificationsVisible: false,
     notificationsDialogInDom: false,
     notificationDialogVisible: false,
-    notificationCount:0,
-    notifications:{}
+    notificationCount: 0,
+    notifications: []
   };
 
   searchValues(value) {
@@ -46,23 +49,28 @@ class Header extends Component {
       }
     }
   }
-  getNotificationsCount(){
-    this.props.api.getNotifications().then(result=>{
-      let notificationCount=0;
-      if(result){
-        notificationCount=Object.keys(result).reduce((prev,curr)=>{
-          if(result[curr].Count)
-          prev++;
-          else{
-            prev+=Object.keys(result[curr]).filter(item=>result[curr][item].Count).length;
-          }
-          return prev;
-        },0);
-      }
-      this.setState({notificationCount,notifications:result});
-    }).catch(ex=>{
-      this.setState({notificationCount:0,notifications:{}});
-    });
+  getNotifications = () => {
+    this.props.api
+      .getNotifications("nabil110176@gmail.com", "all")
+      .then(result => {
+        console.log(result);        
+        this.setState({ notificationCount:result.length, notifications: result });
+      })
+      .catch(ex => {
+        this.setState({ notificationCount: 0, notifications: {} });
+      });
+  };
+  getNotificationsList = () => {
+    const { notifications } = this.state;
+    Object.keys(notifications)
+  };
+  getOverdueItems=()=>{
+   const{notifications}=this.state;
+   return(
+      notifications.map((n)=>{
+       return <NotificationTile/>
+      })
+   )
   }
   openNotificationsDialog = () => {
     let { notificationDialogVisible, notificationsDialogInDom } = this.state;
@@ -76,8 +84,12 @@ class Header extends Component {
       this.setState({ notificationsDialogInDom: false });
     }, 250);
   };
-  componentWillMount(){
-    this.getNotificationsCount();
+  componentWillMount() {
+    this.getNotifications();
+    this.listenToChanges();
+  }
+  listenToChanges() {
+    this.props.firebase.goalOps.listenToGoalChanges("nabil110176@gmail.com",this.getNotifications);
   }
   render() {
     const { search, firebase, tasks } = this.props;
@@ -162,12 +174,14 @@ class Header extends Component {
           }}
           visible={notificationsVisible}
         >
+        {this.getOverdueItems()}
+          {/* {this.getNotificationsList()}
           <NotificationTile
             openNotificationsDialog={this.openNotificationsDialog}
           />
           <NotificationTile />
           <NotificationTile />
-          <NotificationTile />
+          <NotificationTile /> */}
         </Drawer>
         {notificationsDialogInDom && (
           <Modal
