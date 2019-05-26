@@ -53,7 +53,7 @@ const GoalCard = ({
         </div>
         <div className="col-md-10 goalCardContent">
           <div style={{ display: "flex" }}>
-            <div style={{ flex: "1 1 70%" }}>{name}</div>
+            <div className="goalCardTitle" style={{ flex: "1 1 70%" }}>{name}</div>
             <div style={{ flex: "1 1 30%" }}>
               <span className="goalDate">{dueDate}</span>
             </div>

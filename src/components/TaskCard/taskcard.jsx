@@ -48,7 +48,7 @@ const TaskCard = ({
         </div>
         <div className="col-md-10 taskCardContent">
           <div style={{ display: "flex" }}>
-            <div style={{ flex: "1 1 70%" }}>{name}</div>
+            <div className="taskCardTitle" style={{ flex: "1 1 70%" }}>{name}</div>
             <div style={{ flex: "1 1 30%" }}>
               <span className="taskDate">{dueDate}</span>
             </div>

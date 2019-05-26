@@ -1,5 +1,4 @@
 .taskCard{
-    background: linear-gradient(160deg,#ffffff 80%,#c6ffc8);
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
@@ -11,7 +10,6 @@
 .taskCard:hover{
     transition: 0.2s;
     transform: translateY(-4px);
-    background-color: #f1f1f1;
      
 }
 .taskImportance{
@@ -22,7 +20,6 @@
 .taskSubtitle{
     font-weight: normal;
     font-size: 12px;
-    border-top: 1px solid #cec8c8;
     margin-top: 3px;
     padding-top: 3px;
     height: 3em;
@@ -36,7 +33,7 @@
     font-weight: 400;
     float: right;
     font-size: 11px;
-    margin-top: 2%;
+    margin-top: 4px;
 }
 
 .taskBadge{
@@ -44,4 +41,9 @@
     margin-top: 1%;
     font-weight: normal;
     font-size: 10px;
+}
+.taskCardTitle{
+    font-size: 14px;
+    color: #5db461;
+    font-weight: 500;
 }

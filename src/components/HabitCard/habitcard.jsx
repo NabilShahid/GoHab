@@ -41,7 +41,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
           </Tooltip>
         </div>
         <div className="col-md-10 habitCardContent">
-          <div style={{ width: "100%" }}>{name}</div>
+          <div className="habitCardTitle" style={{ width: "100%" }}>{name}</div>
 
           <div className="habitSubtitle">{description}</div>
           <div className="habitCardInfo">

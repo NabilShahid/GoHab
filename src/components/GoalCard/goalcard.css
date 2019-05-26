@@ -1,5 +1,4 @@
-.goalCard{
-    background: linear-gradient(160deg,#ffffff 80%,#f7d7ac);
+.goalCard{  
     padding: 8px;
     border-radius: 3px;
     box-shadow: 0px 0px 3px 0px #bfbfbf;
@@ -12,13 +11,11 @@
 .goalCard:hover{
     transition: 0.2s;
     transform: translateY(-4px);
-    background-color: #f1f1f1;
      
 }
 .goalSubtitle{
     font-weight: normal;
     font-size: 12px;
-    border-top: 1px solid #cec8c8;
     margin-top: 3px;
     padding-top: 3px;
     height: 3em;
@@ -32,7 +29,7 @@
     font-weight: 400;
     float: right;
     font-size: 11px;
-    margin-top: 2%;
+    margin-top: 4px;
 }
 .goalProgress{
     margin-top: 2%;
@@ -77,5 +74,9 @@
     font-size: 15px;
     font-weight: 900;
 }
-
+.goalCardTitle{
+    font-size: 14px;
+    color: #f9b85c;
+    font-weight: 500;
+}
 
