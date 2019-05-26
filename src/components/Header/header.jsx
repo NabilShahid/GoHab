@@ -28,9 +28,9 @@ class Header extends Component {
     notificationDialogVisible: false,
     notificationCount: 0,
     notifications: [],
-    selectedNotificationIndex:0
+    selectedNotificationIndex: 0
   };
-  
+
   searchValues(value) {
     switch (this.props.title) {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
@@ -72,17 +72,17 @@ class Header extends Component {
   };
   getDueItems = () => {
     const { notifications } = this.state;
-    return notifications.map((n,i) => {
+    return notifications.map((n, i) => {
       return (
-        <div key={i} onClick={()=>{
-          const selectedNotificationIndex=i;
-          this.openNotificationsDialog();
-          this.setState({selectedNotificationIndex});
-        }}>
-        <NotificationTile
-         
-          notificationInfo={n.Info}
-        />
+        <div
+          key={i}
+          onClick={() => {
+            const selectedNotificationIndex = i;
+            this.openNotificationsDialog();
+            this.setState({ selectedNotificationIndex });
+          }}
+        >
+          <NotificationTile notificationInfo={n.Info} />
         </div>
       );
     });
@@ -108,48 +108,54 @@ class Header extends Component {
       "nabil110176@gmail.com",
       this.getNotifications
     );
+    this.props.firebase.taskOps.listenToTaskChanges(
+      "nabil110176@gmail.com",
+      this.getNotifications
+    );
   }
-  setNotificationsDialogItems=()=>{
-    const {notifications,selectedNotificationIndex}=this.state;
-    var s=getDueItems(this.props.tasks,notifications[selectedNotificationIndex].Ids)
-    console.log(s)
-    if(notifications[selectedNotificationIndex].Info[1]=="Goals"){
-
-      return(
-        <Goals
-        subMode={{
-          ColSize: 2,
-          Goals: getDueItems(this.props.goals,notifications[selectedNotificationIndex].Ids)
-        }}
-      />
-      )
+  setNotificationsDialogItems = () => {
+    const { notifications, selectedNotificationIndex } = this.state;
+    if (notifications.length > 0) {
+      if (notifications[selectedNotificationIndex].Info[1] == "Goals") {
+        return (
+          <Goals
+            subMode={{
+              ColSize: 2,
+              Goals: getDueItems(
+                this.props.goals,
+                notifications[selectedNotificationIndex].Ids
+              )
+            }}
+          />
+        );
+      } else if (notifications[selectedNotificationIndex].Info[1] == "Tasks") {
+        console.log("Tasks");
+        return (
+          <Tasks
+            subMode={{
+              ColSize: 2,
+              Tasks: getDueItems(
+                this.props.tasks,
+                notifications[selectedNotificationIndex].Ids
+              )
+            }}
+          />
+        );
+      } else if (notifications[selectedNotificationIndex].Info[1] == "Habits") {
+        return (
+          <Habits
+            subMode={{
+              ColSize: 2,
+              Tasks: getDueItems(
+                this.props.habits,
+                notifications[selectedNotificationIndex].Ids
+              )
+            }}
+          />
+        );
+      }
     }
-    else if(notifications[selectedNotificationIndex].Info[1]=="Tasks")
-    {
-      console.log("Tasks")
-      return(
-        <Tasks
-        subMode={{
-          ColSize: 2,
-          Tasks: getDueItems(this.props.tasks,notifications[selectedNotificationIndex].Ids)
-        }}
-      />
-      )
-    }
-    else if(notifications[selectedNotificationIndex].Info[1]=="Habits")
-    {
-
-      return(
-        <Habits
-        subMode={{
-          ColSize: 2,
-          Tasks: getDueItems(this.props.habits,notifications[selectedNotificationIndex].Ids)
-        }}
-      />
-      )
-    }
-   
-  }
+  };
   render() {
     const { search, firebase } = this.props;
     const {
@@ -267,7 +273,7 @@ const mapStateToProps = state => {
     filter: state.headerReducer.Filter,
     currentFilterString: state.headerReducer.CurrentFilterString,
     tasks: state.taskReducer.Tasks,
-    goals:state.goalReducer.Goals
+    goals: state.goalReducer.Goals
   };
 };
 

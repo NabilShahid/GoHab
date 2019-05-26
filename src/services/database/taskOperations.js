@@ -1,21 +1,27 @@
 export default class TaskOperations {
-    fDatabase = null;
-    constructor(fDb) {
-      this.fDatabase = fDb;
-    }
-    addNewTask(useremail, taskObj) {
-      return this.fDatabase
-        .collection(`UsersInfo/${useremail}/Tasks`)
-        .add(taskObj);
-    }
-    updateTask(useremail,taskObj,taskId){
-      return this.fDatabase
+  fDatabase = null;
+  constructor(fDb) {
+    this.fDatabase = fDb;
+  }
+  addNewTask(useremail, taskObj) {
+    return this.fDatabase
+      .collection(`UsersInfo/${useremail}/Tasks`)
+      .add(taskObj);
+  }
+  updateTask(useremail, taskObj, taskId) {
+    return this.fDatabase
       .collection(`UsersInfo/${useremail}/Tasks`)
       .doc(taskId)
       .set(taskObj);
-    }
-    retrieveAllTasks(useremail) {
-      return this.fDatabase.collection(`UsersInfo/${useremail}/Tasks`).get();
-    }
   }
-  
+  retrieveAllTasks(useremail) {
+    return this.fDatabase.collection(`UsersInfo/${useremail}/Tasks`).get();
+  }
+  listenToTaskChanges(useremail, callback) {
+    this.fDatabase
+      .collection(`UsersInfo/${useremail}/Tasks`)
+      .onSnapshot({ includeMetadataChanges: true }, function(querySnapshot) {
+        callback();
+      });
+  }
+}
