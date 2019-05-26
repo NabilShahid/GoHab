@@ -1,0 +1,26 @@
+.hTrackCard{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 10px;
+    border-radius: 2px;
+    color: #909090;
+}
+.hTrackName{
+    color: #1bbed3;
+    font-size: 18px;
+    font-weight: 500;
+}
+.hTrackCount{
+    color: #1bbed3;
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0px 5px;
+}
+.hTrackInfo{
+    font-size: 13px;
+}
+.hTrackAddSubstract{
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+}

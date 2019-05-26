@@ -72,6 +72,7 @@ class Header extends Component {
   };
   getDueItems = () => {
     const { notifications } = this.state;
+    if(notifications&&notifications.length>0)
     return notifications.map((n, i) => {
       return (
         <div
@@ -86,6 +87,7 @@ class Header extends Component {
         </div>
       );
     });
+    return <div>No notifications...</div>
   };
   openNotificationsDialog = () => {
     let { notificationDialogVisible, notificationsDialogInDom } = this.state;

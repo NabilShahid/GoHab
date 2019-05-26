@@ -49,7 +49,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
             <div>{category}</div>
           </div>
           <div className="habitCardInfo">
-            Following
+            Tracking
             <div>5 times a day</div>
           </div>
           <div className="row habitCardInfo">

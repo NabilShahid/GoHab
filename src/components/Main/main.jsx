@@ -22,6 +22,7 @@ import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
 import Goals from "../Goals/goals";
 import Habits from "../Habits/habits";
+import HabitTracking from "../HabitTracking/habittracking";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -31,7 +32,7 @@ import "./main.css";
 class MainBase extends Component {
   state = {};
   render() {
-    const { goalsLoading } = this.props;
+    const { goalsLoading,habitsLoading,tasksLoading } = this.props;
     return (
       <div className="inheritHeight">
         <div className="inheritHeight" style={{ display: "flex" }}>
@@ -76,7 +77,7 @@ class MainBase extends Component {
                     exact
                     path={ROUTES[PAGEKEYS["HABITS"]]}
                     render={() => {
-                      return goalsLoading ? (
+                      return habitsLoading ? (
                         <div className="mainContainerLoadingDiv">
                           <Loading />
                         </div>
@@ -90,12 +91,25 @@ class MainBase extends Component {
                     exact
                     path={ROUTES[PAGEKEYS["TASKS"]]}
                     render={() => {
-                      return goalsLoading ? (
+                      return tasksLoading ? (
                         <div className="mainContainerLoadingDiv">
                           <Loading />
                         </div>
                       ) : (
                         <Tasks />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["HABIT_TRACKING"]]}
+                    render={() => {
+                      return habitsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <HabitTracking />
                       );
                     }}
                   />
@@ -187,7 +201,9 @@ class MainBase extends Component {
 const mapStateToProps = state => {
   return {
     user: state.User,
-    goalsLoading: state.loadingReducer.goalsLoading
+    goalsLoading: state.loadingReducer.goalsLoading,
+    habitsLoading: state.loadingReducer.habitsLoading,
+    tasksLoading:state.loadingReducer.tasksLoading,
   };
 };
 

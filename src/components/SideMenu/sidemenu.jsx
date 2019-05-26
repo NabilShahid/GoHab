@@ -49,7 +49,7 @@ class SideMenu extends Component {
           <i id="sTasksI" className="fa fa-home sideIcon" />
           Tasks
         </Menu.Item>
-        <Menu.Item key="goalTree">
+        <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
           <i className="fa fa-home sideIcon" />
           Habit Tracking
         </Menu.Item>

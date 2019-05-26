@@ -4,7 +4,8 @@
     SINGIN:"SINGIN",
     MAIN:"MAIN",
     HABITS:"HABITS",
-    TASKS:"TASKS"
+    TASKS:"TASKS",
+    HABIT_TRACKING:"HABIT_TRACKING",
 
 }
 export default PAGEKEYS;

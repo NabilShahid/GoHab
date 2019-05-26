@@ -20,5 +20,10 @@ HEADEROPTIONS[PAGEKEYS["TASKS"]] = {
   Title: "Tasks",
   Search: true
 };
+HEADEROPTIONS[PAGEKEYS["HABIT_TRACKING"]] = {
+  Icon: "fa fa-home",
+  Title: "Habit Tracking",
+  Search: false
+};
 
 export default HEADEROPTIONS;
