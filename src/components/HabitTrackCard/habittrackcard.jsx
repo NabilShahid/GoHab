@@ -1,5 +1,7 @@
 import React from "react";
 import "./habittrackcard.css";
+import markedIcon from "../../assets/images/checkIconMarked1.png";
+import unmarkedIcon from "../../assets/images/checkIcon1.png";
 const HabitTrackCart = () => {
   return (
     <div className="hTrackCard">
@@ -32,7 +34,7 @@ const HabitTrackCart = () => {
         </div>
 
         <div className="col-md-6" style={{ textAlign: "right" }}>
-          <div className="hTrackInfo">Mark</div>
+          <div><img src={markedIcon}  className="hTrackMark" alt="Mark"/></div>
         </div>
       </div>
     </div>

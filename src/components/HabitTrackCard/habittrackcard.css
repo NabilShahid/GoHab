@@ -3,6 +3,11 @@
     padding: 10px;
     border-radius: 2px;
     color: #909090;
+    transition: 0.1s;
+}
+.hTrackCard:hover{
+    transition: 0.2s;
+    transform: translateY(-4px);
 }
 .hTrackName{
     color: #1bbed3;
@@ -23,4 +28,8 @@
     font-size: 16px;
     margin-left: 10px;
     cursor: pointer;
+}
+.hTrackMark{
+    width: 30px;
+    margin-top: -10px;
 }

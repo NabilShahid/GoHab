@@ -5,7 +5,7 @@ class HabitTracking extends Component {
   state = {};
   render() {
     return (
-      <div>
+      <div id="habitTrackingDiv">
         <div className="hTrackingCardContainer">
           <HabitTrackCard />
         </div>
