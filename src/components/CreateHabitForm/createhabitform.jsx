@@ -44,7 +44,7 @@ class CreateHabitForm extends React.Component {
       category: "Health",
       parentGoal: "",
       period: "Dialy",
-      frquency: 1
+      frequency: 1
     },
     disabledForm: false,
     periods: {
@@ -92,6 +92,8 @@ class CreateHabitForm extends React.Component {
     if (this.props.mode == "add") {
       //call to firebase habitOps addNewHabit method
       formValuesToSave.completed = false;
+      formValuesToSave.startDateTime=new Date().toISOString();
+      formValuesToSave.tracking=[];
       this.props.firebase.habitOps
         .addNewHabit("nabil110176@gmail.com", formValuesToSave)
         .then(h => {
@@ -206,7 +208,7 @@ class CreateHabitForm extends React.Component {
       category,
       parentGoal,
       period,
-      frquency
+      frequency
     } = this.props;
     const { formValues } = this.state;
     formValues.name = name || "";
@@ -214,7 +216,7 @@ class CreateHabitForm extends React.Component {
     formValues.category = category || "Health";
     formValues.parentGoal = parentGoal || "";
     formValues.period = period || "Dialy";
-    formValues.frquency = frquency || 1;
+    formValues.frequency = frequency || 1;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -245,7 +247,7 @@ class CreateHabitForm extends React.Component {
     const selectedPeriod = this.state.periods[value];
     const { formValues } = this.state;
     formValues.period = value;
-    formValues.frquency = 1;
+    formValues.frequency = 1;
     this.setState({ selectedPeriod, formValues });
   };
   /**
@@ -253,7 +255,7 @@ class CreateHabitForm extends React.Component {
    */
   setPeriodFrequency = value => {
     const { formValues } = this.state;
-    formValues.frquency = value;
+    formValues.frequency = value;
     this.setState({ formValues });
   };
   /**
@@ -449,7 +451,7 @@ class CreateHabitForm extends React.Component {
                   disabled={disabledForm}
                   size="small"
                   name="periodNumber"
-                  value={formValues.frquency}
+                  value={formValues.frequency}
                   min={1}
                   max={selectedPeriod.max}
                   // value={formValues.name}

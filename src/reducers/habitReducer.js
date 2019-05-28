@@ -9,7 +9,8 @@ import {
       CurrentFilterString: "",
       CurrentStatusFilter: "all",
       CurrentOrderBy: "alphabetical",
-      CurrentViewType:"bucket"
+      CurrentViewType:"bucket",
+      HabitIdsToTrack:["wRYdewEdz1yGwr9cYqKb","rpHvgK1HdBH1WYxEE1La","JFQiskeK8RxDPm31teAV"]
     },
     action
   ) => {

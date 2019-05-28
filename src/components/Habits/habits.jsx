@@ -210,8 +210,8 @@ class Habits extends Component {
     }, 250);
   };
 
-  updateLocalHabit = habits => {
-    this.props.updateHabit(habits);
+  updateLocalHabit = habit => {
+    this.props.updateHabit(habit);
     this.closeHabitDialog();
     setTimeout(() => {
       if (this.props.statusFilter != "all") {
