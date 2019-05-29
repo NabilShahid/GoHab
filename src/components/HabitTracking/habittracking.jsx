@@ -15,7 +15,7 @@ class HabitTracking extends Component {
     const { habitsToTrack } = this.props;
     return (
       <div id="habitTrackingDiv">
-        {habitsToTrack.map(h => (
+        {habitsToTrack.map((h,i)=> (
           <div className="hTrackingCardContainer" key={h.id}>
             <HabitTrackCard
               habit={h}
@@ -47,14 +47,12 @@ class HabitTracking extends Component {
       trackObj.Frequency = habit.frequency;
       trackObj.Index = getCurrentTrackIndex(habit.period);
       trackObj.Count = newCount;
-      habit.tracking[tracking.length - 1]=trackObj;
+      habit.tracking.push(trackObj);
     } else {
       trackObj = { ...tracking[tracking.length - 1] };
       trackObj.Count += newCount;
-      habit.tracking.push(trackObj);
-    }
-    habit.name="ddsfdffsad"
-    habit.tracking=JSON.parse(JSON.stringify(habit.tracking));
+      habit.tracking[tracking.length - 1]=trackObj;
+    }   
     this.props.updateHabit(habit);
     this.props.firebase.habitOps
       .updateHabit("nabil110176@gmail.com", habit, habit.id)
@@ -67,11 +65,11 @@ class HabitTracking extends Component {
 
 const mapStateToProps = state => {
   return {
-    goals: state.goalReducer.FilteredGoals,
+    // goals: state.goalReducer.FilteredGoals,
     // habitsToTrack: state.habitReducer.Habits.filter(
     //   h => state.habitReducer.HabitIdsToTrack.indexOf(h.id) > -1
     // )
-    habitsToTrack: state.habitReducer.Habits
+    habitsToTrack: Object.assign([],state.habitReducer.Habits) 
   };
 };
 
