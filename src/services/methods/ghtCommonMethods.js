@@ -37,3 +37,36 @@ export function dateSort(items, order, key) {
 export function getDueItems(items, dueItems) {
   return items.filter(item => dueItems.indexOf(item.id) > -1);
 }
+
+export function getNotificationText(notificationInfo) {
+  let notificationString = "";
+  if (notificationInfo[2] == "today")
+    notificationString +=
+      notificationInfo[0] +
+      " " +
+      (notificationInfo[0] == 1
+        ? notificationInfo[1].substr(0, notificationInfo[1].length - 1)
+        : notificationInfo[1]) +
+      " due " +
+      notificationInfo[2];
+  else if (notificationInfo[2] == "week")
+    notificationString +=
+      notificationInfo[0] +
+      " " +
+      (notificationInfo[0] == 1
+        ? notificationInfo[1].substr(0, notificationInfo[1].length - 1)
+        : notificationInfo[1]) +
+      " due this " +
+      notificationInfo[2];
+  else if (notificationInfo[2] == "overdue")
+    notificationString +=
+      notificationInfo[0] +
+      " " +
+      (notificationInfo[0] == 1
+        ? notificationInfo[1].substr(0, notificationInfo[1].length - 1)
+        : notificationInfo[1]) +
+      " " +
+      notificationInfo[2];
+
+  return notificationString.toLowerCase();
+}

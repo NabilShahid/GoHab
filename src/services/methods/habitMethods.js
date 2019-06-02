@@ -26,7 +26,7 @@ export function getSortedHabits(habits, orderBy) {
   return newHabits;
 }
 
-export function checkIfPendingTracking(index,period) {
+export function checkIfPendingTracking(index, period) {
   if (period === "Weekly") {
     if (index == moment().isoWeek()) {
       return true;
@@ -35,7 +35,7 @@ export function checkIfPendingTracking(index,period) {
   return false;
 }
 
-export function getCurrentTrackIndex(period){
-  if(period=="Weekly")
-  return moment().isoWeek();
+
+export function getCurrentTrackIndex(period) {
+  if (period == "Weekly") return moment().isoWeek();
 }
