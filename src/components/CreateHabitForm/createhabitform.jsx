@@ -43,12 +43,12 @@ class CreateHabitForm extends React.Component {
       description: "",
       category: "Health",
       parentGoal: "",
-      period: "Dialy",
+      period: "Daily",
       frequency: 1
     },
     disabledForm: false,
     periods: {
-      Dialy: {
+      Daily: {
         max: "10",
         unit: "day"
       },
@@ -215,7 +215,7 @@ class CreateHabitForm extends React.Component {
     formValues.description = description || "";
     formValues.category = category || "Health";
     formValues.parentGoal = parentGoal || "";
-    formValues.period = period || "Dialy";
+    formValues.period = period || "Daily";
     formValues.frequency = frequency || 1;
     //set errors to false
     for (const key in this.state.errors) {
@@ -421,7 +421,7 @@ class CreateHabitForm extends React.Component {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  <Option value="none">None</Option>
+                  <Option value="">None</Option>
                   {goals.map(g => {
                     return <Option value={g.id}>{g.name}</Option>;
                   })}
@@ -435,7 +435,7 @@ class CreateHabitForm extends React.Component {
               </div>
               <div className="col-md-4">
                 <Select
-                  defaultValue="Dialy"
+                  defaultValue="Daily"
                   style={{ width: "100%" }}
                   size="small"
                   disabled={disabledForm}

@@ -35,7 +35,15 @@ export function checkIfPendingTracking(index, period) {
   return false;
 }
 
-
 export function getCurrentTrackIndex(period) {
   if (period == "Weekly") return moment().isoWeek();
+}
+
+export function getTrackPeriodString(period, frequency) {
+  let trackString = "Following ";
+  if (frequency == 1) trackString += " once a ";
+  else trackString += frequency + " times a ";
+  if (period == "Daily") trackString = "day";
+  else trackString += period.substring(0, period.length - 2).toLowerCase();
+  return trackString;
 }
