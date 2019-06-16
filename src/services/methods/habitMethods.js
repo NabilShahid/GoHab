@@ -1,4 +1,5 @@
 import { alphaSort, numericSort, dateSort } from "./ghtCommonMethods";
+import { START_DATE_FOR_INDEX } from "../../constants/commonConsts";
 import moment from "moment";
 
 export function getFilteredHabits(habits, filterString, currentStatus) {
@@ -25,10 +26,24 @@ export function getSortedHabits(habits, orderBy) {
   }
   return newHabits;
 }
-
+/**
+ * checks if a habit has on ongoing period
+ */
 export function checkIfPendingTracking(index, period) {
-  if (period === "Weekly") {
-    if (index == moment().isoWeek()) {
+  if (period === "Daily") {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "day")) {
+      return true;
+    }
+  } else if (period === "Weekly") {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "week")) {
+      return true;
+    }
+  } else if (period === "Monthly") {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "month")) {
+      return true;
+    }
+  } else if (period === "Yearly") {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "year")) {
       return true;
     }
   }
@@ -36,7 +51,14 @@ export function checkIfPendingTracking(index, period) {
 }
 
 export function getCurrentTrackIndex(period) {
-  if (period == "Weekly") return moment().isoWeek();
+  if (period == "Daily")
+    return moment().diff(moment(START_DATE_FOR_INDEX), "day");
+  if (period == "Weekly")
+    return moment().diff(moment(START_DATE_FOR_INDEX), "week");
+  if (period == "Monthly")
+    return moment().diff(moment(START_DATE_FOR_INDEX), "month");
+  if (period == "Yearly")
+    return moment().diff(moment(START_DATE_FOR_INDEX), "year");
 }
 
 export function getTrackPeriodString(period, frequency) {

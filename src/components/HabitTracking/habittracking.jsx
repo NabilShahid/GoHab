@@ -16,11 +16,11 @@ class HabitTracking extends Component {
     return (
       <div id="habitTrackingDiv">
         {habitsToTrack.map((h, i) => {
-          const parentGoalIndex=goals.findIndex(g => g.id == h.parentGoal);
-          let parentGoal="";
-          if(parentGoalIndex!=-1){
-            parentGoal=goals[parentGoalIndex].name;
-          }        
+          const parentGoalIndex = goals.findIndex(g => g.id == h.parentGoal);
+          let parentGoal = "";
+          if (parentGoalIndex != -1) {
+            parentGoal = goals[parentGoalIndex].name;
+          }
           return (
             <div className="hTrackingCardContainer" key={h.id}>
               <HabitTrackCard
@@ -41,10 +41,11 @@ class HabitTracking extends Component {
   }
 
   getCurrentTrackCount(tracking, period, frequency) {
-    if (tracking.length > 0) {
-      if (checkIfPendingTracking(tracking[tracking.length - 1].Index, period)) {
-        return tracking[tracking.length - 1];
-      }
+    if (
+      tracking.length > 0 &&
+      checkIfPendingTracking(tracking[tracking.length - 1].Index, period)
+    ) {
+      return tracking[tracking.length - 1];
     } else
       return {
         Count: 0,
@@ -54,26 +55,27 @@ class HabitTracking extends Component {
 
   trackHabit = (habit, newCount) => {
     if (newCount < 0) return;
-    const { tracking } = habit;
+    let newHabit={...habit};
+    const { tracking } = newHabit;
     let trackObj = {};
     if (
       tracking.length == 0 ||
-      !checkIfPendingTracking(tracking[tracking.length - 1].Index, habit.period)
+      !checkIfPendingTracking(tracking[tracking.length - 1].Index, newHabit.period)
     ) {
-      if (newCount > habit.frequency) return;
-      trackObj.Frequency = habit.frequency;
-      trackObj.Index = getCurrentTrackIndex(habit.period);
+      if (newCount > newHabit.frequency) return;
+      trackObj.Frequency = newHabit.frequency;
+      trackObj.Index = getCurrentTrackIndex(newHabit.period);
       trackObj.Count = newCount;
-      habit.tracking.push(trackObj);
+      newHabit.tracking.push(trackObj);
     } else {
       if (newCount > tracking[tracking.length - 1].Frequency) return;
       trackObj = { ...tracking[tracking.length - 1] };
       trackObj.Count = newCount;
-      habit.tracking[tracking.length - 1] = trackObj;
+      newHabit.tracking[tracking.length - 1] = trackObj;
     }
-    this.props.updateHabit(habit);
+    this.props.updateHabit(newHabit);
     this.props.firebase.habitOps
-      .updateHabit("nabil110176@gmail.com", habit, habit.id)
+      .updateHabit("nabil110176@gmail.com", newHabit, newHabit.id)
       .then(() => {})
       .catch(error => {
         console.error("Error writing document: ", error);

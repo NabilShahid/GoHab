@@ -1,0 +1,1 @@
+export const START_DATE_FOR_INDEX="01/01/2019";

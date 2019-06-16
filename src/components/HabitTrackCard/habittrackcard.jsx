@@ -33,7 +33,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
             <div className="hTrackAddSubstract">
               <i
                 onClick={() => {
-                  trackHabit(habit, ++currentTrack.Count);
+                  trackHabit(habit, currentTrack.Count+1);
                 }}
                 className={
                   "fa fa-plus-square " +
@@ -45,7 +45,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
               />
               <i
                 onClick={() => {
-                  trackHabit(habit, --currentTrack.Count);
+                  trackHabit(habit, currentTrack.Count-1);
                 }}
                 className={
                   "fa fa-minus-square " +
