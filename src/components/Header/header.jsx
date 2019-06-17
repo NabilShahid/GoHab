@@ -72,28 +72,33 @@ class Header extends Component {
   };
   getDueItems = () => {
     const { notifications } = this.state;
-    if(notifications&&notifications.length>0)
-    return notifications.map((n, i) => {
-      return (
-        <div
-          key={i}
-          onClick={() => {
-            const selectedNotificationIndex = i;
-            this.openNotificationsDialog();
-            this.setState({ selectedNotificationIndex });
-          }}
-        >
-          <NotificationTile notificationInfo={n.Info} />
-        </div>
-      );
-    });
-    return <div>No notifications...</div>
+    if (notifications && notifications.length > 0)
+      return notifications.map((n, i) => {
+        return (
+          <div
+            key={i}
+            onClick={() => {
+              const selectedNotificationIndex = i;
+              this.openNotificationsDialog(n.Info[1]);
+              this.setState({ selectedNotificationIndex });
+            }}
+          >
+            <NotificationTile notificationInfo={n.Info} />
+          </div>
+        );
+      });
+    return <div>No notifications...</div>;
   };
-  openNotificationsDialog = () => {
-    let { notificationDialogVisible, notificationsDialogInDom } = this.state;
-    notificationDialogVisible = true;
-    notificationsDialogInDom = true;
-    this.setState({ notificationDialogVisible, notificationsDialogInDom });
+  openNotificationsDialog = collection => {
+    if (collection != "Habits") {
+      let { notificationDialogVisible, notificationsDialogInDom } = this.state;
+      notificationDialogVisible = true;
+      notificationsDialogInDom = true;
+      this.setState({ notificationDialogVisible, notificationsDialogInDom });
+    } else {
+      history.push(ROUTES[PAGEKEYS["HABIT_TRACKING"]]);
+    }
+    this.setState({ notificationsVisible: false });
   };
   closeNotificationDialog = () => {
     this.setState({ notificationDialogVisible: false });

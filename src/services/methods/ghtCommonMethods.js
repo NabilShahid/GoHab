@@ -67,6 +67,14 @@ export function getNotificationText(notificationInfo) {
         : notificationInfo[1]) +
       " " +
       notificationInfo[2];
-
+  else if (!notificationInfo[2] && notificationInfo[1] == "Habits")
+    notificationString +=
+      notificationInfo[0] +
+      " " +
+      (notificationInfo[0] == 1
+        ? notificationInfo[1].substr(0, notificationInfo[1].length - 1)
+        : notificationInfo[1]) +
+      " " +
+      "to track";
   return notificationString.toLowerCase();
 }
