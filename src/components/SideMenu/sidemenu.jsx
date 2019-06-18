@@ -53,7 +53,7 @@ class SideMenu extends Component {
           <i className="fa fa-home sideIcon" />
           Habit Tracking
         </Menu.Item>
-        <Menu.Item key="habitCalendar">
+        <Menu.Item>
           <i className="fa fa-home sideIcon" />
           Goal Stats
         </Menu.Item>
@@ -73,7 +73,7 @@ class SideMenu extends Component {
           <i className="fa fa-home sideIcon" />
           Tasks Calendar
         </Menu.Item>
-        <Menu.Item key="taskManaging">
+        <Menu.Item  key={PAGEKEYS["HABIT_CALENDAR"]}>
           <i className="fa fa-home sideIcon" />
           Habit Calendar
         </Menu.Item>
