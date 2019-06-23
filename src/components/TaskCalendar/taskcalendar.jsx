@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CalendarView from "../CalendarView/calendarview";
+import "./taskcalendar.css";
 class TaskCalendar extends Component {
   state = {};
   handleClick = info => {
@@ -13,19 +14,21 @@ class TaskCalendar extends Component {
   };
   getTaskAsEvents() {
     return this.props.tasks
-      .filter(task => task.dueDate)
+      .filter(task => typeof task.dueDate=="string")
       .map(task => {
         let event = {
           title: task.name,
           start: task.startDate.split("T")[0],
-          end: task.dueDate.split("T")[0]
+          end: task.dueDate.split("T")[0],
+          backgroundColor:"#66bb6a",
+          color:"white"
         };
         return event;
       });
   }
   render() {
     return (
-      <div>
+      <div id="taskCalendarView">
         <CalendarView
           calendarEvents={this.getTaskAsEvents()}
           calendarEventClick={this.handleClick}
