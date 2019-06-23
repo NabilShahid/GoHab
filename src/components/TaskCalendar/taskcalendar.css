@@ -1,5 +1,18 @@
 #taskCalendarView{
-    height: 100%;
+    height: 100%;   
+    /* padding: 8px; */
+}
+.taskCalendarFilterLabel{
+    margin-right: 6px;
+}
+#mainTasksCalendarDiv{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 15px;
+    border-radius: 5px;
     overflow-x: hidden;
     overflow-y: auto;
+    height: 91%;
+}
+#taskCalendarFilterDiv{
+
 }
