@@ -24,6 +24,7 @@ import Goals from "../Goals/goals";
 import Habits from "../Habits/habits";
 import HabitTracking from "../HabitTracking/habittracking";
 import HabitCalendar from "../HabitCalendar/habitcalendar";
+import TaskCalendar from "../TaskCalendar/taskcalendar";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -124,6 +125,19 @@ class MainBase extends Component {
                         </div>
                       ) : (
                         <HabitCalendar />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["TASK_CALENDAR"]]}
+                    render={() => {
+                      return tasksLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <TaskCalendar />
                       );
                     }}
                   />

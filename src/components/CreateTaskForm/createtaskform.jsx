@@ -70,6 +70,7 @@ class CreateHabbitForm extends React.Component {
     if (this.props.mode == "add") {
       //call to firebase taskOps addNewTask method
       formValuesToSave.completed = false;
+      formValuesToSave.startDate=moment().toDate().toISOString();
       this.props.firebase.taskOps
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
         .then(t => {

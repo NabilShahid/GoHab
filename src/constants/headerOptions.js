@@ -30,5 +30,10 @@ HEADEROPTIONS[PAGEKEYS["HABIT_CALENDAR"]] = {
   Title: "Habit Calendar",
   Search: false
 };
+HEADEROPTIONS[PAGEKEYS["TASK_CALENDAR"]] = {
+  Icon: "fa fa-home",
+  Title: "Task Calendar",
+  Search: false
+};
 
 export default HEADEROPTIONS;

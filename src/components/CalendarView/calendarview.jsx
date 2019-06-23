@@ -4,17 +4,16 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "./calendarview.css";
-const CalendarView = () => {
+const CalendarView = ({calendarEventClick,calendarEvents}) => {
+  console.log("Calnedar events: ",calendarEvents)
   return (
     <div>
       <FullCalendar
         defaultView="dayGridMonth"
         plugins={[ dayGridPlugin ]}
+        eventClick={calendarEventClick}
         weekends={false}
-        events={[
-          { title: "event 1", date: "2019-04-01" },
-          { title: "event 2", date: "2019-04-02" }
-        ]}
+        events={calendarEvents}
       />
     </div>
   );
