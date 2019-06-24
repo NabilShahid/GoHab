@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CalendarView from "../CalendarView/calendarview";
+import {MATERIAL_COLORS} from "../../constants/commonConsts";
 import { Select } from "antd";
 import "./taskcalendar.css";
 const Option = Select.Option;
@@ -17,13 +18,13 @@ class TaskCalendar extends Component {
   getTaskAsEvents() {
     return this.props.tasks
       .filter(task => typeof task.dueDate == "string")
-      .map(task => {
+      .map((task,index) => {
         let event = {
           title: task.name,
           start: task.startDate.split("T")[0],
           end: task.dueDate.split("T")[0],
-          backgroundColor: "#66bb6a",
-          color: "white"
+          backgroundColor:  MATERIAL_COLORS[index%16],
+          color:MATERIAL_COLORS[index%16]
         };
         return event;
       });
