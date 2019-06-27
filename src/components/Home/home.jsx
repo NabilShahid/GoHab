@@ -19,28 +19,28 @@ class Home extends Component {
     anyPopupOpen: false,
     popups: {
       Goal: {
-        Title:"Create Goal",
-        InDom:false
+        Title: "Create Goal",
+        InDom: false
       },
       Habit: {
-        Title:"Create Habit",
-        InDom:false
+        Title: "Create Habit",
+        InDom: false
       },
       Task: {
-        Title:"Create Task",
-        InDom:false
+        Title: "Create Task",
+        InDom: false
       },
       PendingGoals: {
-        Title:"Pending Goals",
-        InDom:false
+        Title: "Pending Goals",
+        InDom: false
       },
       PendingTasks: {
-        Title:"Pending Tasks",
-        InDom:false
+        Title: "Pending Tasks",
+        InDom: false
       },
       ActiveHabits: {
-        Title:"Active Habits",
-        InDom:false
+        Title: "Active Habits",
+        InDom: false
       }
     },
     selectedPopup: "Goal"
@@ -50,14 +50,13 @@ class Home extends Component {
    * show or hide a form
    */
   setPopupVisibility = (popup, visibility) => {
-    const {popups} = this.state;
+    const popups = JSON.parse(JSON.stringify(this.state.popups));
     const anyPopupOpen = (popups[popup].InDom = visibility);
     const selectedPopup = popup;
-    if (anyPopupOpen){
+    if (anyPopupOpen) {
       this.setState({ anyPopupOpen, popups, selectedPopup });
-      console.log("DFS")
-    }
-    else {
+      console.log("DFS");
+    } else {
       //remove form from dom when not needed timeout to show animation correctly
       this.setState({ anyPopupOpen });
       setTimeout(() => {
@@ -66,10 +65,16 @@ class Home extends Component {
     }
   };
 
-
   render() {
     const { anyPopupOpen, popups, selectedPopup } = this.state;
-    const { goalsCount, tasksCount, habitsCount, goals } = this.props;
+    const {
+      goalsCount,
+      tasksCount,
+      habitsCount,
+      goals,
+      tasks,
+      habits
+    } = this.props;
     return (
       <div id="homeContent">
         <div className="row">
@@ -117,7 +122,10 @@ class Home extends Component {
           </div>
         </div>
         <div className="row" style={{ marginTop: "30px" }}>
-          <div className="col-md-4" onClick={()=>this.setPopupVisibility("PendingGoals",true)}>
+          <div
+            className="col-md-4"
+            onClick={() => this.setPopupVisibility("PendingGoals", true)}
+          >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
               color="#fd9a14"
@@ -125,7 +133,10 @@ class Home extends Component {
               count={goalsCount}
             />
           </div>
-          <div className="col-md-4">
+          <div
+            className="col-md-4"
+            onClick={() => this.setPopupVisibility("ActiveHabits", true)}
+          >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
               color="#04afc4"
@@ -133,7 +144,10 @@ class Home extends Component {
               count={habitsCount}
             />
           </div>
-          <div className="col-md-4">
+          <div
+            className="col-md-4"
+            onClick={() => this.setPopupVisibility("PendingTasks", true)}
+          >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"
               color="#49a54d"
@@ -185,6 +199,30 @@ class Home extends Component {
               }}
             />
           )}
+          {popups.PendingTasks.InDom && (
+            <Tasks
+              subMode={{
+                ColSize: 2,
+                Tasks: alphaSort(
+                  getFilteredTasks(tasks, "", "pending"),
+                  "asc",
+                  "name"
+                )
+              }}
+            />
+          )}
+          {popups.ActiveHabits.InDom && (
+            <Habits
+              subMode={{
+                ColSize: 2,
+                Habits: alphaSort(
+                  getFilteredHabits(habits, "", "pending"),
+                  "asc",
+                  "name"
+                )
+              }}
+            />
+          )}
         </Modal>
       </div>
     );
@@ -197,9 +235,9 @@ const mapStateToProps = state => {
     habitsCount: getFilteredHabits(state.habitReducer.Habits, "", "pending")
       .length,
     tasksCount: getFilteredTasks(state.taskReducer.Tasks, "", "pending").length,
-    tasks: state.taskReducer.Tasks,
     goals: state.goalReducer.Goals,
-    habits: state.habitReducer.Habits
+    habits: state.habitReducer.Habits,
+    tasks: state.taskReducer.Tasks
   };
 };
 
