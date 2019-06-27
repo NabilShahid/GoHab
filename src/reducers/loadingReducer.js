@@ -1,8 +1,8 @@
 const loadingReducer = (
   state = {
-    goalsLoading: false,
-    tasksLoading: false,
-    habitsLoading: false
+    goalsLoading: true,
+    tasksLoading: true,
+    habitsLoading: true
   },
   action
 ) => {

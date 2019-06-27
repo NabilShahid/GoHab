@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 import CalendarView from "../CalendarView/calendarview";
 import {MATERIAL_COLORS} from "../../constants/commonConsts";
 import { Select } from "antd";
+import { getFilteredTasks } from "../../services/methods/taskMethods";
 import "./taskcalendar.css";
 const Option = Select.Option;
 class TaskCalendar extends Component {
-  state = {};
+  state = {
+    tasksStatus:"all",
+    tasksGoal:"all"
+  };
   handleClick = info => {
     alert("Event: " + info.event.title);
     alert("Coordinates: " + info.jsEvent.pageX + "," + info.jsEvent.pageY);
@@ -16,7 +20,8 @@ class TaskCalendar extends Component {
     info.el.style.borderColor = "red";
   };
   getTaskAsEvents() {
-    return this.props.tasks
+    const {tasksStatus,tasksGoal}=this.state;    
+    return getFilteredTasks(this.props.tasks,"",tasksStatus)
       .filter(task => typeof task.dueDate == "string")
       .map((task,index) => {
         let event = {
@@ -29,6 +34,7 @@ class TaskCalendar extends Component {
         return event;
       });
   }
+  
   render() {
     return (
       <div id="taskCalendarView">
@@ -36,7 +42,7 @@ class TaskCalendar extends Component {
           <div className="col-md-4">
             <span className="taskCalendarFilterLabel">Goal: </span>
             <Select
-              onChange={e => this.changeOrderBy(e)}
+              onChange={e => this.changeTasksStatus(e)}
               style={{ width: "80%" }}
               size="small"
               value={"dueDate"}
@@ -49,14 +55,14 @@ class TaskCalendar extends Component {
           <div className="col-md-3">
             <span className="taskCalendarFilterLabel">Status: </span>
             <Select
-              onChange={e => this.changeOrderBy(e)}
+              onChange={tasksStatus => this.setState({tasksStatus})}
               style={{ width: "70%" }}
               size="small"
-              value={"dueDate"}
+              defaultValue={"all"}
             >
-              <Option value="dueDate">Due Date</Option>
-              <Option value="importance">Importance</Option>
-              <Option value="alphabetical">Alphabetical</Option>
+              <Option value="all">All</Option>
+              <Option value="pending">Pending</Option>
+              <Option value="completed">Completed</Option>
             </Select>
           </div>
         </div>
