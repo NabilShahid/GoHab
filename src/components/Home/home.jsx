@@ -6,49 +6,77 @@ import CreateTaskForm from "../CreateTaskForm/createtaskform";
 import CountCard from "../CountCard/countcard";
 import { connect } from "react-redux";
 import { Modal } from "antd";
-import {getFilteredGoals} from "../../services/methods/goalMethods";
-import {getFilteredHabits} from "../../services/methods/habitMethods";
-import {getSortedTasks, getFilteredTasks} from "../../services/methods/taskMethods";
+import { getFilteredGoals } from "../../services/methods/goalMethods";
+import { getFilteredHabits } from "../../services/methods/habitMethods";
+import { getFilteredTasks } from "../../services/methods/taskMethods";
+import { alphaSort } from "../../services/methods/ghtCommonMethods";
+import Tasks from "../Tasks/tasks";
+import Habits from "../Habits/habits";
+import Goals from "../Goals/goals";
 import "./home.css";
 class Home extends Component {
   state = {
-    anyFormOpen: false,
-    formInDom: {
-      Goal: false,
-      Habit: false,
-      Task: false
+    anyPopupOpen: false,
+    popups: {
+      Goal: {
+        Title:"Create Goal",
+        InDom:false
+      },
+      Habit: {
+        Title:"Create Habit",
+        InDom:false
+      },
+      Task: {
+        Title:"Create Task",
+        InDom:false
+      },
+      PendingGoals: {
+        Title:"Pending Goals",
+        InDom:false
+      },
+      PendingTasks: {
+        Title:"Pending Tasks",
+        InDom:false
+      },
+      ActiveHabits: {
+        Title:"Active Habits",
+        InDom:false
+      }
     },
-    createDialogTitle: ""
+    selectedPopup: "Goal"
   };
 
   /**
    * show or hide a form
    */
-  setFormVisibility = (form, visibility) => {
-    const formInDom = { ...this.state.formInDom };
-    const anyFormOpen = (formInDom[form] = visibility);
-    const createDialogTitle = form;
-    if (anyFormOpen)
-      this.setState({ anyFormOpen, formInDom, createDialogTitle });
+  setPopupVisibility = (popup, visibility) => {
+    const {popups} = this.state;
+    const anyPopupOpen = (popups[popup].InDom = visibility);
+    const selectedPopup = popup;
+    if (anyPopupOpen){
+      this.setState({ anyPopupOpen, popups, selectedPopup });
+      console.log("DFS")
+    }
     else {
       //remove form from dom when not needed timeout to show animation correctly
-      this.setState({ anyFormOpen });
+      this.setState({ anyPopupOpen });
       setTimeout(() => {
-        this.setState({ formInDom });
+        this.setState({ popups });
       }, 250);
     }
   };
 
+
   render() {
-    const { anyFormOpen, formInDom, createDialogTitle } = this.state;
-    const {goalsCount,tasksCount,habitsCount}=this.props;
+    const { anyPopupOpen, popups, selectedPopup } = this.state;
+    const { goalsCount, tasksCount, habitsCount, goals } = this.props;
     return (
       <div id="homeContent">
         <div className="row">
           <div
             className="col-md-4"
             onClick={() => {
-              this.setFormVisibility("Goal", true);
+              this.setPopupVisibility("Goal", true);
             }}
           >
             <CreateCard
@@ -62,7 +90,7 @@ class Home extends Component {
           <div
             className="col-md-4"
             onClick={() => {
-              this.setFormVisibility("Habit", true);
+              this.setPopupVisibility("Habit", true);
             }}
           >
             <CreateCard
@@ -76,7 +104,7 @@ class Home extends Component {
           <div
             className="col-md-4"
             onClick={() => {
-              this.setFormVisibility("Task", true);
+              this.setPopupVisibility("Task", true);
             }}
           >
             <CreateCard
@@ -89,10 +117,10 @@ class Home extends Component {
           </div>
         </div>
         <div className="row" style={{ marginTop: "30px" }}>
-          <div className="col-md-4">
+          <div className="col-md-4" onClick={()=>this.setPopupVisibility("PendingGoals",true)}>
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
-              color="#fd9a14"              
+              color="#fd9a14"
               subtitle="Pending Goals"
               count={goalsCount}
             />
@@ -100,7 +128,7 @@ class Home extends Component {
           <div className="col-md-4">
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
-              color="#04afc4"              
+              color="#04afc4"
               subtitle="Active Habits"
               count={habitsCount}
             />
@@ -108,7 +136,7 @@ class Home extends Component {
           <div className="col-md-4">
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"
-              color="#49a54d"              
+              color="#49a54d"
               subtitle="Pending Tasks"
               count={tasksCount}
             />
@@ -116,33 +144,45 @@ class Home extends Component {
         </div>
 
         <Modal
-          visible={anyFormOpen}
+          visible={anyPopupOpen}
           width="53%"
-          title={"Create " + createDialogTitle}
+          title={popups[selectedPopup].Title}
           centered
           bodyStyle={{ overflowY: "auto" }}
           style={{ top: "10px" }}
           onCancel={() => {
-            this.setFormVisibility(createDialogTitle, false);
+            this.setPopupVisibility(selectedPopup, false);
           }}
           footer=""
         >
-          {formInDom.Goal && (
+          {popups.Goal.InDom && (
             <CreateGoalForm
               mode="add"
-              setFormVisibility={this.setFormVisibility}
+              setPopupVisibility={this.setPopupVisibility}
             />
           )}
-          {formInDom.Habit && (
+          {popups.Habit.InDom && (
             <CreateHabitForm
               mode="add"
-              setFormVisibility={this.setFormVisibility}
+              setPopupVisibility={this.setPopupVisibility}
             />
           )}
-          {formInDom.Task && (
+          {popups.Task.InDom && (
             <CreateTaskForm
               mode="add"
-              setFormVisibility={this.setFormVisibility}
+              setPopupVisibility={this.setPopupVisibility}
+            />
+          )}
+          {popups.PendingGoals.InDom && (
+            <Goals
+              subMode={{
+                ColSize: 2,
+                Goals: alphaSort(
+                  getFilteredGoals(goals, "", "pending"),
+                  "asc",
+                  "name"
+                )
+              }}
             />
           )}
         </Modal>
@@ -153,9 +193,13 @@ class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    goalsCount: getFilteredGoals(state.goalReducer.Goals,"","pending").length,
-    habitsCount: getFilteredHabits(state.habitReducer.Habits,"","pending").length,
-    tasksCount: getFilteredTasks(state.taskReducer.Tasks,"","pending").length
+    goalsCount: getFilteredGoals(state.goalReducer.Goals, "", "pending").length,
+    habitsCount: getFilteredHabits(state.habitReducer.Habits, "", "pending")
+      .length,
+    tasksCount: getFilteredTasks(state.taskReducer.Tasks, "", "pending").length,
+    tasks: state.taskReducer.Tasks,
+    goals: state.goalReducer.Goals,
+    habits: state.habitReducer.Habits
   };
 };
 
