@@ -197,13 +197,8 @@ class Goals extends Component {
     const { currentGoalOptions } = this.state;
     return (
       <CreateGoalForm
-        dueDate={currentGoalOptions.dueDate}
-        name={currentGoalOptions.name}
-        description={currentGoalOptions.description}
-        importance={currentGoalOptions.importance}
-        progress={currentGoalOptions.progress}
+        goalOptions={currentGoalOptions}
         mode="view"
-        id={currentGoalOptions.id}
         closeAndUpdate={this.updateLocalGoal}
       />
     );

@@ -72,9 +72,9 @@ class CreateGoalForm extends React.Component {
       //call to firebase goalOps addNewGoal method
       this.props.firebase.goalOps
         .addNewGoal("nabil110176@gmail.com", formValuesToSave)
-        .then((g) => {
+        .then(g => {
           this.setState({ loading: false });
-          this.props.addGoal({...formValuesToSave,id:g.id})
+          this.props.addGoal({ ...formValuesToSave, id: g.id });
           this.props.setFormVisibility("Goal", false);
         })
         .catch(error => {
@@ -82,10 +82,17 @@ class CreateGoalForm extends React.Component {
         });
     else
       this.props.firebase.goalOps
-        .updateGoal("nabil110176@gmail.com", formValuesToSave, this.props.id)
+        .updateGoal(
+          "nabil110176@gmail.com",
+          formValuesToSave,
+          this.props.goalOptions.id
+        )
         .then(() => {
           this.setState({ loading: false });
-          this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
+          this.props.closeAndUpdate({
+            ...formValuesToSave,
+            id: this.props.goalOptions.id
+          });
         })
         .catch(error => {
           console.error("Error writing document: ", error);
@@ -153,7 +160,7 @@ class CreateGoalForm extends React.Component {
   componentWillMount() {
     if (this.props.mode == "view") {
       this.setInitFormValues();
-      this.setState({disabledForm:true});
+      this.setState({ disabledForm: true });
     }
   }
 
@@ -161,7 +168,13 @@ class CreateGoalForm extends React.Component {
    * set values of form in case of existing goal for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, progress, dueDate } = this.props;
+    const {
+      name,
+      description,
+      importance,
+      progress,
+      dueDate
+    } = this.props.goalOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
@@ -185,7 +198,6 @@ class CreateGoalForm extends React.Component {
     this.setState({ disabledForm });
   };
 
- 
   /**
    * discard changes in edited form i.e. set to initial values
    */
@@ -305,7 +317,7 @@ class CreateGoalForm extends React.Component {
                         }}
                         value={formValues.progress}
                         min={0}
-                        max={mode=="add"?99:100}
+                        max={mode == "add" ? 99 : 100}
                         style={{
                           width: "80%",
                           margin: "0% 6%",
@@ -313,7 +325,10 @@ class CreateGoalForm extends React.Component {
                         }}
                       />
                       <i
-                        style={{ color: "var(--primary-color)", fontSize: "18px" }}
+                        style={{
+                          color: "var(--primary-color)",
+                          fontSize: "18px"
+                        }}
                         className="fa fa-check"
                       />
                     </span>
@@ -393,26 +408,24 @@ class CreateGoalForm extends React.Component {
         return (
           <span style={{ cursor: "pointer" }} onClick={this.editForm}>
             <Tooltip title="Edit goal info">
-              
               <i
                 className={"fa fa-edit blackBoldClickableIcon"}
                 style={{ marginRight: "10px" }}
-                
-              />Edit
+              />
+              Edit
             </Tooltip>
           </span>
         );
       } else {
         //editable mode
         return (
-          <span style={{cursor:"pointer"}} onClick={this.cancelChanges}> 
-                       
+          <span style={{ cursor: "pointer" }} onClick={this.cancelChanges}>
             <Tooltip title="Cancel">
               <i
                 className={"fa fa-times blackBoldClickableIcon"}
-                style={{ marginRight: "10px"}}
-                
-              />Cancel
+                style={{ marginRight: "10px" }}
+              />
+              Cancel
             </Tooltip>
           </span>
         );
@@ -447,12 +460,11 @@ class CreateGoalForm extends React.Component {
   }
 }
 
-
 /**
  * dispatch to props mapping form updating user
  */
 const mapDispatchToProps = dispatch => {
-  return {   
+  return {
     addGoal: goalPayload => {
       dispatch(addGoal(goalPayload));
     }
@@ -463,4 +475,3 @@ export default connect(
   null,
   mapDispatchToProps
 )(withFirebase(CreateGoalForm));
- 
