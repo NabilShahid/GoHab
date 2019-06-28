@@ -70,7 +70,9 @@ class CreateHabbitForm extends React.Component {
     if (this.props.mode == "add") {
       //call to firebase taskOps addNewTask method
       formValuesToSave.completed = false;
-      formValuesToSave.startDate=moment().toDate().toISOString();
+      formValuesToSave.startDate = moment()
+        .toDate()
+        .toISOString();
       this.props.firebase.taskOps
         .addNewTask("nabil110176@gmail.com", formValuesToSave)
         .then(t => {
@@ -78,23 +80,29 @@ class CreateHabbitForm extends React.Component {
           this.props.addTask({ ...formValuesToSave, id: t.id });
           this.updateSubTasksCountForGoal(formValues.parentGoal);
           if (this.props.close) this.props.close();
-          else this.props.setFormVisibility("Task", false);
+          else this.props.setPopupVisibility("Task", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
     } else {
       this.props.firebase.taskOps
-        .updateTask("nabil110176@gmail.com", formValuesToSave, this.props.id)
+        .updateTask(
+          "nabil110176@gmail.com",
+          formValuesToSave,
+          this.props.taskOptions.id
+        )
         .then(() => {
           this.setState({ loading: false });
-          this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
+          this.props.closeAndUpdate({
+            ...formValuesToSave,
+            id: this.props.taskOptions.id
+          });
           this.updateSubTasksCountForGoal(false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
-      
     }
   };
   /**
@@ -190,13 +198,26 @@ class CreateHabbitForm extends React.Component {
    * set values of form in case of existing task for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, dueDate, parentGoal,startDate } = this.props;
+    const {
+      name,
+      description,
+      importance,
+      dueDate,
+      parentGoal,
+      startDate,
+      completed
+    } = this.props.taskOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.parentGoal = parentGoal || "";
-    formValues.startDate = startDate || "";
+    formValues.startDate =
+      startDate ||
+      moment()
+        .toDate()
+        .toISOString();
+    formValues.completed = completed || false;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;

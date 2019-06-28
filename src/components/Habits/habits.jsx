@@ -171,12 +171,7 @@ class Habits extends Component {
           >
             <CreateHabitForm
               mode={habitViewMode}
-              name={currentHabitOptions.name}
-              description={currentHabitOptions.description}
-              dueDate={currentHabitOptions.dueDate}
-              id={currentHabitOptions.id}
-              importance={currentHabitOptions.importance}
-              parentGoal={currentHabitOptions.parentGoal}
+              habitOptions={currentHabitOptions}
               closeAndUpdate={this.updateLocalHabit}
               close={this.closeHabitDialog}
             />

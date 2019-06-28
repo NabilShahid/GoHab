@@ -168,13 +168,7 @@ class Tasks extends Component {
           >
             <CreateTaskForm
               mode={taskViewMode}
-              name={currentTaskOptions.name}
-              description={currentTaskOptions.description}
-              dueDate={currentTaskOptions.dueDate}
-              id={currentTaskOptions.id}
-              importance={currentTaskOptions.importance}
-              parentGoal={currentTaskOptions.parentGoal}
-              startDate={currentTaskOptions.startDate}
+              taskOptions={currentTaskOptions}
               closeAndUpdate={this.updateLocalTask}
               close={this.closeTaskDialog}
             />

@@ -92,8 +92,10 @@ class CreateHabitForm extends React.Component {
     if (this.props.mode == "add") {
       //call to firebase habitOps addNewHabit method
       formValuesToSave.completed = false;
-      formValuesToSave.startDateTime=new Date().toISOString();
-      formValuesToSave.tracking=[];
+      formValuesToSave.startDateTime = moment()
+        .toDate()
+        .toISOString();
+      formValuesToSave.tracking = [];
       this.props.firebase.habitOps
         .addNewHabit("nabil110176@gmail.com", formValuesToSave)
         .then(h => {
@@ -101,23 +103,29 @@ class CreateHabitForm extends React.Component {
           this.props.addHabit({ ...formValuesToSave, id: h.id });
           this.updateSubHabitsCountForGoal(formValues.parentGoal);
           if (this.props.close) this.props.close();
-          else this.props.setFormVisibility("Habit", false);
+          else this.props.setPopupVisibility("Habit", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
     } else {
       this.props.firebase.habitOps
-        .updateHabit("nabil110176@gmail.com", formValuesToSave, this.props.id)
+        .updateHabit(
+          "nabil110176@gmail.com",
+          formValuesToSave,
+          this.props.habitOptions.id
+        )
         .then(() => {
           this.setState({ loading: false });
-          this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
+          this.props.closeAndUpdate({
+            ...formValuesToSave,
+            id: this.props.habitOptions.id
+          });
           this.updateSubHabitsCountForGoal(false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);
         });
-      
     }
   };
 
@@ -208,8 +216,11 @@ class CreateHabitForm extends React.Component {
       category,
       parentGoal,
       period,
-      frequency
-    } = this.props;
+      frequency,
+      completed,
+      startDateTime,
+      tracking
+    } = this.props.habitOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
@@ -217,6 +228,13 @@ class CreateHabitForm extends React.Component {
     formValues.parentGoal = parentGoal || "";
     formValues.period = period || "Daily";
     formValues.frequency = frequency || 1;
+    formValues.completed = completed || false;
+    formValues.tracking = tracking || [];
+    formValues.startDateTime =
+      startDateTime ||
+      moment()
+        .toDate()
+        .toISOString();
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -440,6 +458,7 @@ class CreateHabitForm extends React.Component {
                   size="small"
                   disabled={disabledForm}
                   onChange={this.setPeriod}
+                  value={formValues.period}
                 >
                   {Object.keys(periods).map(p => {
                     return <Option value={p}>{p}</Option>;
@@ -548,7 +567,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     goals: state.goalReducer.Goals,
-    habits:state.habitReducer.Habits
+    habits: state.habitReducer.Habits
   };
 };
 

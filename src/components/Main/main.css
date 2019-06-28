@@ -34,6 +34,11 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+.fc-button-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
 .mainContainerLoadingDiv{
     text-align: center;
     margin-top: 20%;

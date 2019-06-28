@@ -124,7 +124,9 @@ class Home extends Component {
         <div className="row" style={{ marginTop: "30px" }}>
           <div
             className="col-md-4"
-            onClick={() => this.setPopupVisibility("PendingGoals", true)}
+            onClick={() =>
+              goalsCount && this.setPopupVisibility("PendingGoals", true)
+            }
           >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
@@ -135,7 +137,9 @@ class Home extends Component {
           </div>
           <div
             className="col-md-4"
-            onClick={() => this.setPopupVisibility("ActiveHabits", true)}
+            onClick={() =>
+              habitsCount && this.setPopupVisibility("ActiveHabits", true)
+            }
           >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
@@ -146,7 +150,9 @@ class Home extends Component {
           </div>
           <div
             className="col-md-4"
-            onClick={() => this.setPopupVisibility("PendingTasks", true)}
+            onClick={() =>
+              tasksCount && this.setPopupVisibility("PendingTasks", true)
+            }
           >
             <CountCard
               background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"

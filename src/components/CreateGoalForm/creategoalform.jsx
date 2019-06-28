@@ -75,7 +75,7 @@ class CreateGoalForm extends React.Component {
         .then(g => {
           this.setState({ loading: false });
           this.props.addGoal({ ...formValuesToSave, id: g.id });
-          this.props.setFormVisibility("Goal", false);
+          this.props.setPopupVisibility("Goal", false);
         })
         .catch(error => {
           console.error("Error writing document: ", error);

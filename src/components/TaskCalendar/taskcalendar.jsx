@@ -111,13 +111,7 @@ class TaskCalendar extends Component {
           >
             <CreateTaskForm
               mode="view"
-              name={selectedTask.name}
-              description={selectedTask.description}
-              dueDate={selectedTask.dueDate}
-              id={selectedTask.id}
-              importance={selectedTask.importance}
-              parentGoal={selectedTask.parentGoal}
-              startDate={selectedTask.startDate}
+              taskOptions={selectedTask}
               closeAndUpdate={this.updateLocalTask}
               close={this.closeTaskDialog}
             />
