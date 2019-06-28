@@ -190,12 +190,13 @@ class CreateHabbitForm extends React.Component {
    * set values of form in case of existing task for viewing and editing
    */
   setInitFormValues() {
-    const { name, description, importance, dueDate, parentGoal } = this.props;
+    const { name, description, importance, dueDate, parentGoal,startDate } = this.props;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.parentGoal = parentGoal || "";
+    formValues.startDate = startDate || "";
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;

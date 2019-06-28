@@ -174,6 +174,7 @@ class Tasks extends Component {
               id={currentTaskOptions.id}
               importance={currentTaskOptions.importance}
               parentGoal={currentTaskOptions.parentGoal}
+              startDate={currentTaskOptions.startDate}
               closeAndUpdate={this.updateLocalTask}
               close={this.closeTaskDialog}
             />

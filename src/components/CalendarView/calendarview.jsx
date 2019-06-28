@@ -5,7 +5,6 @@ import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "./calendarview.css";
 const CalendarView = ({calendarEventClick,calendarEvents}) => {
-  console.log("Calnedar events: ",calendarEvents)
   return (
     <div>
       <FullCalendar
