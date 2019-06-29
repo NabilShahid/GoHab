@@ -34,8 +34,8 @@ class TaskCalendar extends Component {
       .map((task, index) => {
         let event = {
           title: task.name,
-          start: task.startDate.split("T")[0],
-          end: task.dueDate.split("T")[0],
+          start: new Date(task.startDate),
+          end: new Date(task.dueDate),
           backgroundColor: MATERIAL_COLORS[index % 16],
           color: MATERIAL_COLORS[index % 16],
           id: task.id
