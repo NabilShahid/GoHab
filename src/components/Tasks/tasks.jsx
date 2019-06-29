@@ -8,7 +8,8 @@ import {
   message,
   Button,
   Popover,
-  Tooltip
+  Tooltip,
+  Input
 } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
@@ -21,15 +22,18 @@ import {
 } from "../../actions/taskActions";
 import TaskCard from "../TaskCard/taskcard";
 import CreateTaskForm from "../CreateTaskForm/createtaskform";
+import { getFilteredTasks } from "../../services/methods/taskMethods";
 import "./tasks.css";
 const Option = Select.Option;
+const Search = Input.Search;
 class Tasks extends Component {
   state = {
     taskDialogInDom: false,
     taskDialogVisible: false,
     currentTaskOptions: {},
     taskViewMode: "view",
-    taskDialogTitle: ""
+    taskDialogTitle: "",
+    subModeSearchValue: ""
   };
 
   changeOrderBy(v) {
@@ -48,14 +52,30 @@ class Tasks extends Component {
       taskDialogVisible,
       currentTaskOptions,
       taskViewMode,
-      taskDialogTitle
+      taskDialogTitle,
+      subModeSearchValue
     } = this.state;
     const { statusFilter, orderBy, viewTypeFilter, subMode } = this.props;
     return (
       <div id="taskCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-            {this.getTasksRows(subMode.Tasks, subMode.ColSize)}
+            <div style={{ textAlign: "right" }}>
+              <Search
+                className="submodeSearch"
+                placeholder="Search"
+                value={subModeSearchValue}
+                size="small"
+                onChange={e => {
+                  this.setState({subModeSearchValue:e.target.value});
+                }}
+                style={{ width: 210 }}
+              />
+            </div>
+            {this.getTasksRows(
+              getFilteredTasks(subMode.Tasks,subModeSearchValue,"all"),
+              subMode.ColSize
+            )}
           </div>
         )}
         {!subMode && (

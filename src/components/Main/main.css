@@ -43,6 +43,16 @@
     text-align: center;
     margin-top: 20%;
 }
+.submodeSearch input{
+    width: 90%;
+    margin-bottom: 5px;    
+}
+.submodeSearch input:focus{
+    width: 100%;
+}
+.ant-modal-body{
+    padding: 3px 15px !important;
+}
 
 @media  screen and (max-width: 500px) { 
    #sideContainer{

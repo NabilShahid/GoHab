@@ -8,7 +8,8 @@ import {
   message,
   Button,
   Popover,
-  Tooltip
+  Tooltip,
+  Input
 } from "antd";
 import { connect } from "react-redux";
 import { withFirebase } from "../../services/firebase/context";
@@ -21,15 +22,19 @@ import {
 } from "../../actions/habitActions";
 import HabitCard from "../HabitCard/habitcard";
 import CreateHabitForm from "../CreateHabitForm/createhabitform";
+import { getFilteredHabits } from "../../services/methods/habitMethods";
+
 import "./habits.css";
 const Option = Select.Option;
+const Search=Input.Search;
 class Habits extends Component {
   state = {
     habitDialogInDom: false,
     habitDialogVisible: false,
     currentHabitOptions: {},
     habitViewMode: "view",
-    habitDialogTitle: ""
+    habitDialogTitle: "",
+    subModeSearchValue:""
   };
 
   changeOrderBy(v) {
@@ -49,14 +54,27 @@ class Habits extends Component {
       habitDialogVisible,
       currentHabitOptions,
       habitViewMode,
-      habitDialogTitle
+      habitDialogTitle,
+      subModeSearchValue
     } = this.state;
     const { statusFilter, orderBy, viewTypeFilter, subMode } = this.props;
     return (
       <div id="habitCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-            {this.getHabitsRows(subMode.Habits, subMode.ColSize)}
+           <div style={{ textAlign: "right" }}>
+              <Search
+                className="submodeSearch"
+                placeholder="Search"
+                value={subModeSearchValue}
+                size="small"
+                onChange={e => {
+                  this.setState({subModeSearchValue:e.target.value});
+                }}
+                style={{ width: 210 }}
+              />
+            </div>
+            {this.getHabitsRows(getFilteredHabits(subMode.Habits,subModeSearchValue,"all"), subMode.ColSize)}
           </div>
         )}
         {!subMode && (

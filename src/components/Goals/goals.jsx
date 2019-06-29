@@ -11,6 +11,7 @@ import {
 } from "../../actions/goalActions";
 import { connect } from "react-redux";
 import { alphaSort } from "../../services/methods/ghtCommonMethods.js";
+import { getFilteredGoals } from "../../services/methods/goalMethods";
 import {
   Modal,
   Tabs,
@@ -22,18 +23,20 @@ import {
   Button,
   Icon,
   Select,
-  Tooltip
+  Tooltip,
+  Input
 } from "antd";
 import "./goals.css";
 
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
-
+const Search=Input.Search;
 class Goals extends Component {
   state = {
     goalDialogInDom: false,
     goalDialogVisible: false,
-    currentGoalOptions: {}
+    currentGoalOptions: {},
+    subModeSearchValue:""
   };
   changeOrderBy(v) {
     const orderBy = v;
@@ -46,14 +49,27 @@ class Goals extends Component {
     const {
       goalDialogInDom,
       goalDialogVisible,
-      currentGoalOptions
+      currentGoalOptions,
+      subModeSearchValue
     } = this.state;
     const { statusFilter, orderBy, tasks, habits, subMode } = this.props;
     return (
       <div id="goalCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-            {this.getGoalRows(subMode.Goals, subMode.ColSize)}
+           <div style={{ textAlign: "right" }}>
+              <Search
+                className="submodeSearch"
+                placeholder="Search"
+                value={subModeSearchValue}
+                size="small"
+                onChange={e => {
+                  this.setState({subModeSearchValue:e.target.value});
+                }}
+                style={{ width: 210 }}
+              />
+            </div>
+            {this.getGoalRows(getFilteredGoals(subMode.Goals,subModeSearchValue,"all"), subMode.ColSize)}
           </div>
         )}
         {!subMode && (
