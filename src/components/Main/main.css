@@ -53,7 +53,9 @@
 .ant-modal-body{
     padding: 3px 15px !important;
 }
-
+.fc-time{
+    display : none;
+ }
 @media  screen and (max-width: 500px) { 
    #sideContainer{
         width:75px;

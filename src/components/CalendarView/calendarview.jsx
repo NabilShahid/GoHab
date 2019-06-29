@@ -11,7 +11,7 @@ const CalendarView = ({calendarEventClick,calendarEvents}) => {
         defaultView="dayGridMonth"
         plugins={[ dayGridPlugin ]}
         eventClick={calendarEventClick}
-        // weekends={false}
+        firstDay={1}
         events={calendarEvents}
       />
     </div>

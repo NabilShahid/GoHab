@@ -1,4 +1,4 @@
-export const START_DATE_FOR_INDEX="01/01/2019";
+export const START_DATE_FOR_INDEX="2019-01-07";
 export const MATERIAL_COLORS=[
     "#EC407A",
     "#18FFFF",

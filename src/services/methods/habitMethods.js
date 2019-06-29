@@ -61,6 +61,45 @@ export function getCurrentTrackIndex(period) {
     return moment().diff(moment(START_DATE_FOR_INDEX), "year");
 }
 
+export function getTrackIndexForDate(period, forDate) {
+  forDate = moment(forDate);
+  if (period == "Daily")
+    return forDate.diff(moment(START_DATE_FOR_INDEX), "day");
+  if (period == "Weekly")
+    return forDate.diff(moment(START_DATE_FOR_INDEX), "week");
+  if (period == "Monthly")
+    return forDate.diff(moment(START_DATE_FOR_INDEX), "month");
+  if (period == "Yearly")
+    return forDate.diff(moment(START_DATE_FOR_INDEX), "year");
+}
+
+export function getTrackDateFromIndex(period, index) {
+  if (period == "Daily")
+    return moment(START_DATE_FOR_INDEX)
+      .add("days", index)
+      .toDate();
+  if (period == "Weekly")
+    return moment(START_DATE_FOR_INDEX)
+      .add("weeks", index)
+      .toDate();
+  if (period == "Monthly")
+    return moment(START_DATE_FOR_INDEX)
+      .add("months", index)
+      .toDate();
+  if (period == "Yearly")
+    return moment(START_DATE_FOR_INDEX)
+      .add("years", index)
+      .toDate();
+}
+
+export function getWeekStartAndEndDate(date){
+  // let newDate=moment(date).add(1,"days");
+  return {
+    start:moment(date).subtract(moment(date).isoWeekday()-1,"days").toDate(),
+    end:moment(date).add(7-moment(date).isoWeekday()+1,"days").toDate()
+  }
+}
+
 export function getTrackPeriodString(period, frequency) {
   let trackString = "Following ";
   if (frequency == 1) trackString += " once a ";
