@@ -1,60 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import CalendarView from "../CalendarView/calendarview";
-import CreateTaskForm from "../CreateTaskForm/createtaskform";
-import { MATERIAL_COLORS } from "../../constants/commonConsts";
+import CreateHabitForm from "../CreateHabitForm/createhabitform";
 import { Select, Modal } from "antd";
-import { getFilteredTasks } from "../../services/methods/taskMethods";
+import { getFilteredHabits } from "../../services/methods/habitMethods";
 import {
   getTrackIndexForDate,
   getTrackDateFromIndex,
   getWeekStartAndEndDate
 } from "../../services/methods/habitMethods";
-import { updateTask } from "../../actions/taskActions";
+import { updateHabit } from "../../actions/habitActions";
 import moment from "moment";
 import "./habitcalendar.css";
 const Option = Select.Option;
 class HabitCalendar extends Component {
   state = {
-    tasksStatus: "all",
-    tasksGoal: "all",
-    selectedTaskId: "",
-    taskDialogInDom: false,
-    taskDialogVisible: false
+    habitsStatus: "all",
+    habitsGoal: "all",
+    selectedHabitId: "",
+    habitDialogInDom: false,
+    habitDialogVisible: false
   };
   calendarEventClick = ({ event }) => {
     this.setState({
-      selectedTaskId: event.id,
-      taskDialogInDom: true,
-      taskDialogVisible: true
+      selectedHabitId: event.id,
+      habitDialogInDom: true,
+      habitDialogVisible: true
     });
   };
-  getTaskAsEvents() {
-    const { tasksStatus, tasksGoal } = this.state;
-    return getFilteredTasks(this.props.tasks, "", tasksStatus)
-      .filter(
-        task =>
-          typeof task.dueDate == "string" &&
-          (tasksGoal == "all" || tasksGoal == task.parentGoal)
-      )
-      .map((task, index) => {
-        let event = {
-          title: task.name,
-          start: new Date(task.startDate),
-          end: new Date(task.dueDate),
-          backgroundColor: MATERIAL_COLORS[index % 16],
-          color: MATERIAL_COLORS[index % 16],
-          id: task.id
-        };
-        return event;
-      });
-  }
 
   render() {
-    this.genereteHabitEvents(this.props.habits);
     const { goals } = this.props;
-    const { taskDialogInDom, taskDialogVisible, selectedTaskId } = this.state;
-    const selectedTask = this.props.tasks.find(t => t.id == selectedTaskId);
+    const { habitDialogInDom, habitDialogVisible, selectedHabitId } = this.state;
+    const selectedHabit = this.props.habits.find(t => t.id == selectedHabitId);
     return (
       <div id="habitCalendarView">
         <div
@@ -69,7 +47,7 @@ class HabitCalendar extends Component {
               defaultValue={"all"}
               style={{ width: "70%" }}
               size="small"
-              onChange={tasksGoal => this.setState({ tasksGoal })}
+              onChange={habitsGoal => this.setState({ habitsGoal })}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.props.children
@@ -86,7 +64,7 @@ class HabitCalendar extends Component {
           <div className="col-md-3">
             <span className="habitCalendarFilterLabel">Status: </span>
             <Select
-              onChange={tasksStatus => this.setState({ tasksStatus })}
+              onChange={habitsStatus => this.setState({ habitsStatus })}
               style={{ width: "70%" }}
               size="small"
               defaultValue={"all"}
@@ -106,24 +84,24 @@ class HabitCalendar extends Component {
             calendarEventClick={this.calendarEventClick}
           />
         </div>
-        {taskDialogInDom && (
+        {habitDialogInDom && (
           <Modal
-            visible={taskDialogVisible}
+            visible={habitDialogVisible}
             width="53%"
-            title={selectedTask.name}
+            title={selectedHabit.name}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
             onCancel={() => {
-              this.closeTaskDialog();
+              this.closeHabitDialog();
             }}
             footer=""
           >
-            <CreateTaskForm
+            <CreateHabitForm
               mode="view"
-              taskOptions={selectedTask}
-              closeAndUpdate={this.updateLocalTask}
-              close={this.closeTaskDialog}
+              habitOptions={selectedHabit}
+              closeAndUpdate={this.updateLocalHabit}
+              close={this.closeHabitDialog}
             />
           </Modal>
         )}
@@ -183,16 +161,16 @@ class HabitCalendar extends Component {
     return allHabitEvents;
   }
 
-  closeTaskDialog = () => {
-    this.setState({ taskDialogVisible: false });
+  closeHabitDialog = () => {
+    this.setState({ habitDialogVisible: false });
     setTimeout(() => {
-      this.setState({ taskDialogInDom: false });
+      this.setState({ habitDialogInDom: false });
     }, 250);
   };
 
-  updateLocalTask = task => {
-    this.props.updateTask(task);
-    this.closeTaskDialog();
+  updateLocalHabit = habit => {
+    this.props.updateHabit(habit);
+    this.closeHabitDialog();
   };
 }
 
@@ -201,7 +179,6 @@ class HabitCalendar extends Component {
  */
 const mapStateToProps = state => {
   return {
-    tasks: state.taskReducer.Tasks,
     goals: state.goalReducer.Goals,
     habits: state.habitReducer.Habits
   };
@@ -212,8 +189,8 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    updateTask: taskPayload => {
-      dispatch(updateTask(taskPayload));
+    updateHabit: habitPayload => {
+      dispatch(updateHabit(habitPayload));
     }
   };
 };
