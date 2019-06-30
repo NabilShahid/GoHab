@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "./calendarview.css";
-const CalendarView = ({calendarEventClick,calendarEvents}) => {
+const CalendarView = ({calendarEventClick,calendarEvents,calendarHeight,contentHeight}) => {
   return (
     <div>
       <FullCalendar
@@ -13,6 +13,8 @@ const CalendarView = ({calendarEventClick,calendarEvents}) => {
         eventClick={calendarEventClick}
         firstDay={1}
         events={calendarEvents}
+        height={calendarHeight}
+        contentHeight={contentHeight}
       />
     </div>
   );

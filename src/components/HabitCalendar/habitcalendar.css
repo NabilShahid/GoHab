@@ -6,10 +6,45 @@
     margin-right: 6px;
 }
 #mainHabitsCalendarDiv{
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    padding: 15px;
-    border-radius: 5px;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+    padding: 7px;
     overflow-x: hidden;
     overflow-y: auto;
     height: 91%;
+}
+#mainHabitsCalendarDiv h2{
+    font-size: 15px;
+}
+.habitCalendar{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 14px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    
+}
+.habitCelendarInfo{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 5px;
+}
+.habitCelendarName{
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    font-weight: 500;
+    font-size: 15px;
+}
+.habitCalendarCounts{
+    text-align: right;
+    display: inline-block;
+    font-size: 13px;
+    width: 50%;
+    font-weight: 500;
+}
+.habitCalendarCountFirstSpan{
+    float: right;
+    padding-right: 5px;
+    border-right: 1px solid #b1b0b0;
+    margin-right: 5px;
+
 }

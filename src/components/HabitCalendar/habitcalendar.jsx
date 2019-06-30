@@ -4,6 +4,8 @@ import CalendarView from "../CalendarView/calendarview";
 import CreateHabitForm from "../CreateHabitForm/createhabitform";
 import { Select, Modal } from "antd";
 import { getFilteredHabits } from "../../services/methods/habitMethods";
+import { HABIT_EVENT_COLORS } from "../../constants/commonConsts";
+
 import {
   getTrackIndexForDate,
   getTrackDateFromIndex,
@@ -31,8 +33,16 @@ class HabitCalendar extends Component {
 
   render() {
     const { goals } = this.props;
-    const { habitDialogInDom, habitDialogVisible, selectedHabitId } = this.state;
+    const {
+      habitDialogInDom,
+      habitDialogVisible,
+      selectedHabitId
+    } = this.state;
     const selectedHabit = this.props.habits.find(t => t.id == selectedHabitId);
+    const habitCalendarEvents = this.generateHabitCalendarEvents(
+      this.props.habits,
+      "Daily"
+    );
     return (
       <div id="habitCalendarView">
         <div
@@ -76,13 +86,11 @@ class HabitCalendar extends Component {
           </div>
         </div>
         <div id="mainHabitsCalendarDiv">
-          <CalendarView
-            calendarEvents={this.genereteHabitEvents(
-              this.props.habits,
-              "Monthly"
-            )}
-            calendarEventClick={this.calendarEventClick}
-          />
+          {this.getCalendarRows(
+            Object.keys(habitCalendarEvents),
+            habitCalendarEvents,
+            2
+          )}
         </div>
         {habitDialogInDom && (
           <Modal
@@ -109,10 +117,16 @@ class HabitCalendar extends Component {
     );
   }
 
-  genereteHabitEvents(habits, period) {
-    let allHabitEvents = [];
+  generateHabitCalendarEvents(habits, period) {
+    let allHabitEvents = {};
     habits.forEach(h => {
       if (h.period == period) {
+        if (Object.keys(allHabitEvents).indexOf(h.name) == -1) {
+          allHabitEvents[h.name] = {};
+          allHabitEvents[h.name].events = [];
+          allHabitEvents[h.name].hits = 0;
+          allHabitEvents[h.name].misses = 0;
+        }
         let initialTrackIndex = getTrackIndexForDate(h.period, h.startDateTime);
         if (h.tracking.length > 0) {
           for (
@@ -128,37 +142,88 @@ class HabitCalendar extends Component {
             if (period == "Daily")
               event.start = event.end = getTrackDateFromIndex(h.period, i);
             else if (period == "Weekly") {
-                console.log(getTrackDateFromIndex(h.period, i))
               let weekStartEnd = getWeekStartAndEndDate(
                 getTrackDateFromIndex(h.period, i)
               );
               event.start = weekStartEnd.start;
               event.end = weekStartEnd.end;
-            }
-            else if(period=="Monthly"){
-                event.start=moment(getTrackDateFromIndex(h.period, i)).startOf("month").toDate();
-                event.end=moment(getTrackDateFromIndex(h.period, i)).endOf("month").toDate();
-
+            } else if (period == "Monthly") {
+              event.start = moment(getTrackDateFromIndex(h.period, i))
+                .startOf("month")
+                .toDate();
+              event.end = moment(getTrackDateFromIndex(h.period, i))
+                .endOf("month")
+                .toDate();
             }
             if (currTrackIndex > -1) {
               if (h.tracking[currTrackIndex].Count == 0) {
-                event.color = "red";
+                event.color = HABIT_EVENT_COLORS.MISS;
               } else if (
                 h.tracking[currTrackIndex].Count <
                 h.tracking[currTrackIndex].Frequency
               ) {
-                event.color = "yellow";
+                event.color = HABIT_EVENT_COLORS.PARTIAL;
               } else {
-                event.color = "green";
+                event.color = HABIT_EVENT_COLORS.HIT;
               }
-            } else event.color = "red";
-            allHabitEvents.push(event);
+            } else event.color = HABIT_EVENT_COLORS.MISS;
+            allHabitEvents[h.name].events.push(event);
           }
         }
       }
-     
     });
+    console.log("AHE: ", allHabitEvents);
     return allHabitEvents;
+  }
+
+  getCalendarRows(habitsEventNames, habitEvents, colSize) {
+    let calendarRows = [];
+    for (let i = 0; i < habitsEventNames.length; i += colSize) {
+      if (habitsEventNames[i]) {
+        const calendarRowArray = [];
+        for (let j = 0; j < colSize; j++) {
+          if (habitsEventNames[i + j])
+            calendarRowArray.push(habitsEventNames[i + j]);
+        }
+
+        calendarRows.push(
+          <div className="row" style={{ marginTop: "15px" }} key={i}>
+            {this.getCalendarCols(calendarRowArray, habitEvents, i, colSize)}
+          </div>
+        );
+      }
+    }
+    return calendarRows;
+  }
+
+  getCalendarCols(rowArrayNames, rowArray, rowindex, colSize) {
+    let cellClass = `col-md-${Math.floor(12 / colSize)}`;
+    // if (rowindex > 0) cellClass += " tasksRow";
+    return rowArrayNames.map((r, i) => {
+      return (
+        <div key={i} className={cellClass}>
+          <div className="habitCalendar">
+            <div className="habitCelendarInfo">
+              <div className="habitCelendarName">{r}</div>
+              <div className="habitCalendarCounts">
+                <div>
+                  <i className="fa fa-check" style={{ marginRight: "9px" }} />5
+                </div>
+                <div>
+                  <i className="fa fa-times" style={{ marginRight: "9px" }} />45
+                </div>
+              </div>
+            </div>
+            <CalendarView
+              calendarEvents={rowArray[r].events}
+              calendarEventClick={this.calendarEventClick}
+              calendarHeight={350}
+              contentHeight={410}
+            />
+          </div>
+        </div>
+      );
+    });
   }
 
   closeHabitDialog = () => {

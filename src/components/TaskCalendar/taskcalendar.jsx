@@ -94,6 +94,8 @@ class TaskCalendar extends Component {
           <CalendarView
             calendarEvents={this.getTaskAsEvents()}
             calendarEventClick={this.calendarEventClick}
+            calendarHeight={650}
+            contentHeight={600}
           />
         </div>
         {taskDialogInDom && (

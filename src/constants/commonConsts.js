@@ -17,3 +17,9 @@ export const MATERIAL_COLORS=[
     "#3949AB",
     "#00E676",
 ]
+
+export const HABIT_EVENT_COLORS={
+    HIT:"#66bb6a",
+    MISS:"#fb584c",
+    PARTIAL:"#ffa726"
+}
