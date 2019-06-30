@@ -1,5 +1,5 @@
 import { alphaSort, numericSort, dateSort } from "./ghtCommonMethods";
-import { START_DATE_FOR_INDEX } from "../../constants/commonConsts";
+import { START_DATE_FOR_INDEX_DAY_WEEK,START_DATE_FOR_INDEX_MONTH } from "../../constants/commonConsts";
 import moment from "moment";
 
 export function getFilteredHabits(habits, filterString, currentStatus) {
@@ -31,19 +31,19 @@ export function getSortedHabits(habits, orderBy) {
  */
 export function checkIfPendingTracking(index, period) {
   if (period === "Daily") {
-    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "day")) {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "day")) {
       return true;
     }
   } else if (period === "Weekly") {
-    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "week")) {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "week")) {
       return true;
     }
   } else if (period === "Monthly") {
-    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "month")) {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX_MONTH), "month")) {
       return true;
     }
   } else if (period === "Yearly") {
-    if (index == moment().diff(moment(START_DATE_FOR_INDEX), "year")) {
+    if (index == moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "year")) {
       return true;
     }
   }
@@ -52,42 +52,42 @@ export function checkIfPendingTracking(index, period) {
 
 export function getCurrentTrackIndex(period) {
   if (period == "Daily")
-    return moment().diff(moment(START_DATE_FOR_INDEX), "day");
+    return moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "day");
   if (period == "Weekly")
-    return moment().diff(moment(START_DATE_FOR_INDEX), "week");
+    return moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "week");
   if (period == "Monthly")
-    return moment().diff(moment(START_DATE_FOR_INDEX), "month");
+    return moment().diff(moment(START_DATE_FOR_INDEX_MONTH), "month");
   if (period == "Yearly")
-    return moment().diff(moment(START_DATE_FOR_INDEX), "year");
+    return moment().diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "year");
 }
 
 export function getTrackIndexForDate(period, forDate) {
-  forDate = moment(forDate);
+  forDate = moment(forDate.split("T")[0]);
   if (period == "Daily")
-    return forDate.diff(moment(START_DATE_FOR_INDEX), "day");
+    return forDate.diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "day");
   if (period == "Weekly")
-    return forDate.diff(moment(START_DATE_FOR_INDEX), "week");
+    return forDate.diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "week");
   if (period == "Monthly")
-    return forDate.diff(moment(START_DATE_FOR_INDEX), "month");
+    return forDate.diff(moment(START_DATE_FOR_INDEX_MONTH), "month");
   if (period == "Yearly")
-    return forDate.diff(moment(START_DATE_FOR_INDEX), "year");
+    return forDate.diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "year");
 }
 
 export function getTrackDateFromIndex(period, index) {
   if (period == "Daily")
-    return moment(START_DATE_FOR_INDEX)
+    return moment(START_DATE_FOR_INDEX_DAY_WEEK)
       .add("days", index)
       .toDate();
   if (period == "Weekly")
-    return moment(START_DATE_FOR_INDEX)
+    return moment(START_DATE_FOR_INDEX_DAY_WEEK)
       .add("weeks", index)
       .toDate();
   if (period == "Monthly")
-    return moment(START_DATE_FOR_INDEX)
+    return moment(START_DATE_FOR_INDEX_MONTH)
       .add("months", index)
       .toDate();
   if (period == "Yearly")
-    return moment(START_DATE_FOR_INDEX)
+    return moment(START_DATE_FOR_INDEX_DAY_WEEK)
       .add("years", index)
       .toDate();
 }

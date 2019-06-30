@@ -11,6 +11,7 @@ import {
   getWeekStartAndEndDate
 } from "../../services/methods/habitMethods";
 import { updateTask } from "../../actions/taskActions";
+import moment from "moment";
 import "./habitcalendar.css";
 const Option = Select.Option;
 class HabitCalendar extends Component {
@@ -100,7 +101,7 @@ class HabitCalendar extends Component {
           <CalendarView
             calendarEvents={this.genereteHabitEvents(
               this.props.habits,
-              "Daily"
+              "Monthly"
             )}
             calendarEventClick={this.calendarEventClick}
           />
@@ -156,6 +157,11 @@ class HabitCalendar extends Component {
               event.start = weekStartEnd.start;
               event.end = weekStartEnd.end;
             }
+            else if(period=="Monthly"){
+                event.start=moment(getTrackDateFromIndex(h.period, i)).startOf("month").toDate();
+                event.end=moment(getTrackDateFromIndex(h.period, i)).endOf("month").toDate();
+
+            }
             if (currTrackIndex > -1) {
               if (h.tracking[currTrackIndex].Count == 0) {
                 event.color = "red";
@@ -172,12 +178,7 @@ class HabitCalendar extends Component {
           }
         }
       }
-      console.log(
-        "Initial Track Index for ",
-        h.name,
-        ": ",
-        getTrackIndexForDate(h.period, h.startDateTime)
-      );
+     
     });
     return allHabitEvents;
   }
