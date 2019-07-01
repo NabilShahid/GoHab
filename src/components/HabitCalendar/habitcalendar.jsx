@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import CalendarView from "../CalendarView/calendarview";
 import CreateHabitForm from "../CreateHabitForm/createhabitform";
 import { Select, Modal } from "antd";
-import { getFilteredHabits } from "../../services/methods/habitMethods";
+import { getCurrentTrackIndex } from "../../services/methods/habitMethods";
 import { HABIT_EVENT_COLORS } from "../../constants/commonConsts";
 
 import {
@@ -17,8 +17,9 @@ import "./habitcalendar.css";
 const Option = Select.Option;
 class HabitCalendar extends Component {
   state = {
-    habitsStatus: "all",
+    habitsPeriod: "Daily",
     habitsGoal: "all",
+    habitsToFilter: [],
     selectedHabitId: "",
     habitDialogInDom: false,
     habitDialogVisible: false
@@ -32,16 +33,25 @@ class HabitCalendar extends Component {
   };
 
   render() {
-    const { goals } = this.props;
+    const { goals, habits } = this.props;
     const {
       habitDialogInDom,
       habitDialogVisible,
-      selectedHabitId
+      selectedHabitId,
+      habitsPeriod,
+      habitsGoal,
+      habitsToFilter
     } = this.state;
     const selectedHabit = this.props.habits.find(t => t.id == selectedHabitId);
+    const goalPeriodHabits = habits
+      .filter(h => h.period == habitsPeriod)
+      .filter(h => habitsGoal == "all" || h.parentGoal == habitsGoal);
+      
     const habitCalendarEvents = this.generateHabitCalendarEvents(
-      this.props.habits,
-      "Daily"
+      goalPeriodHabits.filter(
+        h => habitsToFilter.length == 0 || habitsToFilter.includes(h.name)
+      ),
+      habitsPeriod
     );
     return (
       <div id="habitCalendarView">
@@ -72,16 +82,33 @@ class HabitCalendar extends Component {
             </Select>
           </div>
           <div className="col-md-3">
-            <span className="habitCalendarFilterLabel">Status: </span>
+            <span className="habitCalendarFilterLabel">Period: </span>
             <Select
-              onChange={habitsStatus => this.setState({ habitsStatus })}
+              onChange={habitsPeriod => this.setState({ habitsPeriod })}
               style={{ width: "70%" }}
               size="small"
-              defaultValue={"all"}
+              value={habitsPeriod}
             >
-              <Option value="all">All</Option>
-              <Option value="pending">Pending</Option>
-              <Option value="completed">Completed</Option>
+              <Option value="Daily">Daily</Option>
+              <Option value="Weekly">Weekly</Option>
+              <Option value="Monthly">Monthly</Option>
+            </Select>
+          </div>
+          <div className="col-md-5">
+            <span className="habitCalendarFilterLabel">Habits: </span>
+            <Select
+              mode="multiple"
+              style={{ width: "70%" }}
+              size="small"
+              placeholder="Filter habits"
+              //   defaultValue={["a10", "c12"]}
+              onChange={e => this.setState({ habitsToFilter: e })}
+            >
+              {goalPeriodHabits
+                .filter(h => h.period == habitsPeriod)
+                .map(h => {
+                  return <Option key={h.name}>{h.name}</Option>;
+                })}
             </Select>
           </div>
         </div>
@@ -128,47 +155,50 @@ class HabitCalendar extends Component {
           allHabitEvents[h.name].misses = 0;
         }
         let initialTrackIndex = getTrackIndexForDate(h.period, h.startDateTime);
-        if (h.tracking.length > 0) {
-          for (
-            let i = initialTrackIndex;
-            i <= h.tracking[h.tracking.length - 1].Index;
-            i++
-          ) {
-            let event = {
-              title: h.name,
-              id: h.id
-            };
-            let currTrackIndex = h.tracking.findIndex(t => t.Index == i);
-            if (period == "Daily")
-              event.start = event.end = getTrackDateFromIndex(h.period, i);
-            else if (period == "Weekly") {
-              let weekStartEnd = getWeekStartAndEndDate(
-                getTrackDateFromIndex(h.period, i)
-              );
-              event.start = weekStartEnd.start;
-              event.end = weekStartEnd.end;
-            } else if (period == "Monthly") {
-              event.start = moment(getTrackDateFromIndex(h.period, i))
-                .startOf("month")
-                .toDate();
-              event.end = moment(getTrackDateFromIndex(h.period, i))
-                .endOf("month")
-                .toDate();
-            }
-            if (currTrackIndex > -1) {
-              if (h.tracking[currTrackIndex].Count == 0) {
-                event.color = HABIT_EVENT_COLORS.MISS;
-              } else if (
-                h.tracking[currTrackIndex].Count <
-                h.tracking[currTrackIndex].Frequency
-              ) {
-                event.color = HABIT_EVENT_COLORS.PARTIAL;
-              } else {
-                event.color = HABIT_EVENT_COLORS.HIT;
-              }
-            } else event.color = HABIT_EVENT_COLORS.MISS;
-            allHabitEvents[h.name].events.push(event);
+        for (
+          let i = initialTrackIndex;
+          i <= getCurrentTrackIndex(h.period);
+          i++
+        ) {
+          let event = {
+            title: h.name,
+            id: h.id
+          };
+          let currTrackIndex = h.tracking.findIndex(t => t.Index == i);
+          if (period == "Daily")
+            event.start = event.end = getTrackDateFromIndex(h.period, i);
+          else if (period == "Weekly") {
+            let weekStartEnd = getWeekStartAndEndDate(
+              getTrackDateFromIndex(h.period, i)
+            );
+            event.start = weekStartEnd.start;
+            event.end = weekStartEnd.end;
+          } else if (period == "Monthly") {
+            event.start = moment(getTrackDateFromIndex(h.period, i))
+              .startOf("month")
+              .toDate();
+            event.end = moment(getTrackDateFromIndex(h.period, i))
+              .endOf("month")
+              .toDate();
           }
+          if (currTrackIndex > -1) {
+            if (h.tracking[currTrackIndex].Count == 0) {
+              event.color = HABIT_EVENT_COLORS.MISS;
+            } else if (
+              h.tracking[currTrackIndex].Count <
+              h.tracking[currTrackIndex].Frequency
+            ) {
+              event.color = HABIT_EVENT_COLORS.PARTIAL;
+              allHabitEvents[h.name].misses++;
+            } else {
+              event.color = HABIT_EVENT_COLORS.HIT;
+              allHabitEvents[h.name].hits++;
+            }
+          } else {
+            event.color = HABIT_EVENT_COLORS.MISS;
+            allHabitEvents[h.name].misses++;
+          }
+          allHabitEvents[h.name].events.push(event);
         }
       }
     });
@@ -206,11 +236,13 @@ class HabitCalendar extends Component {
             <div className="habitCelendarInfo">
               <div className="habitCelendarName">{r}</div>
               <div className="habitCalendarCounts">
-                <div>
-                  <i className="fa fa-check" style={{ marginRight: "9px" }} />5
+                <div style={{color:"rgb(96, 214, 96)"}}>
+                  <i className="fa fa-check" style={{ marginRight: "9px" }} />
+                  {rowArray[r].hits} <span style={{fontSize:"12px",fontWeight:"normal"}}>followed</span>
                 </div>
-                <div>
-                  <i className="fa fa-times" style={{ marginRight: "9px" }} />45
+                <div style={{color:"rgb(255, 100, 100)"}}>
+                  <i className="fa fa-times" style={{ marginRight: "9px" }} />
+                  {rowArray[r].misses} <span style={{fontSize:"12px",fontWeight:"normal"}}>missed</span>
                 </div>
               </div>
             </div>
