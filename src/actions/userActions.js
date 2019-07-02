@@ -1,12 +1,6 @@
-export function updateUser(userPayload) {
+export function setUser(userPayload) {
     return {
-        type: "UPDATE_USER",
+        type: "SET_USER",
         payload: userPayload
-    };
-}
-export function resetCounters() {
-    return {
-        type: "RESET_COUNTERS",
-        payload: {}
     };
 }

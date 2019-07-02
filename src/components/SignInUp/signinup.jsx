@@ -9,6 +9,8 @@ import history from "../../services/history";
 import { Card, Row, Col } from "antd";
 import PAGEKEYS from "../../constants/pageKeys";
 import { Button } from "antd";
+import { setUser } from "../../actions/userActions.js";
+import { connect } from "react-redux";
 import "./signinup.css";
 
 class SignInUp extends Component {
@@ -28,19 +30,43 @@ class SignInUp extends Component {
     this.props.firebase.authOps
       .doSignInWithEmailAndPassword(signInEmail, signInPassword)
       .then(() => {
-        history.push(ROUTES[PAGEKEYS["MAIN"]]);
+        this.props.firebase.userOps
+        .retrieveUserName(signInEmail)
+        .then((doc)=> {
+          console.log('doc.data() :', doc.data());
+          if (doc.exists) {
+            this.props.setUser({
+              Email: signInEmail,
+              Name: doc.data().UserName
+            });               
+            history.push(ROUTES[PAGEKEYS["MAIN"]]);            
+          } 
+        })
+             
       })
       .catch(error => {
         this.setState({ error });
       });
   };
-  onSignIn = event => {
-    const { signUpEmail, signUpPassword } = this.state;
+  onSignUp = event => {
+    const { signUpEmail, signUpPassword, signUpName } = this.state;
 
     this.props.firebase.authOps
       .doCreateUserWithEmailAndPassword(signUpEmail, signUpPassword)
-      .then(authUser => {
-        this.props.history.push(ROUTES[PAGEKEYS["MAIN"]]);
+      .then(({ additionalUserInfo: { isNewUser } }) => {
+        if (isNewUser)
+          this.props.firebase.userOps
+            .addUserInfo(signUpEmail, signUpName)
+            .then(()=> {
+              this.props.setUser({
+                Email: signUpEmail,
+                Name: signUpName
+              });    
+              history.push(ROUTES[PAGEKEYS["MAIN"]]);
+            })
+            .catch((error)=> {
+              this.setState({ error });
+            });
       })
       .catch(error => {
         this.setState({ error });
@@ -114,6 +140,8 @@ class SignInUp extends Component {
                 type="password"
                 placeholder="Password"
               />
+              {error && <p className="suiP">{error.message}</p>}
+
               <button className="siuButton">Sign Up</button>
             </form>
           </div>
@@ -199,4 +227,19 @@ class SignInUp extends Component {
     );
   }
 }
-export default withFirebase(SignInUp);
+/**
+ * dispatch to props mapping form updating user
+ */
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: userPayload => {
+      dispatch(setUser(userPayload));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withFirebase(SignInUp));
+

@@ -164,7 +164,7 @@ class Header extends Component {
     }
   };
   render() {
-    const { search, firebase } = this.props;
+    const { search, firebase,user } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
@@ -191,6 +191,7 @@ class Header extends Component {
                 style={{ width: 210 }}
               />
             )}
+            {user.Name}
           </Col>
 
           <Col className="headerIconContainer" span={1}>
@@ -280,7 +281,8 @@ const mapStateToProps = state => {
     filter: state.headerReducer.Filter,
     currentFilterString: state.headerReducer.CurrentFilterString,
     tasks: state.taskReducer.Tasks,
-    goals: state.goalReducer.Goals
+    goals: state.goalReducer.Goals,
+    user:state.userReducer.User
   };
 };
 

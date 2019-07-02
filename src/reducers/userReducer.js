@@ -1,20 +1,17 @@
 const userReducer = (
   state = {
-    User: { UserEmail: "", DisplayName: "" }
+    User: { Email: "", Name: "" }
   },
   action
 ) => {
   switch (action.type) {
-    case "UPDATE_USER":
-      let newState = Object.assign({},{...state});
-      newState.User=action.payload;     
-      state = newState
-      break;
-    case "RESET_COUNTERS":
-      state = {
-        Counters: [0, 0, 0, 0, 0]
-      };
-      break;
+    case "SET_USER":
+      let newState = Object.assign({}, { ...state });
+      newState.User = action.payload;
+      state = newState;
+      break;    
+    default: {
+    }
   }
   return state;
 };
