@@ -13,4 +13,7 @@ export default class AuthOperations {
 
   doPasswordUpdate = password =>
     this.fAuth.currentUser.updatePassword(password);
+
+  doCreateUserWithEmailAndPassword = (email, password) =>
+    this.fAuth.createUserWithEmailAndPassword(email, password);
 }

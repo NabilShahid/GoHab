@@ -11,21 +11,22 @@ import PAGEKEYS from "../../constants/pageKeys";
 import { Button } from "antd";
 import "./signinup.css";
 
-
 class SignInUp extends Component {
-  state={
-    email: "",
-    password: "",
+  state = {
+    signInEmail: "",
+    signInPassword: "",
+    signUpEmail: "",
+    signUpPassword: "",
+    signUpName: "",
     error: null,
     signUpForm: false
   };
 
-  onSubmit = event => {
-    const { email, password } = this.state;
+  onSignIn = event => {
+    const { signInEmail, signInPassword } = this.state;
     event.preventDefault();
-    console.log(this.props.firebase);
     this.props.firebase.authOps
-      .doSignInWithEmailAndPassword(email, password)
+      .doSignInWithEmailAndPassword(signInEmail, signInPassword)
       .then(() => {
         history.push(ROUTES[PAGEKEYS["MAIN"]]);
       })
@@ -33,58 +34,47 @@ class SignInUp extends Component {
         this.setState({ error });
       });
   };
+  onSignIn = event => {
+    const { signUpEmail, signUpPassword } = this.state;
+
+    this.props.firebase.authOps
+      .doCreateUserWithEmailAndPassword(signUpEmail, signUpPassword)
+      .then(authUser => {
+        this.props.history.push(ROUTES[PAGEKEYS["MAIN"]]);
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  addUser = () => {
-    this.props.firebase.goalOps.retrieveAllGoals("nabil110176@gmail.com");
-  };
-
   render() {
-    const { email, password, error, signUpForm } = this.state;
+    const {
+      signInEmail,
+      signInPassword,
+      signUpEmail,
+      signUpPassword,
+      signUpName,
+      error,
+      signUpForm
+    } = this.state;
 
-    const isInvalid = password === "" || email === "";
+    const isInvalid = signInPassword === "" || signInEmail === "";
 
     return (
       <React.Fragment>
-        {/* <div id="loginContainer">
-          <Row>
-            <Col id="leftCol" span={10} />
-            <Col id="rightCol" span={14}>
-              <form onSubmit={this.onSubmit}>
-                <input
-                  name="email"
-                  value={email}
-                  onChange={this.onChange}
-                  type="text"
-                  placeholder="Email Address"
-                />
-                <input
-                  name="password"
-                  value={password}
-                  onChange={this.onChange}
-                  type="password"
-                  placeholder="Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                  Sign In
-                </button>
-
-                {error && <p>{error.message}</p>}
-              </form>
-              <Button id="loginButton" onClick={this.addUser}>Sign In</Button>
-            </Col>
-          </Row>
-        </div> */}
         <div
           className={
             "siuContainer " + (signUpForm ? "siuRightPanelActive" : "")
           }
         >
           <div className="siuFormContainer signUpContainer">
-            <form className="siuForm" action="#">
+            <form className="siuForm" onSubmit={this.onSignUp}>
               <div className="siuMainHeader">Create Account</div>
               <div className="socialContainer">
                 <a href="#" className="siuSocialLink">
@@ -100,10 +90,27 @@ class SignInUp extends Component {
               <span className="siuInfoText">
                 or use your email for registration
               </span>
-              <input className="siuInput" type="text" placeholder="Name" />
-              <input className="siuInput" type="email" placeholder="Email" />
               <input
                 className="siuInput"
+                name="signUpName"
+                value={signUpName}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Name"
+              />
+              <input
+                className="siuInput"
+                name="signUpEmail"
+                value={signUpEmail}
+                onChange={this.onChange}
+                type="email"
+                placeholder="Email"
+              />
+              <input
+                className="siuInput"
+                name="signUpPassword"
+                value={signUpPassword}
+                onChange={this.onChange}
                 type="password"
                 placeholder="Password"
               />
@@ -111,7 +118,7 @@ class SignInUp extends Component {
             </form>
           </div>
           <div className="siuFormContainer signInContainer">
-            <form className="siuForm" onSubmit={this.onSubmit}>
+            <form className="siuForm" onSubmit={this.onSignIn}>
               <div className="siuMainHeader">Sign in</div>
               <div className="socialContainer">
                 <a href="#" className="social">
@@ -127,8 +134,8 @@ class SignInUp extends Component {
               <span className="siuInfoText">or use your account</span>
               <input
                 className="siuInput"
-                name="email"
-                value={email}
+                name="signInEmail"
+                value={signInEmail}
                 onChange={this.onChange}
                 type="text"
                 placeholder="Email Address"
@@ -136,17 +143,24 @@ class SignInUp extends Component {
               <input
                 className="siuInput"
                 type="password"
-                name="password"
-                value={password}
+                name="signInPassword"
+                value={signInPassword}
                 onChange={this.onChange}
                 placeholder="Password"
               />
               {error && <p className="suiP">{error.message}</p>}
-              <a className="siuSocialLink" href="#">Forgot your password?</a>
+              <a className="siuSocialLink" href="#">
+                Forgot your password?
+              </a>
               <button className="siuButton">Sign In</button>
             </form>
           </div>
-          <div className={"siuOverlayContainer " + (signUpForm ? "siuLeftDistance" : "siuRightDistance")}>
+          <div
+            className={
+              "siuOverlayContainer " +
+              (signUpForm ? "siuLeftDistance" : "siuRightDistance")
+            }
+          >
             <div className="siuOverlay">
               <div className="siuOverlayPanel siuOverlayLeft">
                 <div className="siuMainHeader">Welcome Back!</div>
@@ -186,5 +200,3 @@ class SignInUp extends Component {
   }
 }
 export default withFirebase(SignInUp);
-
- 
