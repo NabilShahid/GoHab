@@ -75,7 +75,7 @@ class HabitTracking extends Component {
     }
     this.props.updateHabit(newHabit);
     this.props.firebase.habitOps
-      .updateHabit("nabil110176@gmail.com", newHabit, newHabit.id)
+      .updateHabit(this.props.userEmail, newHabit, newHabit.id)
       .then(() => {})
       .catch(error => {
         console.error("Error writing document: ", error);
@@ -89,7 +89,8 @@ const mapStateToProps = state => {
     // habitsToTrack: state.habitReducer.Habits.filter(
     //   h => state.habitReducer.HabitIdsToTrack.indexOf(h.id) > -1
     // )
-    habitsToTrack: Object.assign([], state.habitReducer.Habits)
+    habitsToTrack: Object.assign([], state.habitReducer.Habits),
+    userEmail:state.userReducer.User.Email
   };
 };
 

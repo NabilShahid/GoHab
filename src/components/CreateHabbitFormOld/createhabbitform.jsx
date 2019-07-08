@@ -97,7 +97,7 @@ class CreateHabitForm extends React.Component {
     if (this.props.mode == "add")
       //call to firebase habitOps addNewHabit method
       this.props.firebase.habitOps
-        .addNewHabit("nabil110176@gmail.com", formValuesToSave)
+        .addNewHabit(this.props.userEmail, formValuesToSave)
         .then(() => {
           this.setState({ loading: false });
           this.props.setFormVisibility("Habit", false);
@@ -107,7 +107,7 @@ class CreateHabitForm extends React.Component {
         });
     else
       this.props.firebase.habitOps
-        .updateHabit("nabil110176@gmail.com", formValuesToSave, this.props.id)
+        .updateHabit(this.props.userEmail, formValuesToSave, this.props.id)
         .then(() => {
           this.setState({ loading: false });
           this.props.closeAndUpdate({ ...formValuesToSave, id: this.props.id });
@@ -580,7 +580,8 @@ class CreateHabitForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    goals: state.goalReducer.Goals
+    goals: state.goalReducer.Goals,
+    userEmail: state.userReducer.User.Email
   };
 };
 

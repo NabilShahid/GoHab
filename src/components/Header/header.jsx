@@ -54,7 +54,7 @@ class Header extends Component {
   }
   getNotifications = () => {
     this.props.api
-      .getNotifications("nabil110176@gmail.com", "all")
+      .getNotifications(this.props.user.Email, "all")
       .then(result => {
         console.log(result);
         this.setState({
@@ -108,15 +108,15 @@ class Header extends Component {
   };
   componentWillMount() {
     this.getNotifications();
-    this.listenToChanges();
+    //this.listenToChanges();
   }
   listenToChanges() {
     this.props.firebase.goalOps.listenToGoalChanges(
-      "nabil110176@gmail.com",
+      this.props.user.Email,
       this.getNotifications
     );
     this.props.firebase.taskOps.listenToTaskChanges(
-      "nabil110176@gmail.com",
+      this.props.user.Email,
       this.getNotifications
     );
   }
@@ -164,7 +164,7 @@ class Header extends Component {
     }
   };
   render() {
-    const { search, firebase,user } = this.props;
+    const { search, firebase, user } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
@@ -282,7 +282,7 @@ const mapStateToProps = state => {
     currentFilterString: state.headerReducer.CurrentFilterString,
     tasks: state.taskReducer.Tasks,
     goals: state.goalReducer.Goals,
-    user:state.userReducer.User
+    user: state.userReducer.User
   };
 };
 

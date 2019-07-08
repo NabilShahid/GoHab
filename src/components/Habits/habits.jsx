@@ -294,7 +294,7 @@ class Habits extends Component {
     this.updateLocalHabit(currHabit);
 
     this.props.firebase.habitOps
-      .updateHabit("nabil110176@gmail.com", currHabit, id)
+      .updateHabit(this.props.userEmail, currHabit, id)
       .then(() => {})
       .catch(error => {
         console.error("Error writing document: ", error);
@@ -307,7 +307,8 @@ const mapStateToProps = state => {
     statusFilter: state.habitReducer.CurrentStatusFilter,
     orderBy: state.habitReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
-    viewTypeFilter: state.habitReducer.CurrentViewType
+    viewTypeFilter: state.habitReducer.CurrentViewType,
+    userEmail:state.userReducer.User.Email
   };
 };
 

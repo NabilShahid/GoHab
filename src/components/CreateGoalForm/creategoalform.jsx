@@ -71,7 +71,7 @@ class CreateGoalForm extends React.Component {
     if (this.props.mode == "add")
       //call to firebase goalOps addNewGoal method
       this.props.firebase.goalOps
-        .addNewGoal("nabil110176@gmail.com", formValuesToSave)
+        .addNewGoal(this.props.userEmail, formValuesToSave)
         .then(g => {
           this.setState({ loading: false });
           this.props.addGoal({ ...formValuesToSave, id: g.id });
@@ -83,7 +83,7 @@ class CreateGoalForm extends React.Component {
     else
       this.props.firebase.goalOps
         .updateGoal(
-          "nabil110176@gmail.com",
+          this.props.userEmail,
           formValuesToSave,
           this.props.goalOptions.id
         )
@@ -461,6 +461,17 @@ class CreateGoalForm extends React.Component {
 }
 
 /**
+ * state to props mapping
+ */
+const mapStateToProps = state => {
+  return {
+
+    userEmail: state.userReducer.User.Email
+  };
+};
+
+
+/**
  * dispatch to props mapping form updating user
  */
 const mapDispatchToProps = dispatch => {
@@ -472,6 +483,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withFirebase(CreateGoalForm));

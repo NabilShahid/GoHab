@@ -162,7 +162,7 @@ class MainBase extends Component {
   getGoalsAndInsertAndSort() {
     this.props.toggleItemLoading("goalsLoading",true);
     this.props.firebase.goalOps
-      .retrieveAllGoals("nabil110176@gmail.com")
+      .retrieveAllGoals(this.props.userEmail)
       .then(querySnapshot => {
         this.props.toggleItemLoading("goalsLoading",false);
         const allGoals = querySnapshot.docs.map(function(doc) {
@@ -179,7 +179,7 @@ class MainBase extends Component {
   getTasksAndInsertAndSort() {
     this.props.toggleItemLoading("tasksLoading",true);
     this.props.firebase.taskOps
-      .retrieveAllTasks("nabil110176@gmail.com")
+      .retrieveAllTasks(this.props.userEmail)
       .then(querySnapshot => {
         this.props.toggleItemLoading("tasksLoading",false);
         const allTasks = querySnapshot.docs.map(function(doc) {
@@ -202,7 +202,7 @@ class MainBase extends Component {
   getHabitsAndInsertAndSort() {
     this.props.toggleItemLoading("habitsLoading",true);
     this.props.firebase.habitOps
-      .retrieveAllHabits("nabil110176@gmail.com")
+      .retrieveAllHabits(this.props.userEmail)
       .then(querySnapshot => {
         this.props.toggleItemLoading("habitsLoading",false);
         const allHabits = querySnapshot.docs.map(function(doc) {
@@ -232,6 +232,7 @@ const mapStateToProps = state => {
     goalsLoading: state.loadingReducer.goalsLoading,
     habitsLoading: state.loadingReducer.habitsLoading,
     tasksLoading:state.loadingReducer.tasksLoading,
+    userEmail:state.userReducer.User.Email
   };
 };
 

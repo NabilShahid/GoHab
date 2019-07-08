@@ -97,7 +97,7 @@ class CreateHabitForm extends React.Component {
         .toISOString();
       formValuesToSave.tracking = [];
       this.props.firebase.habitOps
-        .addNewHabit("nabil110176@gmail.com", formValuesToSave)
+        .addNewHabit(this.props.userEmail, formValuesToSave)
         .then(h => {
           this.setState({ loading: false });
           this.props.addHabit({ ...formValuesToSave, id: h.id });
@@ -111,7 +111,7 @@ class CreateHabitForm extends React.Component {
     } else {
       this.props.firebase.habitOps
         .updateHabit(
-          "nabil110176@gmail.com",
+          this.props.userEmail,
           formValuesToSave,
           this.props.habitOptions.id
         )
@@ -567,7 +567,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     goals: state.goalReducer.Goals,
-    habits: state.habitReducer.Habits
+    habits: state.habitReducer.Habits,
+    userEmail:state.userReducer.User.Email
   };
 };
 

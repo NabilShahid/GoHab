@@ -297,7 +297,7 @@ class Goals extends Component {
     }
     this.updateLocalGoal(currGoal);
     this.props.firebase.goalOps
-      .updateGoal("nabil110176@gmail.com", currGoal, id)
+      .updateGoal(this.props.userEmail, currGoal, id)
       .then(() => {})
       .catch(error => {
         console.error("Error writing document: ", error);
@@ -311,7 +311,8 @@ const mapStateToProps = state => {
     statusFilter: state.goalReducer.CurrentStatusFilter,
     orderBy: state.goalReducer.CurrentOrderBy,
     tasks: state.taskReducer.Tasks,
-    habits: state.habitReducer.Habits
+    habits: state.habitReducer.Habits,
+    userEmail:state.userReducer.User.Email
   };
 };
 

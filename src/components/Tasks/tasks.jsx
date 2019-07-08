@@ -292,7 +292,7 @@ class Tasks extends Component {
     this.updateLocalTask(currTask);
 
     this.props.firebase.taskOps
-      .updateTask("nabil110176@gmail.com", currTask, id)
+      .updateTask(this.props.userEmail, currTask, id)
       .then(() => {})
       .catch(error => {
         console.error("Error writing document: ", error);
@@ -305,7 +305,8 @@ const mapStateToProps = state => {
     statusFilter: state.taskReducer.CurrentStatusFilter,
     orderBy: state.taskReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
-    viewTypeFilter: state.taskReducer.CurrentViewType
+    viewTypeFilter: state.taskReducer.CurrentViewType,
+    userEmail:state.userReducer.User.Email
   };
 };
 

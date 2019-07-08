@@ -74,7 +74,7 @@ class CreateHabbitForm extends React.Component {
         .toDate()
         .toISOString();
       this.props.firebase.taskOps
-        .addNewTask("nabil110176@gmail.com", formValuesToSave)
+        .addNewTask(this.props.userEmail, formValuesToSave)
         .then(t => {
           this.setState({ loading: false });
           this.props.addTask({ ...formValuesToSave, id: t.id });
@@ -88,7 +88,7 @@ class CreateHabbitForm extends React.Component {
     } else {
       this.props.firebase.taskOps
         .updateTask(
-          "nabil110176@gmail.com",
+          this.props.userEmail,
           formValuesToSave,
           this.props.taskOptions.id
         )
@@ -488,7 +488,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     goals: state.goalReducer.Goals,
-    tasks: state.taskReducer.Tasks
+    tasks: state.taskReducer.Tasks,
+    userEmail:state.userReducer.User.Email
   };
 };
 
