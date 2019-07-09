@@ -108,7 +108,7 @@ class Header extends Component {
   };
   componentWillMount() {
     this.getNotifications();
-    //this.listenToChanges();
+    this.listenToChanges();
   }
   listenToChanges() {
     this.props.firebase.goalOps.listenToGoalChanges(

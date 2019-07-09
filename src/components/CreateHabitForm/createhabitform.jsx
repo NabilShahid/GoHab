@@ -199,9 +199,9 @@ class CreateHabitForm extends React.Component {
     if (this.props.mode == "view") {
       this.setInitFormValues();
       this.state.disabledForm = true;
-    } else if (this.props.mode == "add" && this.props.parentGoal) {
+    } else if (this.props.mode == "add" && this.props.habitOptions.parentGoal) {
       let formValues = { ...this.state.formValues };
-      formValues.parentGoal = this.props.parentGoal;
+      formValues.parentGoal = this.props.habitOptions.parentGoal;
       this.setState({ formValues });
     }
   }

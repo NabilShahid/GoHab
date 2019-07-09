@@ -186,9 +186,9 @@ class CreateHabbitForm extends React.Component {
     if (this.props.mode == "view") {
       this.setInitFormValues();
       this.setState({ disabledForm: true });
-    } else if (this.props.mode == "add" && this.props.parentGoal) {
+    } else if (this.props.mode == "add" && this.props.taskOptions.parentGoal) {
       let formValues = { ...this.state.formValues };
-      formValues.parentGoal = this.props.parentGoal;
+      formValues.parentGoal = this.props.taskOptions.parentGoal;
       formValues.dueDate = moment().toDate();
       this.setState({ formValues });
     }
@@ -489,7 +489,7 @@ const mapStateToProps = state => {
   return {
     goals: state.goalReducer.Goals,
     tasks: state.taskReducer.Tasks,
-    userEmail:state.userReducer.User.Email
+    userEmail: state.userReducer.User.Email
   };
 };
 

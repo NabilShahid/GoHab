@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ROUTES from "../../constants/routes";
 import { Link } from "react-router-dom";
 import Main from "../Main/main";
+import Loading from "../Loading/loading";
 import SignUpPage from "../SignUp/signup";
 import SignInUp from "../SignInUp/signinup";
 import SignOutButton from "../SignOut/signoutbutton";
@@ -19,12 +20,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authUser: null,
-      userEmail: ""
+      userLoaded: false      
     };
   }
 
   render() {
+    const {userLoaded}=this.state;
     return (
       <Router history={history}>
         <div className="inheritHeight">
@@ -35,7 +36,20 @@ class App extends Component {
               path="/"
               render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />}
             />
-            <Route path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} />
+            <Route
+                    
+                    path={ROUTES[PAGEKEYS["MAIN"]]}
+                    render={() => {
+                      return !userLoaded ? (
+                        <div className="mainContainerLoadingDiv">
+                         <Loading/>
+                        </div>
+                      ) : (
+                        <Main/>
+                      );
+                    }}
+                  />
+            {/* <Route path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} /> */}
             <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInUp} />
           </Switch>
         </div>
@@ -52,7 +66,7 @@ class App extends Component {
         //go to signin page if no session
         if (authUser == null) history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
         else {
-          let userEmail = authUser.email;
+          let userEmail = authUser.email;          
           this.props.firebase.userOps
             .retrieveUserName(userEmail)
             .then((doc)=> {
@@ -60,7 +74,8 @@ class App extends Component {
                 this.props.setUser({
                   Email: userEmail,
                   Name: doc.data().UserName
-                });               
+                });        
+                if(userEmail)this.setState({userLoaded:true});       
               } else {
                 history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
               }
