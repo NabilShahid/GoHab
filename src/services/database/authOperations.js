@@ -1,7 +1,9 @@
 export default class AuthOperations {
   fAuth = null;
-  constructor(fAuth) {
+  constructor(fAuth, googleProvider,facebookProvider) {
     this.fAuth = fAuth;
+    this.googleProvider=googleProvider;
+    this.facebookProvider=facebookProvider;
   }
 
   doSignInWithEmailAndPassword = (email, password) =>
@@ -16,4 +18,11 @@ export default class AuthOperations {
 
   doCreateUserWithEmailAndPassword = (email, password) =>
     this.fAuth.createUserWithEmailAndPassword(email, password);
+
+  doSignInWithGoogle=()=>{
+    return this.fAuth.signInWithPopup(this.googleProvider);
+  }
+  doSignInWithFacebook=()=>{
+    return this.fAuth.signInWithPopup(this.facebookProvider);
+  }
 }

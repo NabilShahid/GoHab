@@ -4,6 +4,7 @@ import { compose } from "recompose";
 import { SignUpLink } from "../SignUp/signup";
 import { withFirebase } from "../../services/firebase";
 import ROUTES from "../../constants/routes";
+import {AUTH_TYPES} from "../../constants/commonConsts";
 import { PasswordForgetLink } from "../PasswordForget/passwordforget";
 import history from "../../services/history";
 import { Card, Row, Col } from "antd";
@@ -56,7 +57,7 @@ class SignInUp extends Component {
       .then(({ additionalUserInfo: { isNewUser } }) => {
         if (isNewUser)
           this.props.firebase.userOps
-            .addUserInfo(signUpEmail, signUpName)
+            .addUserInfo(signUpEmail, signUpName,AUTH_TYPES["Email"])
             .then(()=> {
               this.props.setUser({
                 Email: signUpEmail,
@@ -74,6 +75,45 @@ class SignInUp extends Component {
 
     event.preventDefault();
   };
+
+  signInWithGoogle=()=>{
+    this.props.firebase.authOps.doSignInWithGoogle().then((result)=>{
+      this.props.firebase.userOps
+      .addUserInfo(result.user.email, result.user.displayName,AUTH_TYPES["Google"])
+      .then(()=> {
+        this.props.setUser({
+          Email: result.user.email,
+          Name: result.user.displayName
+        });    
+        history.push(ROUTES[PAGEKEYS["MAIN"]]);
+      })
+      .catch((error)=> {
+        this.setState({ error });
+      });  
+      history.push(ROUTES[PAGEKEYS["MAIN"]]);
+    }).catch(error=>{
+      this.setState({error});
+    })
+  }
+  signInWithFacebook=()=>{
+    this.props.firebase.authOps.doSignInWithFacebook().then((result)=>{
+      this.props.firebase.userOps
+      .addUserInfo(result.user.email, result.user.displayName,AUTH_TYPES["Google"])
+      .then(()=> {
+        this.props.setUser({
+          Email: result.user.email,
+          Name: result.user.displayName
+        });    
+        history.push(ROUTES[PAGEKEYS["MAIN"]]);
+      })
+      .catch((error)=> {
+        this.setState({ error });
+      });  
+      history.push(ROUTES[PAGEKEYS["MAIN"]]);
+    }).catch(error=>{
+      this.setState({error});
+    })
+  }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -152,9 +192,11 @@ class SignInUp extends Component {
                 <a href="#" className="social">
                   <i className="fab fa-facebook-f" />
                 </a>
-                <a href="#" className="social">
+                {/* <a href="#" className="social">
                   <i className="fab fa-google-plus-g" />
-                </a>
+                </a> */}
+                <button onClick={this.signInWithGoogle}>Google SignIn</button>
+                <button onClick={this.signInWithFacebook}>Facebook SignIn</button>
                 <a href="#" className="social">
                   <i className="fab fa-linkedin-in" />
                 </a>

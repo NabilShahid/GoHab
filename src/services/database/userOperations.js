@@ -3,9 +3,10 @@ export default class UserOperations{
     constructor(fDb){
         this.fDatabase=fDb;
     }
-    addUserInfo(email,name){
+    addUserInfo(email,name, authType){
        return this.fDatabase.collection("UsersInfo").doc(email).set({
-            UserName:name
+            UserName:name,
+            AuthType:authType
         });
         
     }
