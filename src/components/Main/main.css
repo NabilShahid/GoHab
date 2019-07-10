@@ -2,9 +2,9 @@
 
 #mainContainer{
     /* background-image: url("../../assets/images/bg2.jpg"); */
-    background-position: center;
-    background-size: cover;
-    background: linear-gradient(60deg, #6b6b6b, #383434);
+    /* background-position: center; */
+    /* background-size: cover; */
+    /* background: linear-gradient(60deg, #6b6b6b, #383434); */
      flex: 0 0 82%;
     overflow: hidden ;
     display: flex;
