@@ -64,7 +64,11 @@ class App extends Component {
     this.firebaseAuthListener = this.props.firebase.authOps.fAuth.onAuthStateChanged(
       authUser => {
         //go to signin page if no session
-        if (authUser == null) history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
+        if (authUser == null) {
+          history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
+          this.setState({userLoaded:false})
+
+        }
         else {
           let userEmail = authUser.email;          
           this.props.firebase.userOps

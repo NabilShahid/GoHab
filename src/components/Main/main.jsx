@@ -154,7 +154,6 @@ class MainBase extends Component {
    * set initial route to home to show home tab by default
    */
   componentDidMount() {
-    console.log('this.props.userEmail :', this.props.userEmail);
     this.getGoalsAndInsertAndSort();
     this.getTasksAndInsertAndSort();
     this.getHabitsAndInsertAndSort();

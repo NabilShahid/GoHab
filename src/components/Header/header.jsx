@@ -56,7 +56,6 @@ class Header extends Component {
     this.props.api
       .getNotifications(this.props.user.Email, "all")
       .then(result => {
-        console.log(result);
         this.setState({
           notificationCount: result.length,
           notifications: result
@@ -136,7 +135,6 @@ class Header extends Component {
           />
         );
       } else if (notifications[selectedNotificationIndex].Info[1] == "Tasks") {
-        console.log("Tasks");
         return (
           <Tasks
             subMode={{
@@ -164,7 +162,7 @@ class Header extends Component {
     }
   };
   render() {
-    const { search, firebase, user } = this.props;
+    const { search, firebase, user, flushStore } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
@@ -217,6 +215,7 @@ class Header extends Component {
                     onClick={() => {
                       firebase.authOps.doSignOut().then(() => {
                         history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
+                        flushStore();
                       });
                     }}
                     className="submenuOption"
@@ -302,6 +301,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateFilterString: filterPayload => {
       dispatch(updateFilterString(filterPayload));
+    },
+    flushStore:flush=>{
+      dispatch({type:"FLUSH_STORE"})
     }
   };
 };

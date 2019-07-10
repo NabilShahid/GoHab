@@ -62,7 +62,7 @@ export function getCurrentTrackIndex(period) {
 }
 
 export function getTrackIndexForDate(period, forDate) {
-  forDate = moment(forDate.split("T")[0]);
+  forDate = moment(forDate);
   if (period == "Daily")
     return forDate.diff(moment(START_DATE_FOR_INDEX_DAY_WEEK), "day");
   if (period == "Weekly")
