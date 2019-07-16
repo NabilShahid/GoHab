@@ -78,3 +78,10 @@ export function getNotificationText(notificationInfo) {
       "to track";
   return notificationString.toLowerCase();
 }
+
+export function getNotificationDialogText(nt) {
+  if (nt[2] == "overdue") return "Overdue " + nt[1];
+  else if (nt[2] == "week") return nt[1] + " due this week";
+  else if (nt[2] == "today") return nt[1] + " due today";
+  return "";
+}

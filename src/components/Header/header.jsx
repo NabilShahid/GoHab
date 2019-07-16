@@ -8,6 +8,7 @@ import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
 import { updateFilterString } from "../../actions/headerActions";
+import { getNotificationDialogText } from "../../services/methods/ghtCommonMethods";
 import {
   alphaSort,
   getDueItems
@@ -28,7 +29,8 @@ class Header extends Component {
     notificationDialogVisible: false,
     notificationCount: 0,
     notifications: [],
-    selectedNotificationIndex: 0
+    selectedNotificationIndex: 0,
+    notificationDialogTitle:""
   };
 
   searchValues(value) {
@@ -78,7 +80,7 @@ class Header extends Component {
             key={i}
             onClick={() => {
               const selectedNotificationIndex = i;
-              this.openNotificationsDialog(n.Info[1]);
+              this.openNotificationsDialog(n.Info);
               this.setState({ selectedNotificationIndex });
             }}
           >
@@ -89,11 +91,12 @@ class Header extends Component {
     return <div>No notifications...</div>;
   };
   openNotificationsDialog = collection => {
-    if (collection != "Habits") {
+    if (collection[1] != "Habits") {
       let { notificationDialogVisible, notificationsDialogInDom } = this.state;
       notificationDialogVisible = true;
       notificationsDialogInDom = true;
-      this.setState({ notificationDialogVisible, notificationsDialogInDom });
+      let notificationDialogTitle=getNotificationDialogText(collection)
+      this.setState({ notificationDialogVisible, notificationsDialogInDom,notificationDialogTitle });
     } else {
       history.push(ROUTES[PAGEKEYS["HABIT_TRACKING"]]);
     }
@@ -167,7 +170,8 @@ class Header extends Component {
       notificationsDialogInDom,
       notificationDialogVisible,
       notificationsVisible,
-      notificationCount
+      notificationCount,
+      notificationDialogTitle
     } = this.state;
     return (
       <div id="headerDiv">
@@ -252,7 +256,7 @@ class Header extends Component {
           <Modal
             visible={notificationDialogVisible}
             width="58%"
-            title={"currentGoalOptions.name"}
+            title={notificationDialogTitle}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
