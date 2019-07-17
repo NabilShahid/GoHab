@@ -7,7 +7,7 @@ import Tasks from "../Tasks/tasks";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
-import { updateFilterString } from "../../actions/headerActions";
+import { updateHeaderFilterString,updateHeaderOptions } from "../../actions/headerActions";
 import { getNotificationDialogText } from "../../services/methods/ghtCommonMethods";
 import {
   alphaSort,
@@ -30,24 +30,24 @@ class Header extends Component {
     notificationCount: 0,
     notifications: [],
     selectedNotificationIndex: 0,
-    notificationDialogTitle:""
+    notificationDialogTitle: ""
   };
 
   searchValues(value) {
     switch (this.props.title) {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
         this.props.filterGoals(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
         this.props.filterTasks(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       case HEADEROPTIONS[PAGEKEYS["HABITS"]].Title: {
         this.props.filterHabits(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       default: {
@@ -80,7 +80,7 @@ class Header extends Component {
             key={i}
             onClick={() => {
               const selectedNotificationIndex = i;
-              this.openNotificationsDialog(n.Info);
+              this.openNotificationItems(n.Info);
               this.setState({ selectedNotificationIndex });
             }}
           >
@@ -90,14 +90,22 @@ class Header extends Component {
       });
     return <div>No notifications...</div>;
   };
-  openNotificationsDialog = collection => {
+  openNotificationItems = collection => {
     if (collection[1] != "Habits") {
       let { notificationDialogVisible, notificationsDialogInDom } = this.state;
       notificationDialogVisible = true;
       notificationsDialogInDom = true;
-      let notificationDialogTitle=getNotificationDialogText(collection)
-      this.setState({ notificationDialogVisible, notificationsDialogInDom,notificationDialogTitle });
+      let notificationDialogTitle = getNotificationDialogText(collection);
+      this.setState({
+        notificationDialogVisible,
+        notificationsDialogInDom,
+        notificationDialogTitle
+      });
     } else {
+      this.props.updateHeaderOptions({
+        ...HEADEROPTIONS["HABIT_TRACKING"],
+        SelectedMenuOption: ["HABIT_TRACKING"]
+      });      
       history.push(ROUTES[PAGEKEYS["HABIT_TRACKING"]]);
     }
     this.setState({ notificationsVisible: false });
@@ -303,11 +311,14 @@ const mapDispatchToProps = dispatch => {
     filterHabits: filterPayload => {
       dispatch(filterHabits(filterPayload));
     },
-    updateFilterString: filterPayload => {
-      dispatch(updateFilterString(filterPayload));
+    updateHeaderFilterString: filterPayload => {
+      dispatch(updateHeaderFilterString(filterPayload));
     },
-    flushStore:flush=>{
-      dispatch({type:"FLUSH_STORE"})
+    updateHeaderOptions: headerOptionsPayload => {
+      dispatch(updateHeaderOptions(headerOptionsPayload));
+    },
+    flushStore: flush => {
+      dispatch({ type: "FLUSH_STORE" });
     }
   };
 };

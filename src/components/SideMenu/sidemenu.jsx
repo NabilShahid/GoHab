@@ -3,7 +3,10 @@ import { Menu } from "antd";
 import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { updateHeader, updateFilterString } from "../../actions/headerActions";
+import {
+  updateHeaderOptions,
+  updateHeaderFilterString
+} from "../../actions/headerActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
 import HEADEROPTIONS from "../../constants/headerOptions";
@@ -14,21 +17,26 @@ class SideMenu extends Component {
   selectedOption;
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
-      this.props.updateHeader(HEADEROPTIONS[PAGEKEYS["HOME"]]);
+      this.props.updateHeaderOptions(HEADEROPTIONS[PAGEKEYS["HOME"]]);
       this.selectedOption = [PAGEKEYS["HOME"]];
     } else {
       const currPage = Object.keys(ROUTES).filter(key => {
         return ROUTES[key] == this.props.location.pathname;
       })[0];
-      this.props.updateHeader(HEADEROPTIONS[currPage]);
+      this.props.updateHeaderOptions(HEADEROPTIONS[currPage]);
       this.selectedOption = [currPage];
     }
   }
 
   render() {
+    const selectedOption =
+      this.props.selectedOption.length > 0
+        ? this.props.selectedOption
+        : this.selectedOption;
     return (
       <Menu
-        defaultSelectedKeys={this.selectedOption}
+        selectedKeys={selectedOption}
+        // selectedKeys={}
         mode="inline"
         theme="light"
         onSelect={this.moveToPath}
@@ -73,7 +81,7 @@ class SideMenu extends Component {
           <i className="fa fa-home sideIcon" />
           Tasks Calendar
         </Menu.Item>
-        <Menu.Item  key={PAGEKEYS["HABIT_CALENDAR"]}>
+        <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
           <i className="fa fa-home sideIcon" />
           Habit Calendar
         </Menu.Item>
@@ -86,25 +94,27 @@ class SideMenu extends Component {
    */
   moveToPath = ({ key }) => {
     history.push(ROUTES[key]);
-    this.props.updateHeader(HEADEROPTIONS[key]);
-    // key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
+    this.props.updateHeaderOptions({
+      ...HEADEROPTIONS[key],
+      SelectedMenuOption: [key]
+    });
     this.updateHeaderFilterString(key);
   };
 
   updateHeaderFilterString(key) {
     switch (key) {
       case PAGEKEYS["GOALS"]: {
-        this.props.updateFilterString(this.props.goalFilterString);
+        this.props.updateHeaderFilterString(this.props.goalFilterString);
         this.filterHeaderIfValue(this.props.goalFilterString);
         break;
       }
       case PAGEKEYS["TASKS"]: {
-        this.props.updateFilterString(this.props.taskFilterString);
+        this.props.updateHeaderFilterString(this.props.taskFilterString);
         this.filterHeaderIfValue(this.props.taskFilterString);
         break;
       }
       case PAGEKEYS["HABITS"]: {
-        this.props.updateFilterString(this.props.habitFilterString);
+        this.props.updateHeaderFilterString(this.props.habitFilterString);
         this.filterHeaderIfValue(this.props.habitFilterString);
         break;
       }
@@ -125,10 +135,12 @@ class SideMenu extends Component {
  * state to props mapping
  */
 const mapStateToProps = state => {
+  console.log(state);
   return {
     goalFilterString: state.goalReducer.CurrentFilterString,
     taskFilterString: state.taskReducer.CurrentFilterString,
-    habitFilterString:state.habitReducer.CurrentFilterString
+    habitFilterString: state.habitReducer.CurrentFilterString,
+    selectedOption: state.headerReducer.SelectedMenuOption
   };
 };
 
@@ -137,11 +149,11 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    updateHeader: headerPayload => {
-      dispatch(updateHeader(headerPayload));
+    updateHeaderOptions: headerOptionsPayload => {
+      dispatch(updateHeaderOptions(headerOptionsPayload));
     },
-    updateFilterString: filterPayload => {
-      dispatch(updateFilterString(filterPayload));
+    updateHeaderFilterString: filterPayload => {
+      dispatch(updateHeaderFilterString(filterPayload));
     }
   };
 };
