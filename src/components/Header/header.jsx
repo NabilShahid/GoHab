@@ -201,7 +201,6 @@ class Header extends Component {
                 style={{ width: 210 }}
               />
             )}
-            {user.Name}
           </Col>
 
           <Col className="headerIconContainer" span={1}>

@@ -3,8 +3,9 @@ import { Tooltip } from "antd";
 import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
 import HabitHitMissChart from "../../charts/habitHitMissChart";
+import {getTrackPeriodString} from "../../services/methods/habitMethods";
 import "./habitcard.css";
-const HabitCard = ({ name, description, completed, markHabit, id, category,period, frequecy  }) => {
+const HabitCard = ({ name, description, completed, markHabit, id, category,period, frequency  }) => {
   return (
     <div
       className="habitCard"
@@ -49,10 +50,10 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
             <div>{category}</div>
           </div>
           <div className="habitCardInfo">
-            Tracking
-            <div>5 times a day</div>
+            {getTrackPeriodString(period,frequency)}
           </div>
-          <div className="row habitCardInfo">
+          {/* Habit Hit Miss Markup. Deferred */}
+          {/* <div className="row habitCardInfo">
           
             <div className="col-md-6">
               <div style={{color:(completed?"#97e097":"#60d660")}}>
@@ -70,7 +71,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
