@@ -49,7 +49,6 @@ class App extends Component {
                       );
                     }}
                   />
-            {/* <Route path={ROUTES[PAGEKEYS["MAIN"]]} component={Main} /> */}
             <Route path={ROUTES[PAGEKEYS["SIGNIN"]]} component={SignInUp} />
           </Switch>
         </div>
