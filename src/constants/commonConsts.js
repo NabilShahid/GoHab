@@ -18,6 +18,34 @@ export const MATERIAL_COLORS = [
   "#00E676"
 ];
 
+export const HABIT_CATEGORIES=[
+  {
+    Name:"Health",
+    Icon:"fa fa-heartbeat"
+  },
+  {
+    Name:"Personal Development",
+    Icon:"fa fa-user-check"
+  },
+  {
+    Name:"Social",
+    Icon:"fa fa-user-friends"
+  },
+  {
+    Name:"Relationship",
+    Icon:"fa fa-heart"
+  },
+  {
+    Name:"Routine Work",
+    Icon:"fa fa-chart-bar"
+  },
+  {
+    Name:"Other",
+    Icon:"fa fa-circle"
+  },
+  
+]
+
 export const HABIT_EVENT_COLORS = {
   HIT: "#66bb6a",
   MISS: "#fb584c",

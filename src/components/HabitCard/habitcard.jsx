@@ -4,6 +4,7 @@ import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
 import HabitHitMissChart from "../../charts/habitHitMissChart";
 import {getTrackPeriodString} from "../../services/methods/habitMethods";
+import {HABIT_CATEGORIES} from "../../constants/commonConsts";
 import "./habitcard.css";
 const HabitCard = ({ name, description, completed, markHabit, id, category,period, frequency  }) => {
   return (
@@ -47,7 +48,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
           <div className="habitSubtitle">{description}</div>
           <div className="habitCardInfo">
             Category
-            <div>{category}</div>
+            <div><i className={"habitCardCategoryIcon "+HABIT_CATEGORIES.find(hc=>hc.Name==category).Icon}></i>{category}</div>
           </div>
           <div className="habitCardInfo">
             {getTrackPeriodString(period,frequency)}

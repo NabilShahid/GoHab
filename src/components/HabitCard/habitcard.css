@@ -57,3 +57,8 @@
     /* color: #3fcdde; */
     font-weight: 500;
 }
+.habitCardCategoryIcon{
+    margin-right: 4px;
+    font-size: 13px;
+    margin-top: 5px;
+}
