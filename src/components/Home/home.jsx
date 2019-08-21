@@ -14,6 +14,7 @@ import { alphaSort } from "../../services/methods/ghtCommonMethods";
 import Tasks from "../Tasks/tasks";
 import Habits from "../Habits/habits";
 import Goals from "../Goals/goals";
+import HomeChartsWrapper from "../HomeChartsWrapper/homechartswrapper";
 import "./home.css";
 class Home extends Component {
   state = {
@@ -163,17 +164,8 @@ class Home extends Component {
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-        </div>
+        <HomeChartsWrapper/>
+       
 
         <Modal
           visible={anyPopupOpen}
