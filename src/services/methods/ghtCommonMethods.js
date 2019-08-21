@@ -87,7 +87,7 @@ export function getNotificationDialogText(nt) {
 }
 
 export function getOverduePendingGoalsOrTasks(items) {
-  items.reduce(
+  return items.reduce(
     (p, c, i) => {
       //completed and pending logic
       if (c.progress) {
