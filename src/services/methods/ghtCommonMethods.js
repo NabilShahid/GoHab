@@ -85,3 +85,24 @@ export function getNotificationDialogText(nt) {
   else if (nt[2] == "today") return nt[1] + " due today";
   return "";
 }
+
+export function getOverduePendingGoalsOrTasks(items) {
+  items.reduce(
+    (p, c, i) => {
+      //completed and pending logic
+      if (c.progress) {
+        if (c.progress == 100) p.Completed++;
+        else p.Pending++;
+      }
+      if (c.completed) p.Completed++;
+      else p.Pending++;
+
+      //overdue logic
+      if (c.dueDate) {
+        if (new Date(c.dueDate) < new Date()) p.Overdue++;
+      }
+      return p;
+    },
+    { Pending: 0, Completed: 0, Overdue: 0 }
+  );
+}
