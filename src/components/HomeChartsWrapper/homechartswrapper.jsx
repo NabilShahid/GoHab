@@ -1,35 +1,35 @@
 import React, { Component } from "react";
 import OverduePendingChart from "../../charts/overduePendingChart";
+import HabitHitMissBarChart from "../../charts/habitHitMissBarChart";
 import {
   getOverdueAndPendingGoalsForChart,
   getOverdueAndPendingTasksForChart
 } from "../../services/chartService.js";
 import { connect } from "react-redux";
-class HomeChartsWrapper extends Component {
-  state = {};
-  getOverduePendingCount() {}
-  render() {
-    return (
-      <div className="row">
-        <div className="col-md-4 homeChartDiv">
-          <OverduePendingChart data={this.props.goalsData} />
-        </div>
-        <div className="col-md-4 homeChartDiv">
-          {/* <OverduePendingChart/> */}
-        </div>
-        <div className="col-md-4 homeChartDiv">
-          <OverduePendingChart data={this.props.tasksData}/>
-        </div>
+const HomeChartsWrapper = ({ goalsData, tasksData }) => {
+  return (
+    <div className="row">
+      <div className="col-md-4 homeChartDiv">
+        <OverduePendingChart data={goalsData} />
       </div>
-    );
-  }
-}
+      <div className="col-md-4 homeChartDiv">
+        <HabitHitMissBarChart/>
+      </div>
+      <div className="col-md-4 homeChartDiv">
+        <OverduePendingChart data={tasksData} />
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   return {
     goalsData: getOverdueAndPendingGoalsForChart(state.goalReducer.Goals),
-    tasksData: getOverdueAndPendingTasksForChart(state.taskReducer.Tasks),
+    tasksData: getOverdueAndPendingTasksForChart(state.taskReducer.Tasks)
   };
 };
 
-export default connect(mapStateToProps,null)(HomeChartsWrapper);
+export default connect(
+  mapStateToProps,
+  null
+)(HomeChartsWrapper);
