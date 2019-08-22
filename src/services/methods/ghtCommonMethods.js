@@ -89,20 +89,22 @@ export function getNotificationDialogText(nt) {
 export function getOverduePendingGoalsOrTasks(items) {
   return items.reduce(
     (p, c, i) => {
-      //completed and pending logic
-      if (c.progress) {
-        if (c.progress == 100) p.Completed++;
-        else p.Pending++;
+      //completed logic
+      if(c.progress==100||c.completed){
+        p.Completed++;
       }
-      if (c.completed) p.Completed++;
-      else p.Pending++;
-
-      //overdue logic
-      if (c.dueDate) {
-        if (new Date(c.dueDate) < new Date()) p.Overdue++;
+      //pending logic
+      else{
+        if(c.dueDate){
+          if (new Date(c.dueDate) < new Date()) p.Overdue++;
+          else p.Due++;
+        }
+        else{
+          p.NoDue++;
+        }
       }
       return p;
     },
-    { Pending: 0, Completed: 0, Overdue: 0 }
+    { Overdue: 0, Completed: 0, NoDue: 0, Due:0 }
   );
 }

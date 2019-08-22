@@ -18,7 +18,7 @@ class HomeChartsWrapper extends Component {
           {/* <OverduePendingChart/> */}
         </div>
         <div className="col-md-4 homeChartDiv">
-          {/* <OverduePendingChart/> */}
+          <OverduePendingChart data={this.props.tasksData}/>
         </div>
       </div>
     );
@@ -27,7 +27,8 @@ class HomeChartsWrapper extends Component {
 
 const mapStateToProps = state => {
   return {
-    goalsData: getOverdueAndPendingGoalsForChart(state.goalReducer.Goals)
+    goalsData: getOverdueAndPendingGoalsForChart(state.goalReducer.Goals),
+    tasksData: getOverdueAndPendingTasksForChart(state.taskReducer.Tasks),
   };
 };
 

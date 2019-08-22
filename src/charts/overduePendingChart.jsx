@@ -7,11 +7,7 @@ import {
   Legend,
   ResponsiveContainer
 } from "recharts";
-const data1 = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 }
-];
+
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const OverDuePendingChart = ({data}) => {
