@@ -290,9 +290,14 @@ class Goals extends Component {
 
   markGoal = id => {
     let currGoal = this.props.goals.find(v => v.id == id);
-    if (currGoal.progress == 100) currGoal.progress = 0;
+    if (currGoal.progress == 100) {
+      currGoal.dateCompleted=false;
+      currGoal.progress = 0;
+      
+    }
     else {
       currGoal.progress = 100;
+      currGoal.dateCompleted=new Date().toISOString();
       message.success(`Marked ${currGoal.name} as achieved!`);
     }
     this.updateLocalGoal(currGoal);

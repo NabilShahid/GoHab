@@ -284,9 +284,14 @@ class Tasks extends Component {
 
   markTask = id => {
     let currTask = this.props.tasks.find(v => v.id == id);
-    if (currTask.completed) currTask.completed = false;
+    if (currTask.completed){
+
+      currTask.completed = false;
+      currTask.dateCompleted=false;
+    } 
     else {
       currTask.completed = true;
+      currTask.dateCompleted=new Date().toISOString();
       message.success(`Marked ${currTask.name} as completed!`);
     }
     this.updateLocalTask(currTask);

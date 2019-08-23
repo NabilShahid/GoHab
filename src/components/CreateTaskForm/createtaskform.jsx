@@ -38,7 +38,8 @@ class CreateHabbitForm extends React.Component {
       description: "",
       importance: 1,
       parentGoal: "",
-      dueDate: moment().toDate()
+      dueDate: moment().toDate(),
+      dateCompleted:false
     },
     disabledForm: false
   };
@@ -209,13 +210,15 @@ class CreateHabbitForm extends React.Component {
       dueDate,
       parentGoal,
       startDate,
-      completed
+      completed,
+      dateCompleted
     } = this.props.taskOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.parentGoal = parentGoal || "";
+    formValues.dateCompleted = dateCompleted ||false;
     formValues.startDate =
       startDate ||
       moment()

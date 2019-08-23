@@ -39,7 +39,8 @@ class CreateGoalForm extends React.Component {
       description: "",
       importance: 1,
       progress: 25,
-      dueDate: moment().toDate()
+      dueDate: moment().toDate(),
+      dateCompleted:false
     },
     disabledForm: false
   };
@@ -173,13 +174,15 @@ class CreateGoalForm extends React.Component {
       description,
       importance,
       progress,
-      dueDate
+      dueDate,
+      dateCompleted
     } = this.props.goalOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.progress = progress || 25;
+    formValues.dateCompleted=dateCompleted||false;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
