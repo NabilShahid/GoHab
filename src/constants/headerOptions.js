@@ -35,5 +35,20 @@ HEADEROPTIONS[PAGEKEYS["TASK_CALENDAR"]] = {
   Title: "Task Calendar",
   Search: false
 };
+HEADEROPTIONS[PAGEKEYS["GOAL_STATS"]] = {
+  Icon: "fa fa-home",
+  Title: "Goal Stats",
+  Search: false
+};
+HEADEROPTIONS[PAGEKEYS["TASK_STATS"]] = {
+  Icon: "fa fa-home",
+  Title: "Task Stats",
+  Search: false
+};
+HEADEROPTIONS[PAGEKEYS["HABIT_STATS"]] = {
+  Icon: "fa fa-home",
+  Title: "Habit Stats",
+  Search: false
+};
 
 export default HEADEROPTIONS;

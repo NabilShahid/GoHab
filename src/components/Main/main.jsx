@@ -25,6 +25,9 @@ import Habits from "../Habits/habits";
 import HabitTracking from "../HabitTracking/habittracking";
 import HabitCalendar from "../HabitCalendar/habitcalendar";
 import TaskCalendar from "../TaskCalendar/taskcalendar";
+import GoalStats from "../GoalStats/goalstats";
+import TaskStats from "../TaskStats/taskstats";
+import HabitStats from "../HabitStats/habitstats";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -138,6 +141,45 @@ class MainBase extends Component {
                         </div>
                       ) : (
                         <TaskCalendar />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["GOAL_STATS"]]}
+                    render={() => {
+                      return goalsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <GoalStats />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["TASK_STATS"]]}
+                    render={() => {
+                      return tasksLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <TaskStats />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["HABIT_STATS"]]}
+                    render={() => {
+                      return habitsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <HabitStats />
                       );
                     }}
                   />
