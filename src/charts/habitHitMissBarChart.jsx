@@ -31,13 +31,13 @@ const data = [
 
 const HabitHitMissBarChart = () => {
   return (
-    <ResponsiveContainer width={"70%"} height={300}>
+    <ResponsiveContainer width={"90%"} height={300}>
       <BarChart
         data={data}
         margin={{
           top: 75,
           right: 0,
-          left: -20,
+          left: 0,
           bottom: 5
         }}
       >
@@ -47,9 +47,9 @@ const HabitHitMissBarChart = () => {
         <Tooltip />
         <div style={{height:"10px"}}></div>
         <Legend />
-        <Bar dataKey="Followed" fill="#8884d8" />
-        <Bar dataKey="Missed" fill="#82ca9d" />
-        <Bar dataKey="Partially Followed" fill="#84c49d" />
+        <Bar width={300} dataKey="Followed" fill="#0088FE" />
+        <Bar width={300} dataKey="Missed" fill="#00C49F" />
+        <Bar width={300} dataKey="Partially Followed" fill="#FFBB28" />
       </BarChart>
     </ResponsiveContainer>
   );
