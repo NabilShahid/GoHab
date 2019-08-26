@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import OverduePendingChart from "../../charts/overduePendingChart";
 import HabitHitMissBarChart from "../../charts/habitHitMissBarChart";
+import OnTimeBeforeTimeRadarChart from "../../charts/onTimeBeforeTimeRadarChart";
 import {
   getOverdueAndPendingGoalsForChart,
   getOverdueAndPendingTasksForChart
@@ -13,7 +14,7 @@ const HomeChartsWrapper = ({ goalsData, tasksData }) => {
         <OverduePendingChart data={goalsData} />
       </div>
       <div className="col-md-4 homeChartDiv">
-        <HabitHitMissBarChart/>
+        <OnTimeBeforeTimeRadarChart/>
       </div>
       <div className="col-md-4 homeChartDiv">
         <OverduePendingChart data={tasksData} />

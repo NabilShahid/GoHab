@@ -78,7 +78,7 @@ class Home extends Component {
       habits
     } = this.props;
     return (
-      <div id="homeContent">
+      <div id="homeContent" className="fullHeightScroll">
         <div className="row">
           <div
             className="col-md-4"

@@ -11,6 +11,12 @@
     flex-direction: column;
 }
 
+.fullHeightScroll{
+    height: 100%;
+    overflow-x:hidden;
+    overflow-y: auto;
+}
+
 #sideContainer{
     flex: 0 0 18%;
     /* background-color: #f1f1f1; */

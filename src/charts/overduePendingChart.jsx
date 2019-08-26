@@ -5,7 +5,8 @@ import {
   Sector,
   Cell,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Tooltip
 } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -15,6 +16,7 @@ const OverDuePendingChart = ({data}) => {
     <ResponsiveContainer width={"100%"} height={300}>
       <PieChart>
         <Legend />
+        <Tooltip/>
         <Pie
           data={data}
           cx="50%"
