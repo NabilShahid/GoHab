@@ -1,5 +1,8 @@
 import { alphaSort, numericSort, dateSort } from "./ghtCommonMethods";
-import { START_DATE_FOR_INDEX_DAY_WEEK,START_DATE_FOR_INDEX_MONTH } from "../../constants/commonConsts";
+import {
+  START_DATE_FOR_INDEX_DAY_WEEK,
+  START_DATE_FOR_INDEX_MONTH
+} from "../../constants/commonConsts";
 import moment from "moment";
 
 export function getFilteredHabits(habits, filterString, currentStatus) {
@@ -92,12 +95,16 @@ export function getTrackDateFromIndex(period, index) {
       .toDate();
 }
 
-export function getWeekStartAndEndDate(date){
+export function getWeekStartAndEndDate(date) {
   // let newDate=moment(date).add(1,"days");
   return {
-    start:moment(date).subtract(moment(date).isoWeekday()-1,"days").toDate(),
-    end:moment(date).add(7-moment(date).isoWeekday()+1,"days").toDate()
-  }
+    start: moment(date)
+      .subtract(moment(date).isoWeekday() - 1, "days")
+      .toDate(),
+    end: moment(date)
+      .add(7 - moment(date).isoWeekday() + 1, "days")
+      .toDate()
+  };
 }
 
 export function getTrackPeriodString(period, frequency) {
@@ -107,4 +114,37 @@ export function getTrackPeriodString(period, frequency) {
   if (period == "Daily") trackString += "day";
   else trackString += period.substring(0, period.length - 2).toLowerCase();
   return trackString;
+}
+
+export function getHitMissCountForHabit(habit) {
+  const startIndex = getTrackIndexForDate(habit.period, habit.startDateTime);
+  const endIndex = getCurrentTrackIndex(habit.period);
+  const { tracking } = habit;
+  let result = tracking.reduce(
+    (acc, curr) => {
+      if (curr.Count != 0) {
+        if (curr.Count == curr.Frequency) acc.Followed++;
+        else acc.PartiallyFollowed++;
+      }
+      return acc;
+    },
+    { Followed: 0, PartiallyFollowed: 0 }
+  );
+  return {
+    ...result,
+    Missed: endIndex - startIndex - (result.Followed + result.PartiallyFollowed)
+  };
+}
+
+export function getHitMissCountForAllHabits(habits) {
+  return habits.reduce(
+    (acc, curr) => {
+      const currHabitCounts = getHitMissCountForHabit(curr);
+      acc.Followed += currHabitCounts.Followed;
+      acc.PartiallyFollowed += currHabitCounts.PartiallyFollowed;
+      acc.Missed += currHabitCounts.Missed;
+      return acc;
+    },
+    { Followed: 0, PartiallyFollowed: 0, Missed: 0 }
+  );
 }
