@@ -5,7 +5,7 @@
     background-position: center;
     background-size: cover;
     background: linear-gradient(60deg, #6b6b6b, #383434); 
-     flex: 0 0 82%;
+     width: 100%;
     overflow: hidden ;
     display: flex;
     flex-direction: column;
@@ -18,14 +18,18 @@
 }
 
 #sideContainer{
-    flex: 0 0 18%;
-    /* background-color: #f1f1f1; */
-    
+    width: 18%;
+    background-color: white;
+    transition: 0.3s;
 }
 #headerContainer{
     flex: 0 0 60px;
 }
-
+.hiddenMenu{
+    opacity: 0;
+    width: 0 !important;
+    transition: 0.3s;
+}
 #bodyContainer{
     box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
     margin-left: 14px;
@@ -64,6 +68,8 @@
  }
 @media  screen and (max-width: 500px) { 
    #sideContainer{
-        width:75px;
+        position:absolute;
+        z-index: 1;
+        width: 70%;
     }
   }

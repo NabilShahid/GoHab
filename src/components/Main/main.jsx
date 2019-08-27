@@ -16,7 +16,7 @@ import {
 import { insertTasks, sortTasks } from "../../actions/taskActions";
 import { insertHabits, sortHabits } from "../../actions/habitActions";
 import { toggleItemLoading } from "../../actions/loadingActions";
-import { Row, Col } from "antd";
+import { Row, Col, Icon } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
@@ -35,19 +35,36 @@ import Loading from "../Loading/loading";
 import "./main.css";
 
 class MainBase extends Component {
-  state = {};
+  state = { menuShown: true };
+  toggleMenu = () => {
+    const { menuShown } = this.state;
+    this.setState({ menuShown: !menuShown });
+  };
   render() {
-    const { goalsLoading,habitsLoading,tasksLoading } = this.props;
+    const { menuShown } = this.state;
+    const { goalsLoading, habitsLoading, tasksLoading } = this.props;
     return (
       <div className="inheritHeight">
         <div className="inheritHeight" style={{ display: "flex" }}>
-          <div id="sideContainer" className="inheritHeight">
-            <UserTile />
+          <div
+            id="sideContainer"
+            className={"inheritHeight " + (menuShown ? "" : "hiddenMenu")}
+            style={{ width: menuShown ? "20%" : "0" }}
+          >
+            <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />
             <SideMenu />
           </div>
 
           <div id="mainContainer" className="inheritHeight">
             <div id="headerContainer">
+              {!menuShown && (
+                <Icon
+                  style={{ margin: "10px", width: "20px", height: "20px" }}
+                  type="menu-unfold"
+                  onClick={this.toggleMenu}
+                />
+              )}
+
               <Header />
             </div>
             <div id="bodyContainer">
@@ -202,11 +219,11 @@ class MainBase extends Component {
   }
 
   getGoalsAndInsertAndSort() {
-    this.props.toggleItemLoading("goalsLoading",true);
+    this.props.toggleItemLoading("goalsLoading", true);
     this.props.firebase.goalOps
       .retrieveAllGoals(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("goalsLoading",false);
+        this.props.toggleItemLoading("goalsLoading", false);
         const allGoals = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -219,11 +236,11 @@ class MainBase extends Component {
   }
 
   getTasksAndInsertAndSort() {
-    this.props.toggleItemLoading("tasksLoading",true);
+    this.props.toggleItemLoading("tasksLoading", true);
     this.props.firebase.taskOps
       .retrieveAllTasks(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("tasksLoading",false);
+        this.props.toggleItemLoading("tasksLoading", false);
         const allTasks = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -242,11 +259,11 @@ class MainBase extends Component {
   }
 
   getHabitsAndInsertAndSort() {
-    this.props.toggleItemLoading("habitsLoading",true);
+    this.props.toggleItemLoading("habitsLoading", true);
     this.props.firebase.habitOps
       .retrieveAllHabits(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("habitsLoading",false);
+        this.props.toggleItemLoading("habitsLoading", false);
         const allHabits = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -273,8 +290,8 @@ const mapStateToProps = state => {
     user: state.User,
     goalsLoading: state.loadingReducer.goalsLoading,
     habitsLoading: state.loadingReducer.habitsLoading,
-    tasksLoading:state.loadingReducer.tasksLoading,
-    userEmail:state.userReducer.User.Email
+    tasksLoading: state.loadingReducer.tasksLoading,
+    userEmail: state.userReducer.User.Email
   };
 };
 
@@ -304,8 +321,8 @@ const mapDispatchToProps = dispatch => {
     updateSubItemsCount: itemsPayload => {
       dispatch(updateSubItemsCount(itemsPayload));
     },
-    toggleItemLoading: (item,loading) => {
-      dispatch(toggleItemLoading(item,loading));
+    toggleItemLoading: (item, loading) => {
+      dispatch(toggleItemLoading(item, loading));
     }
   };
 };

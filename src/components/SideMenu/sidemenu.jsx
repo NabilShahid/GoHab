@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu } from "antd";
+import { Menu, Icon } from "antd";
 import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -11,9 +11,9 @@ import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import "./sidemenu.css";
+const { SubMenu } = Menu;
 
 class SideMenu extends Component {
-  state = {};
   selectedOption;
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
@@ -36,6 +36,7 @@ class SideMenu extends Component {
     return (
       <Menu
         selectedKeys={selectedOption}
+        defaultOpenKeys={["sub1"]}
         // selectedKeys={}
         mode="inline"
         theme="light"
@@ -45,46 +46,86 @@ class SideMenu extends Component {
           <i id="sHomeI" className="fa fa-home sideIcon" />
           Home
         </Menu.Item>
-        <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
-          <i id="sGoalsI" className="fa fa-home sideIcon" />
-          Goals
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
-          <i id="sHabitsI" className="fa fa-home sideIcon" />
-          Habits
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
-          <i id="sTasksI" className="fa fa-home sideIcon" />
-          Tasks
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
-          <i className="fa fa-home sideIcon" />
-          Habit Tracking
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["GOAL_STATS"]}>
-          <i className="fa fa-home sideIcon" />
-          Goal Stats
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
-          <i className="fa fa-home sideIcon" />
-          Task Stats
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABIT_STATS"]}>
-          <i className="fa fa-home sideIcon" />
-          Habit Stats
-        </Menu.Item>
-        <Menu.Item key="8">
-          <i className="fa fa-home sideIcon" />
-          Goal Calendar
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
-          <i className="fa fa-home sideIcon" />
-          Tasks Calendar
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
-          <i className="fa fa-home sideIcon" />
-          Habit Calendar
-        </Menu.Item>
+        <SubMenu
+          key="sub1"
+          title={
+            <span>
+              <Icon type="mail" />
+              <span>Navigation One</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
+            <i id="sGoalsI" className="fa fa-home sideIcon" />
+            Goals
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
+            <i id="sHabitsI" className="fa fa-home sideIcon" />
+            Habits
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
+            <i id="sTasksI" className="fa fa-home sideIcon" />
+            Tasks
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="sub2"
+          title={
+            <span>
+              <Icon type="mail" />
+              <span>Analytics</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["GOAL_STATS"]}>
+            <i className="fa fa-home sideIcon" />
+            Goal Stats
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
+            <i className="fa fa-home sideIcon" />
+            Task Stats
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["HABIT_STATS"]}>
+            <i className="fa fa-home sideIcon" />
+            Habit Stats
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="sub3"
+          title={
+            <span>
+              <Icon type="mail" />
+              <span>Habit Tracking</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
+            <i className="fa fa-home sideIcon" />
+            Track Habits
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
+            <i className="fa fa-home sideIcon" />
+            Habits Record
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="sub4"
+          title={
+            <span>
+              <Icon type="mail" />
+              <span>Calendar</span>
+            </span>
+          }
+        >
+          <Menu.Item key="8">
+            <i className="fa fa-home sideIcon" />
+            Goal Calendar
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
+            <i className="fa fa-home sideIcon" />
+            Tasks Calendar
+          </Menu.Item>
+        </SubMenu>
       </Menu>
     );
   }

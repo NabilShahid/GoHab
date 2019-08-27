@@ -137,7 +137,7 @@ export function getHitMissCountForHabit(habit) {
 }
 
 export function getHitMissCountForAllHabits(habits) {
-  return habits.reduce(
+  return habits.filter(h=>!h.completed).reduce(
     (acc, curr) => {
       const currHabitCounts = getHitMissCountForHabit(curr);
       acc.Followed += currHabitCounts.Followed;
