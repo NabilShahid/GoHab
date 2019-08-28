@@ -35,13 +35,14 @@ import Loading from "../Loading/loading";
 import "./main.css";
 
 class MainBase extends Component {
-  state = { menuShown: true };
+  state = { menuShown: true, menuWidth: "20%" };
   toggleMenu = () => {
     const { menuShown } = this.state;
     this.setState({ menuShown: !menuShown });
   };
+
   render() {
-    const { menuShown } = this.state;
+    const { menuShown, menuWidth } = this.state;
     const { goalsLoading, habitsLoading, tasksLoading } = this.props;
     return (
       <div className="inheritHeight">
@@ -49,7 +50,7 @@ class MainBase extends Component {
           <div
             id="sideContainer"
             className={"inheritHeight " + (menuShown ? "" : "hiddenMenu")}
-            style={{ width: menuShown ? "20%" : "0" }}
+            style={{ width: menuShown ? menuWidth : "0" }}
           >
             <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />
             <SideMenu />
@@ -216,6 +217,10 @@ class MainBase extends Component {
     this.getGoalsAndInsertAndSort();
     this.getTasksAndInsertAndSort();
     this.getHabitsAndInsertAndSort();
+    this.adjustMenuForDevice();
+    window.onresize = () => {
+      this.adjustMenuForDevice();
+    };
   }
 
   getGoalsAndInsertAndSort() {
@@ -279,6 +284,19 @@ class MainBase extends Component {
       .catch(error => {
         console.log("firebase error: ", error);
       });
+  }
+
+  checkIfSmallDevice() {
+    return (
+      getComputedStyle(document.getElementById("sideContainer")).position ==
+      "absolute"
+    );
+  }
+
+  adjustMenuForDevice() {
+    if (this.checkIfSmallDevice()) {
+      this.setState({ menuShown: false, menuWidth: "70%" });
+    } else this.setState({ menuShown: true, menuWidth: "20%" });
   }
 }
 
