@@ -56,18 +56,16 @@ import {
 //   }
 // ];
 
-const GoalHabitProgressLineChart = ({data}) => {
+const GoalTaskProgressLineChart = ({data}) => {
   return (
     <ResponsiveContainer width={"100%"} height={300}>
       <LineChart
-        // width={500}
-        // height={300}
         data={data}
-        margin={{
-          top: 5,
+          margin={{
+          top: 0,
           right: 30,
-          left: 20,
-          bottom: 5
+          left: 0,
+          bottom: 0
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -83,10 +81,9 @@ const GoalHabitProgressLineChart = ({data}) => {
           stroke="#0088FE"
           activeDot={{ r: 8 }}
         />
-        {/* <Line type="monotone" dataKey="days" stroke="#82ca9d" /> */}
       </LineChart>
     </ResponsiveContainer>
   );
 };
 
-export default GoalHabitProgressLineChart;
+export default GoalTaskProgressLineChart;

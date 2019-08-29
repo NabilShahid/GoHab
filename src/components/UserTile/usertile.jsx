@@ -8,14 +8,7 @@ const UserTile = ({ toggleMenu, menuShown }) => {
   return (
     <div id="userDiv">
       <img src={logo} id="gohabLogo" alt="G" />
-      <span id="gohabTitle">GoHab</span>{" "}
-      {/* {menuShown && (
-        <Icon
-          style={{ margin: "10px", width: "20px", height: "20px" }}
-          type="menu-fold"
-          onClick={toggleMenu}
-        />
-      )} */}
+      <span id="gohabTitle">GoHab</span>{" "}     
       <hr style={{ marginBottom: "7px", marginTop: "7px" }} />
     </div>
   );

@@ -14,42 +14,33 @@ import {
 const data = [
   {
     name: "Followed",
-    Followed: 40
-   
-  },
-  {
-    name: "Missed",
-    Missed: 30
-   
-  },
-  {
-    name: "Partially Followed",
-    "Partially Followed": 20
+    Followed: 40,
+    Missed:40,
+    "Partially Followed":43
    
   }
 ];
 
 const HabitHitMissBarChart = () => {
   return (
-    <ResponsiveContainer width={"90%"} height={300}>
+    <ResponsiveContainer width={"80%"} height={250}>
       <BarChart
         data={data}
         margin={{
           top: 75,
           right: 0,
-          left: 0,
-          bottom: 5
+          left: 30,
+          bottom: 0
         }}
       >
         {/* <CartesianGrid strokeDasharray="1 1" /> */}
         {/* <XAxis dataKey="name" /> */}
         <YAxis />
         <Tooltip />
-        <div style={{height:"10px"}}></div>
         <Legend />
-        <Bar width={300} dataKey="Followed" fill="#0088FE" />
-        <Bar width={300} dataKey="Missed" fill="#00C49F" />
-        <Bar width={300} dataKey="Partially Followed" fill="#FFBB28" />
+        <Bar width={50} dataKey="Followed" fill="#0088FE" />
+        <Bar width={50} dataKey="Missed" fill="#00C49F" />
+        <Bar width={50} dataKey="Partially Followed" fill="#FFBB28" />
       </BarChart>
     </ResponsiveContainer>
   );

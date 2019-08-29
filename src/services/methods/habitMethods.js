@@ -118,7 +118,7 @@ export function getTrackPeriodString(period, frequency) {
 
 export function getHitMissCountForHabit(habit) {
   const startIndex = getTrackIndexForDate(habit.period, habit.startDateTime);
-  const endIndex = getCurrentTrackIndex(habit.period);
+  const endIndex = getCurrentTrackIndex(habit.period)+1;
   const { tracking } = habit;
   let result = tracking.reduce(
     (acc, curr) => {
