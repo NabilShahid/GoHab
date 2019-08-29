@@ -9,13 +9,13 @@ const UserTile = ({ toggleMenu, menuShown }) => {
     <div id="userDiv">
       <img src={logo} id="gohabLogo" alt="G" />
       <span id="gohabTitle">GoHab</span>{" "}
-      {menuShown && (
+      {/* {menuShown && (
         <Icon
           style={{ margin: "10px", width: "20px", height: "20px" }}
           type="menu-fold"
           onClick={toggleMenu}
         />
-      )}
+      )} */}
       <hr style={{ marginBottom: "7px", marginTop: "7px" }} />
     </div>
   );

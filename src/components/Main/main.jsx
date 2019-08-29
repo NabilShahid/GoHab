@@ -52,20 +52,25 @@ class MainBase extends Component {
             className={"inheritHeight " + (menuShown ? "" : "hiddenMenu")}
             style={{ width: menuShown ? menuWidth : "0" }}
           >
+            {menuShown && (
+              <div onClick={this.toggleMenu} className="menuShown">
+                <i className="fa fa-caret-left sideMenuToggleIcon"></i>
+              </div>
+            )}
             <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />
             <SideMenu />
           </div>
 
           <div id="mainContainer" className="inheritHeight">
+            {!menuShown && (
+              <div onClick={this.toggleMenu} className="menuCollapsed">
+                <i
+                  style={{ color: "white" }}
+                  className="fa fa-caret-right sideMenuToggleIcon"
+                ></i>
+              </div>
+            )}
             <div id="headerContainer">
-              {!menuShown && (
-                <Icon
-                  style={{ margin: "10px", width: "20px", height: "20px" }}
-                  type="menu-unfold"
-                  onClick={this.toggleMenu}
-                />
-              )}
-
               <Header />
             </div>
             <div id="bodyContainer">
