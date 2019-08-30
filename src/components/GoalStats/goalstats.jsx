@@ -11,7 +11,7 @@ import GoalTaskDueDateBarChart from "../../charts/goalTaskDueDateBarChart";
 
 import { connect } from "react-redux";
 
-const GoalStats = ({ goalProgressData, goalsOverduePendingData,goalsDueDateData }) => {
+const GoalStats = ({ goalsProgressData, goalsOverduePendingData,goalsDueDateData }) => {
   return (
     <div className="fullHeight" style={{ overflowY: "auto" }}>
       <div style={{ width: "100%" }}>
@@ -37,7 +37,7 @@ const GoalStats = ({ goalProgressData, goalsOverduePendingData,goalsDueDateData 
             <i className="fa fa-info-circle graphInfoIcon"></i>
           </Popover>
         </div>
-        <GoalTaskProgressLinechart data={goalProgressData} />
+        <GoalTaskProgressLinechart data={goalsProgressData} />
       </div>
       <div className="chartsHorizontalSeperator"></div>
       <div className="row">
@@ -57,7 +57,7 @@ const GoalStats = ({ goalProgressData, goalsOverduePendingData,goalsDueDateData 
 
 const mapStateToProps = state => {
   return {
-    goalProgressData: getGoalProgressArrayForChart(state.goalReducer.Goals),
+    goalsProgressData: getGoalProgressArrayForChart(state.goalReducer.Goals),
     goalsOverduePendingData: getOverdueAndPendingGoalsForChart(
       state.goalReducer.Goals
     ),

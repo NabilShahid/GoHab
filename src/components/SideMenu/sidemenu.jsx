@@ -9,12 +9,14 @@ import {
 } from "../../actions/headerActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
+import { MENU_MAPPING } from "../../constants/commonConsts";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import "./sidemenu.css";
 const { SubMenu } = Menu;
 
 class SideMenu extends Component {
   selectedOption;
+  defaultOpenMenu = "ItemsMenu";
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
       this.props.updateHeaderOptions(HEADEROPTIONS[PAGEKEYS["HOME"]]);
@@ -25,6 +27,10 @@ class SideMenu extends Component {
       })[0];
       this.props.updateHeaderOptions(HEADEROPTIONS[currPage]);
       this.selectedOption = [currPage];
+      this.defaultOpenMenu =
+        Object.keys(MENU_MAPPING).find(
+          (curr, i) => MENU_MAPPING[curr].indexOf(currPage) > -1
+        ) || this.defaultOpenMenu;
     }
   }
 
@@ -36,7 +42,7 @@ class SideMenu extends Component {
     return (
       <Menu
         selectedKeys={selectedOption}
-        defaultOpenKeys={["sub1"]}
+        defaultOpenKeys={[this.defaultOpenMenu]}
         // selectedKeys={}
         mode="inline"
         theme="light"
@@ -47,11 +53,11 @@ class SideMenu extends Component {
           Home
         </Menu.Item>
         <SubMenu
-          key="sub1"
+          key="ItemsMenu"
           title={
             <span>
               <Icon type="mail" />
-              <span>Navigation One</span>
+              <span>Items</span>
             </span>
           }
         >
@@ -69,7 +75,7 @@ class SideMenu extends Component {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key="sub2"
+          key="AnalyticsMenu"
           title={
             <span>
               <Icon type="mail" />
@@ -91,7 +97,7 @@ class SideMenu extends Component {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key="sub3"
+          key="HabitTrackingMenu"
           title={
             <span>
               <Icon type="mail" />
@@ -109,7 +115,7 @@ class SideMenu extends Component {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key="sub4"
+          key="CalendarMenu"
           title={
             <span>
               <Icon type="mail" />

@@ -45,7 +45,12 @@ export const HABIT_CATEGORIES=[
   },
   
 ]
-
+export const MENU_MAPPING={
+  ItemsMenu:["GOALS","TASKS","HABITS"],
+  AnalyticsMenu:["GOAL_STATS","TASK_STATS","HABIT_STATS"],
+  HabitTrackingMenu:["HABIT_TRACKING","HABIT_CALENDAR"],
+  CalendarMenu:["GOAL_CALENDAR","TASK_CALENDAR"]
+}
 export const HABIT_EVENT_COLORS = {
   HIT: "#66bb6a",
   MISS: "#fb584c",

@@ -3,6 +3,7 @@ import {
   getOnBeforeAfterDueDateGoalsOrTasks
 } from "./methods/ghtCommonMethods";
 import { getSortedGoals } from "./methods/goalMethods";
+import { getSortedTasks } from "./methods/taskMethods";
 import { getHitMissCountForAllHabits } from "./methods/habitMethods";
 import moment from "moment";
 
@@ -28,6 +29,17 @@ export function getOverdueAndPendingTasksForChart(tasks) {
 export function getGoalProgressArrayForChart(goals) {
   let sortedGoals = getSortedGoals(goals, "dueDate");
   return sortedGoals
+    .filter(g => g.dateCompleted)
+    .map(g => {
+      return {
+        name: g.name,
+        days: moment(g.dueDate).diff(moment(g.dateCompleted), "day")
+      };
+    });
+}
+export function getTaskProgressArrayForChart(tasks) {
+  let sortedTasks = getSortedTasks(tasks, "dueDate");
+  return sortedTasks
     .filter(g => g.dateCompleted)
     .map(g => {
       return {
