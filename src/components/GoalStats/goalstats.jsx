@@ -3,14 +3,15 @@ import GoalTaskProgressLinechart from "../../charts/goalTaskProgressLinechart";
 import OverduePendingChart from "../../charts/overduePendingChart";
 import {
   getGoalProgressArrayForChart,
-  getOverdueAndPendingGoalsForChart
+  getOverdueAndPendingGoalsForChart,
+  getGoalTaskDueDateDataForBarChart
 } from "../../services/chartService.js";
 import { Popover } from "antd";
-import HabitHitMissBarChart from "../../charts/habitHitMissBarChart";
+import GoalTaskDueDateBarChart from "../../charts/goalTaskDueDateBarChart";
 
 import { connect } from "react-redux";
 
-const GoalStats = ({ goalProgressData, goalsOverduePendingData }) => {
+const GoalStats = ({ goalProgressData, goalsOverduePendingData,goalsDueDateData }) => {
   return (
     <div className="fullHeight" style={{ overflowY: "auto" }}>
       <div style={{ width: "100%" }}>
@@ -47,7 +48,7 @@ const GoalStats = ({ goalProgressData, goalsOverduePendingData }) => {
         <div className="col-md-6">
           {" "}
           <div className="halfPageChartLabel">Overdue Pending Chart</div>
-          <HabitHitMissBarChart data={goalsOverduePendingData} />
+          <GoalTaskDueDateBarChart data={goalsDueDateData} />
         </div>
       </div>
     </div>
@@ -59,7 +60,8 @@ const mapStateToProps = state => {
     goalProgressData: getGoalProgressArrayForChart(state.goalReducer.Goals),
     goalsOverduePendingData: getOverdueAndPendingGoalsForChart(
       state.goalReducer.Goals
-    )
+    ),
+    goalsDueDateData: getGoalTaskDueDateDataForBarChart(state.goalReducer.Goals)
   };
 };
 

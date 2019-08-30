@@ -1,4 +1,7 @@
-import { getOverduePendingGoalsOrTasks } from "./methods/ghtCommonMethods";
+import {
+  getOverduePendingGoalsOrTasks,
+  getOnBeforeAfterDueDateGoalsOrTasks
+} from "./methods/ghtCommonMethods";
 import { getSortedGoals } from "./methods/goalMethods";
 import { getHitMissCountForAllHabits } from "./methods/habitMethods";
 import moment from "moment";
@@ -48,6 +51,18 @@ export function getHabitHitMissDataForHomeRadarChart(habits) {
     {
       subject: "Followed",
       count: allCounts.Followed
+    }
+  ];
+}
+
+export function getGoalTaskDueDateDataForBarChart(items) {
+  const data = getOnBeforeAfterDueDateGoalsOrTasks(items);
+  return [
+    {
+      name: "Completed",
+      "On Due Date": data.OnDueDate,
+      "Before Due Date": data.BeforeDueDate,
+      "After Due Date": data.AfterDueDate
     }
   ];
 }

@@ -96,7 +96,7 @@ export function getOverduePendingGoalsOrTasks(items) {
       //pending logic
       else{
         if(c.dueDate){
-          if (new Date(c.dueDate) < new Date()) p.Overdue++;
+          if (new Date(c.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0)) p.Overdue++;
           else p.Due++;
         }
         else{
@@ -106,5 +106,31 @@ export function getOverduePendingGoalsOrTasks(items) {
       return p;
     },
     { Overdue: 0, Completed: 0, NoDue: 0, Due:0 }
+  );
+}
+export function getOnBeforeAfterDueDateGoalsOrTasks(items) {
+  return items.reduce(
+    (p, c, i) => {
+      //completed logic
+      if(c.progress==100||c.completed){
+        if(c.dueDate){
+          if (new Date(c.dueDate).setHours(0,0,0,0) < new Date().setHours(0,0,0,0)) p.BeforeDueDate++;
+          else if (new Date(c.dueDate).setHours(0,0,0,0) > new Date().setHours(0,0,0,0)) p.AfterDueDate++;
+          else p.OnDueDate++;
+        }
+      }
+      //pending logic
+      else{
+        if(c.dueDate){
+          if (new Date(c.dueDate) < new Date()) p.Overdue++;
+          else p.Due++;
+        }
+        else{
+          p.NoDue++;
+        }
+      }
+      return p;
+    },
+    { BeforeDueDate: 0, AfterDueDate: 0, OnDueDate: 0 }
   );
 }
