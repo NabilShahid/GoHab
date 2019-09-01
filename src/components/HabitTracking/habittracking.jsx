@@ -89,7 +89,8 @@ const mapStateToProps = state => {
     // habitsToTrack: state.habitReducer.Habits.filter(
     //   h => state.habitReducer.HabitIdsToTrack.indexOf(h.id) > -1
     // )
-    habitsToTrack: Object.assign([], state.habitReducer.Habits),
+    habitsToTrack1: Object.assign([], state.habitReducer.Habits),
+    habitsToTrack: state.habitReducer.Habits.filter(h=>!h.completed),
     userEmail:state.userReducer.User.Email
   };
 };
