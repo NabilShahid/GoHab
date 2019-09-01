@@ -1,8 +1,8 @@
 #mainContainer {
-  background-image: url("../../assets/images/bg2.jpg");
-  background-position: center;
-  background-size: cover;
-  background: linear-gradient(60deg, #6b6b6b, #383434);
+  /* background-image: url("../../assets/images/bg2.jpg"); */
+  /* background-position: center; */
+  /* background-size: cover; */
+  /* background: linear-gradient(60deg, #6b6b6b, #383434); */
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -24,7 +24,11 @@
   overflow-y: auto;
 }
 #headerContainer {
-  flex: 0 0 60px;
+  flex: 0 0 55px;
+  background: linear-gradient(to left, #505050, #484848);
+  /* background:  #008793; */
+  /* background: linear-gradient(to left, #051937, #004d7a, #008793); */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .hiddenMenu {
   opacity: 0;
@@ -40,9 +44,9 @@
   color: #4c4c4c;
   padding: 15px 15px 0px 15px;
   background-color: white;
-  flex: 0 0 calc(100% - 65px);
+  flex: 0 0 calc(100% - 80px);
 
-  /* margin-top: 5px; */
+  margin-top: 15px;
   overflow-y: hidden;
   overflow-x: hidden;
 }

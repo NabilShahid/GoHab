@@ -210,7 +210,7 @@ class Header extends Component {
                   this.setState({ notificationsVisible: true });
                 }}
                 className="fa fa-bell headerIcon"
-                style={{ fontSize: "22px" }}
+                style={{ fontSize: "20px" }}
               />
             </Badge>
           </Col>
@@ -242,7 +242,7 @@ class Header extends Component {
                   // this.setState({ notificationsVisible: true });
                 }}
                 className="fa fa-cog headerIcon"
-                style={{ fontSize: "25px" }}
+                style={{ fontSize: "22px" }}
               />
             </Popover>
           </Col>
