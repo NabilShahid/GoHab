@@ -12,4 +12,6 @@
     1px 1px 1px 1px rgba(76, 175, 80, 0.4);
     /* main selector color */
     --primary-color:#fb584c;
+    --outer-menu-color:#262f3d;
+    --inner-menu-color:#19212b;
 }

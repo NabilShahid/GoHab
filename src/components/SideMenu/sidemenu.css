@@ -1,18 +1,18 @@
 
 .ant-menu{
-    background-color: var(--primary-color) !important;
-    background:  white!important;
-    color: #4c4c4c !important;
+    background:var(--outer-menu-color) !important;
+    /* background:  white!important; */
+    color: white !important;
     border-radius: 5px;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: var(--primary-color)!important;
+    background-color: var(--outer-menu-color)!important;
 }
 .ant-menu-item-selected {
     color: white !important;
     /* margin: 5px !important; */
     /* border-radius: 4px; */
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14);
+    /* box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14); */
   
    
 }
@@ -36,4 +36,7 @@
 #sTasksI{
     color: #5cb360;
     
+}
+.ant-menu-sub.ant-menu-inline{
+    background-color: var(--inner-menu-color) !important;
 }

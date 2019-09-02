@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  background-color: #f7f7f7;
 }
 
 .fullHeightScroll {
@@ -22,13 +23,15 @@
   transition: 0.3s;
   position: relative;
   overflow-y: auto;
+  background: var(--outer-menu-color);
 }
 #headerContainer {
   flex: 0 0 55px;
-  background: linear-gradient(to left, #505050, #484848);
+  background: #4c5265;
+  margin: 0px 14px;
   /* background:  #008793; */
   /* background: linear-gradient(to left, #051937, #004d7a, #008793); */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 .hiddenMenu {
   opacity: 0;
@@ -38,8 +41,7 @@
 #bodyContainer {
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
-  margin-left: 14px;
-  margin-right: 14px;
+  margin: 0px 14px;
   border-radius: 2px;
   color: #4c4c4c;
   padding: 15px 15px 0px 15px;
