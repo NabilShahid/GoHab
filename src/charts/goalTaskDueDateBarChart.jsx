@@ -38,9 +38,9 @@ const GoalTaskDueDateBarChart = ({data}) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar width={50} dataKey="On Due Date" fill="#0088FE" />
-        <Bar width={50} dataKey="Before Due Date" fill="#00C49F" />
-        <Bar width={50} dataKey="After Due Date" fill="#FFBB28" />
+        <Bar width={50} dataKey="On Due Date" fill="var(--goal-color)" />
+        <Bar width={50} dataKey="Before Due Date" fill="var(--task-color)" />
+        <Bar width={50} dataKey="After Due Date" fill="var(--habit-color)" />
       </BarChart>
     </ResponsiveContainer>
   );

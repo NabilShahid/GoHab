@@ -39,7 +39,7 @@ const OnTimeBeforeTimeRadarChart = ({data=0,total=0}) => {
           name=""
           dataKey="count"
           stroke="#00C49F"
-          fill="#00C49F"
+          fill="var(--task-color)"
           fillOpacity={0.6}
         />
       </RadarChart>

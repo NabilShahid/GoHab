@@ -38,9 +38,9 @@ const HabitHitMissBarChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar width={50} dataKey="Followed" fill="#0088FE" />
-        <Bar width={50} dataKey="Missed" fill="#00C49F" />
-        <Bar width={50} dataKey="Partially Followed" fill="#FFBB28" />
+        <Bar width={50} dataKey="Followed" fill="var(--goal-color)" />
+        <Bar width={50} dataKey="Missed" fill="var(--task-color)" />
+        <Bar width={50} dataKey="Partially Followed" fill="var(--habit-color)" />
       </BarChart>
     </ResponsiveContainer>
   );

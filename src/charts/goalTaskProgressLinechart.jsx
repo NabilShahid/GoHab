@@ -78,7 +78,7 @@ const GoalTaskProgressLineChart = ({data}) => {
         <Line
           type="monotone"
           dataKey="days"
-          stroke="#0088FE"
+          stroke="var(--habit-color)"
           activeDot={{ r: 8 }}
         />
       </LineChart>

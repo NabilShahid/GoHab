@@ -9,7 +9,7 @@ import {
   Tooltip
 } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["var(--goal-color)", "var(--habit-color)", "var(--task-color)", "#FF8042"];
 
 const OverDuePendingChart = ({data}) => {
   return (
