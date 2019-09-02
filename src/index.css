@@ -82,7 +82,7 @@ code {
 }
 .noColorButton {
   border: 0px !important;
-  border-radius: 3px !important;
+  border-radius: 20px !important;
   color: white !important;
 }
 .ant-calendar-selected-date .ant-calendar-date,

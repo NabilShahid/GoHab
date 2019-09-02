@@ -34,6 +34,7 @@
 .goalProgress{
     margin-top: 2%;
     font-size: 12px;
+    display: none;
 }
 .goalImportance{
     margin-top: 4%;

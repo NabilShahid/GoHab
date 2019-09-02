@@ -128,8 +128,8 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
-              color="#fd9a14"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(249, 219, 156))"
+              color="var(--goal-color)"
               subtitle={"Pending Goal" + (goalsCount > 1 ? "s" : "")}
               count={goalsCount}
             />
@@ -141,8 +141,8 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
-              color="#04afc4"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(170, 216, 255))"
+              color="var(--habit-color)"
               subtitle={"Pending Habit" + (habitsCount > 1 ? "s" : "")}
               count={habitsCount}
             />
@@ -154,8 +154,8 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"
-              color="#49a54d"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(173, 234, 223))"
+              color="var(--task-color)"
               subtitle={"Pending Task" + (tasksCount > 1 ? "s" : "")}
               count={tasksCount}
             />
