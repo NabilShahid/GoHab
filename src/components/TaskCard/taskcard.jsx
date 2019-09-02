@@ -25,8 +25,7 @@ const TaskCard = ({
           <div
             className="cardAvatar"
             style={{
-              background: "var(--task-color)",
-              boxShadow: "var(--task-shadow)"
+              background: "var(--task-color)"
             }}
           >
             {name[0].toUpperCase() || ""}

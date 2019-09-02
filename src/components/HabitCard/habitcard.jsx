@@ -21,8 +21,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
           <div
             className="cardAvatar"
             style={{
-              background: "var(--habit-color)",
-              boxShadow: "var(--habit-shadow)"
+              background: "var(--habit-color)"
             }}
           >
             {name[0].toUpperCase() || ""}

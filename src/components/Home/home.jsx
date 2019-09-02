@@ -90,7 +90,6 @@ class Home extends Component {
               ccTitle="Create Goal"
               ccSubTitle="Create a new goal and assing value to it"
               background="var(--goal-color)"
-              boxShadow="var(--goal-shadow)"
               icon="fa fa-check"
             />
           </div>
@@ -102,9 +101,8 @@ class Home extends Component {
           >
             <CreateCard
               ccTitle="Create Habit"
-              ccSubTitle="Create a new goal and assing value to it"
-              background="linear-gradient(60deg, #26c6da, #00acc1)"
-              boxShadow="var(--habit-shadow)"
+              ccSubTitle="Create a new habit and assing value to it"
+              background="var(--habit-color)"
               icon="fa fa-check"
             />
           </div>
@@ -116,9 +114,8 @@ class Home extends Component {
           >
             <CreateCard
               ccTitle="Create Task"
-              ccSubTitle="Create a new goal and assing value to it"
-              background="linear-gradient(60deg, #66bb6a, #43a047)"
-              boxShadow="var(--task-shadow)"
+              ccSubTitle="Create a new task and assing value to it"
+              background="var(--task-color)"             
               icon="fa fa-check"
             />
           </div>
@@ -164,8 +161,7 @@ class Home extends Component {
             />
           </div>
         </div>
-        <HomeChartsWrapper/>
-       
+        <HomeChartsWrapper />
 
         <Modal
           visible={anyPopupOpen}

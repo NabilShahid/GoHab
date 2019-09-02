@@ -27,11 +27,13 @@
 }
 #headerContainer {
   flex: 0 0 55px;
-  background: #4c5265;
-  margin: 0px 14px;
+  /* background: #4c5265; */
+  background-color:white;
+  /* margin: 0px 14px; */
   /* background:  #008793; */
   /* background: linear-gradient(to left, #051937, #004d7a, #008793); */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+  border-bottom: 1px solid #e6e6e6;
 }
 .hiddenMenu {
   opacity: 0;

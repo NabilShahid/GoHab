@@ -30,8 +30,7 @@ const GoalCard = ({
           <div
             className="cardAvatar"
             style={{
-              background: "var(--goal-color)",
-              boxShadow: "var(--goal-shadow)"
+              background: "var(--goal-color)"
             }}
           >
             {name[0].toUpperCase() || ""}
