@@ -52,9 +52,9 @@ export const MENU_MAPPING={
   CalendarMenu:["GOAL_CALENDAR","TASK_CALENDAR"]
 }
 export const HABIT_EVENT_COLORS = {
-  HIT: "#66bb6a",
-  MISS: "#fb584c",
-  PARTIAL: "#ffa726"
+  HIT: "rgb(96, 214, 96)",
+  MISS: "rgb(255, 100, 100)",
+  PARTIAL: "#ffd026"
 };
 export const AUTH_TYPES = {
   Google: "Google",

@@ -151,7 +151,7 @@ class Habits extends Component {
                   <Tooltip title="Change View">
                     <i
                       className="fa fa-cogs cardsFilterIcon"
-                      style={{ color: "#17bcd0" }}
+                      style={{ color: "var(--habit-color)" }}
                     />
                   </Tooltip>
                 </Popover>

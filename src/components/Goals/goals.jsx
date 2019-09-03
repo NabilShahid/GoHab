@@ -132,7 +132,7 @@ class Goals extends Component {
                   <Tooltip title="Change View">
                     <i
                       className="fa fa-cogs cardsFilterIcon"
-                      style={{ color: "#fd960f" }}
+                      style={{ color: "var(--goal-color)" }}
                     />
                   </Tooltip>
                 </Popover>

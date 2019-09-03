@@ -151,7 +151,7 @@ class Tasks extends Component {
                   <Tooltip title="Change View">
                     <i
                       className="fa fa-cogs cardsFilterIcon"
-                      style={{ color: "#4ea952" }}
+                      style={{ color: "var(--task-color)" }}
                     />
                   </Tooltip>
                 </Popover>

@@ -19,10 +19,11 @@
 }
 
 #headerOptions input {
-  background-color: #656565;
-  color: white;
-  width: 80%;
-  border: unset;
+     /* background-color: #656565; */
+     color: white;
+     width: 80%;
+     border: 1;
+     border-radius: 30px;
 }
 #headerOptions input:focus {
   width: 100%;

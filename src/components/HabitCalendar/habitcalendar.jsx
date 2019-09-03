@@ -123,7 +123,7 @@ class HabitCalendar extends Component {
           <Modal
             visible={habitDialogVisible}
             width="53%"
-            title={selectedHabit.name}
+            title=""
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
@@ -161,7 +161,7 @@ class HabitCalendar extends Component {
           i++
         ) {
           let event = {
-            title: h.name,
+            title:"",
             id: h.id
           };
           let currTrackIndex = h.tracking.findIndex(t => t.Index == i);
