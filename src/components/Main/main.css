@@ -50,7 +50,7 @@
   background-color: white;
   flex: 0 0 calc(100% - 80px);
   max-width: 1300px;
-  max-height: 750px;
+  /* max-height: 750px; */
   margin-top: 15px;
   overflow-y: hidden;
   overflow-x: hidden;
