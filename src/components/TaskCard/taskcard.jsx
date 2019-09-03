@@ -63,8 +63,9 @@ const TaskCard = ({
                 value={importance}
                 style={{
                   fontSize: 19,
-                  color:(completed?"#9bca9e":"#61b765"),
-                  marginTop: "5px"
+                  opacity:(completed?"0.6":"1"),
+                  marginTop: "5px",
+                  color:"var(--task-color)"
                 }}
               />
             </div>

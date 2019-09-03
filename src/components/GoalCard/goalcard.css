@@ -34,7 +34,7 @@
 .goalProgress{
     margin-top: 2%;
     font-size: 12px;
-    display: none;
+    /* display: none; */
 }
 .goalImportance{
     margin-top: 4%;
@@ -42,7 +42,7 @@
 }
 
 .goalCard .progress{
-    height: 11px;
+    height: 3px;
     margin-top: 2%;
     border-radius: 2px;
 }

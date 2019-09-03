@@ -65,7 +65,7 @@ const GoalCard = ({
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: progress + "%",background:(progress==100?"#ffc373":"#fea321") }}
+                style={{ width: progress + "%",backgroundColor:"var(--goal-color)",opacity:(progress==100?"0.6":"1") }}
                 aria-valuenow={progress}
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -82,8 +82,9 @@ const GoalCard = ({
                 value={importance}
                 style={{
                   fontSize: 19,
-                  color:(progress==100?"#ffc373":"#fea321"),
-                  marginTop: "5px"
+                  opacity:(progress==100?"0.6":"1"),
+                  marginTop: "5px",
+                  color:"var(--goal-color)"
                 }}
               />
             </div>
