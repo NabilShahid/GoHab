@@ -219,12 +219,12 @@ code {
 .cardAvatar {
   color: white;
   text-align: center;
-  width: 37px;
+  width: 31px;
   margin-top: -20px;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 3px;
   padding-top: 1px;
-  border-radius: 2px;
+  border-radius: 3px;
   margin-left: -2px;
   font-weight: 500;
 }

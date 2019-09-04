@@ -17,8 +17,10 @@ import { withFirebase } from "../../services/firebase";
 import { addGoal } from "../../actions/goalActions";
 import { connect } from "react-redux";
 import logo from "../../assets/images/logo_withoutText.png";
-import "./creategoalform.css";
+import { getRandomInt } from "../../services/methods/ghtCommonMethods";
+import { MATERIAL_COLORS } from "../../constants/commonConsts";
 import moment from "moment";
+import "./creategoalform.css";
 const { TextArea } = Input;
 class CreateGoalForm extends React.Component {
   state = {
@@ -40,7 +42,7 @@ class CreateGoalForm extends React.Component {
       importance: 1,
       progress: 25,
       dueDate: moment().toDate(),
-      dateCompleted:false
+      dateCompleted: false
     },
     disabledForm: false
   };
@@ -69,8 +71,10 @@ class CreateGoalForm extends React.Component {
     if (!noDueDate) formValuesToSave.dueDate = formValues.dueDate.toISOString();
     else formValuesToSave.dueDate = false;
 
-    if (this.props.mode == "add")
+    if (this.props.mode == "add") {
       //call to firebase goalOps addNewGoal method
+      formValuesToSave.bgColor =
+        MATERIAL_COLORS[getRandomInt(MATERIAL_COLORS.length)];
       this.props.firebase.goalOps
         .addNewGoal(this.props.userEmail, formValuesToSave)
         .then(g => {
@@ -81,7 +85,7 @@ class CreateGoalForm extends React.Component {
         .catch(error => {
           console.error("Error writing document: ", error);
         });
-    else
+    } else
       this.props.firebase.goalOps
         .updateGoal(
           this.props.userEmail,
@@ -175,14 +179,16 @@ class CreateGoalForm extends React.Component {
       importance,
       progress,
       dueDate,
-      dateCompleted
+      dateCompleted,
+      bgColor
     } = this.props.goalOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.progress = progress || 25;
-    formValues.dateCompleted=dateCompleted||false;
+    formValues.dateCompleted = dateCompleted || false;
+    formValues.bgColor = bgColor;
     //set errors to false
     for (const key in this.state.errors) {
       this.state.errors[key].error = false;
@@ -468,11 +474,9 @@ class CreateGoalForm extends React.Component {
  */
 const mapStateToProps = state => {
   return {
-
     userEmail: state.userReducer.User.Email
   };
 };
-
 
 /**
  * dispatch to props mapping form updating user

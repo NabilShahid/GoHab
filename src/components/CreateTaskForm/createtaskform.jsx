@@ -16,6 +16,8 @@ import logo from "../../assets/images/logo_withoutText.png";
 import "./createtaskform.css";
 import moment from "moment";
 import { updateSubItemsCount } from "../../actions/goalActions";
+import { getRandomInt } from "../../services/methods/ghtCommonMethods";
+import { MATERIAL_COLORS } from "../../constants/commonConsts";
 const { TextArea } = Input;
 const Option = Select.Option;
 
@@ -39,7 +41,7 @@ class CreateHabbitForm extends React.Component {
       importance: 1,
       parentGoal: "",
       dueDate: moment().toDate(),
-      dateCompleted:false
+      dateCompleted: false
     },
     disabledForm: false
   };
@@ -70,6 +72,8 @@ class CreateHabbitForm extends React.Component {
 
     if (this.props.mode == "add") {
       //call to firebase taskOps addNewTask method
+      formValuesToSave.bgColor =
+        MATERIAL_COLORS[getRandomInt(MATERIAL_COLORS.length)];
       formValuesToSave.completed = false;
       formValuesToSave.startDate = moment()
         .toDate()
@@ -211,14 +215,16 @@ class CreateHabbitForm extends React.Component {
       parentGoal,
       startDate,
       completed,
-      dateCompleted
+      dateCompleted,
+      bgColor
     } = this.props.taskOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
     formValues.description = description || "";
     formValues.importance = importance || 1;
     formValues.parentGoal = parentGoal || "";
-    formValues.dateCompleted = dateCompleted ||false;
+    formValues.dateCompleted = dateCompleted || false;
+    formValues.bgColor = bgColor;
     formValues.startDate =
       startDate ||
       moment()

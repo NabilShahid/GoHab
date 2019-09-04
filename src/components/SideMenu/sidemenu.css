@@ -1,44 +1,44 @@
-
-.ant-menu{
-    background:var(--outer-menu-color) !important;
-    /* background:  white!important; */
-    color: white !important;
-    border-radius: 5px;
+.ant-menu {
+  background: var(--outer-menu-color) !important;
+  /* background:  white!important; */
+  color: white !important;
+  border-radius: 5px;
 }
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background-color: unset!important;
+  background-color: unset !important;
 }
 .ant-menu-item-selected {
-    /* color: white !important; */
-    /* margin: 5px !important; */
-    /* border-radius: 4px; */
-    /* box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14); */
-    font-weight: 500;
-    color: #3b93ff !important;
-  
-   
+  font-weight: 500;
+  color: #3b93ff !important;
 }
-.ant-menu-vertical .ant-menu-item:after, .ant-menu-vertical-left .ant-menu-item:after, .ant-menu-vertical-right .ant-menu-item:after, .ant-menu-inline .ant-menu-item:after{
-    border-right: 0px !important;
+.ant-menu-vertical .ant-menu-item:after,
+.ant-menu-vertical-left .ant-menu-item:after,
+.ant-menu-vertical-right .ant-menu-item:after,
+.ant-menu-inline .ant-menu-item:after {
+  border-right: 0px !important;
 }
-.sideIcon{
-    font-size: 19px !important;
-    margin-right: 5%;
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border-right: 0px !important;
 }
-.ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
-    width: unset !important;
+.sideIcon {
+  font-size: 19px !important;
+  margin-right: 5%;
 }
-#sGoalsI{
-    color: #fea01b;
+.ant-menu-inline .ant-menu-item,
+.ant-menu-inline .ant-menu-submenu-title {
+  width: unset !important;
 }
-#sHabitsI{
-    color: #1dc0d4;
-    
+#sGoalsI {
+  color: #fea01b;
 }
-#sTasksI{
-    color: #5cb360;
-    
+#sHabitsI {
+  color: #1dc0d4;
 }
-.ant-menu-sub.ant-menu-inline{
-    background-color: var(--inner-menu-color) !important;
+#sTasksI {
+  color: #5cb360;
+}
+.ant-menu-sub.ant-menu-inline {
+  background-color: var(--inner-menu-color) !important;
 }

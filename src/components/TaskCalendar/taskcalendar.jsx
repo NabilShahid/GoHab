@@ -36,8 +36,7 @@ class TaskCalendar extends Component {
           title: task.name,
           start: new Date(task.startDate),
           end: new Date(task.dueDate),
-          backgroundColor: MATERIAL_COLORS[index % 16],
-          color: MATERIAL_COLORS[index % 16],
+          color: task.bgColor,
           id: task.id
         };
         return event;

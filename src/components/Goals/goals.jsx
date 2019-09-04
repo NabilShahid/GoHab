@@ -30,13 +30,13 @@ import "./goals.css";
 
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
-const Search=Input.Search;
+const Search = Input.Search;
 class Goals extends Component {
   state = {
     goalDialogInDom: false,
     goalDialogVisible: false,
     currentGoalOptions: {},
-    subModeSearchValue:""
+    subModeSearchValue: ""
   };
   changeOrderBy(v) {
     const orderBy = v;
@@ -57,19 +57,22 @@ class Goals extends Component {
       <div id="goalCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-           <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: "right" }}>
               <Search
                 className="submodeSearch"
                 placeholder="Search"
                 value={subModeSearchValue}
                 size="small"
                 onChange={e => {
-                  this.setState({subModeSearchValue:e.target.value});
+                  this.setState({ subModeSearchValue: e.target.value });
                 }}
                 style={{ width: 210 }}
               />
             </div>
-            {this.getGoalRows(getFilteredGoals(subMode.Goals,subModeSearchValue,"all"), subMode.ColSize)}
+            {this.getGoalRows(
+              getFilteredGoals(subMode.Goals, subModeSearchValue, "all"),
+              subMode.ColSize
+            )}
           </div>
         )}
         {!subMode && (
@@ -252,7 +255,7 @@ class Goals extends Component {
 
         goalRows.push(
           <div className="row" style={{ marginTop: "15px" }} key={i}>
-            {this.getRowCols(goalRowArray, i,colSize)}
+            {this.getRowCols(goalRowArray, i, colSize)}
           </div>
         );
       }
@@ -260,7 +263,7 @@ class Goals extends Component {
     return goalRows;
   }
 
-  getRowCols(rowArray, rowindex,colSize) {
+  getRowCols(rowArray, rowindex, colSize) {
     let cellClass = `col-md-${Math.floor(12 / colSize)}`;
     if (rowindex > 0) cellClass += " goalsRow";
     return rowArray.map(r => {
@@ -278,6 +281,7 @@ class Goals extends Component {
             dueDate={r.dueDate}
             progress={r.progress}
             importance={r.importance}
+            bgColor={r.bgColor}
             id={r.id}
             subTasks={r.subTasks}
             subHabits={r.subHabits}
@@ -291,13 +295,11 @@ class Goals extends Component {
   markGoal = id => {
     let currGoal = this.props.goals.find(v => v.id == id);
     if (currGoal.progress == 100) {
-      currGoal.dateCompleted=false;
+      currGoal.dateCompleted = false;
       currGoal.progress = 0;
-      
-    }
-    else {
+    } else {
       currGoal.progress = 100;
-      currGoal.dateCompleted=new Date().toISOString();
+      currGoal.dateCompleted = new Date().toISOString();
       message.success(`Marked ${currGoal.name} as achieved!`);
     }
     this.updateLocalGoal(currGoal);
@@ -317,7 +319,7 @@ const mapStateToProps = state => {
     orderBy: state.goalReducer.CurrentOrderBy,
     tasks: state.taskReducer.Tasks,
     habits: state.habitReducer.Habits,
-    userEmail:state.userReducer.User.Email
+    userEmail: state.userReducer.User.Email
   };
 };
 

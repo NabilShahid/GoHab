@@ -67,13 +67,13 @@ class Tasks extends Component {
                 value={subModeSearchValue}
                 size="small"
                 onChange={e => {
-                  this.setState({subModeSearchValue:e.target.value});
+                  this.setState({ subModeSearchValue: e.target.value });
                 }}
                 style={{ width: 210 }}
               />
             </div>
             {this.getTasksRows(
-              getFilteredTasks(subMode.Tasks,subModeSearchValue,"all"),
+              getFilteredTasks(subMode.Tasks, subModeSearchValue, "all"),
               subMode.ColSize
             )}
           </div>
@@ -274,6 +274,7 @@ class Tasks extends Component {
             dueDate={r.dueDate}
             completed={r.completed}
             importance={r.importance}
+            bgColor={r.bgColor}
             markTask={this.markTask}
             id={r.id}
           />
@@ -284,14 +285,12 @@ class Tasks extends Component {
 
   markTask = id => {
     let currTask = this.props.tasks.find(v => v.id == id);
-    if (currTask.completed){
-
+    if (currTask.completed) {
       currTask.completed = false;
-      currTask.dateCompleted=false;
-    } 
-    else {
+      currTask.dateCompleted = false;
+    } else {
       currTask.completed = true;
-      currTask.dateCompleted=new Date().toISOString();
+      currTask.dateCompleted = new Date().toISOString();
       message.success(`Marked ${currTask.name} as completed!`);
     }
     this.updateLocalTask(currTask);
@@ -311,7 +310,7 @@ const mapStateToProps = state => {
     orderBy: state.taskReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
     viewTypeFilter: state.taskReducer.CurrentViewType,
-    userEmail:state.userReducer.User.Email
+    userEmail: state.userReducer.User.Email
   };
 };
 

@@ -26,7 +26,7 @@ import { getFilteredHabits } from "../../services/methods/habitMethods";
 
 import "./habits.css";
 const Option = Select.Option;
-const Search=Input.Search;
+const Search = Input.Search;
 class Habits extends Component {
   state = {
     habitDialogInDom: false,
@@ -34,7 +34,7 @@ class Habits extends Component {
     currentHabitOptions: {},
     habitViewMode: "view",
     habitDialogTitle: "",
-    subModeSearchValue:""
+    subModeSearchValue: ""
   };
 
   changeOrderBy(v) {
@@ -62,19 +62,22 @@ class Habits extends Component {
       <div id="habitCardsDiv">
         {subMode && (
           <div className="actualCardsDiv">
-           <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: "right" }}>
               <Search
                 className="submodeSearch"
                 placeholder="Search"
                 value={subModeSearchValue}
                 size="small"
                 onChange={e => {
-                  this.setState({subModeSearchValue:e.target.value});
+                  this.setState({ subModeSearchValue: e.target.value });
                 }}
                 style={{ width: 210 }}
               />
             </div>
-            {this.getHabitsRows(getFilteredHabits(subMode.Habits,subModeSearchValue,"all"), subMode.ColSize)}
+            {this.getHabitsRows(
+              getFilteredHabits(subMode.Habits, subModeSearchValue, "all"),
+              subMode.ColSize
+            )}
           </div>
         )}
         {!subMode && (
@@ -249,7 +252,7 @@ class Habits extends Component {
 
         habitRows.push(
           <div className="row" style={{ marginTop: "15px" }} key={i}>
-            {this.getHabitCols(habitRowArray, i,colSize)}
+            {this.getHabitCols(habitRowArray, i, colSize)}
           </div>
         );
       }
@@ -257,7 +260,7 @@ class Habits extends Component {
     return habitRows;
   }
 
-  getHabitCols(rowArray, rowindex,colSize) {
+  getHabitCols(rowArray, rowindex, colSize) {
     let cellClass = `col-md-${Math.floor(12 / colSize)}`;
     if (rowindex > 0) cellClass += " habitsRow";
     return rowArray.map(r => {
@@ -276,6 +279,7 @@ class Habits extends Component {
             period={r.period}
             completed={r.completed}
             frequency={r.frequency}
+            bgColor={r.bgColor}
             markHabit={this.markHabit}
             id={r.id}
           />
@@ -308,7 +312,7 @@ const mapStateToProps = state => {
     orderBy: state.habitReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
     viewTypeFilter: state.habitReducer.CurrentViewType,
-    userEmail:state.userReducer.User.Email
+    userEmail: state.userReducer.User.Email
   };
 };
 

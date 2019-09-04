@@ -11,6 +11,7 @@ const TaskCard = ({
   importance,
   completed,
   markTask,
+  bgColor,
   id
 }) => {
   if (!dueDate) dueDate = "No due date";
@@ -18,14 +19,18 @@ const TaskCard = ({
   return (
     <div
       className="taskCard"
-      style={completed ? { color: "rgb(195, 195, 195)", background: "rgb(251, 251, 251)"  } : {}}
+      style={
+        completed
+          ? { color: "rgb(195, 195, 195)", background: "rgb(251, 251, 251)" }
+          : {}
+      }
     >
       <div className="row">
         <div className="col-md-2">
           <div
             className="cardAvatar"
             style={{
-              background: "var(--task-color)"
+              backgroundColor: bgColor
             }}
           >
             {name[0].toUpperCase() || ""}
@@ -47,7 +52,9 @@ const TaskCard = ({
         </div>
         <div className="col-md-10 taskCardContent">
           <div style={{ display: "flex" }}>
-            <div className="taskCardTitle" style={{ flex: "1 1 70%" }}>{name}</div>
+            <div className="taskCardTitle" style={{ flex: "1 1 70%" }}>
+              {name}
+            </div>
             <div style={{ flex: "1 1 30%" }}>
               <span className="taskDate">{dueDate}</span>
             </div>
@@ -63,9 +70,9 @@ const TaskCard = ({
                 value={importance}
                 style={{
                   fontSize: 19,
-                  opacity:(completed?"0.6":"1"),
+                  opacity: completed ? "0.6" : "1",
                   marginTop: "5px",
-                  color:"var(--task-color)"
+                  color: "var(--task-color)"
                 }}
               />
             </div>

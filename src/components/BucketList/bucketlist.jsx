@@ -28,6 +28,7 @@ const BucketList = ({ items, lists, openDialog, markItem, card }) => {
                           progress={filteredItem.progress}
                           importance={filteredItem.importance}
                           id={filteredItem.id}
+                          bgColor={filteredItem.bgColor}
                           completed={filteredItem.completed}
                           markTask={markItem}
                         />
@@ -37,6 +38,7 @@ const BucketList = ({ items, lists, openDialog, markItem, card }) => {
                           name={filteredItem.name}
                           description={filteredItem.description}
                           id={filteredItem.id}
+                          bgColor={filteredItem.bgColor}
                           completed={filteredItem.completed}
                           category={filteredItem.category}
                           period={filteredItem.period}

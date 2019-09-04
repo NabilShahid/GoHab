@@ -23,7 +23,11 @@ import { addHabit } from "../../actions/habitActions";
 import "./createhabitform.css";
 import moment from "moment";
 import { updateSubItemsCount } from "../../actions/goalActions";
-import {HABIT_CATEGORIES} from "../../constants/commonConsts";
+import {
+  HABIT_CATEGORIES,
+  MATERIAL_COLORS
+} from "../../constants/commonConsts";
+import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 const { TextArea } = Input;
 const Option = Select.Option;
 class CreateHabitForm extends React.Component {
@@ -92,6 +96,8 @@ class CreateHabitForm extends React.Component {
 
     if (this.props.mode == "add") {
       //call to firebase habitOps addNewHabit method
+      formValuesToSave.bgColor =
+        MATERIAL_COLORS[getRandomInt(MATERIAL_COLORS.length)];
       formValuesToSave.completed = false;
       formValuesToSave.startDateTime = moment()
         .toDate()
@@ -224,7 +230,8 @@ class CreateHabitForm extends React.Component {
       frequency,
       completed,
       startDateTime,
-      tracking
+      tracking,
+      bgColor
     } = this.props.habitOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
@@ -235,6 +242,7 @@ class CreateHabitForm extends React.Component {
     formValues.frequency = frequency || 1;
     formValues.completed = completed || false;
     formValues.tracking = tracking || [];
+    formValues.bgColor = bgColor;
     formValues.startDateTime =
       startDateTime ||
       moment()
@@ -374,18 +382,12 @@ class CreateHabitForm extends React.Component {
                   }}
                   buttonStyle="solid"
                 >
-                  {
-                    HABIT_CATEGORIES.map(hc=>(
-                      <Radio.Button value={hc.Name}>
-                      <i
-                        className={hc.Icon}
-                        style={{ marginRight: "6px" }}
-                      />
+                  {HABIT_CATEGORIES.map(hc => (
+                    <Radio.Button value={hc.Name}>
+                      <i className={hc.Icon} style={{ marginRight: "6px" }} />
                       {hc.Name}
                     </Radio.Button>
-                    ))
-                  }
-                 
+                  ))}
                 </Radio.Group>
               </div>
             </div>

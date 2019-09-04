@@ -1,56 +1,58 @@
 export const START_DATE_FOR_INDEX_DAY_WEEK = "2019-01-07";
 export const START_DATE_FOR_INDEX_MONTH = "2019-01-01";
 export const MATERIAL_COLORS = [
-  "#EC407A",
-  "#18FFFF",
-  "#546E7A",
-  "#FFA726",
-  "#4DD0E1",
-  "#66bb6a",
-  "#AA00FF",
-  "#009688",
-  "#FFEB3B",
-  "#f44336",
-  "#00695C",
-  "#0D47A1",
-  "#6D4C41",
-  "#3949AB",
-  "#00E676"
+  "rgb(239, 83, 80)",
+  "rgb(236, 64, 122)",
+  "rgb(171, 71, 188)",
+  "rgb(126, 87, 194)",
+  "rgb(92, 107, 192)",
+  "rgb(66, 165, 245)",
+  "rgb(41, 182, 246)",
+  "rgb(38, 198, 218)",
+  "rgb(38, 166, 154)",
+  "rgb(102, 187, 106)",
+  "rgb(156, 204, 101)",
+  "rgb(212, 225, 87)",
+  "rgb(255, 238, 88)",
+  "rgb(255, 202, 40)",
+  "rgb(255, 167, 38)",
+  "rgb(255, 112, 67)",
+  "rgb(141, 110, 99)",
+  "rgb(189, 189, 189)",
+  "rgb(120, 144, 156)"
 ];
-
-export const HABIT_CATEGORIES=[
+export const HABIT_CATEGORIES = [
   {
-    Name:"Health",
-    Icon:"fa fa-heartbeat"
+    Name: "Health",
+    Icon: "fa fa-heartbeat"
   },
   {
-    Name:"Personal Development",
-    Icon:"fa fa-user-check"
+    Name: "Personal Development",
+    Icon: "fa fa-user-check"
   },
   {
-    Name:"Social",
-    Icon:"fa fa-user-friends"
+    Name: "Social",
+    Icon: "fa fa-user-friends"
   },
   {
-    Name:"Relationship",
-    Icon:"fa fa-heart"
+    Name: "Relationship",
+    Icon: "fa fa-heart"
   },
   {
-    Name:"Routine Work",
-    Icon:"fa fa-chart-bar"
+    Name: "Routine Work",
+    Icon: "fa fa-chart-bar"
   },
   {
-    Name:"Other",
-    Icon:"fa fa-circle"
-  },
-  
-]
-export const MENU_MAPPING={
-  ItemsMenu:["GOALS","TASKS","HABITS"],
-  AnalyticsMenu:["GOAL_STATS","TASK_STATS","HABIT_STATS"],
-  HabitTrackingMenu:["HABIT_TRACKING","HABIT_CALENDAR"],
-  CalendarMenu:["GOAL_CALENDAR","TASK_CALENDAR"]
-}
+    Name: "Other",
+    Icon: "fa fa-circle"
+  }
+];
+export const MENU_MAPPING = {
+  ItemsMenu: ["GOALS", "TASKS", "HABITS"],
+  AnalyticsMenu: ["GOAL_STATS", "TASK_STATS", "HABIT_STATS"],
+  HabitTrackingMenu: ["HABIT_TRACKING", "HABIT_CALENDAR"],
+  CalendarMenu: ["GOAL_CALENDAR", "TASK_CALENDAR"]
+};
 export const HABIT_EVENT_COLORS = {
   HIT: "rgb(96, 214, 96)",
   MISS: "rgb(255, 100, 100)",
