@@ -8,7 +8,7 @@ const BucketList = ({ items, lists, openDialog, markItem, card }) => {
       {lists.map(list => {
         return (
           <div className="bList">
-            <div className="bListHeader">{list.name}</div>
+            <div className="bListHeader" style={{borderTop:"4px solid "+list.bgColor}}>{list.name}</div>
             <div className="bListContent">
               {items
                 .filter(item => item.parentGoal == list.id)
