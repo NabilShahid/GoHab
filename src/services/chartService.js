@@ -4,7 +4,10 @@ import {
 } from "./methods/ghtCommonMethods";
 import { getSortedGoals } from "./methods/goalMethods";
 import { getSortedTasks } from "./methods/taskMethods";
-import { getHitMissCountForAllHabits } from "./methods/habitMethods";
+import {
+  getHitMissCountForAllHabits,
+  getHabitHitMissArrayForPeriod
+} from "./methods/habitMethods";
 import moment from "moment";
 
 export function getOverdueAndPendingGoalsForChart(goals) {
@@ -77,4 +80,12 @@ export function getGoalTaskDueDateDataForBarChart(items) {
       "After Due Date": data.AfterDueDate
     }
   ];
+}
+
+export function getHabitWiseProgressDataForLineChart(
+  tracking,
+  period,
+  startFrom
+) {
+  return getHabitHitMissArrayForPeriod(tracking, period, startFrom);
 }

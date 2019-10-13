@@ -1,7 +1,8 @@
 import { alphaSort, numericSort, dateSort } from "./ghtCommonMethods";
 import {
   START_DATE_FOR_INDEX_DAY_WEEK,
-  START_DATE_FOR_INDEX_MONTH
+  START_DATE_FOR_INDEX_MONTH,
+  PERIOD_FORMATS
 } from "../../constants/commonConsts";
 import moment from "moment";
 
@@ -118,7 +119,7 @@ export function getTrackPeriodString(period, frequency) {
 
 export function getHitMissCountForHabit(habit) {
   const startIndex = getTrackIndexForDate(habit.period, habit.startDateTime);
-  const endIndex = getCurrentTrackIndex(habit.period)+1;
+  const endIndex = getCurrentTrackIndex(habit.period) + 1;
   const { tracking } = habit;
   let result = tracking.reduce(
     (acc, curr) => {
@@ -137,14 +138,63 @@ export function getHitMissCountForHabit(habit) {
 }
 
 export function getHitMissCountForAllHabits(habits) {
-  return habits.filter(h=>!h.completed).reduce(
-    (acc, curr) => {
-      const currHabitCounts = getHitMissCountForHabit(curr);
-      acc.Followed += currHabitCounts.Followed;
-      acc.PartiallyFollowed += currHabitCounts.PartiallyFollowed;
-      acc.Missed += currHabitCounts.Missed;
-      return acc;
-    },
-    { Followed: 0, PartiallyFollowed: 0, Missed: 0 }
-  );
+  return habits
+    .filter(h => !h.completed)
+    .reduce(
+      (acc, curr) => {
+        const currHabitCounts = getHitMissCountForHabit(curr);
+        acc.Followed += currHabitCounts.Followed;
+        acc.PartiallyFollowed += currHabitCounts.PartiallyFollowed;
+        acc.Missed += currHabitCounts.Missed;
+        return acc;
+      },
+      { Followed: 0, PartiallyFollowed: 0, Missed: 0 }
+    );
 }
+
+export function getHabitHitMissArrayForPeriod(tracking, period, fromLast) {
+  let periodArray = [];
+  const currentTrackIndex = getCurrentTrackIndex(period);
+  for (let i = currentTrackIndex - fromLast + 1; i <= currentTrackIndex; i++) {
+    let periodObj = {
+      period: moment(getTrackDateFromIndex(period, i)).format(
+        PERIOD_FORMATS[period]
+      )
+    };
+    if (
+      tracking.findIndex(tr => tr.Index == i && tr.Count == tr.Frequency) > -1
+    )
+      periodObj.followed = 1;
+    else periodObj.followed = 0;
+    periodArray.push(periodObj);
+  }
+  return periodArray;
+}
+
+var tracking = [
+  {
+    Count: 1,
+    Frequency: 1,
+    Index: 33
+  },
+  {
+    Count: 1,
+    Frequency: 1,
+    Index: 34
+  },
+  {
+    Count: 1,
+    Frequency: 1,
+    Index: 36
+  },
+  {
+    Count: 1,
+    Frequency: 1,
+    Index: 37
+  },
+  {
+    Count: 1,
+    Frequency: 1,
+    Index: 39
+  }
+];

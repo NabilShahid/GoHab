@@ -1,29 +1,45 @@
 import React, { Component } from "react";
-import { Popover, Select } from "antd";
+import { InputNumber, Select } from "antd";
+import HabitWiseProgressLineChart from "../../charts/habitWiseProgressLineChart";
 import { connect } from "react-redux";
+import { getHabitWiseProgressDataForLineChart } from "../../services/chartService.js";
 const { Option } = Select;
 class HabitWiseProgressChartWrapper extends Component {
   state = {
     habitPeriod: "Daily",
     habitGoal: "all",
-    selectedHabit: ""
+    selectedHabit: "",
+    showLastCount: 10
   };
+  setSelectedHabit(selectedHabit) {
+    debugger;
+    this.setState({ selectedHabit });
+  }
+
   componentDidMount() {}
   render() {
-    const { habitPeriod, habitGoal, selectedHabit } = this.state;
+    const { habitPeriod, habitGoal, showLastCount } = this.state;
+    let { selectedHabit } = this.state;
     const { goals, habits } = this.props;
     const goalPeriodHabits = habits
       .filter(h => h.period == habitPeriod)
       .filter(h => habitGoal == "all" || h.parentGoal == habitGoal);
-    const firtHabitOfCurrentFilter =
-      goalPeriodHabits[0] && goalPeriodHabits[0].id;
+
+    if (!selectedHabit)
+      selectedHabit = goalPeriodHabits[0] && goalPeriodHabits[0].id;
+    else selectedHabit = "";
+    let currentHabitTracking = habits.find(h => h.id == selectedHabit);
+    currentHabitTracking = currentHabitTracking
+      ? currentHabitTracking.tracking
+      : [];
+
     return (
       <div
         className="row"
         id="habitWiseProgressLineChartFilterDiv"
         style={{ marginBottom: "22px" }}
       >
-        <div className="col-md-4">
+        <div className="col-md-3">
           <span className="habitWiseProgressLineChartFilterLabel">Goal: </span>
           <Select
             showSearch
@@ -61,15 +77,14 @@ class HabitWiseProgressChartWrapper extends Component {
             <Option value="Monthly">Monthly</Option>
           </Select>
         </div>
-        <div className="col-md-5">
+        <div className="col-md-3">
           <span className="habitWiseProgressLineChartFilterLabel">Habit: </span>
           <Select
             style={{ width: "70%" }}
             size="small"
-            defaultValue={firtHabitOfCurrentFilter}
             placeholder="Select habit"
-            onChange={selectedHabit => this.setState({ selectedHabit })}
-            value={selectedHabit || firtHabitOfCurrentFilter}
+            onChange={selectedHabit => this.setSelectedHabit(selectedHabit)}
+            value={selectedHabit}
           >
             {goalPeriodHabits.map(h => {
               return (
@@ -80,6 +95,26 @@ class HabitWiseProgressChartWrapper extends Component {
             })}
           </Select>
         </div>
+        <div className="col-md-3">
+          <span className="habitWiseProgressLineChartFilterLabel">
+            Show Last:{" "}
+          </span>
+          <InputNumber
+            size="small"
+            name="periodNumber"
+            value={showLastCount}
+            min={1}
+            max={50}
+             onChange={showLastCount => this.setState({ showLastCount })}
+          />
+        </div>
+        <HabitWiseProgressLineChart
+          data={getHabitWiseProgressDataForLineChart(
+            currentHabitTracking,
+            habitPeriod,
+            showLastCount
+          )}
+        />
       </div>
     );
   }

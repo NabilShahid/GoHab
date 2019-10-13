@@ -3,7 +3,7 @@ import { Popover } from "antd";
 import HabitWiseProgressChartWrapper  from "../HabitWiseProgressChartWrapper/habitwiseprogresschartwrapper";
 const HabitStats = () => {
   return (
-    <div className="fullHeight" style={{ overflowY: "auto" }}>
+    <div className="fullHeight" style={{ overflowY: "auto", overflowX:"hidden" }}>
       <div style={{ width: "100%" }}>
         <div className="fullWidthLineChartLabel">
           Habit Wise Progress Chart{" "}

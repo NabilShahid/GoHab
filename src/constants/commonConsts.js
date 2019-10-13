@@ -1,5 +1,10 @@
 export const START_DATE_FOR_INDEX_DAY_WEEK = "2019-01-07";
 export const START_DATE_FOR_INDEX_MONTH = "2019-01-01";
+export const PERIOD_FORMATS = {
+  Daily: "DD/MM/YYYY",
+  Weekly: "DD/MM/YYYY",
+  Monthly: "MM/YYYY"
+};
 export const MATERIAL_COLORS = [
   "rgb(239, 83, 80)",
   "rgb(236, 64, 122)",
