@@ -59,6 +59,7 @@ class MainBase extends Component {
             )}
             <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />
             <SideMenu />
+            <div id="sideBottomDiv">Hello</div>
           </div>
 
           <div id="mainContainer" className="inheritHeight">

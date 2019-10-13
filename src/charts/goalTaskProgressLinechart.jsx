@@ -62,7 +62,7 @@ const GoalTaskProgressLineChart = ({data}) => {
       <LineChart
         data={data}
           margin={{
-          top: 0,
+          top:10,
           right: 30,
           left: 0,
           bottom: 0

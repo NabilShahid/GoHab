@@ -15,7 +15,7 @@ const TaskStats = ({ tasksProgressData, tasksOverduePendingData,tasksDueDateData
   return (
     <div className="fullHeight" style={{ overflowY: "auto" }}>
       <div style={{ width: "100%" }}>
-        <div className="goalTaskProgressLineChartLabel">
+        <div className="fullWidthLineChartLabel">
           Task Progress Line Chart{" "}
           <Popover
             placement="bottomLeft"

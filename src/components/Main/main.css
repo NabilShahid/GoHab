@@ -67,6 +67,7 @@
 .submodeSearch input {
   width: 90%;
   margin-bottom: 5px;
+  border-radius: 20px;
 }
 .submodeSearch input:focus {
   width: 100%;

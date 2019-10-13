@@ -104,10 +104,9 @@ class HabitCalendar extends Component {
               //   defaultValue={["a10", "c12"]}
               onChange={e => this.setState({ habitsToFilter: e })}
             >
-              {goalPeriodHabits
-                .filter(h => h.period == habitsPeriod)
+              {goalPeriodHabits               
                 .map(h => {
-                  return <Option key={h.name}>{h.name}</Option>;
+                  return <Option key={h.id}>{h.name}</Option>;
                 })}
             </Select>
           </div>
