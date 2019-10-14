@@ -1,21 +1,21 @@
 import React, { Component } from "react";
-import { InputNumber, Select, Popover } from "antd";
+import { InputNumber, Select } from "antd";
 import HabitWiseProgressLineChart from "../../charts/habitWiseProgressLineChart";
 import { connect } from "react-redux";
 import { getHabitWiseProgressDataForLineChart } from "../../services/chartService.js";
 const { Option } = Select;
-class HabitStats extends Component {
+class HabitWiseProgressChartWrapper extends Component {
   state = {
     habitPeriod: "Daily",
     habitGoal: "all",
     selectedHabit: "",
-    showLastCountProgressLineChart: 10
+    showLastCount: 10
   };
   setSelectedHabit(selectedHabit) {
     this.setState({ selectedHabit });
   }
   render() {
-    const { habitPeriod, habitGoal, showLastCountProgressLineChart } = this.state;
+    const { habitPeriod, habitGoal, showLastCount } = this.state;
     let { selectedHabit } = this.state;
     const { goals, habits } = this.props;
     const goalPeriodHabits = habits
@@ -35,15 +35,32 @@ class HabitStats extends Component {
         className="fullHeight"
         style={{ overflowY: "auto", overflowX: "hidden" }}
       >
-        Select a Habit{" "}
+        {/* <Popover
+            placement="bottomLeft"
+            content={
+              <div>
+                Chart showing how early or late goal was completed in days.
+                <ul>
+                  <li>
+                    Vertical axis shows number of days. Positive for days before
+                    due date, and negative for days after due date
+                  </li>
+                  <li>Horizontal axis shows goals</li>
+                </ul>{" "}
+              </div>
+            }
+            trigger="hover"
+          >
+            <i className="fa fa-info-circle graphInfoIcon"></i>
+          </Popover> */}
         <div
           className="row"
           id="habitWiseProgressLineChartFilterDiv"
           style={{ marginBottom: "22px" }}
         >
-          
-          <div className="col-md-4">
-            <span className="habitStatsFilterLabel">
+          Select a Habit{" "}
+          <div className="col-md-3">
+            <span className="habitWiseProgressLineChartFilterLabel">
               Goal:{" "}
             </span>
             <Select
@@ -66,7 +83,7 @@ class HabitStats extends Component {
             </Select>
           </div>
           <div className="col-md-3">
-            <span className="habitStatsFilterLabel">
+            <span className="habitWiseProgressLineChartFilterLabel">
               Period:{" "}
             </span>
             <Select
@@ -82,8 +99,8 @@ class HabitStats extends Component {
               <Option value="Monthly">Monthly</Option>
             </Select>
           </div>
-          <div className="col-md-4">
-            <span className="habitStatsFilterLabel">
+          <div className="col-md-3">
+            <span className="habitWiseProgressLineChartFilterLabel">
               Habit:{" "}
             </span>
             <Select
@@ -101,50 +118,28 @@ class HabitStats extends Component {
                 );
               })}
             </Select>
-          </div>        
-        </div>
-
-        <div id="habitWiseProgressLineChartDiv">
-        <div className="fullWidthLineChartLabel">
-          Task Progress Line Chart{" "}
-          <Popover
-            placement="bottomLeft"
-            // title="Change View"
-            content={
-              <div>
-                Chart showing how early or late task was completed in days.
-                <ul>
-                  <li>
-                    Vertical axis shows number of days. Positive for days before
-                    due date, and negative for days after due date
-                  </li>
-                  <li>Horizontal axis shows tasks</li>
-                </ul>{" "}
-              </div>
-            }
-            trigger="hover"
-          >
-            <i className="fa fa-info-circle graphInfoIcon"></i>
-          </Popover>
-          <div>
+          </div>
+          <div className="col-md-3">
             <span className="habitWiseProgressLineChartFilterLabel">
               Show Last:{" "}
             </span>
             <InputNumber
               size="small"
               name="periodNumber"
-              value={showLastCountProgressLineChart}
+              value={showLastCount}
               min={1}
               max={50}
-              onChange={showLastCountProgressLineChart => this.setState({ showLastCountProgressLineChart })}
+              onChange={showLastCount => this.setState({ showLastCount })}
             />
           </div>
         </div>
+
+        <div id="habitWiseProgressLineChartDiv">
           <HabitWiseProgressLineChart
             data={getHabitWiseProgressDataForLineChart(
               currentHabitTracking,
               habitPeriod,
-              showLastCountProgressLineChart
+              showLastCount
             )}
           />
         </div>
@@ -163,4 +158,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   null
-)(HabitStats);
+)(HabitWiseProgressChartWrapper);

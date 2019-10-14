@@ -12,11 +12,8 @@ class HabitWiseProgressChartWrapper extends Component {
     showLastCount: 10
   };
   setSelectedHabit(selectedHabit) {
-    debugger;
     this.setState({ selectedHabit });
   }
-
-  componentDidMount() {}
   render() {
     const { habitPeriod, habitGoal, showLastCount } = this.state;
     let { selectedHabit } = this.state;
