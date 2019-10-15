@@ -1,31 +1,40 @@
 import React, { Component } from "react";
 import { InputNumber, Select, Popover } from "antd";
 import HabitWiseProgressLineChart from "../../charts/habitWiseProgressLineChart";
+import HabitWiseHitMissBarChart from "../../charts/habitWiseHitMissBarChart";
 import { connect } from "react-redux";
-import { getHabitWiseProgressDataForLineChart } from "../../services/chartService.js";
+import {
+  getHabitWiseProgressDataForLineChart,
+  getHabitHitMissDataForSingleHabit
+} from "../../services/chartService.js";
+import "./habitstats.css";
 const { Option } = Select;
 class HabitStats extends Component {
   state = {
     habitPeriod: "Daily",
     habitGoal: "all",
-    selectedHabit: "",
+    selectedHabitId: "",
     showLastCountProgressLineChart: 10
   };
-  setSelectedHabit(selectedHabit) {
-    this.setState({ selectedHabit });
+  setSelectedHabit(selectedHabitId) {
+    this.setState({ selectedHabitId });
   }
   render() {
-    const { habitPeriod, habitGoal, showLastCountProgressLineChart } = this.state;
-    let { selectedHabit } = this.state;
+    const {
+      habitPeriod,
+      habitGoal,
+      showLastCountProgressLineChart
+    } = this.state;
+    let { selectedHabitId } = this.state;
     const { goals, habits } = this.props;
     const goalPeriodHabits = habits
       .filter(h => h.period == habitPeriod)
       .filter(h => habitGoal == "all" || h.parentGoal == habitGoal);
-
-    if (!selectedHabit)
-      selectedHabit = goalPeriodHabits[0] && goalPeriodHabits[0].id;
-    else selectedHabit = "";
-    let currentHabitTracking = habits.find(h => h.id == selectedHabit);
+    const selectedHabitObj = goalPeriodHabits[0] ? goalPeriodHabits[0] : {};
+    if (Object.keys(selectedHabitObj).length > 0)
+      selectedHabitId = selectedHabitObj.id;
+    else selectedHabitId = "";
+    let currentHabitTracking = habits.find(h => h.id == selectedHabitId);
     currentHabitTracking = currentHabitTracking
       ? currentHabitTracking.tracking
       : [];
@@ -38,14 +47,11 @@ class HabitStats extends Component {
         Select a Habit{" "}
         <div
           className="row"
-          id="habitWiseProgressLineChartFilterDiv"
+          id="habitStatsFilterDiv"
           style={{ marginBottom: "22px" }}
         >
-          
           <div className="col-md-4">
-            <span className="habitStatsFilterLabel">
-              Goal:{" "}
-            </span>
+            <span className="habitStatsFilterLabel">Goal: </span>
             <Select
               showSearch
               defaultValue={"all"}
@@ -66,9 +72,7 @@ class HabitStats extends Component {
             </Select>
           </div>
           <div className="col-md-3">
-            <span className="habitStatsFilterLabel">
-              Period:{" "}
-            </span>
+            <span className="habitStatsFilterLabel">Period: </span>
             <Select
               onChange={habitPeriod => {
                 this.setState({ habitPeriod });
@@ -83,15 +87,15 @@ class HabitStats extends Component {
             </Select>
           </div>
           <div className="col-md-4">
-            <span className="habitStatsFilterLabel">
-              Habit:{" "}
-            </span>
+            <span className="habitStatsFilterLabel">Habit: </span>
             <Select
               style={{ width: "70%" }}
               size="small"
               placeholder="Select habit"
-              onChange={selectedHabit => this.setSelectedHabit(selectedHabit)}
-              value={selectedHabit}
+              onChange={selectedHabitId =>
+                this.setSelectedHabit(selectedHabitId)
+              }
+              value={selectedHabitId}
             >
               {goalPeriodHabits.map(h => {
                 return (
@@ -101,45 +105,46 @@ class HabitStats extends Component {
                 );
               })}
             </Select>
-          </div>        
-        </div>
-
-        <div id="habitWiseProgressLineChartDiv">
-        <div className="fullWidthLineChartLabel">
-          Task Progress Line Chart{" "}
-          <Popover
-            placement="bottomLeft"
-            // title="Change View"
-            content={
-              <div>
-                Chart showing how early or late task was completed in days.
-                <ul>
-                  <li>
-                    Vertical axis shows number of days. Positive for days before
-                    due date, and negative for days after due date
-                  </li>
-                  <li>Horizontal axis shows tasks</li>
-                </ul>{" "}
-              </div>
-            }
-            trigger="hover"
-          >
-            <i className="fa fa-info-circle graphInfoIcon"></i>
-          </Popover>
-          <div>
-            <span className="habitWiseProgressLineChartFilterLabel">
-              Show Last:{" "}
-            </span>
-            <InputNumber
-              size="small"
-              name="periodNumber"
-              value={showLastCountProgressLineChart}
-              min={1}
-              max={50}
-              onChange={showLastCountProgressLineChart => this.setState({ showLastCountProgressLineChart })}
-            />
           </div>
         </div>
+        <div id="habitWiseProgressLineChartDiv">
+          <div className="fullWidthLineChartLabel">
+            Task Progress Line Chart{" "}
+            <Popover
+              placement="bottomLeft"
+              // title="Change View"
+              content={
+                <div>
+                  Chart showing how early or late task was completed in days.
+                  <ul>
+                    <li>
+                      Vertical axis shows number of days. Positive for days
+                      before due date, and negative for days after due date
+                    </li>
+                    <li>Horizontal axis shows tasks</li>
+                  </ul>{" "}
+                </div>
+              }
+              trigger="hover"
+            >
+              <i className="fa fa-info-circle graphInfoIcon"></i>
+            </Popover>
+            <div>
+              <span className="habitWiseProgressLineChartFilterLabel">
+                Show Last:{" "}
+              </span>
+              <InputNumber
+                size="small"
+                name="periodNumber"
+                value={showLastCountProgressLineChart}
+                min={1}
+                max={50}
+                onChange={showLastCountProgressLineChart =>
+                  this.setState({ showLastCountProgressLineChart })
+                }
+              />
+            </div>
+          </div>
           <HabitWiseProgressLineChart
             data={getHabitWiseProgressDataForLineChart(
               currentHabitTracking,
@@ -147,6 +152,23 @@ class HabitStats extends Component {
               showLastCountProgressLineChart
             )}
           />
+        </div>
+        <div className="chartsHorizontalSeperator"></div>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="halfPageChartLabel">Habit Wise Hit/Miss Counts</div>
+            <HabitWiseHitMissBarChart
+              data={getHabitHitMissDataForSingleHabit(selectedHabitObj)}
+            />
+          </div>
+          <div className="col-md-6">
+            {" "}
+            <div className="halfPageChartLabel">Overdue Pending Chart</div>
+            {/* <GoalTaskDueDateBarChart data={goalsDueDateData} /> */}
+            <div id="overallHabitFollowingPercentageWrapper">
+              <div id="overallHabitFollowingPercentage">78<span style={{fontSize:"20px"}}>%</span></div>
+            </div>
+          </div>
         </div>
       </div>
     );

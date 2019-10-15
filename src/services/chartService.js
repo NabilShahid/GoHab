@@ -5,7 +5,7 @@ import {
 import { getSortedGoals } from "./methods/goalMethods";
 import { getSortedTasks } from "./methods/taskMethods";
 import {
-  getHitMissCountForAllHabits,
+  getHitMissCountForAllHabits,getHitMissCountForHabit,
   getHabitHitMissArrayForPeriod
 } from "./methods/habitMethods";
 import moment from "moment";
@@ -66,6 +66,18 @@ export function getHabitHitMissDataForHomeRadarChart(habits) {
     {
       subject: "Followed",
       count: allCounts.Followed
+    }
+  ];
+}
+
+export function getHabitHitMissDataForSingleHabit(habit) {
+  const data = getHitMissCountForHabit(habit);
+  return [
+    {
+      name: "Counts",
+      "Followed": data.Followed,
+      "Partially Followed": data.PartiallyFollowed,
+      "Missed": data.Missed
     }
   ];
 }

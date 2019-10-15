@@ -1,0 +1,14 @@
+#overallHabitFollowingPercentage{
+    background: rebeccapurple;
+    color: white;
+    width: 129px;
+    /* height: 129px; */
+    text-align: center;
+    border-radius: 50%;
+    font-size: 30px;
+    padding: 42px 0px;
+}
+#overallHabitFollowingPercentageWrapper{
+    width: 100%;
+    text-align: center;
+}
