@@ -12,11 +12,13 @@ import ROUTES from "../../constants/routes";
 import { MENU_MAPPING } from "../../constants/commonConsts";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import "./sidemenu.css";
+import ICONS from "../../constants/iconSvgs";
 const { SubMenu } = Menu;
 
 class SideMenu extends Component {
   selectedOption;
   defaultOpenMenu = "ItemsMenu";
+  iconsStyles = { fill: "#6f7782", width: "20px", marginRight: "10px" };
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
       this.props.updateHeaderOptions(HEADEROPTIONS[PAGEKEYS["HOME"]]);
@@ -62,11 +64,11 @@ class SideMenu extends Component {
           }
         >
           <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
-            <i id="sGoalsI" className="fa fa-home sideIcon" />
+            <ICONS.Goal style={this.iconsStyles} />
             Goals
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
-            <i id="sHabitsI" className="fa fa-home sideIcon" />
+          <ICONS.Habit style={this.iconsStyles} />
             Habits
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">

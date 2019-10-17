@@ -20,6 +20,7 @@ import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
 import { withApi } from "../../services/api";
 import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
+import ICONS from "../../constants/iconSvgs";
 import "./header.css";
 const Search = Input.Search;
 class Header extends Component {
@@ -172,6 +173,7 @@ class Header extends Component {
       }
     }
   };
+  iconsStyles = { fill: "#6f7782", width: "30px", marginRight: "10px" };
   render() {
     const { search, firebase, user, flushStore } = this.props;
     const {
@@ -181,12 +183,15 @@ class Header extends Component {
       notificationCount,
       notificationDialogTitle
     } = this.state;
+    const Icon=ICONS[this.props.icon]||(()=>{return <div></div>});
+    debugger
     return (
       <div id="headerDiv">
         <Row>
           <Col span={1} />
           <Col id="headerTitle" span={9}>
-            <i className={this.props.icon} style={{ marginRight: "2%" }} />
+            {/* <i className={this.props.icon} style={{ marginRight: "2%" }} /> */}
+            <Icon style={this.iconsStyles}/>
             {this.props.title}
           </Col>
           <Col id="headerOptions" span={11}>
