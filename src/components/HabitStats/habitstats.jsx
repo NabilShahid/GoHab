@@ -38,17 +38,28 @@ class HabitStats extends Component {
     currentHabitTracking = currentHabitTracking
       ? currentHabitTracking.tracking
       : [];
+    const habitHitMissBarChartData = getHabitHitMissDataForSingleHabit(
+      selectedHabitObj
+    );
 
+    let followRate = parseInt(
+      (habitHitMissBarChartData[0]["Followed"] /
+        (habitHitMissBarChartData[0]["Missed"] +
+          habitHitMissBarChartData[0]["Followed"] +
+          habitHitMissBarChartData[0]["Partially Followed"])) *
+        100
+    );
+    if (isNaN(followRate)) followRate = 0;
     return (
       <div
         className="fullHeight"
         style={{ overflowY: "auto", overflowX: "hidden" }}
       >
-        Select a Habit{" "}
+        <span id="habitStatsFilterHeading">Select a Habit</span>
         <div
           className="row"
           id="habitStatsFilterDiv"
-          style={{ marginBottom: "22px" }}
+          style={{ marginBottom: "22px", marginTop: "7px" }}
         >
           <div className="col-md-4">
             <span className="habitStatsFilterLabel">Goal: </span>
@@ -129,7 +140,7 @@ class HabitStats extends Component {
             >
               <i className="fa fa-info-circle graphInfoIcon"></i>
             </Popover>
-            <div>
+            <div style={{ marginTop: "8px" }}>
               <span className="habitWiseProgressLineChartFilterLabel">
                 Show Last:{" "}
               </span>
@@ -157,16 +168,18 @@ class HabitStats extends Component {
         <div className="row">
           <div className="col-md-6">
             <div className="halfPageChartLabel">Habit Wise Hit/Miss Counts</div>
-            <HabitWiseHitMissBarChart
-              data={getHabitHitMissDataForSingleHabit(selectedHabitObj)}
-            />
+            <HabitWiseHitMissBarChart data={habitHitMissBarChartData} />
           </div>
           <div className="col-md-6">
             {" "}
-            <div className="halfPageChartLabel">Overdue Pending Chart</div>
+            <div className="halfPageChartLabel">Follow Rate</div>
             {/* <GoalTaskDueDateBarChart data={goalsDueDateData} /> */}
             <div id="overallHabitFollowingPercentageWrapper">
-              <div id="overallHabitFollowingPercentage">78<span style={{fontSize:"20px"}}>%</span></div>
+              {/* <div>ddd</div> */}
+              <div id="overallHabitFollowingPercentage">
+                {followRate}
+                <span style={{ fontSize: "20px" }}>%</span>
+              </div>
             </div>
           </div>
         </div>
