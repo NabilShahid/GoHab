@@ -173,7 +173,7 @@ class Header extends Component {
       }
     }
   };
-  iconsStyles = { fill: "#6f7782", width: "30px", marginRight: "10px" };
+  iconsStyles = { fill: "#6f7782", width: "30px", height: "30px", marginRight: "10px" };
   render() {
     const { search, firebase, user, flushStore } = this.props;
     const {

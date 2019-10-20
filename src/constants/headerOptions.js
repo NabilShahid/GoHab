@@ -1,7 +1,7 @@
 import PAGEKEYS from "./pageKeys";
 const HEADEROPTIONS = {};
 HEADEROPTIONS[PAGEKEYS["HOME"]] = {
-  Icon: "Goal",
+  Icon: "Home",
   Title: "Home",
   Search: false
 };
@@ -16,7 +16,7 @@ HEADEROPTIONS[PAGEKEYS["HABITS"]] = {
   Search: true
 };
 HEADEROPTIONS[PAGEKEYS["TASKS"]] = {
-  Icon: "Goal",
+  Icon: "Task",
   Title: "Tasks",
   Search: true
 };
@@ -36,17 +36,17 @@ HEADEROPTIONS[PAGEKEYS["TASK_CALENDAR"]] = {
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["GOAL_STATS"]] = {
-  Icon: "Goal",
+  Icon: "Analytics",
   Title: "Goal Stats",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["TASK_STATS"]] = {
-  Icon: "Goal",
+  Icon: "Analytics",
   Title: "Task Stats",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["HABIT_STATS"]] = {
-  Icon: "Goal",
+  Icon: "Analytics",
   Title: "Habit Stats",
   Search: false
 };

@@ -18,7 +18,12 @@ const { SubMenu } = Menu;
 class SideMenu extends Component {
   selectedOption;
   defaultOpenMenu = "ItemsMenu";
-  iconsStyles = { fill: "#6f7782", width: "20px", marginRight: "10px" };
+  iconsStyles = {
+    fill: "#6f7782",
+    width: "20px",
+    height: "20px",
+    marginRight: "10px"
+  };
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
       this.props.updateHeaderOptions(HEADEROPTIONS[PAGEKEYS["HOME"]]);
@@ -51,28 +56,29 @@ class SideMenu extends Component {
         onSelect={this.moveToPath}
       >
         <Menu.Item key={PAGEKEYS["HOME"]}>
-          <i id="sHomeI" className="fa fa-home sideIcon" />
+          <ICONS.Home style={this.iconsStyles} />
           Home
         </Menu.Item>
         <SubMenu
           key="ItemsMenu"
           title={
             <span>
-              <Icon type="mail" />
+              {/* <Icon type="mail" /> */}
+              <ICONS.Items style={this.iconsStyles} />
               <span>Items</span>
             </span>
           }
         >
           <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
-            <ICONS.Goal style={this.iconsStyles} />
+            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
             Goals
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
-          <ICONS.Habit style={this.iconsStyles} />
+            <ICONS.Habit style={this.iconsStyles} />
             Habits
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
-            <i id="sTasksI" className="fa fa-home sideIcon" />
+            <ICONS.Task style={this.iconsStyles} />
             Tasks
           </Menu.Item>
         </SubMenu>
@@ -80,22 +86,23 @@ class SideMenu extends Component {
           key="AnalyticsMenu"
           title={
             <span>
-              <Icon type="mail" />
+              <ICONS.Analytics style={this.iconsStyles} />
               <span>Analytics</span>
             </span>
           }
         >
           <Menu.Item key={PAGEKEYS["GOAL_STATS"]}>
-            <i className="fa fa-home sideIcon" />
+            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
             Goal Stats
           </Menu.Item>
-          <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
-            <i className="fa fa-home sideIcon" />
-            Task Stats
-          </Menu.Item>
+
           <Menu.Item key={PAGEKEYS["HABIT_STATS"]}>
-            <i className="fa fa-home sideIcon" />
+            <ICONS.Habit style={this.iconsStyles} />
             Habit Stats
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
+            <ICONS.Task style={this.iconsStyles} />
+            Task Stats
           </Menu.Item>
         </SubMenu>
         <SubMenu
