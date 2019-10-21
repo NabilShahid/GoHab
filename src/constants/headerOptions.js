@@ -21,17 +21,17 @@ HEADEROPTIONS[PAGEKEYS["TASKS"]] = {
   Search: true
 };
 HEADEROPTIONS[PAGEKEYS["HABIT_TRACKING"]] = {
-  Icon: "Goal",
-  Title: "Habit Tracking",
+  Icon: "TrackHabits",
+  Title: "Track Habits",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["HABIT_CALENDAR"]] = {
-  Icon: "Goal",
-  Title: "Habit Calendar",
+  Icon: "HabitsRecord",
+  Title: "Habits Record",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["TASK_CALENDAR"]] = {
-  Icon: "Goal",
+  Icon: "Calendar",
   Title: "Task Calendar",
   Search: false
 };

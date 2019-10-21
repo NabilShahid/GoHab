@@ -109,17 +109,17 @@ class SideMenu extends Component {
           key="HabitTrackingMenu"
           title={
             <span>
-              <Icon type="mail" />
+              <ICONS.HabitTracking style={this.iconsStyles} />{" "}
               <span>Habit Tracking</span>
             </span>
           }
         >
           <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
-            <i className="fa fa-home sideIcon" />
+            <ICONS.TrackHabits style={this.iconsStyles} />
             Track Habits
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
-            <i className="fa fa-home sideIcon" />
+            <ICONS.HabitsRecord style={this.iconsStyles} />
             Habits Record
           </Menu.Item>
         </SubMenu>
@@ -127,17 +127,17 @@ class SideMenu extends Component {
           key="CalendarMenu"
           title={
             <span>
-              <Icon type="mail" />
+               <ICONS.Calendar style={this.iconsStyles} />
               <span>Calendar</span>
             </span>
           }
         >
           <Menu.Item key="8">
-            <i className="fa fa-home sideIcon" />
+             <ICONS.Goal style={this.iconsStyles} />
             Goal Calendar
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
-            <i className="fa fa-home sideIcon" />
+             <ICONS.Task style={this.iconsStyles} />
             Tasks Calendar
           </Menu.Item>
         </SubMenu>
