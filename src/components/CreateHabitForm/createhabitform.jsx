@@ -27,6 +27,7 @@ import {
   HABIT_CATEGORIES,
   MATERIAL_COLORS
 } from "../../constants/commonConsts";
+import { CATEGORY_ICONS } from "../../constants/iconSvgs";
 import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -305,7 +306,13 @@ class CreateHabitForm extends React.Component {
     if (this.state.disabledForm) return "100%";
     return "70%";
   }
-
+  categoryIconStyles = {
+    height: "15px",
+    width: "15px",
+    fill: "#4c4c4c",
+    marginRight: "4px",
+    marginBottom: "2px"
+  };
   render() {
     const {
       loading,
@@ -382,12 +389,19 @@ class CreateHabitForm extends React.Component {
                   }}
                   buttonStyle="solid"
                 >
-                  {HABIT_CATEGORIES.map(hc => (
-                    <Radio.Button value={hc.Name}>
-                      <i className={hc.Icon} style={{ marginRight: "6px" }} />
-                      {hc.Name}
-                    </Radio.Button>
-                  ))}
+                  {HABIT_CATEGORIES.map(hc => {
+                    const Icon =
+                      CATEGORY_ICONS[hc.Icon] ||
+                      (() => {
+                        return <div></div>;
+                      });
+                    return (
+                      <Radio.Button value={hc.Name}>
+                        <Icon style={this.categoryIconStyles} />
+                        {hc.Name}
+                      </Radio.Button>
+                    );
+                  })}
                 </Radio.Group>
               </div>
             </div>

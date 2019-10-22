@@ -4,6 +4,7 @@ import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
 import { getTrackPeriodString } from "../../services/methods/habitMethods";
 import { HABIT_CATEGORIES } from "../../constants/commonConsts";
+import { CATEGORY_ICONS } from "../../constants/iconSvgs";
 import "./habitcard.css";
 const HabitCard = ({
   name,
@@ -16,6 +17,11 @@ const HabitCard = ({
   frequency,
   bgColor
 }) => {
+  const Icon =
+    CATEGORY_ICONS[HABIT_CATEGORIES.find(h=>h.Name==category).Icon] ||
+    (() => {
+      return <div></div>;
+    });
   return (
     <div
       className="habitCard"
@@ -59,12 +65,8 @@ const HabitCard = ({
           <div className="habitCardInfo">
             Category
             <div>
-              <i
-                className={
-                  "habitCardCategoryIcon " +
-                  HABIT_CATEGORIES.find(hc => hc.Name == category).Icon
-                }
-              ></i>
+            <Icon style={{height:"15px",width:"15px",fill:"#4c4c4c",marginRight:"8px"}}/>
+
               {category}
             </div>
           </div>

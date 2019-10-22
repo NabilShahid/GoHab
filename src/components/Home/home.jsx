@@ -16,6 +16,7 @@ import Habits from "../Habits/habits";
 import Goals from "../Goals/goals";
 import HomeChartsWrapper from "../HomeChartsWrapper/homechartswrapper";
 import "./home.css";
+import ICONS from "../../constants/iconSvgs";
 class Home extends Component {
   state = {
     anyPopupOpen: false,
@@ -87,10 +88,10 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Goal"
+              ccTitle="New Goal"
               ccSubTitle="Create a new goal and assing value to it"
               background="var(--goal-color)"
-              icon="fa fa-check"
+              Icon={ICONS.Goal}
             />
           </div>
           <div
@@ -100,10 +101,11 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Habit"
+              ccTitle="New Habit"
               ccSubTitle="Create a new habit and assing value to it"
               background="var(--habit-color)"
-              icon="fa fa-check"
+              Icon={ICONS.Habit}
+              iconStyle={{marginBottom:"5px"}}
             />
           </div>
           <div
@@ -113,10 +115,12 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Task"
+              ccTitle="New Task"
               ccSubTitle="Create a new task and assing value to it"
               background="var(--task-color)"             
               icon="fa fa-check"
+              Icon={ICONS.Task}
+              iconStyle={{marginBottom:"5px"}}
             />
           </div>
         </div>

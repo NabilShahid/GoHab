@@ -29,27 +29,27 @@ export const MATERIAL_COLORS = [
 export const HABIT_CATEGORIES = [
   {
     Name: "Health",
-    Icon: "fa fa-heartbeat"
+    Icon: "Health"
   },
   {
     Name: "Personal Development",
-    Icon: "fa fa-user-check"
+    Icon: "PersonalDevelopment"
   },
   {
     Name: "Social",
-    Icon: "fa fa-user-friends"
+    Icon: "Social"
   },
   {
     Name: "Relationship",
-    Icon: "fa fa-heart"
+    Icon: "Relationship"
   },
   {
     Name: "Routine Work",
-    Icon: "fa fa-chart-bar"
+    Icon: "RoutineWork"
   },
   {
     Name: "Other",
-    Icon: "fa fa-circle"
+    Icon: "Other"
   }
 ];
 export const MENU_MAPPING = {

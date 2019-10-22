@@ -1,4 +1,5 @@
 @import "./constants/styleVars.css";
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 html {
   height: 100%;
 }
@@ -14,9 +15,8 @@ body {
   overflow: auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+div{
+  font-family: 'Questrial', sans-serif;
 }
 #root {
   height: 100%;

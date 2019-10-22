@@ -20,9 +20,10 @@ class SideMenu extends Component {
   defaultOpenMenu = "ItemsMenu";
   iconsStyles = {
     fill: "#6f7782",
-    width: "20px",
-    height: "20px",
-    marginRight: "10px"
+    width: "23px",
+    height: "23px",
+    marginRight: "10px",
+    marginBottom: "6px"
   };
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
@@ -109,7 +110,13 @@ class SideMenu extends Component {
           key="HabitTrackingMenu"
           title={
             <span>
-              <ICONS.HabitTracking style={this.iconsStyles} />{" "}
+              <ICONS.HabitTracking
+                style={{
+                  ...this.iconsStyles,
+                  marginLeft: "-2px",
+                  marginRight: "7px"
+                }}
+              />{" "}
               <span>Habit Tracking</span>
             </span>
           }
@@ -127,17 +134,17 @@ class SideMenu extends Component {
           key="CalendarMenu"
           title={
             <span>
-               <ICONS.Calendar style={this.iconsStyles} />
+              <ICONS.Calendar style={this.iconsStyles} />
               <span>Calendar</span>
             </span>
           }
         >
           <Menu.Item key="8">
-             <ICONS.Goal style={this.iconsStyles} />
+            <ICONS.Goal style={this.iconsStyles} />
             Goal Calendar
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
-             <ICONS.Task style={this.iconsStyles} />
+            <ICONS.Task style={this.iconsStyles} />
             Tasks Calendar
           </Menu.Item>
         </SubMenu>
