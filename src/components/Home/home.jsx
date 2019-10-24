@@ -169,11 +169,10 @@ class Home extends Component {
 
         <Modal
           visible={anyPopupOpen}
-          width="53%"
-          title={popups[selectedPopup].Title}
+           title={<div>HELLO</div>+popups[selectedPopup].Title}
           centered
           bodyStyle={{ overflowY: "auto" }}
-          style={{ top: "10px" }}
+          style={{ top: "10px",minWidth:"53vw" }}
           onCancel={() => {
             this.setPopupVisibility(selectedPopup, false);
           }}

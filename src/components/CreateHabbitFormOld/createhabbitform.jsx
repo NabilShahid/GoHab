@@ -567,7 +567,7 @@ class CreateHabitForm extends React.Component {
           type="submit"
           loading={loading}
           onClick={this.performHabitAction}
-          className="redButton"
+          className="primaryColorButton"
           disabled={!this.validateForm()}
         >
           {mode == "view" && "Update"}

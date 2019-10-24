@@ -1,5 +1,5 @@
 #overallHabitFollowingPercentage {
-  background: linear-gradient(to left, #43cea2, #185a9d);
+  background: var(--habit-color);
   color: white;
   width: 129px;
   height: 129px;

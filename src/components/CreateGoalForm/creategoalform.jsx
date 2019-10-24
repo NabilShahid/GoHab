@@ -21,6 +21,7 @@ import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 import { MATERIAL_COLORS } from "../../constants/commonConsts";
 import moment from "moment";
 import "./creategoalform.css";
+import ICONS from "../../constants/iconSvgs";
 const { TextArea } = Input;
 class CreateGoalForm extends React.Component {
   state = {
@@ -241,8 +242,15 @@ class CreateGoalForm extends React.Component {
       <div>
         <div className="ghtFormContainer">
           <div className="sHeader">
+            <ICONS.Goal
+              style={{
+                fill: "#7d7d7d",
+                width: "19px",
+                height: "19px",
+                float: "right"
+              }}
+            />
             {this.getFormHeader()}
-            <img src={logo} className="formLogo" />
           </div>
           <form onSubmit={this.performGoalAction}>
             <div className="row formControlDiv">
@@ -399,6 +407,14 @@ class CreateGoalForm extends React.Component {
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>
+          <Button
+            onClick={() => {
+              this.props.setPopupVisibility("Goal", false);
+            }}
+            
+          >
+            Cancel
+          </Button>
           {this.getActionButton(mode, disabledForm, loading)}
         </div>
       </div>
@@ -441,12 +457,7 @@ class CreateGoalForm extends React.Component {
       }
     } else {
       //create mode
-      return (
-        <span>
-          <i className={"fa fa-info-circle"} style={{ marginRight: "10px" }} />
-          Fill out the form
-        </span>
-      );
+      return <span>New Goal </span>;
     }
   }
 
@@ -458,7 +469,8 @@ class CreateGoalForm extends React.Component {
           type="submit"
           loading={loading}
           onClick={this.performGoalAction}
-          className="redButton"
+          style={{marginLeft:"10px"}}
+          className="primaryColorButton"
           disabled={!this.validateForm()}
         >
           {mode == "view" && "Update"}

@@ -26,19 +26,20 @@ div{
   border-radius: 6px !important;
 }
 .ant-modal-title {
-  font-size: 15px !important;
+  /* font-size: 15px !important; */
 }
 .ant-modal-close-x {
-  line-height: 35px !important;
+  /* line-height: 35px !important;
   font-size: 12px !important;
-  height: 0px !important;
+  height: 0px !important; */
+  display: none !important;
 }
 .ghtFormContainer {
   width: 100%;
   padding: 15px;
   border-radius: 4px;
   font-size: 13px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
 }
 .formLabel {
   color: #5f5f5f;
@@ -68,7 +69,7 @@ div{
   border-color: var(--primary-color);
 }
 
-.redButton {
+.primaryColorButton {
   background-color: var(--primary-color) !important;
   border: 0px !important;
   border-radius: 3px !important;
@@ -175,16 +176,17 @@ div{
 }
 .sHeader {
   color: #4c4c4c;
-  margin-top: 8px;
-  margin-bottom: 15px;
+  margin-top: 0px;
+  margin-bottom: 13px;
   border-bottom: 1px solid #d6d6d6;
-  padding-bottom: 12px;
+  padding-bottom: 9px;
   padding-left: 5px;
   font-size: 15px;
   font-weight: 500;
 }
 .ant-modal-header {
-  padding: 8px 24px !important;
+  /* padding: 8px 24px !important; */
+  display: none;
 }
 .ant-radio-group-solid
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {

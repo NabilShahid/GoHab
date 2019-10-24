@@ -176,11 +176,10 @@ class Tasks extends Component {
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
-            width="53%"
-            title={taskDialogTitle}
+             title={taskDialogTitle}
             centered
             bodyStyle={{ overflowY: "auto" }}
-            style={{ top: "10px" }}
+            style={{ top: "10px",minWidth:"53vw" }}
             onCancel={() => {
               this.closeTaskDialog();
             }}

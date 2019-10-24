@@ -27,7 +27,7 @@ import {
   HABIT_CATEGORIES,
   MATERIAL_COLORS
 } from "../../constants/commonConsts";
-import { CATEGORY_ICONS } from "../../constants/iconSvgs";
+import ICONS, { CATEGORY_ICONS } from "../../constants/iconSvgs";
 import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -327,8 +327,16 @@ class CreateHabitForm extends React.Component {
       <div>
         <div className="ghtFormContainer">
           <div className="sHeader">
+            <ICONS.Habit
+              style={{
+                fill: "#7d7d7d",
+                width: "19px",
+                height: "19px",
+                marginBottom: "3px",
+                float: "right"
+              }}
+            />
             {this.getFormHeader()}
-            <img src={logo} className="formLogo" />
           </div>
           <form onSubmit={this.performHabitAction}>
             <div className="row formControlDiv">
@@ -469,6 +477,14 @@ class CreateHabitForm extends React.Component {
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>
+        <Button
+            onClick={() => {
+              this.props.setPopupVisibility("Habit", false);
+            }}
+            
+          >
+            Cancel
+          </Button>
           {this.getActionButton(mode, disabledForm, loading)}
         </div>
       </div>
@@ -511,12 +527,7 @@ class CreateHabitForm extends React.Component {
       }
     } else {
       //create mode
-      return (
-        <span>
-          <i className={"fa fa-info-circle"} style={{ marginRight: "10px" }} />
-          Fill out the form
-        </span>
-      );
+      return <span>New Habit</span>;
     }
   }
 
@@ -528,7 +539,8 @@ class CreateHabitForm extends React.Component {
           type="submit"
           loading={loading}
           onClick={this.performHabitAction}
-          className="redButton"
+          style={{marginLeft:"10px"}}
+          className="primaryColorButton"
           disabled={!this.validateForm()}
         >
           {mode == "view" && "Update"}

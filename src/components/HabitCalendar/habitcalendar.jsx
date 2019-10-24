@@ -121,11 +121,10 @@ class HabitCalendar extends Component {
         {habitDialogInDom && (
           <Modal
             visible={habitDialogVisible}
-            width="53%"
-            title=""
+             title=""
             centered
             bodyStyle={{ overflowY: "auto" }}
-            style={{ top: "10px" }}
+            style={{ top: "10px",minWidth:"53vw" }}
             onCancel={() => {
               this.closeHabitDialog();
             }}

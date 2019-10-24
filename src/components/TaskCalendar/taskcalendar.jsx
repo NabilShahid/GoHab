@@ -100,11 +100,10 @@ class TaskCalendar extends Component {
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
-            width="53%"
-            title={selectedTask.name}
+             title={selectedTask.name}
             centered
             bodyStyle={{ overflowY: "auto" }}
-            style={{ top: "10px" }}
+            style={{ top: "10px",minWidth:"53vw" }}
             onCancel={() => {
               this.closeTaskDialog();
             }}
