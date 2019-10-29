@@ -16,7 +16,7 @@ import {
 import { insertTasks, sortTasks } from "../../actions/taskActions";
 import { insertHabits, sortHabits } from "../../actions/habitActions";
 import { toggleItemLoading } from "../../actions/loadingActions";
-import { Row, Col } from "antd";
+import { Row, Col, Icon } from "antd";
 import UserTile from "../UserTile/usertile";
 import Home from "../Home/home";
 import Tasks from "../Tasks/tasks";
@@ -25,6 +25,9 @@ import Habits from "../Habits/habits";
 import HabitTracking from "../HabitTracking/habittracking";
 import HabitCalendar from "../HabitCalendar/habitcalendar";
 import TaskCalendar from "../TaskCalendar/taskcalendar";
+import GoalStats from "../GoalStats/goalstats";
+import TaskStats from "../TaskStats/taskstats";
+import HabitStats from "../HabitStats/habitstats";
 import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -32,18 +35,39 @@ import Loading from "../Loading/loading";
 import "./main.css";
 
 class MainBase extends Component {
-  state = {};
+  state = { menuShown: true, menuWidth: "20%" };
+  toggleMenu = () => {
+    const { menuShown } = this.state;
+    this.setState({ menuShown: !menuShown });
+  };
+
   render() {
-    const { goalsLoading,habitsLoading,tasksLoading } = this.props;
+    const { menuShown, menuWidth } = this.state;
+    const { goalsLoading, habitsLoading, tasksLoading } = this.props;
     return (
       <div className="inheritHeight">
         <div className="inheritHeight" style={{ display: "flex" }}>
-          <div id="sideContainer" className="inheritHeight">
-            <UserTile />
+          <div
+            id="sideContainer"
+            className={"inheritHeight " + (menuShown ? "" : "hiddenMenu")}
+            style={{ width: menuShown ? menuWidth : "0" }}
+          >
+            {menuShown && (
+              <div onClick={this.toggleMenu} className="menuShown">
+                <Icon type="menu-fold" style={{color:"white", fontSize:"17px"}}/>
+              </div>
+            )}
+            <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />
             <SideMenu />
+            <div id="sideBottomDiv">Hello</div>
           </div>
 
           <div id="mainContainer" className="inheritHeight">
+            {!menuShown && (
+              <div onClick={this.toggleMenu} className="menuCollapsed">
+                <Icon type="menu-unfold" style={{color:"#4c4c4c", fontSize:"17px"}}/>
+              </div>
+            )}
             <div id="headerContainer">
               <Header />
             </div>
@@ -141,6 +165,45 @@ class MainBase extends Component {
                       );
                     }}
                   />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["GOAL_STATS"]]}
+                    render={() => {
+                      return goalsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <GoalStats />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["TASK_STATS"]]}
+                    render={() => {
+                      return tasksLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <TaskStats />
+                      );
+                    }}
+                  />
+                  <Route
+                    exact
+                    path={ROUTES[PAGEKEYS["HABIT_STATS"]]}
+                    render={() => {
+                      return habitsLoading ? (
+                        <div className="mainContainerLoadingDiv">
+                          <Loading />
+                        </div>
+                      ) : (
+                        <HabitStats />
+                      );
+                    }}
+                  />
                 </Switch>
               </Router>
             </div>
@@ -157,14 +220,18 @@ class MainBase extends Component {
     this.getGoalsAndInsertAndSort();
     this.getTasksAndInsertAndSort();
     this.getHabitsAndInsertAndSort();
+    this.adjustMenuForDevice();
+    window.onresize = () => {
+      this.adjustMenuForDevice();
+    };
   }
 
   getGoalsAndInsertAndSort() {
-    this.props.toggleItemLoading("goalsLoading",true);
+    this.props.toggleItemLoading("goalsLoading", true);
     this.props.firebase.goalOps
       .retrieveAllGoals(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("goalsLoading",false);
+        this.props.toggleItemLoading("goalsLoading", false);
         const allGoals = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -177,11 +244,11 @@ class MainBase extends Component {
   }
 
   getTasksAndInsertAndSort() {
-    this.props.toggleItemLoading("tasksLoading",true);
+    this.props.toggleItemLoading("tasksLoading", true);
     this.props.firebase.taskOps
       .retrieveAllTasks(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("tasksLoading",false);
+        this.props.toggleItemLoading("tasksLoading", false);
         const allTasks = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -200,11 +267,11 @@ class MainBase extends Component {
   }
 
   getHabitsAndInsertAndSort() {
-    this.props.toggleItemLoading("habitsLoading",true);
+    this.props.toggleItemLoading("habitsLoading", true);
     this.props.firebase.habitOps
       .retrieveAllHabits(this.props.userEmail)
       .then(querySnapshot => {
-        this.props.toggleItemLoading("habitsLoading",false);
+        this.props.toggleItemLoading("habitsLoading", false);
         const allHabits = querySnapshot.docs.map(function(doc) {
           return { ...doc.data(), id: doc.id };
         });
@@ -221,6 +288,19 @@ class MainBase extends Component {
         console.log("firebase error: ", error);
       });
   }
+
+  checkIfSmallDevice() {
+    return (
+      getComputedStyle(document.getElementById("sideContainer")).position ==
+      "absolute"
+    );
+  }
+
+  adjustMenuForDevice() {
+    if (this.checkIfSmallDevice()) {
+      this.setState({ menuShown: false, menuWidth: "70%" });
+    } else this.setState({ menuShown: true, menuWidth: "20%" });
+  }
 }
 
 /**
@@ -231,8 +311,8 @@ const mapStateToProps = state => {
     user: state.User,
     goalsLoading: state.loadingReducer.goalsLoading,
     habitsLoading: state.loadingReducer.habitsLoading,
-    tasksLoading:state.loadingReducer.tasksLoading,
-    userEmail:state.userReducer.User.Email
+    tasksLoading: state.loadingReducer.tasksLoading,
+    userEmail: state.userReducer.User.Email
   };
 };
 
@@ -262,8 +342,8 @@ const mapDispatchToProps = dispatch => {
     updateSubItemsCount: itemsPayload => {
       dispatch(updateSubItemsCount(itemsPayload));
     },
-    toggleItemLoading: (item,loading) => {
-      dispatch(toggleItemLoading(item,loading));
+    toggleItemLoading: (item, loading) => {
+      dispatch(toggleItemLoading(item, loading));
     }
   };
 };

@@ -1,12 +1,12 @@
-export function updateHeader(headerPayload) {
+export function updateHeaderOptions(headerOptionsPayload) {
     return {
-        type: "UPDATE_HEADER",
-        payload: headerPayload
+        type: "UPDATE_HEADER_OPTIONS",
+        payload: headerOptionsPayload
     };
 }
-export function updateFilterString(filterStringPayload) {
+export function updateHeaderFilterString(filterStringPayload) {
     return {
-        type: "UPDATE_FITLER_STRING",
+        type: "UPDATE_HEADER_FITLER_STRING",
         payload: filterStringPayload
     };
 }

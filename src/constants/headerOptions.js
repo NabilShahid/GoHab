@@ -1,38 +1,53 @@
 import PAGEKEYS from "./pageKeys";
 const HEADEROPTIONS = {};
 HEADEROPTIONS[PAGEKEYS["HOME"]] = {
-  Icon: "fa fa-home",
+  Icon: "Home",
   Title: "Home",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["GOALS"]] = {
-  Icon: "fa fa-home",
+  Icon: "Goal",
   Title: "Goals",
   Search: true
 };
 HEADEROPTIONS[PAGEKEYS["HABITS"]] = {
-  Icon: "fa fa-home",
+  Icon: "Habit",
   Title: "Habits",
   Search: true
 };
 HEADEROPTIONS[PAGEKEYS["TASKS"]] = {
-  Icon: "fa fa-home",
+  Icon: "Task",
   Title: "Tasks",
   Search: true
 };
 HEADEROPTIONS[PAGEKEYS["HABIT_TRACKING"]] = {
-  Icon: "fa fa-home",
-  Title: "Habit Tracking",
+  Icon: "TrackHabits",
+  Title: "Track Habits",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["HABIT_CALENDAR"]] = {
-  Icon: "fa fa-home",
-  Title: "Habit Calendar",
+  Icon: "HabitsRecord",
+  Title: "Habits Record",
   Search: false
 };
 HEADEROPTIONS[PAGEKEYS["TASK_CALENDAR"]] = {
-  Icon: "fa fa-home",
+  Icon: "Calendar",
   Title: "Task Calendar",
+  Search: false
+};
+HEADEROPTIONS[PAGEKEYS["GOAL_STATS"]] = {
+  Icon: "Analytics",
+  Title: "Goal Stats",
+  Search: false
+};
+HEADEROPTIONS[PAGEKEYS["TASK_STATS"]] = {
+  Icon: "Analytics",
+  Title: "Task Stats",
+  Search: false
+};
+HEADEROPTIONS[PAGEKEYS["HABIT_STATS"]] = {
+  Icon: "Analytics",
+  Title: "Habit Stats",
   Search: false
 };
 

@@ -6,6 +6,7 @@
     cursor: pointer;
     color: #9a9a9a;
     max-width: 360px;
+    background-color: white;
 }
 .habitCard:hover{
     transition: 0.2s;
@@ -56,4 +57,9 @@
     font-size: 14px;
     /* color: #3fcdde; */
     font-weight: 500;
+}
+.habitCardCategoryIcon{
+    margin-right: 4px;
+    font-size: 13px;
+    margin-top: 5px;
 }

@@ -6,6 +6,7 @@
     cursor: pointer;
     color: #9a9a9a;
     max-width: 360px;
+    background-color: white;
 }
 .taskCard:hover{
     transition: 0.2s;

@@ -2,9 +2,26 @@ import React from "react";
 import { Tooltip } from "antd";
 import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
-import HabitHitMissChart from "../../charts/habitHitMissChart";
+import { getTrackPeriodString } from "../../services/methods/habitMethods";
+import { HABIT_CATEGORIES } from "../../constants/commonConsts";
+import { CATEGORY_ICONS } from "../../constants/iconSvgs";
 import "./habitcard.css";
-const HabitCard = ({ name, description, completed, markHabit, id, category,period, frequecy  }) => {
+const HabitCard = ({
+  name,
+  description,
+  completed,
+  markHabit,
+  id,
+  category,
+  period,
+  frequency,
+  bgColor
+}) => {
+  const Icon =
+    CATEGORY_ICONS[HABIT_CATEGORIES.find(h=>h.Name==category).Icon] ||
+    (() => {
+      return <div></div>;
+    });
   return (
     <div
       className="habitCard"
@@ -19,8 +36,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
           <div
             className="cardAvatar"
             style={{
-              background: "var(--habit-color)",
-              boxShadow: "var(--habit-shadow)"
+              backgroundColor: bgColor
             }}
           >
             {name[0].toUpperCase() || ""}
@@ -41,18 +57,24 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
           </Tooltip>
         </div>
         <div className="col-md-10 habitCardContent">
-          <div className="habitCardTitle" style={{ width: "100%" }}>{name}</div>
+          <div className="habitCardTitle" style={{ width: "100%" }}>
+            {name}
+          </div>
 
           <div className="habitSubtitle">{description}</div>
           <div className="habitCardInfo">
             Category
-            <div>{category}</div>
+            <div>
+            <Icon style={{height:"15px",width:"15px",fill:"var(--habit-category-color)",marginRight:"8px"}}/>
+
+              {category}
+            </div>
           </div>
           <div className="habitCardInfo">
-            Tracking
-            <div>5 times a day</div>
+            {getTrackPeriodString(period, frequency)}
           </div>
-          <div className="row habitCardInfo">
+          {/* Habit Hit Miss Markup. Deferred */}
+          {/* <div className="row habitCardInfo">
           
             <div className="col-md-6">
               <div style={{color:(completed?"#97e097":"#60d660")}}>
@@ -70,7 +92,7 @@ const HabitCard = ({ name, description, completed, markHabit, id, category,perio
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

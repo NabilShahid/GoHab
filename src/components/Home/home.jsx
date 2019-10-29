@@ -14,7 +14,9 @@ import { alphaSort } from "../../services/methods/ghtCommonMethods";
 import Tasks from "../Tasks/tasks";
 import Habits from "../Habits/habits";
 import Goals from "../Goals/goals";
+import HomeChartsWrapper from "../HomeChartsWrapper/homechartswrapper";
 import "./home.css";
+import ICONS from "../../constants/iconSvgs";
 class Home extends Component {
   state = {
     anyPopupOpen: false,
@@ -77,7 +79,7 @@ class Home extends Component {
       habits
     } = this.props;
     return (
-      <div id="homeContent">
+      <div id="homeContent" className="fullHeightScroll">
         <div className="row">
           <div
             className="col-md-4"
@@ -86,11 +88,10 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Goal"
+              ccTitle="New Goal"
               ccSubTitle="Create a new goal and assing value to it"
               background="var(--goal-color)"
-              boxShadow="var(--goal-shadow)"
-              icon="fa fa-check"
+              Icon={ICONS.Goal}
             />
           </div>
           <div
@@ -100,11 +101,11 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Habit"
-              ccSubTitle="Create a new goal and assing value to it"
-              background="linear-gradient(60deg, #26c6da, #00acc1)"
-              boxShadow="var(--habit-shadow)"
-              icon="fa fa-check"
+              ccTitle="New Habit"
+              ccSubTitle="Create a new habit and assing value to it"
+              background="var(--habit-color)"
+              Icon={ICONS.Habit}
+              iconStyle={{marginBottom:"5px"}}
             />
           </div>
           <div
@@ -114,11 +115,12 @@ class Home extends Component {
             }}
           >
             <CreateCard
-              ccTitle="Create Task"
-              ccSubTitle="Create a new goal and assing value to it"
-              background="linear-gradient(60deg, #66bb6a, #43a047)"
-              boxShadow="var(--task-shadow)"
+              ccTitle="New Task"
+              ccSubTitle="Create a new task and assing value to it"
+              background="var(--task-color)"             
               icon="fa fa-check"
+              Icon={ICONS.Task}
+              iconStyle={{marginBottom:"5px"}}
             />
           </div>
         </div>
@@ -130,8 +132,8 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#f7d7ac)"
-              color="#fd9a14"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(249, 219, 156))"
+              color="var(--goal-color)"
               subtitle={"Pending Goal" + (goalsCount > 1 ? "s" : "")}
               count={goalsCount}
             />
@@ -143,8 +145,8 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#c3dfe2)"
-              color="#04afc4"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(170, 216, 255))"
+              color="var(--habit-color)"
               subtitle={"Pending Habit" + (habitsCount > 1 ? "s" : "")}
               count={habitsCount}
             />
@@ -156,32 +158,21 @@ class Home extends Component {
             }
           >
             <CountCard
-              background="linear-gradient(160deg,#f9f8f8 80%,#c6ffc8)"
-              color="#49a54d"
+              background="linear-gradient(160deg, rgb(249, 248, 248) 80%, rgb(173, 234, 223))"
+              color="var(--task-color)"
               subtitle={"Pending Task" + (tasksCount > 1 ? "s" : "")}
               count={tasksCount}
             />
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-          <div className="col-md-4">
-            <HabitHitMissChart />
-          </div>
-        </div>
+        <HomeChartsWrapper />
 
         <Modal
           visible={anyPopupOpen}
-          width="53%"
-          title={popups[selectedPopup].Title}
+           title={<div>HELLO</div>+popups[selectedPopup].Title}
           centered
           bodyStyle={{ overflowY: "auto" }}
-          style={{ top: "10px" }}
+          style={{ top: "10px",minWidth:"53vw" }}
           onCancel={() => {
             this.setPopupVisibility(selectedPopup, false);
           }}

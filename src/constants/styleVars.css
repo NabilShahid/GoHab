@@ -1,15 +1,14 @@
 :root {
   /* Goal habbit and task background colors */
-  --goal-color: linear-gradient(60deg, #ffa726, #fb8c00);
-  --habit-color: linear-gradient(60deg, #26c6da, #00acc1);
-  --task-color: linear-gradient(60deg, #66bb6a, #43a047);
-  /* Goal habbit and task box shadows */
-  --goal-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
-    1px 1px 1px 1px rgba(255, 152, 0, 0.4);
-  --habit-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
-    1px 1px 1px 1px rgba(0, 188, 212, 0.4);
-  --task-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.14),
-    1px 1px 1px 1px rgba(76, 175, 80, 0.4);
-    /* main selector color */
-    --primary-color:#fb584c;
+  --goal-color: #ffbb28;
+  --habit-color: #48a9fd;
+  --task-color: #1ad4b1;
+
+  /* main selector color */
+  --primary-color: #54e273;
+  --outer-menu-color: #262f3d;
+  --inner-menu-color: #19212b;
+
+  /*other*/
+  --habit-category-color:#5f77ce;
 }

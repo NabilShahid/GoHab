@@ -12,6 +12,7 @@ const GoalCard = ({
   progress,
   id,
   importance,
+  bgColor,
   asscTasks,
   asscHabits,
   markGoal,
@@ -23,23 +24,26 @@ const GoalCard = ({
   return (
     <div
       className="goalCard"
-      style={progress == 100 ? { color: "rgb(195, 195, 195)", background: "rgb(251, 251, 251)" } : {}}
+      style={
+        progress == 100
+          ? { color: "rgb(195, 195, 195)", background: "rgb(251, 251, 251)" }
+          : {}
+      }
     >
       <div className="row">
         <div className="col-md-2">
           <div
             className="cardAvatar"
             style={{
-              background: "var(--goal-color)",
-              boxShadow: "var(--goal-shadow)"
+              backgroundColor: bgColor
             }}
           >
             {name[0].toUpperCase() || ""}
           </div>
           <Tooltip
             placement="right"
-            title={progress == 100 ? "Mark as pending" : "Mark as achieved"}          >
-           
+            title={progress == 100 ? "Mark as pending" : "Mark as achieved"}
+          >
             <img
               src={progress == 100 ? markedIcon : unmarkedIcon}
               onClick={e => {
@@ -53,20 +57,26 @@ const GoalCard = ({
         </div>
         <div className="col-md-10 goalCardContent">
           <div style={{ display: "flex" }}>
-            <div className="goalCardTitle" style={{ flex: "1 1 70%" }}>{name}</div>
+            <div className="goalCardTitle" style={{ flex: "1 1 70%" }}>
+              {name}
+            </div>
             <div style={{ flex: "1 1 30%" }}>
               <span className="goalDate">{dueDate}</span>
             </div>
           </div>
           <div className="goalSubtitle">{description}</div>
-         
+
           <div className="goalProgress">
             Progress<span className="progressNumber">{progress}%</span>
             <div className="progress">
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: progress + "%",background:(progress==100?"#ffc373":"#fea321") }}
+                style={{
+                  width: progress + "%",
+                  backgroundColor: "var(--goal-color)",
+                  opacity: progress == 100 ? "0.6" : "1"
+                }}
                 aria-valuenow={progress}
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -83,18 +93,21 @@ const GoalCard = ({
                 value={importance}
                 style={{
                   fontSize: 19,
-                  color:(progress==100?"#ffc373":"#fea321"),
-                  marginTop: "5px"
+                  opacity: progress == 100 ? "0.6" : "1",
+                  marginTop: "5px",
+                  color: "var(--goal-color)"
                 }}
               />
             </div>
           </div>
-          <div className="row goalAssociations">          
+          <div className="row goalAssociations">
             <div className="col-md-6">
               <div>
                 Sub Habits
                 <div>
-                  <span className="goalAssociationsNumber">{subHabits||0}</span>
+                  <span className="goalAssociationsNumber">
+                    {subHabits || 0}
+                  </span>
                 </div>
               </div>
             </div>
@@ -102,7 +115,9 @@ const GoalCard = ({
               <div>
                 Sub Tasks
                 <div>
-                  <span className="goalAssociationsNumber">{subTasks||0}</span>
+                  <span className="goalAssociationsNumber">
+                    {subTasks || 0}
+                  </span>
                 </div>
               </div>
             </div>

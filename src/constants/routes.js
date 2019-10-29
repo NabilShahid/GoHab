@@ -9,4 +9,7 @@ ROUTES[PAGEKEYS["TASKS"]] = "/main/tasks";
 ROUTES[PAGEKEYS["HABIT_TRACKING"]] = "/main/habit-tracking";
 ROUTES[PAGEKEYS["HABIT_CALENDAR"]] = "/main/habit-calendar";
 ROUTES[PAGEKEYS["TASK_CALENDAR"]] = "/main/task-calendar";
+ROUTES[PAGEKEYS["GOAL_STATS"]] = "/main/goal-stats";
+ROUTES[PAGEKEYS["TASK_STATS"]] = "/main/task-stats";
+ROUTES[PAGEKEYS["HABIT_STATS"]] = "/main/habit-stats";
 export default ROUTES;

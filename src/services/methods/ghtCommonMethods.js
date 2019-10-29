@@ -37,7 +37,9 @@ export function dateSort(items, order, key) {
 export function getDueItems(items, dueItems) {
   return items.filter(item => dueItems.indexOf(item.id) > -1);
 }
-
+export function getRandomInt(max) {
+  return parseInt((Math.random() * 100) % max);
+}
 export function getNotificationText(notificationInfo) {
   let notificationString = "";
   if (notificationInfo[2] == "today")
@@ -77,4 +79,70 @@ export function getNotificationText(notificationInfo) {
       " " +
       "to track";
   return notificationString.toLowerCase();
+}
+
+export function getNotificationDialogText(nt) {
+  if (nt[2] == "overdue") return "Overdue " + nt[1];
+  else if (nt[2] == "week") return nt[1] + " due this week";
+  else if (nt[2] == "today") return nt[1] + " due today";
+  return "";
+}
+
+export function getOverduePendingGoalsOrTasks(items) {
+  return items.reduce(
+    (p, c, i) => {
+      //completed logic
+      if (c.progress == 100 || c.completed) {
+        p.Completed++;
+      }
+      //pending logic
+      else {
+        if (c.dueDate) {
+          if (
+            new Date(c.dueDate).setHours(0, 0, 0, 0) <
+            new Date().setHours(0, 0, 0, 0)
+          )
+            p.Overdue++;
+          else p.Due++;
+        } else {
+          p.NoDue++;
+        }
+      }
+      return p;
+    },
+    { Overdue: 0, Completed: 0, NoDue: 0, Due: 0 }
+  );
+}
+export function getOnBeforeAfterDueDateGoalsOrTasks(items) {
+  return items.reduce(
+    (p, c, i) => {
+      //completed logic
+      if (c.progress == 100 || c.completed) {
+        if (c.dueDate) {
+          if (
+            new Date(c.dueDate).setHours(0, 0, 0, 0) <
+            new Date().setHours(0, 0, 0, 0)
+          )
+            p.BeforeDueDate++;
+          else if (
+            new Date(c.dueDate).setHours(0, 0, 0, 0) >
+            new Date().setHours(0, 0, 0, 0)
+          )
+            p.AfterDueDate++;
+          else p.OnDueDate++;
+        }
+      }
+      //pending logic
+      else {
+        if (c.dueDate) {
+          if (new Date(c.dueDate) < new Date()) p.Overdue++;
+          else p.Due++;
+        } else {
+          p.NoDue++;
+        }
+      }
+      return p;
+    },
+    { BeforeDueDate: 0, AfterDueDate: 0, OnDueDate: 0 }
+  );
 }

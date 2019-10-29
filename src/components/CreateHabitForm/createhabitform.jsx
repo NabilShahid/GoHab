@@ -23,6 +23,12 @@ import { addHabit } from "../../actions/habitActions";
 import "./createhabitform.css";
 import moment from "moment";
 import { updateSubItemsCount } from "../../actions/goalActions";
+import {
+  HABIT_CATEGORIES,
+  MATERIAL_COLORS
+} from "../../constants/commonConsts";
+import ICONS, { CATEGORY_ICONS } from "../../constants/iconSvgs";
+import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 const { TextArea } = Input;
 const Option = Select.Option;
 class CreateHabitForm extends React.Component {
@@ -91,6 +97,8 @@ class CreateHabitForm extends React.Component {
 
     if (this.props.mode == "add") {
       //call to firebase habitOps addNewHabit method
+      formValuesToSave.bgColor =
+        MATERIAL_COLORS[getRandomInt(MATERIAL_COLORS.length)];
       formValuesToSave.completed = false;
       formValuesToSave.startDateTime = moment()
         .toDate()
@@ -223,7 +231,8 @@ class CreateHabitForm extends React.Component {
       frequency,
       completed,
       startDateTime,
-      tracking
+      tracking,
+      bgColor
     } = this.props.habitOptions;
     const { formValues } = this.state;
     formValues.name = name || "";
@@ -234,6 +243,7 @@ class CreateHabitForm extends React.Component {
     formValues.frequency = frequency || 1;
     formValues.completed = completed || false;
     formValues.tracking = tracking || [];
+    formValues.bgColor = bgColor;
     formValues.startDateTime =
       startDateTime ||
       moment()
@@ -296,7 +306,13 @@ class CreateHabitForm extends React.Component {
     if (this.state.disabledForm) return "100%";
     return "70%";
   }
-
+  categoryIconStyles = {
+    height: "15px",
+    width: "15px",
+    fill: "var(--habit-category-color)",
+    marginRight: "4px",
+    marginBottom: "2px"
+  };
   render() {
     const {
       loading,
@@ -311,8 +327,16 @@ class CreateHabitForm extends React.Component {
       <div>
         <div className="ghtFormContainer">
           <div className="sHeader">
+            <ICONS.Habit
+              style={{
+                fill: "#7d7d7d",
+                width: "19px",
+                height: "19px",
+                marginBottom: "3px",
+                float: "right"
+              }}
+            />
             {this.getFormHeader()}
-            <img src={logo} className="formLogo" />
           </div>
           <form onSubmit={this.performHabitAction}>
             <div className="row formControlDiv">
@@ -373,53 +397,19 @@ class CreateHabitForm extends React.Component {
                   }}
                   buttonStyle="solid"
                 >
-                  <Radio.Button value="Health">
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Health
-                  </Radio.Button>
-                  <Radio.Button value="Personal Development">
-                    {" "}
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Personal Development
-                  </Radio.Button>
-                  <Radio.Button value="Social">
-                    {" "}
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Social
-                  </Radio.Button>
-                  <Radio.Button value="Relationship">
-                    {" "}
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Relationship
-                  </Radio.Button>
-                  <Radio.Button value="Routine Work">
-                    {" "}
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Routine Work
-                  </Radio.Button>
-                  <Radio.Button value="Other">
-                    {" "}
-                    <i
-                      className={"fa fa-edit"}
-                      style={{ marginRight: "6px" }}
-                    />
-                    Other
-                  </Radio.Button>
+                  {HABIT_CATEGORIES.map(hc => {
+                    const Icon =
+                      CATEGORY_ICONS[hc.Icon] ||
+                      (() => {
+                        return <div></div>;
+                      });
+                    return (
+                      <Radio.Button value={hc.Name}>
+                        <Icon style={this.categoryIconStyles} />
+                        {hc.Name}
+                      </Radio.Button>
+                    );
+                  })}
                 </Radio.Group>
               </div>
             </div>
@@ -487,6 +477,14 @@ class CreateHabitForm extends React.Component {
           </form>
         </div>
         <div className="formControlDiv" style={{ textAlign: "right" }}>
+        <Button
+            onClick={() => {
+              this.props.setPopupVisibility("Habit", false);
+            }}
+            
+          >
+            Cancel
+          </Button>
           {this.getActionButton(mode, disabledForm, loading)}
         </div>
       </div>
@@ -529,12 +527,7 @@ class CreateHabitForm extends React.Component {
       }
     } else {
       //create mode
-      return (
-        <span>
-          <i className={"fa fa-info-circle"} style={{ marginRight: "10px" }} />
-          Fill out the form
-        </span>
-      );
+      return <span>New Habit</span>;
     }
   }
 
@@ -546,7 +539,9 @@ class CreateHabitForm extends React.Component {
           type="submit"
           loading={loading}
           onClick={this.performHabitAction}
-          className="redButton"
+          style={{marginLeft:"10px"}}
+          className="primaryButton"
+          style={{ marginLeft: "10px", backgroundColor: "var(--habit-color)" }}
           disabled={!this.validateForm()}
         >
           {mode == "view" && "Update"}

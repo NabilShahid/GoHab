@@ -104,10 +104,9 @@ class HabitCalendar extends Component {
               //   defaultValue={["a10", "c12"]}
               onChange={e => this.setState({ habitsToFilter: e })}
             >
-              {goalPeriodHabits
-                .filter(h => h.period == habitsPeriod)
+              {goalPeriodHabits               
                 .map(h => {
-                  return <Option key={h.name}>{h.name}</Option>;
+                  return <Option key={h.id}>{h.name}</Option>;
                 })}
             </Select>
           </div>
@@ -122,11 +121,10 @@ class HabitCalendar extends Component {
         {habitDialogInDom && (
           <Modal
             visible={habitDialogVisible}
-            width="53%"
-            title={selectedHabit.name}
+             title=""
             centered
             bodyStyle={{ overflowY: "auto" }}
-            style={{ top: "10px" }}
+            style={{ top: "10px",minWidth:"53vw" }}
             onCancel={() => {
               this.closeHabitDialog();
             }}
@@ -161,7 +159,7 @@ class HabitCalendar extends Component {
           i++
         ) {
           let event = {
-            title: h.name,
+            title:"",
             id: h.id
           };
           let currTrackIndex = h.tracking.findIndex(t => t.Index == i);

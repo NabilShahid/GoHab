@@ -1,4 +1,5 @@
 @import "./constants/styleVars.css";
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 html {
   height: 100%;
 }
@@ -14,9 +15,8 @@ body {
   overflow: auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+div{
+  font-family: 'Questrial', sans-serif;
 }
 #root {
   height: 100%;
@@ -26,19 +26,20 @@ code {
   border-radius: 6px !important;
 }
 .ant-modal-title {
-  font-size: 15px !important;
+  /* font-size: 15px !important; */
 }
 .ant-modal-close-x {
-  line-height: 35px !important;
+  /* line-height: 35px !important;
   font-size: 12px !important;
-  height: 0px !important;
+  height: 0px !important; */
+  display: none !important;
 }
 .ghtFormContainer {
   width: 100%;
   padding: 15px;
   border-radius: 4px;
   font-size: 13px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
 }
 .formLabel {
   color: #5f5f5f;
@@ -56,9 +57,6 @@ code {
   float: right;
 }
 
-.ghtFormContainer .ant-slider-track {
-  background-color: var(--primary-color);
-}
 .ghtFormContainer .ant-slider:hover .ant-slider-track {
   background-color: #4c4c4c;
 }
@@ -68,8 +66,7 @@ code {
   border-color: var(--primary-color);
 }
 
-.redButton {
-  background-color: var(--primary-color) !important;
+.primaryButton {
   border: 0px !important;
   border-radius: 3px !important;
   color: white !important;
@@ -82,7 +79,7 @@ code {
 }
 .noColorButton {
   border: 0px !important;
-  border-radius: 3px !important;
+  border-radius: 20px !important;
   color: white !important;
 }
 .ant-calendar-selected-date .ant-calendar-date,
@@ -144,9 +141,10 @@ code {
   border: unset;
   border-bottom: 1px solid #d0d0d0;
 }
-.ghtFormContainer .ant-radio-button-wrapper-disabled.ant-radio-button-wrapper-checked {
-  background-color: #fb584c !important;
-  border-color: #fb584c !important;
+.ghtFormContainer
+  .ant-radio-button-wrapper-disabled.ant-radio-button-wrapper-checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 .ghtFormContainer .ant-input-number-disabled .ant-input-number-input {
   background-color: white !important;
@@ -161,9 +159,6 @@ code {
   background-color: white;
   border: unset;
 }
-.ghtFormContainer .progress-bar {
-  background-color: var(--primary-color);
-}
 
 .ghtFormContainer .progressNumber {
   font-size: 11px;
@@ -174,26 +169,27 @@ code {
 }
 .sHeader {
   color: #4c4c4c;
-  margin-top: 8px;
-  margin-bottom: 15px;
+  margin-top: 0px;
+  margin-bottom: 13px;
   border-bottom: 1px solid #d6d6d6;
-  padding-bottom: 12px;
+  padding-bottom: 9px;
   padding-left: 5px;
   font-size: 15px;
   font-weight: 500;
 }
 .ant-modal-header {
-  padding: 8px 24px !important;
+  /* padding: 8px 24px !important; */
+  display: none;
 }
 .ant-radio-group-solid
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  background: var(--primary-color) !important;
-  border-color: var(--primary-color) !important;
+  background: #c3c3c3  !important;
+  border-color: #c3c3c3  !important;
 }
 
 .ant-radio-button-wrapper:hover {
   color: white !important;
-  background-color: #4c4c4c;
+  background-color: var(--primary-color);
 }
 .ant-radio-button-wrapper-checked:active {
   border-color: var(--primary-color) !important;
@@ -218,12 +214,12 @@ code {
 .cardAvatar {
   color: white;
   text-align: center;
-  width: 37px;
+  width: 31px;
   margin-top: -20px;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 3px;
   padding-top: 1px;
-  border-radius: 2px;
+  border-radius: 3px;
   margin-left: -2px;
   font-weight: 500;
 }
@@ -259,21 +255,15 @@ code {
 .markIcon {
   margin: 10px 0px 5px 6px;
   width: 23px;
-  /* transition: 0.1s;
-  transform: scale(1)     */
 }
-/* .markIcon:hover{
- 
-  transition: 0.1s;
-  transform: scale(1.05)   
-} */
+
 .ant-message .anticon {
   top: -3px !important;
 }
-.ant-tabs .ant-tabs-left-content{
+.ant-tabs .ant-tabs-left-content {
   max-height: 500px;
   min-height: 300px;
-  overflow-y:auto !important;
+  overflow-y: auto !important;
 }
 .cardsFilterIconContainer {
   text-align: right;
@@ -291,9 +281,9 @@ code {
 .ant-popover-title {
   color: #6f6f6f !important;
 }
-.ant-modal-body{
+.ant-modal-body {
   max-height: 550px;
- }
+}
 .cardFilterLabel {
   font-size: 12px;
   margin: 6px 0px;
@@ -310,4 +300,32 @@ code {
 .submenuOption:not(:last-child) {
   border-bottom: 1px solid #e4e4e4;
   padding-bottom: 8px;
+}
+.fc-time {
+  display: none;
+}
+.fullWidthLineChartLabel{
+  font-weight: 500;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.graphInfoIcon{
+  margin-left: 7px;
+  color: #4da6f3;
+  cursor: pointer;
+}
+.halfPageChartLabel{
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: -25px;
+}
+.chartsHorizontalSeperator{
+  border-bottom: 1px solid #f1f1f1;
+  margin: 10px 25px 20px 25px;
+}
+.filterAndSortIcon{
+  height: 20px;
+  width: 20px;
+  margin-top: 5px;
+  cursor: pointer;
 }

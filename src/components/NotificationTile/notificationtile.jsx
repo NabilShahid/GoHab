@@ -2,7 +2,7 @@ import React from "react";
 import { getNotificationText } from "../../services/methods/ghtCommonMethods";
 import "./notificationtile.css";
 const NotificationTile = ({ notificationInfo }) => {
-  let notificationString = getNotificationText(notificationInfo);
+  let notificationString = getNotificationText(notificationInfo,false);
   const background = `var(${(notificationInfo[1] == "Goals" &&
     "--goal-color") ||
     (notificationInfo[1] == "Habits" && "--habit-color") ||

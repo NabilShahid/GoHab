@@ -7,6 +7,7 @@
     color: #9a9a9a;
     margin-top: 5px;
     max-width: 360px;
+    background-color: white;
 }
 .goalCard:hover{
     transition: 0.2s;
@@ -34,6 +35,7 @@
 .goalProgress{
     margin-top: 2%;
     font-size: 12px;
+    /* display: none; */
 }
 .goalImportance{
     margin-top: 4%;
@@ -41,7 +43,7 @@
 }
 
 .goalCard .progress{
-    height: 11px;
+    height: 3px;
     margin-top: 2%;
     border-radius: 2px;
 }

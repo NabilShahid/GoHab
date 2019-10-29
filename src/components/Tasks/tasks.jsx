@@ -24,6 +24,8 @@ import TaskCard from "../TaskCard/taskcard";
 import CreateTaskForm from "../CreateTaskForm/createtaskform";
 import { getFilteredTasks } from "../../services/methods/taskMethods";
 import "./tasks.css";
+import { FilterAndSort } from "../../constants/iconSvgs";
+
 const Option = Select.Option;
 const Search = Input.Search;
 class Tasks extends Component {
@@ -67,13 +69,13 @@ class Tasks extends Component {
                 value={subModeSearchValue}
                 size="small"
                 onChange={e => {
-                  this.setState({subModeSearchValue:e.target.value});
+                  this.setState({ subModeSearchValue: e.target.value });
                 }}
                 style={{ width: 210 }}
               />
             </div>
             {this.getTasksRows(
-              getFilteredTasks(subMode.Tasks,subModeSearchValue,"all"),
+              getFilteredTasks(subMode.Tasks, subModeSearchValue, "all"),
               subMode.ColSize
             )}
           </div>
@@ -149,9 +151,9 @@ class Tasks extends Component {
                   trigger="click"
                 >
                   <Tooltip title="Change View">
-                    <i
-                      className="fa fa-cogs cardsFilterIcon"
-                      style={{ color: "#4ea952" }}
+                  <FilterAndSort
+                      style={{ fill: "var(--task-color)" }}
+                      className="filterAndSortIcon"
                     />
                   </Tooltip>
                 </Popover>
@@ -176,11 +178,10 @@ class Tasks extends Component {
         {taskDialogInDom && (
           <Modal
             visible={taskDialogVisible}
-            width="53%"
-            title={taskDialogTitle}
+             title={taskDialogTitle}
             centered
             bodyStyle={{ overflowY: "auto" }}
-            style={{ top: "10px" }}
+            style={{ top: "10px",minWidth:"53vw" }}
             onCancel={() => {
               this.closeTaskDialog();
             }}
@@ -190,6 +191,7 @@ class Tasks extends Component {
               mode={taskViewMode}
               taskOptions={currentTaskOptions}
               closeAndUpdate={this.updateLocalTask}
+              setPopupVisibility={this.closeTaskDialog}
               close={this.closeTaskDialog}
             />
           </Modal>
@@ -274,6 +276,7 @@ class Tasks extends Component {
             dueDate={r.dueDate}
             completed={r.completed}
             importance={r.importance}
+            bgColor={r.bgColor}
             markTask={this.markTask}
             id={r.id}
           />
@@ -284,9 +287,12 @@ class Tasks extends Component {
 
   markTask = id => {
     let currTask = this.props.tasks.find(v => v.id == id);
-    if (currTask.completed) currTask.completed = false;
-    else {
+    if (currTask.completed) {
+      currTask.completed = false;
+      currTask.dateCompleted = false;
+    } else {
       currTask.completed = true;
+      currTask.dateCompleted = new Date().toISOString();
       message.success(`Marked ${currTask.name} as completed!`);
     }
     this.updateLocalTask(currTask);
@@ -306,7 +312,7 @@ const mapStateToProps = state => {
     orderBy: state.taskReducer.CurrentOrderBy,
     goalNamesAndIDs: state.goalReducer.SortedGoalNamesAndIDs,
     viewTypeFilter: state.taskReducer.CurrentViewType,
-    userEmail:state.userReducer.User.Email
+    userEmail: state.userReducer.User.Email
   };
 };
 

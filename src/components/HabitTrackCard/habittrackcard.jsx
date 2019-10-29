@@ -1,15 +1,48 @@
 import React from "react";
 import "./habittrackcard.css";
 import { Tooltip } from "antd";
-import {getTrackPeriodString} from "../../services/methods/habitMethods";
+import { getTrackPeriodString } from "../../services/methods/habitMethods";
 import markedIcon from "../../assets/images/checkIconMarked1.png";
 import unmarkedIcon from "../../assets/images/checkIcon1.png";
-const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
+import { HABIT_CATEGORIES } from "../../constants/commonConsts";
+import { CATEGORY_ICONS } from "../../constants/iconSvgs";
+
+const HabitTrackCart = ({ habit, currentTrack, trackHabit, parentGoal }) => {
+  const Icon =
+    CATEGORY_ICONS[HABIT_CATEGORIES.find(h => h.Name == habit.category).Icon] ||
+    (() => {
+      return <div></div>;
+    });
   return (
-    <div className="hTrackCard">
+    <div
+      className="hTrackCard"
+      style={{
+        backgroundColor:
+          currentTrack.Frequency == currentTrack.Count ? "#c8ffc7" : "white"
+      }}
+    >
       <div className="row">
         <div className="col-md-6">
-          <div className="hTrackName">{habit.name}</div>
+          <div
+            className="cardAvatar"
+            style={{
+              backgroundColor: habit.bgColor
+            }}
+          >
+            {habit.name[0].toUpperCase() || ""}
+          </div>
+          <div className="hTrackName">
+            {" "}
+            <Icon
+              style={{
+                height: "15px",
+                width: "15px",
+                fill: "var(--habit-category-color)",
+                marginRight: "8px"
+              }}
+            />
+            {habit.name}
+          </div>
         </div>
         <div className="col-md-6" style={{ textAlign: "right" }}>
           <div className="hTrackParentGoal">{parentGoal}</div>
@@ -18,7 +51,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
       <div className="row">
         <div className="col-md-12">
           <div className="hTrackInfo" style={{ fontSize: "12px" }}>
-            {getTrackPeriodString(habit.period,currentTrack.Frequency)}
+            {getTrackPeriodString(habit.period, currentTrack.Frequency)}
           </div>
         </div>
       </div>
@@ -33,7 +66,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
             <div className="hTrackAddSubstract">
               <i
                 onClick={() => {
-                  trackHabit(habit, currentTrack.Count+1);
+                  trackHabit(habit, currentTrack.Count + 1);
                 }}
                 className={
                   "fa fa-plus-square " +
@@ -45,7 +78,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
               />
               <i
                 onClick={() => {
-                  trackHabit(habit, currentTrack.Count-1);
+                  trackHabit(habit, currentTrack.Count - 1);
                 }}
                 className={
                   "fa fa-minus-square " +
@@ -71,7 +104,7 @@ const HabitTrackCart = ({ habit, currentTrack, trackHabit,parentGoal }) => {
                 />
               </Tooltip>
             ) : (
-              <Tooltip placement="right" title="Mark as trackes">
+              <Tooltip placement="right" title="Mark as tracked">
                 <img
                   onClick={() => {
                     trackHabit(habit, currentTrack.Frequency);

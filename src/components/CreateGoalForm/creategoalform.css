@@ -2,3 +2,10 @@
 .ghtFormContainer .goalProgress{
     margin-top: 0.6%;
   }
+  .ghtFormContainer .goalProgress .progress-bar {
+    background-color: var(--goal-color);
+  }
+  
+  .goalProgressSlider .ant-slider-track {
+    background-color: var(--goal-color);
+  }

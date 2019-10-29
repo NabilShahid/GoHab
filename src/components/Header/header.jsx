@@ -7,7 +7,8 @@ import Tasks from "../Tasks/tasks";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
-import { updateFilterString } from "../../actions/headerActions";
+import { updateHeaderFilterString,updateHeaderOptions } from "../../actions/headerActions";
+import { getNotificationDialogText } from "../../services/methods/ghtCommonMethods";
 import {
   alphaSort,
   getDueItems
@@ -19,6 +20,7 @@ import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
 import { withApi } from "../../services/api";
 import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
+import ICONS,{HEADER_ICONS_STYLES} from "../../constants/iconSvgs";
 import "./header.css";
 const Search = Input.Search;
 class Header extends Component {
@@ -28,24 +30,25 @@ class Header extends Component {
     notificationDialogVisible: false,
     notificationCount: 0,
     notifications: [],
-    selectedNotificationIndex: 0
+    selectedNotificationIndex: 0,
+    notificationDialogTitle: ""
   };
 
   searchValues(value) {
     switch (this.props.title) {
       case HEADEROPTIONS[PAGEKEYS["GOALS"]].Title: {
         this.props.filterGoals(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       case HEADEROPTIONS[PAGEKEYS["TASKS"]].Title: {
         this.props.filterTasks(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       case HEADEROPTIONS[PAGEKEYS["HABITS"]].Title: {
         this.props.filterHabits(value);
-        this.props.updateFilterString(value);
+        this.props.updateHeaderFilterString(value);
         break;
       }
       default: {
@@ -78,7 +81,7 @@ class Header extends Component {
             key={i}
             onClick={() => {
               const selectedNotificationIndex = i;
-              this.openNotificationsDialog(n.Info[1]);
+              this.openNotificationItems(n.Info);
               this.setState({ selectedNotificationIndex });
             }}
           >
@@ -88,13 +91,22 @@ class Header extends Component {
       });
     return <div>No notifications...</div>;
   };
-  openNotificationsDialog = collection => {
-    if (collection != "Habits") {
+  openNotificationItems = collection => {
+    if (collection[1] != "Habits") {
       let { notificationDialogVisible, notificationsDialogInDom } = this.state;
       notificationDialogVisible = true;
       notificationsDialogInDom = true;
-      this.setState({ notificationDialogVisible, notificationsDialogInDom });
+      let notificationDialogTitle = getNotificationDialogText(collection);
+      this.setState({
+        notificationDialogVisible,
+        notificationsDialogInDom,
+        notificationDialogTitle
+      });
     } else {
+      this.props.updateHeaderOptions({
+        ...HEADEROPTIONS["HABIT_TRACKING"],
+        SelectedMenuOption: ["HABIT_TRACKING"]
+      });      
       history.push(ROUTES[PAGEKEYS["HABIT_TRACKING"]]);
     }
     this.setState({ notificationsVisible: false });
@@ -161,23 +173,27 @@ class Header extends Component {
       }
     }
   };
+  commonIconStyles = { fill: "#6f7782", width: "30px", height: "30px", marginRight: "10px" };
   render() {
     const { search, firebase, user, flushStore } = this.props;
     const {
       notificationsDialogInDom,
       notificationDialogVisible,
       notificationsVisible,
-      notificationCount
+      notificationCount,
+      notificationDialogTitle
     } = this.state;
+    const Icon=ICONS[this.props.icon]||(()=>{return <div></div>}); 
+    const iconStyle=HEADER_ICONS_STYLES[this.props.icon];   
     return (
       <div id="headerDiv">
         <Row>
           <Col span={1} />
-          <Col id="headerTitle" span={9}>
-            <i className={this.props.icon} style={{ marginRight: "2%" }} />
+          <Col id="headerTitle" span={14}>
+            <Icon style={{...this.commonIconStyles,...iconStyle}}/>
             {this.props.title}
           </Col>
-          <Col id="headerOptions" span={11}>
+          <Col id="headerOptions" span={6}>
             {search && (
               <Search
                 id="headerSearch"
@@ -189,7 +205,6 @@ class Header extends Component {
                 style={{ width: 210 }}
               />
             )}
-            {user.Name}
           </Col>
 
           <Col className="headerIconContainer" span={1}>
@@ -199,7 +214,7 @@ class Header extends Component {
                   this.setState({ notificationsVisible: true });
                 }}
                 className="fa fa-bell headerIcon"
-                style={{ fontSize: "22px" }}
+                style={{ fontSize: "20px" }}
               />
             </Badge>
           </Col>
@@ -231,7 +246,7 @@ class Header extends Component {
                   // this.setState({ notificationsVisible: true });
                 }}
                 className="fa fa-cog headerIcon"
-                style={{ fontSize: "25px" }}
+                style={{ fontSize: "22px" }}
               />
             </Popover>
           </Col>
@@ -252,7 +267,7 @@ class Header extends Component {
           <Modal
             visible={notificationDialogVisible}
             width="58%"
-            title={"currentGoalOptions.name"}
+            title={notificationDialogTitle}
             centered
             bodyStyle={{ overflowY: "auto" }}
             style={{ top: "10px" }}
@@ -299,11 +314,14 @@ const mapDispatchToProps = dispatch => {
     filterHabits: filterPayload => {
       dispatch(filterHabits(filterPayload));
     },
-    updateFilterString: filterPayload => {
-      dispatch(updateFilterString(filterPayload));
+    updateHeaderFilterString: filterPayload => {
+      dispatch(updateHeaderFilterString(filterPayload));
     },
-    flushStore:flush=>{
-      dispatch({type:"FLUSH_STORE"})
+    updateHeaderOptions: headerOptionsPayload => {
+      dispatch(updateHeaderOptions(headerOptionsPayload));
+    },
+    flushStore: flush => {
+      dispatch({ type: "FLUSH_STORE" });
     }
   };
 };

@@ -1,82 +1,153 @@
 import React, { Component } from "react";
-import { Menu } from "antd";
+import { Menu, Icon } from "antd";
 import history from "../../services/history";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { updateHeader, updateFilterString } from "../../actions/headerActions";
+import {
+  updateHeaderOptions,
+  updateHeaderFilterString
+} from "../../actions/headerActions";
 import PAGEKEYS from "../../constants/pageKeys";
 import ROUTES from "../../constants/routes";
+import { MENU_MAPPING } from "../../constants/commonConsts";
 import HEADEROPTIONS from "../../constants/headerOptions";
 import "./sidemenu.css";
+import ICONS from "../../constants/iconSvgs";
+const { SubMenu } = Menu;
 
 class SideMenu extends Component {
-  state = {};
   selectedOption;
+  defaultOpenMenu = "ItemsMenu";
+  iconsStyles = {
+    fill: "#6f7782",
+    width: "23px",
+    height: "23px",
+    marginRight: "10px",
+    marginBottom: "6px"
+  };
   componentWillMount() {
     if (this.props.location.pathname == ROUTES[PAGEKEYS["MAIN"]]) {
-      this.props.updateHeader(HEADEROPTIONS[PAGEKEYS["HOME"]]);
+      this.props.updateHeaderOptions(HEADEROPTIONS[PAGEKEYS["HOME"]]);
       this.selectedOption = [PAGEKEYS["HOME"]];
     } else {
       const currPage = Object.keys(ROUTES).filter(key => {
         return ROUTES[key] == this.props.location.pathname;
       })[0];
-      this.props.updateHeader(HEADEROPTIONS[currPage]);
+      this.props.updateHeaderOptions(HEADEROPTIONS[currPage]);
       this.selectedOption = [currPage];
+      this.defaultOpenMenu =
+        Object.keys(MENU_MAPPING).find(
+          (curr, i) => MENU_MAPPING[curr].indexOf(currPage) > -1
+        ) || this.defaultOpenMenu;
     }
   }
 
   render() {
+    const selectedOption =
+      this.props.selectedOption.length > 0
+        ? this.props.selectedOption
+        : this.selectedOption;
     return (
       <Menu
-        defaultSelectedKeys={this.selectedOption}
+        selectedKeys={selectedOption}
+        defaultOpenKeys={[this.defaultOpenMenu]}
+        // selectedKeys={}
         mode="inline"
         theme="light"
         onSelect={this.moveToPath}
       >
         <Menu.Item key={PAGEKEYS["HOME"]}>
-          <i id="sHomeI" className="fa fa-home sideIcon" />
+          <ICONS.Home style={this.iconsStyles} />
           Home
         </Menu.Item>
-        <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
-          <i id="sGoalsI" className="fa fa-home sideIcon" />
-          Goals
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
-          <i id="sHabitsI" className="fa fa-home sideIcon" />
-          Habits
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
-          <i id="sTasksI" className="fa fa-home sideIcon" />
-          Tasks
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
-          <i className="fa fa-home sideIcon" />
-          Habit Tracking
-        </Menu.Item>
-        <Menu.Item>
-          <i className="fa fa-home sideIcon" />
-          Goal Stats
-        </Menu.Item>
-        <Menu.Item key="habitStats">
-          <i className="fa fa-home sideIcon" />
-          Task Stats
-        </Menu.Item>
-        <Menu.Item key="taskStats">
-          <i className="fa fa-home sideIcon" />
-          Habit Stats
-        </Menu.Item>
-        <Menu.Item key="8">
-          <i className="fa fa-home sideIcon" />
-          Goal Calendar
-        </Menu.Item>
-        <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
-          <i className="fa fa-home sideIcon" />
-          Tasks Calendar
-        </Menu.Item>
-        <Menu.Item  key={PAGEKEYS["HABIT_CALENDAR"]}>
-          <i className="fa fa-home sideIcon" />
-          Habit Calendar
-        </Menu.Item>
+        <SubMenu
+          key="ItemsMenu"
+          title={
+            <span>
+              {/* <Icon type="mail" /> */}
+              <ICONS.Items style={this.iconsStyles} />
+              <span>Items</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
+            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
+            Goals
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
+            <ICONS.Habit style={this.iconsStyles} />
+            Habits
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
+            <ICONS.Task style={this.iconsStyles} />
+            Tasks
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="AnalyticsMenu"
+          title={
+            <span>
+              <ICONS.Analytics style={this.iconsStyles} />
+              <span>Analytics</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["GOAL_STATS"]}>
+            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
+            Goal Stats
+          </Menu.Item>
+
+          <Menu.Item key={PAGEKEYS["HABIT_STATS"]}>
+            <ICONS.Habit style={this.iconsStyles} />
+            Habit Stats
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
+            <ICONS.Task style={this.iconsStyles} />
+            Task Stats
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="HabitTrackingMenu"
+          title={
+            <span>
+              <ICONS.HabitTracking
+                style={{
+                  ...this.iconsStyles,
+                  marginLeft: "-2px",
+                  marginRight: "7px"
+                }}
+              />{" "}
+              <span>Habit Tracking</span>
+            </span>
+          }
+        >
+          <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
+            <ICONS.TrackHabits style={this.iconsStyles} />
+            Track Habits
+          </Menu.Item>
+          <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
+            <ICONS.HabitsRecord style={this.iconsStyles} />
+            Habits Record
+          </Menu.Item>
+        </SubMenu>
+        <SubMenu
+          key="CalendarMenu"
+          title={
+            <span>
+              <ICONS.Calendar style={this.iconsStyles} />
+              <span>Calendar</span>
+            </span>
+          }
+        >
+          {/* <Menu.Item key="8">
+            <ICONS.Goal style={this.iconsStyles} />
+            Goal Calendar
+          </Menu.Item> */}
+          <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
+            <ICONS.Task style={this.iconsStyles} />
+            Tasks Calendar
+          </Menu.Item>
+        </SubMenu>
       </Menu>
     );
   }
@@ -86,25 +157,29 @@ class SideMenu extends Component {
    */
   moveToPath = ({ key }) => {
     history.push(ROUTES[key]);
-    this.props.updateHeader(HEADEROPTIONS[key]);
-    // key==PAGEKEYS["HOME"]&&this.props.removeGoalFilter();
+    this.props.updateHeaderOptions({
+      ...HEADEROPTIONS[key],
+      SelectedMenuOption: [key]
+    });
     this.updateHeaderFilterString(key);
+    //for closing side menu on small devices
+    window.dispatchEvent(new Event('resize'));
   };
 
   updateHeaderFilterString(key) {
     switch (key) {
       case PAGEKEYS["GOALS"]: {
-        this.props.updateFilterString(this.props.goalFilterString);
+        this.props.updateHeaderFilterString(this.props.goalFilterString);
         this.filterHeaderIfValue(this.props.goalFilterString);
         break;
       }
       case PAGEKEYS["TASKS"]: {
-        this.props.updateFilterString(this.props.taskFilterString);
+        this.props.updateHeaderFilterString(this.props.taskFilterString);
         this.filterHeaderIfValue(this.props.taskFilterString);
         break;
       }
       case PAGEKEYS["HABITS"]: {
-        this.props.updateFilterString(this.props.habitFilterString);
+        this.props.updateHeaderFilterString(this.props.habitFilterString);
         this.filterHeaderIfValue(this.props.habitFilterString);
         break;
       }
@@ -125,10 +200,12 @@ class SideMenu extends Component {
  * state to props mapping
  */
 const mapStateToProps = state => {
+  console.log(state);
   return {
     goalFilterString: state.goalReducer.CurrentFilterString,
     taskFilterString: state.taskReducer.CurrentFilterString,
-    habitFilterString:state.habitReducer.CurrentFilterString
+    habitFilterString: state.habitReducer.CurrentFilterString,
+    selectedOption: state.headerReducer.SelectedMenuOption
   };
 };
 
@@ -137,11 +214,11 @@ const mapStateToProps = state => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    updateHeader: headerPayload => {
-      dispatch(updateHeader(headerPayload));
+    updateHeaderOptions: headerOptionsPayload => {
+      dispatch(updateHeaderOptions(headerOptionsPayload));
     },
-    updateFilterString: filterPayload => {
-      dispatch(updateFilterString(filterPayload));
+    updateHeaderFilterString: filterPayload => {
+      dispatch(updateHeaderFilterString(filterPayload));
     }
   };
 };

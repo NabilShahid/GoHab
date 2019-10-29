@@ -4,12 +4,14 @@ export function getSortedGoalNamesAndIDs(goals) {
   goalNameAndIDs = goals.map(g => {
     return {
       name: g.name,
-      id: g.id
+      id: g.id,
+      bgColor:g.bgColor
     };
   });
   goalNameAndIDs.unshift({
     name: "Standalone Tasks",
-    id: ""
+    id: "",
+    bgColor:"var(--goal-color)"
   });
   return goalNameAndIDs;
 }

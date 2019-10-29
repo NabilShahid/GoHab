@@ -1,34 +1,38 @@
 #headerDiv {
-  padding-top: 10px;
+  padding-top: 7px;
   padding-bottom: 10px;
-  color: white;
+  color: #4c5265;
 }
 #headerTitle {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 500;
   padding-right: 3%;
+  padding-top: 3px;
+  margin-left: 5px;
+  color: #6f7782;
 }
 .headerIcon {  
   cursor: pointer;
 }
 #headerOptions {
-  padding-top: 11px;
+  padding-top: 4px;
   text-align: right;
   padding-left: 15px;
 }
 
 #headerOptions input {
-  background-color: #656565;
-  color: white;
-  width: 80%;
-  border: unset;
+     /* background-color: #656565; */
+     /* color: white; */
+     width: 80%;
+     border: 1;
+     border-radius: 30px;
 }
 #headerOptions input:focus {
   width: 100%;
 }
 .headerIconContainer {
   text-align: right;
-  padding-top: 14px;
+  padding-top: 9px;
 }
 .ant-drawer-body{
   padding:0px !important;

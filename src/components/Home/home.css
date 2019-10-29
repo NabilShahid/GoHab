@@ -1,3 +1,6 @@
-#homeContent{
-    padding: 5px;
+#homeContent {
+  padding: 10px;
+}
+.homeChartDiv {
+  text-align: center;
 }
