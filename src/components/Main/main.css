@@ -56,7 +56,9 @@
   overflow-y: hidden;
   overflow-x: hidden;
 }
-
+.menuShown {
+  position: absolute;
+}
 .fc-button-primary {
   background-color: var(--primary-color) !important;
   border-color: var(--primary-color) !important;

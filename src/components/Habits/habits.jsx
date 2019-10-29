@@ -28,7 +28,6 @@ import "./habits.css";
 import { FilterAndSort } from "../../constants/iconSvgs";
 const Option = Select.Option;
 const Search = Input.Search;
-
 class Habits extends Component {
   state = {
     habitDialogInDom: false,

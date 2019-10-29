@@ -4,7 +4,7 @@ import { Icon } from "antd";
 
 import logo from "../../assets/images/logo_withoutText.png";
 
-const UserTile = () => {
+const UserTile = ({ toggleMenu, menuShown }) => {
   return (
     <div id="userDiv">
       <img src={logo} id="gohabLogo" alt="G" />

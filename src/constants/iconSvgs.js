@@ -45,5 +45,4 @@ export const CATEGORY_ICONS = {
   RoutineWork,
   Other
 };
-
 export default ICONS;
