@@ -16,6 +16,7 @@ import history from "../../services/history";
 import PAGEKEYS from "../../constants/pageKeys";
 
 import "./app.css";
+import LoginForm from "../TempLogin/templogin";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,11 @@ class App extends Component {
               exact
               path="/"
               render={() => <Redirect to={ROUTES[PAGEKEYS["MAIN"]]} />}
+            />
+            <Route
+              exact
+              path="/test"
+              component={LoginForm}
             />
             <Route
                     
