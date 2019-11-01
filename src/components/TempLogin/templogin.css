@@ -16,11 +16,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../../assets/images/bg-01.jpg");
-    background-size:     cover;                      /* <------ */
+    /* background-image: url("../../assets/images/bg-01.jpg");
+    background-size:     cover;                      
     background-repeat:   no-repeat;
-    background-position: center center;  
-
+    background-position: center center;   */
+	background: linear-gradient(to right, #a8c0ff, #3f2b96);
 }
  .ght-login-form {
 	 background-color: white;
@@ -53,10 +53,7 @@
 	 -webkit-transform: translate(-50%, 0%);
 	 -webkit-transition: all 0.3s ease;
 }
- .ght-login-form .signup.slide-up .ght-form-holder, .ght-login-form .signup.slide-up .submit-btn {
-	 opacity: 0;
-	 visibility: hidden;
-}
+
  .ght-login-form .signup.slide-up .form-title {
 	 font-size: 1em;
 	 cursor: pointer;
@@ -79,59 +76,22 @@
 	 -webkit-transition: all 0.3s ease;
 }
  .ght-login-form .signup .ght-form-holder {
-	 border-radius: 0px;
-	 background-color: #fff;
+ 
 	 overflow: hidden;
 	 margin-top: 50px;
 	 opacity: 1;
 	 visibility: visible;
 	 -webkit-transition: all 0.3s ease;
 }
- .ght-login-form .signup .ght-form-holder .input {
-	 border: 0;
-	 outline: none;
-	 box-shadow: none;
-	 display: block;
-	 height: 30px;
-	 line-height: 30px;
-	 padding: 8px 15px;
-	 border-bottom: 1px solid #eee;
-	 width: 100%;
-	 font-size: 12px;
-}
- .ght-login-form .signup .ght-form-holder .input:last-child {
-	 border-bottom: 0;
-}
- .ght-login-form .signup .ght-form-holder .input::-webkit-input-placeholder {
-	 color: rgba(0, 0, 0, 0.4);
-}
- .ght-login-form .signup .submit-btn {
-	 background-color: rgba(0, 0, 0, 0.4);
-	 color: rgba(256, 256, 256, 0.7);
-	 border: 0;
-	 border-radius: 15px;
-	 display: block;
-	 margin: 15px auto;
-	 padding: 15px 45px;
-	 width: 100%;
-	 font-size: 13px;
-	 font-weight: bold;
-	 cursor: pointer;
-	 opacity: 1;
-	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
-}
- .ght-login-form .signup .submit-btn:hover {
-	 transition: all 0.3s ease;
-	 background-color: rgba(0, 0, 0, 0.8);
-}
+ 
+/* signup bg color */
  .ght-login-form .login {
 	 position: absolute;
 	 top: 20%;
 	 left: 0;
 	 right: 0;
 	 bottom: 0;
-     background-color: var(--primary-color);
+     background-color: #A072BE;
      color: white;
 	 z-index: 5;
 	 -webkit-transition: all 0.3s ease;
@@ -143,7 +103,7 @@
      color: white;
 	 top: -20px;
 	 -webkit-transform: translate(-50%, 0);
-	 background-color: var(--primary-color);
+	 background-color: #A072BE;
 	 width: 200%;
 	 height: 250px;
 	 border-radius: 50%;
@@ -160,7 +120,7 @@
 	 -webkit-transition: all 0.3s ease;
 }
  .ght-login-form .login .center .form-title {
-	 color: #000;
+	 color: white;
 	 font-size: 1.7em;
 	 text-align: center;
 }
@@ -171,53 +131,14 @@
 	 -webkit-transition: all 0.3s ease;
 }
  .ght-login-form .login .center .ght-form-holder {
-	 border-radius: 15px;
-	 background-color: #fff;
-	 border: 1px solid #eee;
 	 overflow: hidden;
 	 margin-top: 50px;
 	 opacity: 1;
 	 visibility: visible;
 	 -webkit-transition: all 0.3s ease;
 }
- .ght-login-form .login .center .ght-form-holder .input {
-	 border: 0;
-	 outline: none;
-	 box-shadow: none;
-	 display: block;
-	 height: 30px;
-	 line-height: 30px;
-	 padding: 8px 15px;
-	 border-bottom: 1px solid #eee;
-	 width: 100%;
-	 font-size: 12px;
-}
- .ght-login-form .login .center .ght-form-holder .input:last-child {
-	 border-bottom: 0;
-}
- .ght-login-form .login .center .ght-form-holder .input::-webkit-input-placeholder {
-	 color: rgba(0, 0, 0, 0.4);
-}
- .ght-login-form .login .center .submit-btn {
-	 background-color: #6b92a4;
-	 color: rgba(256, 256, 256, 0.7);
-	 border: 0;
-	 border-radius: 15px;
-	 display: block;
-	 margin: 15px auto;
-	 padding: 15px 45px;
-	 width: 100%;
-	 font-size: 13px;
-	 font-weight: bold;
-	 cursor: pointer;
-	 opacity: 1;
-	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
-}
- .ght-login-form .login .center .submit-btn:hover {
-	 transition: all 0.3s ease;
-	 background-color: rgba(0, 0, 0, 0.8);
-}
+ 
+
  .ght-login-form .login.slide-up {
 	 top: 90%;
 	 -webkit-transition: all 0.3s ease;
@@ -227,11 +148,7 @@
 	 -webkit-transform: translate(-50%, 0%);
 	 -webkit-transition: all 0.3s ease;
 }
- .ght-login-form .login.slide-up .ght-form-holder, .ght-login-form .login.slide-up .submit-btn {
-	 opacity: 0;
-	 visibility: hidden;
-	 -webkit-transition: all 0.3s ease;
-}
+
  .ght-login-form .login.slide-up .form-title {
 	 font-size: 1em;
 	 margin: 0;
@@ -246,3 +163,22 @@
 	 -webkit-transition: all 0.3s ease;
 }
  
+.ght-login-form .login-button-div{
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+.slide-up .ght-form-holder,.slide-up .login-button-div, .slide-up .social-login-container {
+	display: none;
+}
+.social-login-container{
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+.social-login-image{
+	width: 40px;
+    height: 39px;
+    margin: 0px 10px;
+}
+/* https://www.canva.com/colors/color-palettes/alluring-shadows/ */
