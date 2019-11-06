@@ -6,9 +6,10 @@ import gLogin from "../../assets/images/glogin.png";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { SignUpLink } from "../SignUp/signup";
+import Loading from "../Loading/loading";
 import { withFirebase } from "../../services/firebase";
 import ROUTES from "../../constants/routes";
-import {AUTH_TYPES} from "../../constants/commonConsts";
+import { AUTH_TYPES } from "../../constants/commonConsts";
 import { PasswordForgetLink } from "../PasswordForget/passwordforget";
 import history from "../../services/history";
 import PAGEKEYS from "../../constants/pageKeys";
@@ -30,14 +31,16 @@ class LoginForm extends Component {
     signInPassword: "",
     signUpEmail: "",
     signUpPassword: "",
+    signUpPasswordRetype: "",
     signUpName: "",
-    error: null,
-    signUpForm: false
+    signInError: null,
+    signUpError: null,
+    signUpForm: false,
+    signInLoading: false,
+    signUpLoading: false
   };
-
+  loginInputStyle = { marginTop: "20px" };
   componentDidMount() {
-    console.clear();
-
     const loginBtn = document.getElementById("login");
     const signupBtn = document.getElementById("signup");
 
@@ -65,96 +68,151 @@ class LoginForm extends Component {
       });
     });
   }
-  
+
   onSignIn = event => {
-    const { signInEmail, signInPassword } = this.state;
     event.preventDefault();
+    const { signInEmail, signInPassword } = this.state;
+    if (this.validateSignInRequiredFields(signInEmail, signInPassword)) {
+      this.setState({
+        signInError: { message: "Please provide email and password" }
+      });
+      return;
+    }
+    this.setState({ signInLoading: true });
     this.props.firebase.authOps
       .doSignInWithEmailAndPassword(signInEmail, signInPassword)
       .then(() => {
-        this.props.firebase.userOps
-        .retrieveUserName(signInEmail)
-        .then((doc)=> {
-          console.log('doc.data() :', doc.data());
+        this.props.firebase.userOps.retrieveUserName(signInEmail).then(doc => {
           if (doc.exists) {
             this.props.setUser({
               Email: signInEmail,
               Name: doc.data().UserName
-            });               
-            history.push(ROUTES[PAGEKEYS["MAIN"]]);            
-          } 
-        })
-             
+            });
+            history.push(ROUTES[PAGEKEYS["MAIN"]]);
+          }
+        });
       })
-      .catch(error => {
-        this.setState({ error });
+      .catch(signInError => {
+        this.setState({ signInError, signInLoading: false });
       });
   };
-  onSignUp = event => {
-    const { signUpEmail, signUpPassword, signUpName } = this.state;
+  validateSignUpRequiredFields = (
+    signUpEmail,
+    signUpPassword,
+    signUpPasswordRetype,
+    signUpName
+  ) => {
+    return (
+      !signUpEmail || !signUpPassword || !signUpName || !signUpPasswordRetype
+    );
+  };
+  validateSignInRequiredFields = (signInEmail, signInPassword) => {
+    return !signInEmail || !signInPassword;
+  };
 
+  validatePasswordMatch = (signUpPassword, signUpPasswordRetype) => {
+    return signUpPassword !== signUpPasswordRetype;
+  };
+  onSignUp = event => {
+    event.preventDefault();
+
+    const {
+      signUpEmail,
+      signUpPassword,
+      signUpPasswordRetype,
+      signUpName
+    } = this.state;
+    if (
+      this.validateSignUpRequiredFields(
+        signUpEmail,
+        signUpPassword,
+        signUpPasswordRetype,
+        signUpName
+      )
+    ) {
+      this.setState({ signUpError: { message: "Please fill all fields" } });
+      return;
+    }
+
+    if (this.validatePasswordMatch(signUpPassword, signUpPasswordRetype)) {
+      this.setState({ signUpError: { message: "Passwords do not match" } });
+      return;
+    }
+    this.setState({ signUpLoading: true });
     this.props.firebase.authOps
       .doCreateUserWithEmailAndPassword(signUpEmail, signUpPassword)
       .then(({ additionalUserInfo: { isNewUser } }) => {
         if (isNewUser)
           this.props.firebase.userOps
-            .addUserInfo(signUpEmail, signUpName,AUTH_TYPES["Email"])
-            .then(()=> {
+            .addUserInfo(signUpEmail, signUpName, AUTH_TYPES["Email"])
+            .then(() => {
               this.props.setUser({
                 Email: signUpEmail,
                 Name: signUpName
-              });    
+              });
               history.push(ROUTES[PAGEKEYS["MAIN"]]);
             })
-            .catch((error)=> {
-              this.setState({ error });
+            .catch(signUpError => {
+              this.setState({ signUpError, signUpLoading: false });
             });
       })
-      .catch(error => {
-        this.setState({ error });
+      .catch(signUpError => {
+        this.setState({ signUpError, signUpLoading: false });
       });
-
-    event.preventDefault();
   };
 
-  signInWithGoogle=()=>{
-    this.props.firebase.authOps.doSignInWithGoogle().then((result)=>{
-      this.props.firebase.userOps
-      .addUserInfo(result.user.email, result.user.displayName,AUTH_TYPES["Google"])
-      .then(()=> {
-        this.props.setUser({
-          Email: result.user.email,
-          Name: result.user.displayName
-        });    
+  signInWithGoogle = () => {
+    this.props.firebase.authOps
+      .doSignInWithGoogle()
+      .then(result => {
+        this.props.firebase.userOps
+          .addUserInfo(
+            result.user.email,
+            result.user.displayName,
+            AUTH_TYPES["Google"]
+          )
+          .then(() => {
+            this.props.setUser({
+              Email: result.user.email,
+              Name: result.user.displayName
+            });
+            history.push(ROUTES[PAGEKEYS["MAIN"]]);
+          })
+          .catch(signInError => {
+            this.setState({ signInError });
+          });
         history.push(ROUTES[PAGEKEYS["MAIN"]]);
       })
-      .catch((error)=> {
-        this.setState({ error });
-      });  
-      history.push(ROUTES[PAGEKEYS["MAIN"]]);
-    }).catch(error=>{
-      this.setState({error});
-    })
-  }
-  signInWithFacebook=()=>{
-    this.props.firebase.authOps.doSignInWithFacebook().then((result)=>{
-      this.props.firebase.userOps
-      .addUserInfo(result.user.email, result.user.displayName,AUTH_TYPES["Google"])
-      .then(()=> {
-        this.props.setUser({
-          Email: result.user.email,
-          Name: result.user.displayName
-        });    
+      .catch(signInError => {
+        this.setState({ signInError });
+      });
+  };
+  signInWithFacebook = () => {
+    this.props.firebase.authOps
+      .doSignInWithFacebook()
+      .then(result => {
+        this.props.firebase.userOps
+          .addUserInfo(
+            result.user.email,
+            result.user.displayName,
+            AUTH_TYPES["Google"]
+          )
+          .then(() => {
+            this.props.setUser({
+              Email: result.user.email,
+              Name: result.user.displayName
+            });
+            history.push(ROUTES[PAGEKEYS["MAIN"]]);
+          })
+          .catch(signInError => {
+            this.setState({ signInError });
+          });
         history.push(ROUTES[PAGEKEYS["MAIN"]]);
       })
-      .catch((error)=> {
-        this.setState({ error });
-      });  
-      history.push(ROUTES[PAGEKEYS["MAIN"]]);
-    }).catch(error=>{
-      this.setState({error});
-    })
-  }
+      .catch(signInError => {
+        this.setState({ signInError });
+      });
+  };
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -167,11 +225,13 @@ class LoginForm extends Component {
       signUpEmail,
       signUpPassword,
       signUpName,
-      error,
-      signUpForm
+      signInError,
+      signUpError,
+      signUpForm,
+      signInLoading,
+      signUpLoading
     } = this.state;
 
-    const isInvalid = signInPassword === "" || signInEmail === "";
     return (
       <div id="loginFormDiv">
         <div className="ght-login-form">
@@ -179,44 +239,52 @@ class LoginForm extends Component {
             <h2 className="form-title" id="signup">
               Log in
             </h2>
-            <div className="ght-form-holder">
-              {/* <input type="text" className="input" placeholder="Name" />
-              <input type="email" className="input" placeholder="Email" />
-              <input type="password" className="input" placeholder="Password" /> */}
-              <Input
-                placeholder="Username"
-                prefix={<Icon type="user" />}
-                value={signInEmail}
-                onChange={this.onChange}
-                suffix={
-                  <Tooltip title="Extra information">
-                    <Icon
-                      type="info-circle"
-                      style={{ color: "rgba(0,0,0,.45)" }}
-                    />
-                  </Tooltip>
-                }
-              />
-              <Input.Password
-                style={{ marginTop: "20px" }}
-                prefix={<Icon type="lock" />}
-                value={signInPassword}
-                onChange={this.onChange}
-                placeholder="Password"
-              />
-            </div>
-            <div className="login-button-div">
-              <Button
-                type="primary"
-                className="noColorButton"
-                style={{ background: "#5D59AF", width: "55%" }}
-              >
-                Login
-              </Button>
-            </div>
+            <form onSubmit={this.onSignIn}>
+              <div className="ght-form-holder">
+                <Input
+                  placeholder="Email"
+                  prefix={<Icon type="mail" />}
+                  value={signInEmail}
+                  onChange={this.onChange}
+                  name="signInEmail"
+                />
+                <Input.Password
+                  style={this.loginInputStyle}
+                  prefix={<Icon type="lock" />}
+                  value={signInPassword}
+                  onChange={this.onChange}
+                  name="signInPassword"
+                  placeholder="Password"
+                />
+              </div>
+              {signInError && (
+                <p className="login-form-error">{signInError.message}</p>
+              )}
+              <div className="login-button-div">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="noColorButton"
+                  style={{ background: "#5D59AF", width: "55%" }}
+                  loading={signInLoading}
+                >
+                  Login
+                </Button>
+              </div>
+            </form>
             <div className="social-login-container">
-              <img onClick={this.signInWithFacebook} className="social-login-image" src={fbLogin} />
-              <img onClick={this.signInWithGoogle} className="social-login-image" src={gLogin} />
+              <img
+                onClick={this.signInWithFacebook}
+                className="social-login-image"
+                src={fbLogin}
+                alt=""
+              />
+              <img
+                onClick={this.signInWithGoogle}
+                className="social-login-image"
+                src={gLogin}
+                alt=""
+              />
             </div>
           </div>
           <div className="login slide-up">
@@ -224,39 +292,52 @@ class LoginForm extends Component {
               <h2 className="form-title" id="login">
                 Sign Up
               </h2>
-              <div className="ght-form-holder">
-                <Input
-                  placeholder="Username"
-                  prefix={<Icon type="user" />}
-                  suffix={
-                    <Tooltip title="Extra information">
-                      <Icon
-                        type="info-circle"
-                        style={{ color: "rgba(0,0,0,.45)" }}
-                      />
-                    </Tooltip>
-                  }
-                />
-                <Input.Password
-                  style={{ marginTop: "20px" }}
-                  prefix={<Icon type="lock" />}
-                  placeholder="Password"
-                />
-                <Input.Password
-                  style={{ marginTop: "20px" }}
-                  prefix={<Icon type="lock" />}
-                  placeholder="Retype Password"
-                />
-              </div>
-              <div className="login-button-div">
-                <Button
-                  type="primary"
-                  className="noColorButton"
-                  style={{ background: "#5D59AF", width: "55%" }}
-                >
-                  Login
-                </Button>
-              </div>
+              <form onSubmit={this.onSignUp}>
+                <div className="ght-form-holder">
+                  <Input
+                    placeholder="Username"
+                    onChange={this.onChange}
+                    name="signUpName"
+                    prefix={<Icon type="user" />}
+                  />
+                  <Input
+                    placeholder="Email"
+                    onChange={this.onChange}
+                    style={this.loginInputStyle}
+                    name="signUpEmail"
+                    prefix={<Icon type="mail" />}
+                  />
+                  <Input.Password
+                    style={this.loginInputStyle}
+                    prefix={<Icon type="lock" />}
+                    onChange={this.onChange}
+                    placeholder="Password"
+                    name="signUpPassword"
+                  />
+                  <Input.Password
+                    style={this.loginInputStyle}
+                    onChange={this.onChange}
+                    prefix={<Icon type="lock" />}
+                    placeholder="Retype Password"
+                    name="signUpPasswordRetype"
+                  />
+                </div>
+                {signUpError && (
+                  <p className="login-form-error">{signUpError.message}</p>
+                )}
+                <div className="login-button-div">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="noColorButton"
+                    style={{ background: "#5D59AF", width: "55%" }}
+                    onChange={this.onChange}
+                    loading={signUpLoading}
+                  >
+                    Sign Up
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

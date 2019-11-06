@@ -181,4 +181,8 @@
     height: 39px;
     margin: 0px 10px;
 }
+.login-form-error{
+	text-align: center;
+    margin-top: 12px;
+}
 /* https://www.canva.com/colors/color-palettes/alluring-shadows/ */
