@@ -265,7 +265,7 @@ class LoginForm extends Component {
                   type="primary"
                   htmlType="submit"
                   className="noColorButton"
-                  style={{ background: "#5D59AF", width: "55%" }}
+                  style={{ background: "#1848A0", width: "55%" }}
                   loading={signInLoading}
                 >
                   Login
@@ -330,7 +330,7 @@ class LoginForm extends Component {
                     type="primary"
                     htmlType="submit"
                     className="noColorButton"
-                    style={{ background: "#5D59AF", width: "55%" }}
+                    style={{ background: "#1848A0", width: "55%" }}
                     onChange={this.onChange}
                     loading={signUpLoading}
                   >

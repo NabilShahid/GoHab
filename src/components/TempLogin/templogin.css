@@ -22,6 +22,10 @@
     background-position: center center;   */
 	background: linear-gradient(to right, #a8c0ff, #3f2b96);
 }
+.ght-login-form .anticon{
+	color: #c7c7c7 !important;
+	margin-bottom: 1px;
+}
  .ght-login-form {
 	 background-color: white;
 	 border-radius: 15px;
@@ -91,7 +95,7 @@
 	 left: 0;
 	 right: 0;
 	 bottom: 0;
-     background-color: #A072BE;
+     background-color: #5680E9;
      color: white;
 	 z-index: 5;
 	 -webkit-transition: all 0.3s ease;
@@ -103,7 +107,7 @@
      color: white;
 	 top: -20px;
 	 -webkit-transform: translate(-50%, 0);
-	 background-color: #A072BE;
+	 background-color: #5680E9;
 	 width: 200%;
 	 height: 250px;
 	 border-radius: 50%;
@@ -173,13 +177,15 @@
 }
 .social-login-container{
 	margin-top: 10px;
+	margin-bottom: 15px;
 	display: flex;
 	justify-content: center;
 }
 .social-login-image{
 	width: 40px;
     height: 39px;
-    margin: 0px 10px;
+	margin: 0px 10px;
+	cursor: pointer;
 }
 .login-form-error{
 	text-align: center;
