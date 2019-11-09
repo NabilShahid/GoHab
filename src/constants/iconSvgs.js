@@ -15,6 +15,7 @@ import { ReactComponent as Relationship } from "../assets/icons//favorite-heart-
 import { ReactComponent as RoutineWork } from "../assets/icons/clock.svg";
 import { ReactComponent as Other } from "../assets/icons/help-round-button.svg";
 export { ReactComponent as FilterAndSort } from "../assets/icons/filter-and-sort-arrows.svg";
+export { ReactComponent as GoHabLogo } from "../assets/icons/gohab-logo-1.svg";
 
 const ICONS = {
   Goal,

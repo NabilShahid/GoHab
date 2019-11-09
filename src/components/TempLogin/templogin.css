@@ -16,11 +16,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-image: url("../../assets/images/bg-01.jpg");
+    background-image: url("../../assets/images/b3.jpg");
     background-size:     cover;                      
     background-repeat:   no-repeat;
-    background-position: center center;   */
-	background: linear-gradient(to right, #a8c0ff, #3f2b96);
+    background-position: center center;  
+	/* background: linear-gradient(to right, #a8c0ff, #3f2b96); */
+}
+#login-logo-div{
+	text-align: center;
 }
 .ght-login-form .anticon{
 	color: #c7c7c7 !important;
@@ -45,7 +48,7 @@
     }
  .ght-login-form .signup {
 	 position: absolute;
-	 top: 50%;
+	 top: 40%;
 	 left: 50%;
 	 -webkit-transform: translate(-50%, -50%);
 	 width: 65%;
@@ -91,11 +94,11 @@
 /* signup bg color */
  .ght-login-form .login {
 	 position: absolute;
-	 top: 20%;
+	 top: 30%;
 	 left: 0;
 	 right: 0;
 	 bottom: 0;
-     background-color: #5680E9;
+     background-color: #3A67D9;
      color: white;
 	 z-index: 5;
 	 -webkit-transition: all 0.3s ease;
@@ -105,9 +108,9 @@
 	 position: absolute;
      left: 50%;
      color: white;
-	 top: -20px;
+	 top: -30px;
 	 -webkit-transform: translate(-50%, 0);
-	 background-color: #5680E9;
+	 background-color: #3A67D9;
 	 width: 200%;
 	 height: 250px;
 	 border-radius: 50%;
@@ -116,7 +119,7 @@
 }
  .ght-login-form .login .center {
 	 position: absolute;
-	 top: calc(50% - 10%);
+	 top: calc(50% - 5%);
 	 left: 50%;
 	 -webkit-transform: translate(-50%, -50%);
 	 width: 65%;
@@ -136,7 +139,7 @@
 }
  .ght-login-form .login .center .ght-form-holder {
 	 overflow: hidden;
-	 margin-top: 50px;
+	 margin-top: 30px;
 	 opacity: 1;
 	 visibility: visible;
 	 -webkit-transition: all 0.3s ease;

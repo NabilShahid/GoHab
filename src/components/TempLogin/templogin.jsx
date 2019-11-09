@@ -15,6 +15,7 @@ import history from "../../services/history";
 import PAGEKEYS from "../../constants/pageKeys";
 import { setUser } from "../../actions/userActions.js";
 import { connect } from "react-redux";
+import { GoHabLogo } from "../../constants/iconSvgs";
 import {
   Button,
   Input,
@@ -41,8 +42,9 @@ class LoginForm extends Component {
   };
   loginInputStyle = { marginTop: "20px" };
   componentDidMount() {
-    const loginBtn = document.getElementById("login");
-    const signupBtn = document.getElementById("signup");
+    const loginBtn = document.getElementById("signup");
+    const signupBtn = document.getElementById("signin");
+    const loginLogoDiv = document.getElementById("login-logo-div");
 
     loginBtn.addEventListener("click", e => {
       let parent = e.target.parentNode.parentNode;
@@ -51,12 +53,24 @@ class LoginForm extends Component {
           parent.classList.add("slide-up");
         } else {
           signupBtn.parentNode.classList.add("slide-up");
+          loginLogoDiv.parentNode.classList.add("slide-up");
           parent.classList.remove("slide-up");
         }
       });
     });
 
     signupBtn.addEventListener("click", e => {
+      let parent = e.target.parentNode;
+      Array.from(e.target.parentNode.classList).find(element => {
+        if (element !== "slide-up") {
+          parent.classList.add("slide-up");
+        } else {
+          loginBtn.parentNode.parentNode.classList.add("slide-up");
+          parent.classList.remove("slide-up");
+        }
+      });
+    });
+    loginLogoDiv.addEventListener("click", e => {
       let parent = e.target.parentNode;
       Array.from(e.target.parentNode.classList).find(element => {
         if (element !== "slide-up") {
@@ -236,9 +250,13 @@ class LoginForm extends Component {
       <div id="loginFormDiv">
         <div className="ght-login-form">
           <div className="signup">
-            <h2 className="form-title" id="signup">
+            <div id="login-logo-div">
+              <GoHabLogo style={{ height: "45px", width: "45px" }} />
+              <span style={{ fontSize: "25px" }}>GoHab</span>
+            </div>
+            <h4 className="form-title" id="signin">
               Log in
-            </h2>
+            </h4>
             <form onSubmit={this.onSignIn}>
               <div className="ght-form-holder">
                 <Input
@@ -265,7 +283,7 @@ class LoginForm extends Component {
                   type="primary"
                   htmlType="submit"
                   className="noColorButton"
-                  style={{ background: "#1848A0", width: "55%" }}
+                  style={{ background: "#305CAE", width: "55%" }}
                   loading={signInLoading}
                 >
                   Login
@@ -289,7 +307,7 @@ class LoginForm extends Component {
           </div>
           <div className="login slide-up">
             <div className="center">
-              <h2 className="form-title" id="login">
+              <h2 className="form-title" id="signup">
                 Sign Up
               </h2>
               <form onSubmit={this.onSignUp}>
@@ -330,7 +348,7 @@ class LoginForm extends Component {
                     type="primary"
                     htmlType="submit"
                     className="noColorButton"
-                    style={{ background: "#1848A0", width: "55%" }}
+                    style={{ background: "#305CAE", width: "55%" }}
                     onChange={this.onChange}
                     loading={signUpLoading}
                   >
