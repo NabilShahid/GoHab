@@ -36,6 +36,7 @@
      width: 480px;
 	 position: relative;
 	 overflow: hidden;
+	 margin: 0 10px;
 }
  .ght-login-form::after {
 	 content: '';
@@ -48,39 +49,39 @@
     }
  .ght-login-form .signup {
 	 position: absolute;
-	 top: 40%;
+	 top: 44%;
 	 left: 50%;
 	 -webkit-transform: translate(-50%, -50%);
 	 width: 65%;
 	 z-index: 5;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .signup.slide-up {
 	 top: 5%;
 	 -webkit-transform: translate(-50%, 0%);
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
 
  .ght-login-form .signup.slide-up .form-title {
-	 font-size: 1em;
+	 /* font-size: 1em; */
 	 cursor: pointer;
 }
  .ght-login-form .signup.slide-up .form-title span {
 	 margin-right: 5px;
 	 opacity: 1;
 	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .signup .form-title {
 	 color: #000;
-	 font-size: 1.7em;
+	 font-size: 1.5em;
 	 text-align: center;
 }
  .ght-login-form .signup .form-title span {
 	 color: rgba(0, 0, 0, 0.4);
 	 opacity: 0;
 	 visibility: hidden;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .signup .ght-form-holder {
  
@@ -88,7 +89,7 @@
 	 margin-top: 50px;
 	 opacity: 1;
 	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  
 /* signup bg color */
@@ -101,7 +102,7 @@
      background-color: #3A67D9;
      color: white;
 	 z-index: 5;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login::before {
 	 content: '';
@@ -115,7 +116,7 @@
 	 height: 250px;
 	 border-radius: 50%;
 	 z-index: 4;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login .center {
 	 position: absolute;
@@ -124,50 +125,51 @@
 	 -webkit-transform: translate(-50%, -50%);
 	 width: 65%;
 	 z-index: 5;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login .center .form-title {
 	 color: white;
-	 font-size: 1.7em;
+	 font-size: 1.5em;
 	 text-align: center;
+	 transition: 0.4s ease;
 }
  .ght-login-form .login .center .form-title span {
 	 color: rgba(0, 0, 0, 0.4);
 	 opacity: 0;
 	 visibility: hidden;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login .center .ght-form-holder {
 	 overflow: hidden;
 	 margin-top: 30px;
 	 opacity: 1;
 	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  
 
  .ght-login-form .login.slide-up {
 	 top: 90%;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login.slide-up .center {
 	 top: 10%;
 	 -webkit-transform: translate(-50%, 0%);
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
 
  .ght-login-form .login.slide-up .form-title {
-	 font-size: 1em;
+	 font-size: 1.2em;
 	 margin: 0;
 	 padding: 0;
 	 cursor: pointer;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  .ght-login-form .login.slide-up .form-title span {
 	 margin-right: 5px;
 	 opacity: 1;
 	 visibility: visible;
-	 -webkit-transition: all 0.3s ease;
+	 -webkit-transition: all 0.4s ease;
 }
  
 .ght-login-form .login-button-div{
@@ -176,7 +178,7 @@
 	margin-top: 20px;
 }
 .slide-up .ght-form-holder,.slide-up .login-button-div, .slide-up .social-login-container {
-	display: none;
+	/* display: none; */
 }
 .social-login-container{
 	margin-top: 10px;
@@ -193,5 +195,16 @@
 .login-form-error{
 	text-align: center;
     margin-top: 12px;
+}
+.slide-up #signin{
+	margin-top: 0px;
+	transition: 0.4s ease;
+	font-size: 1.2em;
+	
+}
+#signin{
+	margin-top: 40px;
+	transition: 0.4s ease;
+	font-size: 1.5em;
 }
 /* https://www.canva.com/colors/color-palettes/alluring-shadows/ */

@@ -49,9 +49,7 @@ class LoginForm extends Component {
     loginBtn.addEventListener("click", e => {
       let parent = e.target.parentNode.parentNode;
       Array.from(e.target.parentNode.parentNode.classList).find(element => {
-        if (element !== "slide-up") {
-          parent.classList.add("slide-up");
-        } else {
+        if (element === "slide-up") {
           signupBtn.parentNode.classList.add("slide-up");
           loginLogoDiv.parentNode.classList.add("slide-up");
           parent.classList.remove("slide-up");
@@ -62,9 +60,7 @@ class LoginForm extends Component {
     signupBtn.addEventListener("click", e => {
       let parent = e.target.parentNode;
       Array.from(e.target.parentNode.classList).find(element => {
-        if (element !== "slide-up") {
-          parent.classList.add("slide-up");
-        } else {
+        if (element === "slide-up") {
           loginBtn.parentNode.parentNode.classList.add("slide-up");
           parent.classList.remove("slide-up");
         }
@@ -251,7 +247,9 @@ class LoginForm extends Component {
         <div className="ght-login-form">
           <div className="signup">
             <div id="login-logo-div">
-              <GoHabLogo style={{ height: "45px", width: "45px" }} />
+              <GoHabLogo
+                style={{ height: "45px", width: "45px", marginBottom: "5px" }}
+              />
               <span style={{ fontSize: "25px" }}>GoHab</span>
             </div>
             <h4 className="form-title" id="signin">
