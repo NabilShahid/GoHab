@@ -71,15 +71,15 @@ class SideMenu extends Component {
           }
         >
           <Menu.Item key={PAGEKEYS["GOALS"]} theme="filled">
-            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
+            {/* <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} /> */}
             Goals
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["HABITS"]} theme="filled">
-            <ICONS.Habit style={this.iconsStyles} />
+            {/* <ICONS.Habit style={this.iconsStyles} /> */}
             Habits
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASKS"]} theme="filled">
-            <ICONS.Task style={this.iconsStyles} />
+            {/* <ICONS.Task style={this.iconsStyles} /> */}
             Tasks
           </Menu.Item>
         </SubMenu>
@@ -93,16 +93,16 @@ class SideMenu extends Component {
           }
         >
           <Menu.Item key={PAGEKEYS["GOAL_STATS"]}>
-            <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} />
+            {/* <ICONS.Goal style={{ ...this.iconsStyles, width: "24px" }} /> */}
             Goal Stats
           </Menu.Item>
 
           <Menu.Item key={PAGEKEYS["HABIT_STATS"]}>
-            <ICONS.Habit style={this.iconsStyles} />
+            {/* <ICONS.Habit style={this.iconsStyles} /> */}
             Habit Stats
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["TASK_STATS"]}>
-            <ICONS.Task style={this.iconsStyles} />
+            {/* <ICONS.Task style={this.iconsStyles} /> */}
             Task Stats
           </Menu.Item>
         </SubMenu>
@@ -122,11 +122,11 @@ class SideMenu extends Component {
           }
         >
           <Menu.Item key={PAGEKEYS["HABIT_TRACKING"]}>
-            <ICONS.TrackHabits style={this.iconsStyles} />
+            {/* <ICONS.TrackHabits style={this.iconsStyles} /> */}
             Track Habits
           </Menu.Item>
           <Menu.Item key={PAGEKEYS["HABIT_CALENDAR"]}>
-            <ICONS.HabitsRecord style={this.iconsStyles} />
+            {/* <ICONS.HabitsRecord style={this.iconsStyles} /> */}
             Habits Record
           </Menu.Item>
         </SubMenu>
@@ -144,7 +144,7 @@ class SideMenu extends Component {
             Goal Calendar
           </Menu.Item> */}
           <Menu.Item key={PAGEKEYS["TASK_CALENDAR"]}>
-            <ICONS.Task style={this.iconsStyles} />
+            {/* <ICONS.Task style={this.iconsStyles} /> */}
             Tasks Calendar
           </Menu.Item>
         </SubMenu>

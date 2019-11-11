@@ -54,7 +54,7 @@ class MainBase extends Component {
           >
             {menuShown && (
               <div onClick={this.toggleMenu} className="menuShown">
-                <Icon type="menu-fold" style={{color:"white", fontSize:"17px"}}/>
+                <Icon type="menu-fold" style={{color:"#a9a9a9", fontSize:"17px"}}/>
               </div>
             )}
             <UserTile toggleMenu={this.toggleMenu} menuShown={menuShown} />

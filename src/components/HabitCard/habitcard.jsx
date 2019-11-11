@@ -65,7 +65,7 @@ const HabitCard = ({
           <div className="habitCardInfo">
             Category
             <div>
-            <Icon style={{height:"15px",width:"15px",fill:"var(--habit-category-color)",marginRight:"8px"}}/>
+            <Icon style={{height:"15px",width:"15px",fill:"var(--habit-color)",marginRight:"8px"}}/>
 
               {category}
             </div>

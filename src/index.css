@@ -183,8 +183,8 @@ div{
 }
 .ant-radio-group-solid
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  background: #c3c3c3  !important;
-  border-color: #c3c3c3  !important;
+  background: var(--primary-color)  !important;
+  border-color: var(--primary-color)  !important;
 }
 
 .ant-radio-button-wrapper:hover {
@@ -311,7 +311,7 @@ div{
 }
 .graphInfoIcon{
   margin-left: 7px;
-  color: #4da6f3;
+  color: var(--primary-color);
   cursor: pointer;
 }
 .halfPageChartLabel{
@@ -328,4 +328,11 @@ div{
   width: 20px;
   margin-top: 5px;
   cursor: pointer;
+}
+@media (max-width: 768px) {
+
+  [class*="col-"] {
+      margin-bottom: 10px;
+  }
+
 }
