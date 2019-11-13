@@ -32,8 +32,19 @@
 }
 .headerIconContainer {
   text-align: right;
-  padding-top: 9px;
+  padding-top: 4px;
 }
 .ant-drawer-body{
   padding:0px !important;
+}
+#userIcon{
+  margin-left: 20px;
+  display: inline-block;
+  width: 25px;
+  padding: 3px 0 1px 0;
+  background: orange;
+  text-align: center;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
 }

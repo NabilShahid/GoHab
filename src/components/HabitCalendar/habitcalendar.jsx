@@ -49,7 +49,7 @@ class HabitCalendar extends Component {
       
     const habitCalendarEvents = this.generateHabitCalendarEvents(
       goalPeriodHabits.filter(
-        h => habitsToFilter.length == 0 || habitsToFilter.includes(h.name)
+        h => habitsToFilter.length == 0 || habitsToFilter.includes(h.id)
       ),
       habitsPeriod
     );

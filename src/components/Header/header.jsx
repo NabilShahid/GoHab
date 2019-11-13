@@ -205,10 +205,15 @@ class Header extends Component {
                 style={{ width: 210 }}
               />
             )}
+             
           </Col>
 
           <Col className="headerIconContainer" span={1}>
-            <Badge count={notificationCount} showZero>
+          
+          </Col>
+
+          <Col className="headerIconContainer" span={2}>
+          <Badge  count={notificationCount} showZero>
               <i
                 onClick={() => {
                   this.setState({ notificationsVisible: true });
@@ -217,16 +222,12 @@ class Header extends Component {
                 style={{ fontSize: "20px" }}
               />
             </Badge>
-          </Col>
-
-          <Col className="headerIconContainer" span={1}>
             <Popover
               placement="bottomLeft"
               // title="Change View"
               content={
                 <div className="submenu">
-                  <div className="submenuOption">Account Settings</div>
-                  <div
+                   <div
                     onClick={() => {
                       firebase.authOps.doSignOut().then(() => {
                         history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
@@ -241,13 +242,8 @@ class Header extends Component {
               }
               trigger="click"
             >
-              <i
-                onClick={() => {
-                  // this.setState({ notificationsVisible: true });
-                }}
-                className="fa fa-cog headerIcon"
-                style={{ fontSize: "22px" }}
-              />
+             <div id="userIcon">N</div>
+              
             </Popover>
           </Col>
           <Col span={1} />

@@ -134,20 +134,6 @@ class Habits extends Component {
                           </Radio.Button>
                         </Radio.Group>
                       </div>
-
-                      <div className="cardFilterLabel">Sort:</div>
-                      <div>
-                        <Select
-                          onChange={e => this.changeOrderBy(e)}
-                          style={{ width: "100%" }}
-                          size="small"
-                          value={orderBy}
-                        >
-                          <Option value="dueDate">Due Date</Option>
-                          <Option value="importance">Importance</Option>
-                          <Option value="alphabetical">Alphabetical</Option>
-                        </Select>
-                      </div>
                     </div>
                   }
                   trigger="click"
