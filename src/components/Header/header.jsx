@@ -7,7 +7,10 @@ import Tasks from "../Tasks/tasks";
 import { filterGoals } from "../../actions/goalActions";
 import { filterTasks } from "../../actions/taskActions";
 import { filterHabits } from "../../actions/habitActions";
-import { updateHeaderFilterString,updateHeaderOptions } from "../../actions/headerActions";
+import {
+  updateHeaderFilterString,
+  updateHeaderOptions
+} from "../../actions/headerActions";
 import { getNotificationDialogText } from "../../services/methods/ghtCommonMethods";
 import {
   alphaSort,
@@ -20,7 +23,7 @@ import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
 import { withApi } from "../../services/api";
 import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
-import ICONS,{HEADER_ICONS_STYLES} from "../../constants/iconSvgs";
+import ICONS, { HEADER_ICONS_STYLES } from "../../constants/iconSvgs";
 import "./header.css";
 const Search = Input.Search;
 class Header extends Component {
@@ -106,7 +109,7 @@ class Header extends Component {
       this.props.updateHeaderOptions({
         ...HEADEROPTIONS["HABIT_TRACKING"],
         SelectedMenuOption: ["HABIT_TRACKING"]
-      });      
+      });
       history.push(ROUTES[PAGEKEYS["HABIT_TRACKING"]]);
     }
     this.setState({ notificationsVisible: false });
@@ -173,7 +176,12 @@ class Header extends Component {
       }
     }
   };
-  commonIconStyles = { fill: "#6f7782", width: "30px", height: "30px", marginRight: "10px" };
+  commonIconStyles = {
+    fill: "#6f7782",
+    width: "30px",
+    height: "30px",
+    marginRight: "10px"
+  };
   render() {
     const { search, firebase, user, flushStore } = this.props;
     const {
@@ -183,17 +191,20 @@ class Header extends Component {
       notificationCount,
       notificationDialogTitle
     } = this.state;
-    const Icon=ICONS[this.props.icon]||(()=>{return <div></div>}); 
-    const iconStyle=HEADER_ICONS_STYLES[this.props.icon];   
+    const Icon =
+      ICONS[this.props.icon] ||
+      (() => {
+        return <div></div>;
+      });
+    const iconStyle = HEADER_ICONS_STYLES[this.props.icon];
     return (
       <div id="headerDiv">
-        <Row>
-          <Col span={1} />
-          <Col id="headerTitle" span={14}>
-            <Icon style={{...this.commonIconStyles,...iconStyle}}/>
+        <div style={{display:"flex"}}>
+          <div style={{flexBasis:"60%"}} id="headerTitle">
+            <Icon style={{ ...this.commonIconStyles, ...iconStyle }} />
             {this.props.title}
-          </Col>
-          <Col id="headerOptions" span={6}>
+          </div>
+          <div style={{flexBasis:"20%"}} id="headerSearchDiv">
             {search && (
               <Search
                 id="headerSearch"
@@ -202,18 +213,12 @@ class Header extends Component {
                 onChange={e => {
                   this.searchValues(e.target.value);
                 }}
-                style={{ width: 210 }}
+                style={{ maxWidth: 210 }}
               />
             )}
-             
-          </Col>
-
-          <Col className="headerIconContainer" span={1}>
-          
-          </Col>
-
-          <Col className="headerIconContainer" span={2}>
-          <Badge  count={notificationCount} showZero>
+          </div>
+          <div style={{flexBasis:"20%"}} id="headerOptions">
+            <Badge count={notificationCount} showZero>
               <i
                 onClick={() => {
                   this.setState({ notificationsVisible: true });
@@ -227,7 +232,7 @@ class Header extends Component {
               // title="Change View"
               content={
                 <div className="submenu">
-                   <div
+                  <div
                     onClick={() => {
                       firebase.authOps.doSignOut().then(() => {
                         history.push(ROUTES[PAGEKEYS["SIGNIN"]]);
@@ -242,12 +247,19 @@ class Header extends Component {
               }
               trigger="click"
             >
-             <div id="userIcon">N</div>
-              
+              <div id="userIcon">N</div>
             </Popover>
-          </Col>
-          <Col span={1} />
-        </Row>
+          </div>
+
+          {/* <Col className="headerIconContainer" span={1}>
+          
+          </Col> */}
+
+          {/* <Col className="headerIconContainer" span={2}>
+          
+          </Col> */}
+          {/* <Col span={1} /> */}
+        </div>
         <Drawer
           title="Notifications"
           placement="right"

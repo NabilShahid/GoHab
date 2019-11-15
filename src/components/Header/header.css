@@ -6,28 +6,33 @@
 #headerTitle {
   font-size: 20px;
   font-weight: 500;
-  padding-right: 3%;
+  /* padding-right: 3%; */
   padding-top: 3px;
-  margin-left: 5px;
+  /* margin-left: 5px; */
+  padding-left: 40px;
   color: #6f7782;
 }
 .headerIcon {  
   cursor: pointer;
 }
 #headerOptions {
-  padding-top: 4px;
+  padding-top: 7px;
   text-align: right;
-  padding-left: 15px;
+  padding-right: 40px;
+  /* padding-left: 15px; */
 }
 
-#headerOptions input {
+#headerSearchDiv input {
      /* background-color: #656565; */
      /* color: white; */
      width: 80%;
      border: 1;
      border-radius: 30px;
 }
-#headerOptions input:focus {
+#headerSearchDiv{
+  text-align: right;
+}
+#headerSearchDiv input:focus {
   width: 100%;
 }
 .headerIconContainer {
