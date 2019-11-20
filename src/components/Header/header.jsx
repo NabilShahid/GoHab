@@ -22,7 +22,7 @@ import history from "../../services/history";
 import ROUTES from "../../constants/routes";
 import { withFirebase } from "../../services/firebase";
 import { withApi } from "../../services/api";
-import { Row, Col, Badge, Drawer, Input, Popover, Modal } from "antd";
+import { Row, Col, Button, Badge, Drawer, Input, Popover, Modal } from "antd";
 import ICONS, { HEADER_ICONS_STYLES } from "../../constants/iconSvgs";
 import "./header.css";
 const Search = Input.Search;
@@ -191,7 +191,7 @@ class Header extends Component {
       notificationCount,
       notificationDialogTitle
     } = this.state;
-    const Icon =
+    const HeaderIcon =
       ICONS[this.props.icon] ||
       (() => {
         return <div></div>;
@@ -199,12 +199,12 @@ class Header extends Component {
     const iconStyle = HEADER_ICONS_STYLES[this.props.icon];
     return (
       <div id="headerDiv">
-        <div style={{display:"flex"}}>
-          <div style={{flexBasis:"60%"}} id="headerTitle">
-            <Icon style={{ ...this.commonIconStyles, ...iconStyle }} />
+        <div style={{ display: "flex" }}>
+          <div style={{ flexBasis: "40%" }} id="headerTitle">
+            <HeaderIcon style={{ ...this.commonIconStyles, ...iconStyle }} />
             {this.props.title}
           </div>
-          <div style={{flexBasis:"20%"}} id="headerSearchDiv">
+          {/* <div style={{flexBasis:"20%"}} id="headerSearchDiv">
             {search && (
               <Search
                 id="headerSearch"
@@ -215,9 +215,33 @@ class Header extends Component {
                 }}
                 style={{ maxWidth: 210 }}
               />
+              // <Button shape="circle" icon="search" />
+
             )}
-          </div>
-          <div style={{flexBasis:"20%"}} id="headerOptions">
+          </div> */}
+          <div style={{ flexBasis: "60%" }} id="headerOptions">
+            {search && (
+              <span id="headerSearchDiv">
+                <Search
+                  id="headerSearch"
+                  placeholder="Search"
+                  value={this.props.currentFilterString}
+                  onChange={e => {
+                    this.searchValues(e.target.value);
+                  }}
+                  style={{ maxWidth: 210 }}
+                />
+                {/* <i
+                  className="fa fa-search headerIcon"
+                  style={{
+                    display: search ? "block" : "none",
+                    fontSize: "20px",
+                    marginRight: "14px"
+                  }} 
+                />*/}
+              </span>
+            )}
+
             <Badge count={notificationCount} showZero>
               <i
                 onClick={() => {
