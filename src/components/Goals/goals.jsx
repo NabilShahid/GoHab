@@ -37,7 +37,8 @@ class Goals extends Component {
     goalDialogInDom: false,
     goalDialogVisible: false,
     currentGoalOptions: {},
-    subModeSearchValue: ""
+    subModeSearchValue: "",
+    goalAddMode: false
   };
   changeOrderBy(v) {
     const orderBy = v;
@@ -51,7 +52,8 @@ class Goals extends Component {
       goalDialogInDom,
       goalDialogVisible,
       currentGoalOptions,
-      subModeSearchValue
+      subModeSearchValue,
+      goalAddMode
     } = this.state;
     const { statusFilter, orderBy, tasks, habits, subMode } = this.props;
     return (
@@ -84,6 +86,9 @@ class Goals extends Component {
                   type="primary"
                   className="noColorButton"
                   style={{ background: "var(--goal-color)" }}
+                  onClick={() =>
+                    this.setState({goalDialogVisible:true, goalDialogInDom: true, goalAddMode: true })
+                  }
                 >
                   <i className="fa fa-plus" style={{ marginRight: "10px" }} />
                   Add New
@@ -134,7 +139,7 @@ class Goals extends Component {
                 >
                   {" "}
                   <Tooltip title="Change View">
-                  <FilterAndSort
+                    <FilterAndSort
                       style={{ fill: "var(--goal-color)" }}
                       className="filterAndSortIcon"
                     />
@@ -162,43 +167,51 @@ class Goals extends Component {
             }}
             footer=""
           >
-            <Tabs defaultActiveKey="1" tabPosition="top">
-              <TabPane tab="Goal Info" key="1">
-                <div className="gTabContent">{this.currentGoalDialog()}</div>
-              </TabPane>
-              <TabPane tab="Sub Habits" key="2">
-                <div className="gTabContent">
-                  <Habits
-                    subMode={{
-                      ColSize: 2,
-                      Habits: alphaSort(
-                        habits.filter(
-                          g => g.parentGoal == currentGoalOptions.id
-                        ),
-                        "asc",
-                        "name"
-                      )
-                    }}
-                  />
-                </div>
-              </TabPane>
-              <TabPane tab="Sub Tasks" key="3">
-                <div className="gTabContent">
-                  <Tasks
-                    subMode={{
-                      ColSize: 2,
-                      Tasks: alphaSort(
-                        tasks.filter(
-                          t => t.parentGoal == currentGoalOptions.id
-                        ),
-                        "asc",
-                        "name"
-                      )
-                    }}
-                  />
-                </div>
-              </TabPane>
-            </Tabs>
+            {goalAddMode && (
+              <CreateGoalForm
+                mode="add"
+                setPopupVisibility={this.closeGoalDialog}
+              />
+            )}
+            {!goalAddMode && (
+              <Tabs defaultActiveKey="1" tabPosition="top">
+                <TabPane tab="Goal Info" key="1">
+                  <div className="gTabContent">{this.currentGoalDialog()}</div>
+                </TabPane>
+                <TabPane tab="Sub Habits" key="2">
+                  <div className="gTabContent">
+                    <Habits
+                      subMode={{
+                        ColSize: 2,
+                        Habits: alphaSort(
+                          habits.filter(
+                            g => g.parentGoal == currentGoalOptions.id
+                          ),
+                          "asc",
+                          "name"
+                        )
+                      }}
+                    />
+                  </div>
+                </TabPane>
+                <TabPane tab="Sub Tasks" key="3">
+                  <div className="gTabContent">
+                    <Tasks
+                      subMode={{
+                        ColSize: 2,
+                        Tasks: alphaSort(
+                          tasks.filter(
+                            t => t.parentGoal == currentGoalOptions.id
+                          ),
+                          "asc",
+                          "name"
+                        )
+                      }}
+                    />
+                  </div>
+                </TabPane>
+              </Tabs>
+            )}
           </Modal>
         )}
       </div>
@@ -228,7 +241,7 @@ class Goals extends Component {
   closeGoalDialog = () => {
     this.setState({ goalDialogVisible: false });
     setTimeout(() => {
-      this.setState({ goalDialogInDom: false });
+      this.setState({ goalDialogInDom: false,goalAddMode: false });
     }, 250);
   };
 
