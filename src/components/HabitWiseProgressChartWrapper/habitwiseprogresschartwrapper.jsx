@@ -12,6 +12,7 @@ class HabitWiseProgressChartWrapper extends Component {
     showLastCount: 10
   };
   setSelectedHabit(selectedHabit) {
+    debugger
     this.setState({ selectedHabit });
   }
   render() {
@@ -43,7 +44,7 @@ class HabitWiseProgressChartWrapper extends Component {
             defaultValue={"all"}
             style={{ width: "70%" }}
             size="small"
-            onChange={habitGoal => this.setState({ habitGoal })}
+            onChange={habitGoal => this.setState({ habitGoal,selectedHabit:"" })}
             optionFilterProp="children"
             filterOption={(input, option) =>
               option.props.children
@@ -63,7 +64,7 @@ class HabitWiseProgressChartWrapper extends Component {
           </span>
           <Select
             onChange={habitPeriod => {
-              this.setState({ habitPeriod });
+              this.setState({ habitPeriod,selectedHabit:"" });
             }}
             style={{ width: "70%" }}
             size="small"

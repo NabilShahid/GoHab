@@ -26,7 +26,7 @@ const HabitWiseProgressLineChart = ({data}) => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="period" />
-        <YAxis />
+        <YAxis domain={[0, 1]} allowDecimals={false} />
         <Tooltip />
         <Legend />
         <ReferenceLine y={0} label="On Due Date" stroke="#00C49F" />

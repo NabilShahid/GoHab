@@ -17,6 +17,7 @@ class HabitStats extends Component {
     showLastCountProgressLineChart: 10
   };
   setSelectedHabit(selectedHabitId) {
+    debugger;
     this.setState({ selectedHabitId });
   }
   render() {
@@ -30,14 +31,22 @@ class HabitStats extends Component {
     const goalPeriodHabits = habits
       .filter(h => h.period == habitPeriod)
       .filter(h => habitGoal == "all" || h.parentGoal == habitGoal);
-    const selectedHabitObj = goalPeriodHabits[0] ? goalPeriodHabits[0] : {};
-    if (Object.keys(selectedHabitObj).length > 0)
-      selectedHabitId = selectedHabitObj.id;
-    else selectedHabitId = "";
-    let currentHabitTracking = habits.find(h => h.id == selectedHabitId);
-    currentHabitTracking = currentHabitTracking
-      ? currentHabitTracking.tracking
-      : [];
+    // const selectedHabitObj = goalPeriodHabits[0] ? goalPeriodHabits[0] : {};
+    let selectedHabitObj = {};
+    if (!selectedHabitId) {
+      selectedHabitObj = goalPeriodHabits[0] ? goalPeriodHabits[0] : {};
+      selectedHabitId = selectedHabitObj.id || "";
+    } else
+      selectedHabitObj =
+        goalPeriodHabits.find(h => h.id == selectedHabitId) || {};
+    // if (Object.keys(selectedHabitObj).length > 0)
+    //   selectedHabitId = selectedHabitObj.id;
+    // else selectedHabitId = "";
+    // let currentHabitTracking = habits.find(h => h.id == selectedHabitId);
+    let currentHabitTracking = selectedHabitObj.tracking||[];
+    // currentHabitTracking = currentHabitTracking
+    //   ? currentHabitTracking.tracking
+    //   : [];
     const habitHitMissBarChartData = getHabitHitMissDataForSingleHabit(
       selectedHabitObj
     );
@@ -195,7 +204,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null
-)(HabitStats);
+export default connect(mapStateToProps, null)(HabitStats);
