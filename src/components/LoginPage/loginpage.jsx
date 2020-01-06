@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import "./templogin.css";
+import "./loginpage.css";
  import fbLogin from "../../assets/images/fblogin.png";
 import gLogin from "../../assets/images/glogin.png";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { SignUpLink } from "../SignUp/signup";
 import Loading from "../Loading/loading";
 import { withFirebase } from "../../services/firebase";
 import ROUTES from "../../constants/routes";

@@ -10,7 +10,7 @@ import history from "../../services/history";
 import PAGEKEYS from "../../constants/pageKeys";
 
 import "./app.css";
-import LoginForm from "../TempLogin/templogin";
+import LoginForm from "../LoginPage/loginpage";
 class App extends Component {
   constructor(props) {
     super(props);

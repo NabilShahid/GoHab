@@ -4,7 +4,6 @@ import { withFirebase } from "../../services/firebase";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { Router, Route, Redirect, Switch } from "react-router-dom";
-import SignOutButton from "../SignOut/signoutbutton";
 import SideMenu from "../SideMenu/sidemenu";
 import { connect } from "react-redux";
 import Header from "../Header/header";
