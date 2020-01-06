@@ -196,8 +196,12 @@
 	transition: 0.3s ease;
 	font-size: 1.5em;
 }
-/* https://www.canva.com/colors/color-palettes/alluring-shadows/ */
 
+@media (min-width: 481px) and (max-width: 825px) {
+	.ght-login-form{
+		transform: scale(0.6);
+	}
+}
 
 @media screen and (min-width: 2000px) {
 	#loginFormDiv {
