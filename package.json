@@ -8,7 +8,7 @@
     "@fullcalendar/react": "^4.2.0",
     "antd": "^3.13.0",
     "bootstrap": "^4.2.1",
-    "firebase": "^5.7.3",
+    "firebase": "^5.11.1",
     "font-awesome": "^4.7.0",
     "joi": "^14.3.1",
     "moment": "^2.24.0",

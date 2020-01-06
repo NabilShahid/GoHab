@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./templogin.css";
-import bgImage from "../../assets/images/bg-01.jpg";
-import fbLogin from "../../assets/images/fblogin.png";
+ import fbLogin from "../../assets/images/fblogin.png";
 import gLogin from "../../assets/images/glogin.png";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";

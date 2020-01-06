@@ -1,22 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
- /* html, body {
-	 position: relative;
-	 min-height: 100vh;
-	 background-color: #e1e8ee;
-	 display: flex;
-	 align-items: center;
-	 justify-content: center;
-	 font-family: "Fira Sans", Helvetica, Arial, sans-serif;
-	 -webkit-font-smoothing: antialiased;
-	 -moz-osx-font-smoothing: grayscale;
-} */
 #loginFormDiv{
     height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("../../assets/images/b3.jpg");
+    background-image: url("../../assets/images/loginBg.jpg");
     background-size:     cover;                      
     background-repeat:   no-repeat;
     background-position: center center;  
@@ -208,3 +197,10 @@
 	font-size: 1.5em;
 }
 /* https://www.canva.com/colors/color-palettes/alluring-shadows/ */
+
+
+@media screen and (min-width: 2000px) {
+	#loginFormDiv {
+		background-image: url("../../assets/images/loginBgLarge.jpg");
+	}
+  }

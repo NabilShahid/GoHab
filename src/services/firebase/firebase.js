@@ -1,6 +1,6 @@
 import app from "firebase/app";
 // import firebaseConfig from "../../envdev";
-import firebaseConfig from "../../envprod";
+import {firebaseConfig} from "../../envprod";
 import AuthOperations from "../database/authOperations";
 import UserOperations from "../database/userOperations";
 import GoalOperations from "../database/goalOperations";

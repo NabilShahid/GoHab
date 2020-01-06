@@ -3,8 +3,7 @@ import "./usertile.css";
 import { Icon } from "antd";
 import { GoHabLogo } from "../../constants/iconSvgs";
 
-import logo from "../../assets/images/logo_withoutText.png";
-
+ 
 const UserTile = ({ toggleMenu, menuShown }) => {
   return (
     <div id="userDiv">

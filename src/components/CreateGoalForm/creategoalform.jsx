@@ -16,8 +16,7 @@ import {
 import { withFirebase } from "../../services/firebase";
 import { addGoal } from "../../actions/goalActions";
 import { connect } from "react-redux";
-import logo from "../../assets/images/logo_withoutText.png";
-import { getRandomInt } from "../../services/methods/ghtCommonMethods";
+ import { getRandomInt } from "../../services/methods/ghtCommonMethods";
 import { MATERIAL_COLORS } from "../../constants/commonConsts";
 import moment from "moment";
 import "./creategoalform.css";

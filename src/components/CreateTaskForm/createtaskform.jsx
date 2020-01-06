@@ -12,8 +12,7 @@ import {
 import { withFirebase } from "../../services/firebase";
 import { connect } from "react-redux";
 import { addTask } from "../../actions/taskActions";
-import logo from "../../assets/images/logo_withoutText.png";
-import "./createtaskform.css";
+ import "./createtaskform.css";
 import moment from "moment";
 import { updateSubItemsCount } from "../../actions/goalActions";
 import { getRandomInt } from "../../services/methods/ghtCommonMethods";

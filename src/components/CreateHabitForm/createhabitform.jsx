@@ -17,8 +17,7 @@ import {
   Select
 } from "antd";
 import { withFirebase } from "../../services/firebase";
-import logo from "../../assets/images/logo_withoutText.png";
-import { connect } from "react-redux";
+ import { connect } from "react-redux";
 import { addHabit } from "../../actions/habitActions";
 import "./createhabitform.css";
 import moment from "moment";
